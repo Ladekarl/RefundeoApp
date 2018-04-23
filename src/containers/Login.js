@@ -13,23 +13,30 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import {NavigationActions} from 'react-navigation'
-import LocalStorage from '../storage/LocalStorage';
 import colors from '../shared/colors';
 import Icon from 'react-native-fa-icons';
 import {strings} from '../shared/i18n';
-import ModalScreen from './Modal';
+import ModalScreen from '../components/Modal';
+import Actions from '../actions/Actions';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
 const window = Dimensions.get('window');
 const IMAGE_HEIGHT = window.width / 2;
 const CONTAINER_HEIGHT = window.height / 2;
 const CONTAINER_HEIGHT_SMALL = window.height / 6;
-const IMAGE_HEIGHT_SMALL = window.width / 6;
+const IMAGE_HEIGHT_SMALL = 0;
 
-export default class LoginScreen extends Component {
+class LoginScreen extends Component {
 
     static navigationOptions = {
         header: null,
+    };
+
+    static propTypes = {
+        actions: PropTypes.object.isRequired,
+        state: PropTypes.object.isRequired
     };
 
     constructor(props) {
@@ -38,20 +45,15 @@ export default class LoginScreen extends Component {
             email: '',
             password: '',
             error: '',
-            loading: false,
             imageHeight: new Animated.Value(IMAGE_HEIGHT),
             containerHeight: new Animated.Value(CONTAINER_HEIGHT),
             eulaDialogVisible: false
         };
+    }
 
-        // TODO Get current user
-        const user = null;
-        if (user) {
-            this._navigateAndReset('mainFlow');
-        }
-
-        this.keyboardWillShowSub = Keyboard.addListener(Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow', this.keyboardWillShow);
-        this.keyboardWillHideSub = Keyboard.addListener(Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide', this.keyboardWillHide);
+    componentDidMount() {
+        this.keyboardWillShowSub = Keyboard.addListener(Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow', this._keyboardWillShow);
+        this.keyboardWillHideSub = Keyboard.addListener(Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide', this._keyboardWillHide);
     }
 
     componentWillUnmount() {
@@ -59,48 +61,30 @@ export default class LoginScreen extends Component {
         this.keyboardWillHideSub.remove();
     }
 
-    componentDidMount() {
-        LocalStorage.getUser().then(user => {
-            if (user && user.email && user.password) {
-                this.setState({email: user.email, password: user.password});
-                this._login(user.email, user.password)
-            }
-        }).catch(error => {
-            this.setState({error: error.message})
-        });
+    _keyboardWillShow = () => {
+        this._animate(CONTAINER_HEIGHT_SMALL, IMAGE_HEIGHT_SMALL);
+    };
+
+    _keyboardWillHide = () => {
+        this._animate(CONTAINER_HEIGHT, IMAGE_HEIGHT);
+    };
+
+    _animate(containerHeight, imageHeight) {
+        const friction = 20;
+        const tension = 220;
+        Animated.parallel([
+            Animated.spring(this.state.containerHeight, {
+                friction,
+                tension,
+                toValue: containerHeight
+            }),
+            Animated.spring(this.state.imageHeight, {
+                friction,
+                tension: tension / 1.5,
+                toValue: imageHeight
+            })
+        ]).start();
     }
-
-    keyboardWillShow = (event) => {
-        if (!event || !event.duration) {
-            event = {duration: 1};
-        }
-        Animated.parallel([
-            Animated.timing(this.state.containerHeight, {
-                duration: event.duration,
-                toValue: CONTAINER_HEIGHT_SMALL
-            }),
-            Animated.timing(this.state.imageHeight, {
-                duration: event.duration,
-                toValue: IMAGE_HEIGHT_SMALL
-            })
-        ]).start();
-    };
-
-    keyboardWillHide = (event) => {
-        if (!event || !event.duration) {
-            event = {duration: 1};
-        }
-        Animated.parallel([
-            Animated.timing(this.state.containerHeight, {
-                duration: event.duration,
-                toValue: CONTAINER_HEIGHT,
-            }),
-            Animated.timing(this.state.imageHeight, {
-                duration: event.duration,
-                toValue: IMAGE_HEIGHT,
-            })
-        ]).start();
-    };
 
     onLoginPress = () => {
         Keyboard.dismiss();
@@ -109,46 +93,7 @@ export default class LoginScreen extends Component {
     };
 
     _login = (email, password) => {
-        this.setState({error: '', loading: true});
-        // TODO Sign in with email and password then
-        // firebase.auth().signInWithEmailAndPassword(email, password)
-        //     .then((user) => {
-        //         Database.getUser(user.uid).then(snapshot => {
-        //          const dbUser = snapshot.val();
-        const user = {};
-        if (!user) {
-            this._stopLoadingAndSetError(strings('login.error_user_does_not_exist_in_database'));
-            return;
-        }
-        this._saveUserAndNavigate(user);
-        //         }).catch(error => {
-        //             this._stopLoadingAndSetError(error)
-        //         });
-        //     }).catch(error => {
-        //     this._stopLoadingAndSetError(error)
-        // });
-    };
-
-    _saveUserAndNavigate = (user) => {
-        LocalStorage.setUser(user).then(() => {
-            this.setState({error: '', loading: false});
-            this._navigateAndReset('mainFlow');
-        }).catch(error => {
-            this._stopLoadingAndSetError(error);
-        });
-    };
-
-    _stopLoadingAndSetError = (error) => {
-        this.setState({error: error.message, loading: false});
-    };
-
-    _navigateAndReset = (routeName) => {
-        const resetAction = NavigationActions.reset({
-            index: 0,
-            key: null,
-            actions: [NavigationActions.navigate({routeName: routeName})],
-        });
-        this.props.navigation.dispatch(resetAction);
+        this.props.actions.login(email, password);
     };
 
     _renderIos = () => {
@@ -172,6 +117,7 @@ export default class LoginScreen extends Component {
     };
 
     _renderShared = () => {
+        const {state} = this.props;
         return (
             <View style={styles.innerContainer}>
                 <View style={styles.loginFormContainer}>
@@ -189,7 +135,7 @@ export default class LoginScreen extends Component {
                                        keyboardType='email-address'
                                        autoCapitalize='none'
                                        textAlignVertical={'center'}
-                                       editable={!this.state.loading}
+                                       editable={!state.fetching}
                                        underlineColorAndroid='transparent'
                                        selectionColor={colors.inactiveTabColor}
                                        value={this.state.email}
@@ -200,7 +146,7 @@ export default class LoginScreen extends Component {
                             <TextInput style={styles.passwordInput}
                                        secureTextEntry={true}
                                        textAlignVertical={'center'}
-                                       editable={!this.state.loading}
+                                       editable={!state.fetching}
                                        autoCapitalize='none'
                                        underlineColorAndroid='transparent'
                                        selectionColor={colors.inactiveTabColor}
@@ -214,7 +160,7 @@ export default class LoginScreen extends Component {
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity style={styles.loginButton}
                                               onPress={this.onLoginPress}
-                                              disabled={this.state.loading}>
+                                              disabled={state.fetching}>
                                 <Text style={styles.loginButtonText}>{strings('login.login_button')}</Text>
                             </TouchableOpacity>
                         </View>
@@ -230,7 +176,7 @@ export default class LoginScreen extends Component {
                         </View>
                     </View>
                 </View>
-                {this.state.loading &&
+                {state.fetching &&
                 <View style={styles.loadingContainer}>
                     <ActivityIndicator size='large' color={colors.inactiveTabColor} style={{elevation: 10}}/>
                 </View>
@@ -239,6 +185,7 @@ export default class LoginScreen extends Component {
                     modalTitle={strings('login.eula_title')}
                     noCancelButton={true}
                     onSubmit={() => this.showEulaDialog(false)}
+                    onBack={() => this.showEulaDialog(false)}
                     visible={this.state.eulaDialogVisible}>
                     <ScrollView style={styles.eulaTextContainer}>
                         <Text>{Platform.OS === 'ios' ? strings('login.eula_ios') : strings('login.eula_android')}</Text>
@@ -256,6 +203,7 @@ export default class LoginScreen extends Component {
         }
     }
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -327,7 +275,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     eulaLink: {
-        color: 'blue',
+        color: colors.linkColor,
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
@@ -384,3 +332,24 @@ const styles = StyleSheet.create({
         color: colors.inactiveTabColor
     }
 });
+
+const mapStateToProps = state => {
+    const navigation = state.navigationReducer;
+    return {
+        state: {
+            navigation,
+            ...state.authReducer
+        }
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        actions: bindActionCreators(Actions, dispatch)
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(LoginScreen);

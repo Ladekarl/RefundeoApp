@@ -1,15 +1,15 @@
 import {DrawerNavigator, StackNavigator} from 'react-navigation';
-import SplashScreen from '../components/SplashScreen';
-import LoginScreen from '../components/Login';
+import SplashScreen from '../containers/SplashScreen';
+import LoginScreen from '../containers/Login';
 import LogoutScreen from '../components/Logout';
 import SettingsScreen from '../components/Settings';
 import DrawerScreen from '../components/Drawer';
 import colors from '../shared/colors';
-import {TouchableOpacity, Platform} from 'react-native';
+import {Platform, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-fa-icons';
 import React from 'react';
-import Header from '../components/Header';
-import HomeScreen from '../containers/Home';
+import Header from '../containers/Header';
+import HomeNavigator from './HomeNavigator';
 
 const defaultPageNavigationOptions = ({navigation}) => ({
     headerLeft:
@@ -40,40 +40,52 @@ const defaultPageNavigationOptions = ({navigation}) => ({
     headerTintColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.inactiveTabColor
 });
 
-const homeNavigationOptions = ({navigation}) => ({
+const homeNavigatorOptions = ({navigation}) => ({
     headerMode: 'none',
     header: (<Header navigation={navigation}/>),
 });
 
-const AppNavigation = StackNavigator({
+const MainDrawerNavigator = DrawerNavigator({
+    Home: {
+        screen: StackNavigator({
+            Home: {screen: HomeNavigator, navigationOptions: homeNavigatorOptions}
+        })
+    },
+    Settings: {
+        screen: StackNavigator({
+            Settings: {screen: SettingsScreen, navigationOptions: defaultPageNavigationOptions}
+        })
+    },
+    Logout: {screen: LogoutScreen}
+}, {
+    contentComponent: DrawerScreen,
+    contentOptions: {
+        activeBackgroundColor: colors.backgroundColor,
+        activeTintColor: colors.activeTabColor,
+        inactiveTintColor: colors.inactiveTabColor
+    }
+});
+
+const routeConfiguration = {
     loginFlow: {
         screen: StackNavigator({
             SplashScreen: {screen: SplashScreen},
             Login: {screen: LoginScreen},
-        }, {headerMode: 'none'})
+        }, {headerMode: 'none', initialRouteName: 'SplashScreen'})
     },
     mainFlow: {
-        screen: DrawerNavigator({
-            Home: {
-                screen: StackNavigator({
-                    Home: {screen: HomeScreen, navigationOptions: homeNavigationOptions}
-                })
-            },
-            Settings: {
-                screen: StackNavigator({
-                    Settings: {screen: SettingsScreen, navigationOptions: defaultPageNavigationOptions}
-                })
-            },
-            Logout: {screen: LogoutScreen}
-        }, {
-            contentComponent: DrawerScreen,
-            contentOptions: {
-                activeBackgroundColor: colors.backgroundColor,
-                activeTintColor: colors.activeTabColor,
-                inactiveTintColor: colors.inactiveTabColor
-            }
-        })
+        screen: MainDrawerNavigator
     }
-}, {headerMode: 'none'});
+};
 
-export default AppNavigation;
+const rootNavigatorOptions = {
+    initialRouteName: 'loginFlow',
+    headerMode: 'none'
+};
+
+const RootNavigator = StackNavigator(routeConfiguration, rootNavigatorOptions);
+
+export {
+    RootNavigator,
+    MainDrawerNavigator
+};

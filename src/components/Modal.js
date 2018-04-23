@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Modal, Picker, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {BackHandler, Modal, Picker, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import PropTypes from 'prop-types';
 import colors from '../shared/colors';
 import {strings} from '../shared/i18n';
@@ -15,9 +15,10 @@ export default class ModalScreen extends Component {
         visible: PropTypes.bool.isRequired,
         onSubmit: PropTypes.func,
         onCancel: PropTypes.func,
+        onBack: PropTypes.func,
         noCancelButton: PropTypes.bool,
         noSubmitButton: PropTypes.bool,
-        containerStyle: PropTypes.array
+        containerStyle: PropTypes.array,
     };
 
     static defaultProps = {
@@ -26,12 +27,26 @@ export default class ModalScreen extends Component {
         onSubmit: () => {
         },
         onPickerValueChange: () => {
+        },
+        onBack: () => {
         }
     };
 
     constructor(props) {
         super(props);
     }
+
+    componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.backAction);
+    }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.backAction);
+    }
+
+    backAction = () => {
+        this.props.onBack();
+    };
 
     render() {
         const {
@@ -44,9 +59,8 @@ export default class ModalScreen extends Component {
             onSubmit,
             onCancel,
             noCancelButton,
-            noSubmitButton
+            noSubmitButton,
         } = this.props;
-
 
         return (
             <Modal

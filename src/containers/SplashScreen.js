@@ -1,49 +1,32 @@
 import React, {Component} from 'react';
 import {Dimensions, Image, StyleSheet, View} from 'react-native';
-import LocalStorage from '../storage/LocalStorage';
 import colors from '../shared/colors';
-import {NavigationActions} from 'react-navigation';
+import Actions from '../actions/Actions';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import PropTypes from 'prop-types';
 
 const window = Dimensions.get('window');
 const IMAGE_HEIGHT = window.width / 2;
 
-export default class SplashScreen extends Component {
+class SplashScreen extends Component {
 
+    // noinspection JSUnusedGlobalSymbols
     static navigationOptions = {
         header: null
     };
 
-    componentDidMount() {
-        LocalStorage.getUser().then(user => {
-            if (user && user.email && user.password && user.uid) {
-                this._navigateAndReset('mainFlow');
-                this._signIn();
-            } else {
-                this._navigateAndReset('Login', true);
-            }
-        }).catch(() => {
-                this._navigateAndReset('Login', true);
-            }
-        );
+    static propTypes = {
+        actions: PropTypes.object.isRequired
+    };
+
+    constructor(props) {
+        super(props);
     }
 
-    _signIn = () => {
-        LocalStorage.getUser().then(user => {
-            // TODO Sign in with email and password
-            this._navigateAndReset('Login', true);
-        }).catch(error => console.log(error));
-    };
-
-    _navigateAndReset = (routeName, isNested) => {
-        let resetAction = NavigationActions.reset({
-            index: 0,
-            actions: [NavigationActions.navigate({routeName: routeName})],
-        });
-        if (!isNested) {
-            resetAction.key = null
-        }
-        this.props.navigation.dispatch(resetAction);
-    };
+    componentDidMount() {
+        this.props.actions.navigateInitial();
+    }
 
     render() {
         return (
@@ -59,8 +42,9 @@ export default class SplashScreen extends Component {
                 </View>
             </View>
         );
-    };
+    }
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -91,3 +75,23 @@ const styles = StyleSheet.create({
         opacity: 0.8
     }
 });
+
+const mapStateToProps = state => {
+    const navigation = state.navigationReducer;
+    return {
+        state: {
+            navigation
+        }
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        actions: bindActionCreators(Actions, dispatch)
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(SplashScreen);

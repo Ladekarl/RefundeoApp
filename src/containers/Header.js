@@ -3,10 +3,14 @@ import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-fa-icons';
+import Actions from '../actions/Actions';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
-export default class HeaderScreen extends Component {
+class HeaderScreen extends Component {
 
     static propTypes = {
+        actions: PropTypes.object.isRequired,
         navigation: PropTypes.object.isRequired
     };
 
@@ -15,11 +19,11 @@ export default class HeaderScreen extends Component {
     }
 
     openDrawer = () => {
-        this.props.navigation.navigate('DrawerOpen');
+        this.props.actions.toggleDrawer();
     };
 
     openSettings = () => {
-        this.props.navigation.navigate('Settings');
+        this.props.actions.navigateSettings();
     };
 
     render() {
@@ -69,3 +73,23 @@ const styles = StyleSheet.create({
         color: Platform.OS === 'ios' ? colors.backgroundColor : colors.backgroundColor
     }
 });
+
+const mapStateToProps = state => {
+    const navigation = state.navigationReducer;
+    return {
+        state: {
+            navigation
+        }
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        actions: bindActionCreators(Actions, dispatch)
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(HeaderScreen);

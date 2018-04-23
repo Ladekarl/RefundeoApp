@@ -1,10 +1,9 @@
-import React from 'react';
 import {TabNavigator} from 'react-navigation';
 import OverviewScreen from '../components/Overview';
 import colors from '../shared/colors';
 import {Platform} from 'react-native';
 
-export default HomeTab = TabNavigator({
+const HomeTab = TabNavigator({
     Overview: {
         screen: OverviewScreen
     }
@@ -31,3 +30,5 @@ export default HomeTab = TabNavigator({
         showIcon: true,
     }
 });
+
+export default HomeTab;

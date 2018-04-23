@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 import {NavigationActions} from 'react-navigation'
-import LocalStorage from '../storage/LocalStorage';
+import LocalStorage from '../storage';
 import Icon from 'react-native-fa-icons';
 import colors from '../shared/colors';
 

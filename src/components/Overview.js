@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import colors from '../shared/colors';
 import Icon from 'react-native-fa-icons';
 
@@ -8,7 +8,7 @@ export default class OverviewScreen extends Component {
     static navigationOptions = {
         tabBarLabel: 'Oversigt',
         tabBarIcon: ({tintColor}) => (
-            <Icon name='home' style={{fontSize: 20, height: undefined, width: undefined, color: tintColor}}/>),
+            <Icon name='home' style={[styles.tabBarIcon, {color: tintColor}]}/>),
     };
 
     constructor(props) {
@@ -30,5 +30,10 @@ const styles = StyleSheet.create({
         backgroundColor: colors.backgroundColor,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    tabBarIcon: {
+        fontSize: 20,
+        height: undefined,
+        width: undefined,
     }
 });

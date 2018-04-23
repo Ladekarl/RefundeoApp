@@ -1,52 +1,56 @@
 import React, {Component} from 'react';
-import {Platform, StatusBar, StyleSheet, View} from 'react-native';
+import {Platform, StatusBar, StyleSheet} from 'react-native';
 import colors from './shared/colors';
 import {
-  setCustomActivityIndicator,
-  setCustomText,
-  setCustomTextInput,
-  setCustomTouchableOpacity,
+    setCustomActivityIndicator,
+    setCustomText,
+    setCustomTextInput,
+    setCustomTouchableOpacity,
 } from 'react-native-global-props';
-import AppNavigation from './navigation/AppNavigation';
+import {Provider} from 'react-redux';
+import {configureStore} from './store';
+import AppNavigator from './navigation/AppNavigator';
+
+const store = configureStore();
 
 export default class App extends Component {
 
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    const customTextProps = {
-      style: {
-        fontFamily: 'Lato'
-      }
-    };
-    const customTouchableOpacityProps = {
-      hitSlop: {top: 15, right: 15, left: 15, bottom: 15}
-    };
-    const customActivityIndicator = {
-      color: colors.inactiveTabColor
-    };
+        const customTextProps = {
+            style: {
+                fontFamily: 'Lato'
+            }
+        };
+        const customTouchableOpacityProps = {
+            hitSlop: {top: 15, right: 15, left: 15, bottom: 15}
+        };
+        const customActivityIndicator = {
+            color: colors.inactiveTabColor
+        };
 
-    setCustomText(customTextProps);
-    setCustomTouchableOpacity(customTouchableOpacityProps);
-    setCustomActivityIndicator(customActivityIndicator);
-    setCustomTextInput(customTextProps);
-  }
-
-  render() {
-    if (Platform.OS === 'ios') {
-      StatusBar.setBarStyle('light-content', true);
+        setCustomText(customTextProps);
+        setCustomTouchableOpacity(customTouchableOpacityProps);
+        setCustomActivityIndicator(customActivityIndicator);
+        setCustomTextInput(customTextProps);
     }
-    return (
-      <View style={styles.container}>
-        <AppNavigation/>
-      </View>
-    );
-  }
+
+    render() {
+        if (Platform.OS === 'ios') {
+            StatusBar.setBarStyle('light-content', true);
+        }
+        return (
+            <Provider store={store}>
+                <AppNavigator style={styles.container}/>
+            </Provider>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.backgroundColor,
-  }
+    container: {
+        flex: 1,
+        backgroundColor: colors.backgroundColor,
+    }
 });

@@ -1,7 +1,7 @@
 import ThemeManager from 'react-native-color-theme';
 
 export default new ThemeManager({
-    bodegaTheme: {
+    refundeoTheme: {
         backgroundColor: '#faf7f7',
         activeTabColor: '#b5b5b5',
         inactiveTabColor: '#414141',
@@ -11,6 +11,7 @@ export default new ThemeManager({
         submitButtonColor: '#303880',
         errorColor: 'red',
         whiteColor: 'white',
-        blackColor: 'black'
+        blackColor: 'black',
+        linkColor: 'blue'
     },
 });

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {NavigationActions} from 'react-navigation';
 import Icon from 'react-native-fa-icons';
 import colors from '../shared/colors';
-import LocalStorage from '../storage/LocalStorage';
+import LocalStorage from '../storage';
 import {strings} from '../shared/i18n';
 
 export default class DrawerScreen extends Component {
