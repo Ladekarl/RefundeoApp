@@ -5,6 +5,7 @@ import Icon from 'react-native-fa-icons';
 
 export default class OverviewScreen extends Component {
 
+    // noinspection JSUnusedGlobalSymbols
     static navigationOptions = {
         tabBarLabel: 'Oversigt',
         tabBarIcon: ({tintColor}) => (

@@ -1,83 +1,52 @@
 import React, {Component} from 'react';
 import {Platform, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View} from 'react-native';
 import PropTypes from 'prop-types';
-import {NavigationActions} from 'react-navigation';
 import Icon from 'react-native-fa-icons';
 import colors from '../shared/colors';
-import LocalStorage from '../storage';
 import {strings} from '../shared/i18n';
+import Actions from '../actions/Actions';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
-export default class DrawerScreen extends Component {
+class DrawerScreen extends Component {
 
     static propTypes = {
-        navigation: PropTypes.object.isRequired
+        actions: PropTypes.object.isRequired,
+        navigation: PropTypes.object.isRequired,
+        state: PropTypes.object.isRequired
     };
-
-    navigator;
 
     constructor(props) {
         super(props);
-        this.state = {
-            user: {
-                name: '',
-            }
-        }
     }
-
-    componentDidMount() {
-        this._getUser();
-    }
-
-    navigateToScreen = (route) => () => {
-        let currentRoute = this.navigator.state.key;
-
-        if (currentRoute !== route) {
-            const navigateAction = NavigationActions.navigate({
-                routeName: route
-            });
-            this.navigator.dispatch(navigateAction);
-        } else {
-            this.closeDrawer();
-        }
-    };
-
-    _getUser = () => {
-        LocalStorage.getUser().then(user => {
-            this.setState({user: user});
-        });
-    };
-
-    closeDrawer = () => {
-        this.navigator.navigate('DrawerClose');
-    };
 
     render() {
-        this.navigator = this.props.navigation;
+        const {actions} = this.props;
         return (
             <View style={styles.container}>
                 <View style={styles.headerContainer}>
-                    <TouchableWithoutFeedback onPress={this.closeDrawer}>
+                    <TouchableWithoutFeedback onPress={actions.closeDrawer}>
                         <View style={styles.headerIconTextContainer}>
                             <View style={styles.headerIconContainer}>
                                 <Icon name='user' style={styles.headerIcon}/>
                             </View>
                             <Text numberOfLines={2}
-                                  style={styles.headerText}>{this.state.user.name}</Text>
+                                  style={styles.headerText}>{`${this.props.state.user.firstName} ${this.props.state.user.lastName}`}</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
                 <View style={styles.divider}/>
                 <ScrollView style={styles.drawerItemsContainer}>
-                    <TouchableOpacity onPress={this.navigateToScreen('Home')}>
+                    <TouchableOpacity onPress={actions.navigateDrawerHome}>
                         <Text style={styles.drawerItemText}>{strings('drawer.home')}</Text>
                     </TouchableOpacity>
                 </ScrollView>
                 <View style={styles.footerContainer}>
-                    <TouchableOpacity style={styles.footerIconContainer} onPress={this.navigateToScreen('Settings')}>
+                    <TouchableOpacity style={styles.footerIconContainer} onPress={actions.navigateDrawerSettings}>
                         <Icon name='cog' style={styles.footerIcon}/>
                         <Text>{strings('drawer.settings')}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.footerIconContainer} onPress={this.navigateToScreen('Logout')}>
+                    <TouchableOpacity style={styles.footerIconContainer} onPress={actions.logout}>
                         <Icon name='sign-out' style={styles.footerIcon}/>
                         <Text>{strings('drawer.logout')}</Text>
                     </TouchableOpacity>
@@ -163,3 +132,24 @@ const styles = StyleSheet.create({
         borderBottomWidth: StyleSheet.hairlineWidth
     }
 });
+
+const mapStateToProps = state => {
+    const navigation = state.navigationReducer;
+    return {
+        state: {
+            navigation,
+            ...state.authReducer
+        }
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        actions: bindActionCreators(Actions, dispatch)
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(DrawerScreen);

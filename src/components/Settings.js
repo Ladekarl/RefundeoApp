@@ -5,6 +5,7 @@ import {strings} from '../shared/i18n';
 
 export default class SettingsScreen extends Component {
 
+    // noinspection JSUnusedGlobalSymbols
     static navigationOptions = {
         title: strings('settings.settings'),
         headerTitleStyle: {

@@ -15,7 +15,7 @@ export default class LocalStorage {
     static async setUser(user) {
         try {
             return await AsyncStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
-        } catch (error) {
+            } catch (error) {
             return error;
         }
     }
@@ -23,23 +23,6 @@ export default class LocalStorage {
     static async removeUser() {
         try {
             return await AsyncStorage.removeItem(USER_STORAGE_KEY);
-        } catch (error) {
-            return error;
-        }
-    }
-
-    static async setToken(token) {
-        try {
-            return await AsyncStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify(token));
-        } catch (error) {
-            return error;
-        }
-    }
-
-    static async getToken() {
-        try {
-            let tokenJson = await AsyncStorage.getItem(TOKEN_STORAGE_KEY);
-            return await JSON.parse(tokenJson) || null;
         } catch (error) {
             return error;
         }

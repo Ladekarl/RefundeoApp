@@ -1,11 +1,10 @@
 import {DrawerNavigator, StackNavigator} from 'react-navigation';
 import SplashScreen from '../containers/SplashScreen';
 import LoginScreen from '../containers/Login';
-import LogoutScreen from '../components/Logout';
 import SettingsScreen from '../components/Settings';
-import DrawerScreen from '../components/Drawer';
+import DrawerScreen from '../containers/Drawer';
 import colors from '../shared/colors';
-import {Platform, TouchableOpacity} from 'react-native';
+import {Platform, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-fa-icons';
 import React from 'react';
 import Header from '../containers/Header';
@@ -13,30 +12,14 @@ import HomeNavigator from './HomeNavigator';
 
 const defaultPageNavigationOptions = ({navigation}) => ({
     headerLeft:
-        <TouchableOpacity style={{
-            height: 35,
-            width: 35,
-            marginLeft: 20,
-            justifyContent: 'center',
-            alignItems: 'center',
-        }} onPress={() => navigation.navigate('DrawerToggle')}>
-            <Icon name='navicon' style={{
-                fontSize: 20,
-                height: undefined,
-                width: undefined,
-                color: Platform.OS === 'ios' ? colors.backgroundColor : colors.inactiveTabColor
-            }}/>
+        <TouchableOpacity style={styles.defaultHeaderLeftButton} onPress={() => navigation.navigate('DrawerToggle')}>
+            <Icon name='navicon' style={styles.defaultHeaderLeftIcon}/>
         </TouchableOpacity>,
     headerTitleStyle: {
         fontSize: 20,
         color: Platform.OS === 'ios' ? colors.backgroundColor : colors.inactiveTabColor
     },
-    headerStyle: {
-        elevation: 1,
-        backgroundColor: Platform.OS === 'ios' ? colors.inactiveTabColor : colors.backgroundColor,
-        margin: 0,
-        paddingBottom: Platform.OS === 'ios' ? 10 : 0
-    },
+    headerStyle: styles.defaultHeaderStyle,
     headerTintColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.inactiveTabColor
 });
 
@@ -55,8 +38,7 @@ const MainDrawerNavigator = DrawerNavigator({
         screen: StackNavigator({
             Settings: {screen: SettingsScreen, navigationOptions: defaultPageNavigationOptions}
         })
-    },
-    Logout: {screen: LogoutScreen}
+    }
 }, {
     contentComponent: DrawerScreen,
     contentOptions: {
@@ -89,3 +71,25 @@ export {
     RootNavigator,
     MainDrawerNavigator
 };
+
+const styles = StyleSheet.create({
+    defaultHeaderLeftButton: {
+        height: 35,
+        width: 35,
+        marginLeft: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    defaultHeaderLeftIcon: {
+        fontSize: 20,
+        height: undefined,
+        width: undefined,
+        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.inactiveTabColor
+    },
+    defaultHeaderStyle: {
+        elevation: 1,
+        backgroundColor: Platform.OS === 'ios' ? colors.inactiveTabColor : colors.backgroundColor,
+        margin: 0,
+        paddingBottom: Platform.OS === 'ios' ? 10 : 0
+    }
+});

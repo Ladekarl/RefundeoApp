@@ -19,8 +19,10 @@ export default class ModalScreen extends Component {
         noCancelButton: PropTypes.bool,
         noSubmitButton: PropTypes.bool,
         containerStyle: PropTypes.array,
+        children: PropTypes.element
     };
 
+    // noinspection JSUnusedGlobalSymbols
     static defaultProps = {
         onCancel: () => {
         },
@@ -60,6 +62,7 @@ export default class ModalScreen extends Component {
             onCancel,
             noCancelButton,
             noSubmitButton,
+            children
         } = this.props;
 
         return (
@@ -84,7 +87,7 @@ export default class ModalScreen extends Component {
                                 </Picker>
                             </View>
                             }
-                            {this.props.children}
+                            {children}
                         </View>
                         {(!noCancelButton || !noSubmitButton) &&
                         <View style={styles.modalBottomContainer}>
@@ -112,6 +115,7 @@ export default class ModalScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+    // eslint-disable-next-line
     modalContainer: {
         position: 'absolute',
         right: 0,

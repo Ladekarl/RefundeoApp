@@ -30,6 +30,7 @@ const IMAGE_HEIGHT_SMALL = 0;
 
 class LoginScreen extends Component {
 
+    // noinspection JSUnusedGlobalSymbols
     static navigationOptions = {
         header: null,
     };
@@ -42,7 +43,7 @@ class LoginScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: '',
+            username: '',
             password: '',
             error: '',
             imageHeight: new Animated.Value(IMAGE_HEIGHT),
@@ -88,12 +89,12 @@ class LoginScreen extends Component {
 
     onLoginPress = () => {
         Keyboard.dismiss();
-        const {email, password} = this.state;
-        this._login(email.trim(), password);
+        const {username, password} = this.state;
+        this._login(username.trim(), password);
     };
 
-    _login = (email, password) => {
-        this.props.actions.login(email, password);
+    _login = (username, password) => {
+        this.props.actions.login(username, password);
     };
 
     _renderIos = () => {
@@ -113,11 +114,13 @@ class LoginScreen extends Component {
     };
 
     showEulaDialog = (visible) => {
+        // noinspection JSAccessibilityCheck
         this.setState({eulaDialogVisible: visible});
     };
 
     _renderShared = () => {
         const {state} = this.props;
+        // noinspection JSAccessibilityCheck
         return (
             <View style={styles.innerContainer}>
                 <View style={styles.loginFormContainer}>
@@ -128,18 +131,17 @@ class LoginScreen extends Component {
                         />
                     </Animated.View>
                     <View style={styles.inputContainer}>
-                        <View style={[styles.elevatedInputContainer, {marginBottom: 20}]}>
+                        <View style={[styles.elevatedInputContainer, styles.firstInput]}>
                             <Icon name={'user'} style={styles.icon}/>
                             <TextInput style={styles.usernameInput}
                                        placeholder={strings('login.email_placeholder')}
-                                       keyboardType='email-address'
                                        autoCapitalize='none'
                                        textAlignVertical={'center'}
                                        editable={!state.fetching}
                                        underlineColorAndroid='transparent'
                                        selectionColor={colors.inactiveTabColor}
-                                       value={this.state.email}
-                                       onChangeText={email => this.setState({email})}/>
+                                       value={this.state.username}
+                                       onChangeText={username => this.setState({username})}/>
                         </View>
                         <View style={styles.elevatedInputContainer}>
                             <Icon name={'lock'} style={styles.icon}/>
@@ -155,7 +157,7 @@ class LoginScreen extends Component {
                                        onChangeText={password => this.setState({password})}/>
                         </View>
                         <View style={styles.errorContainer}>
-                            <Text style={styles.errorText}>{this.state.error}</Text>
+                            <Text style={styles.errorText}>{this.props.state.error}</Text>
                         </View>
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity style={styles.loginButton}
@@ -178,7 +180,7 @@ class LoginScreen extends Component {
                 </View>
                 {state.fetching &&
                 <View style={styles.loadingContainer}>
-                    <ActivityIndicator size='large' color={colors.inactiveTabColor} style={{elevation: 10}}/>
+                    <ActivityIndicator size='large' color={colors.inactiveTabColor} style={styles.activityIndicator}/>
                 </View>
                 }
                 <ModalScreen
@@ -243,6 +245,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0,
         borderColor: colors.inactiveTabColor,
+    },
+    firstInput: {
+        marginBottom: 20
     },
     errorContainer: {
         height: 50,
@@ -330,6 +335,9 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         marginRight: 5,
         color: colors.inactiveTabColor
+    },
+    activityIndicator: {
+        elevation: 10
     }
 });
 
