@@ -45,10 +45,8 @@ class LoginScreen extends Component {
         this.state = {
             username: '',
             password: '',
-            error: '',
             imageHeight: new Animated.Value(IMAGE_HEIGHT),
-            containerHeight: new Animated.Value(CONTAINER_HEIGHT),
-            eulaDialogVisible: false
+            containerHeight: new Animated.Value(CONTAINER_HEIGHT)
         };
     }
 
@@ -113,14 +111,8 @@ class LoginScreen extends Component {
         );
     };
 
-    showEulaDialog = (visible) => {
-        // noinspection JSAccessibilityCheck
-        this.setState({eulaDialogVisible: visible});
-    };
-
     _renderShared = () => {
-        const {state} = this.props;
-        // noinspection JSAccessibilityCheck
+        const {fetching, error, navigation} = this.props.state;
         return (
             <View style={styles.innerContainer}>
                 <View style={styles.loginFormContainer}>
@@ -137,7 +129,7 @@ class LoginScreen extends Component {
                                        placeholder={strings('login.email_placeholder')}
                                        autoCapitalize='none'
                                        textAlignVertical={'center'}
-                                       editable={!state.fetching}
+                                       editable={!fetching}
                                        underlineColorAndroid='transparent'
                                        selectionColor={colors.inactiveTabColor}
                                        value={this.state.username}
@@ -148,7 +140,7 @@ class LoginScreen extends Component {
                             <TextInput style={styles.passwordInput}
                                        secureTextEntry={true}
                                        textAlignVertical={'center'}
-                                       editable={!state.fetching}
+                                       editable={!fetching}
                                        autoCapitalize='none'
                                        underlineColorAndroid='transparent'
                                        selectionColor={colors.inactiveTabColor}
@@ -157,39 +149,30 @@ class LoginScreen extends Component {
                                        onChangeText={password => this.setState({password})}/>
                         </View>
                         <View style={styles.errorContainer}>
-                            <Text style={styles.errorText}>{this.props.state.error}</Text>
+                            <Text style={styles.errorText}>{error}</Text>
                         </View>
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity style={styles.loginButton}
                                               onPress={this.onLoginPress}
-                                              disabled={state.fetching}>
-                                <Text style={styles.loginButtonText}>{strings('login.login_button')}</Text>
+                                              disabled={fetching}>
+                                <Text style={styles.buttonText}>{strings('login.login_button')}</Text>
                             </TouchableOpacity>
-                        </View>
-                        <View style={styles.eulaContainer}>
-                            <Text style={styles.eulaText}>
-                                {strings('login.eula_agreement_1')}
-                                <Text
-                                    onPress={() => this.showEulaDialog(true)}
-                                    style={styles.eulaLink}>
-                                    {strings('login.eula_agreement_2')}
-                                </Text>
-                            </Text>
                         </View>
                     </View>
                 </View>
-                {state.fetching &&
+                {fetching &&
                 <View style={styles.loadingContainer}>
                     <ActivityIndicator size='large' color={colors.inactiveTabColor} style={styles.activityIndicator}/>
                 </View>
                 }
                 <ModalScreen
                     modalTitle={strings('login.eula_title')}
-                    noCancelButton={true}
-                    onSubmit={() => this.showEulaDialog(false)}
-                    onBack={() => this.showEulaDialog(false)}
-                    visible={this.state.eulaDialogVisible}>
-                    <ScrollView style={styles.eulaTextContainer}>
+                    noCancelButton={false}
+                    onSubmit={this.closeEulaModal}
+                    onBack={this.closeEulaModal}
+                    onCancel={this.closeEulaModal}
+                    visible={navigation.modal['eulaModal'] || false}>
+                    <ScrollView>
                         <Text>{Platform.OS === 'ios' ? strings('login.eula_ios') : strings('login.eula_android')}</Text>
                     </ScrollView>
                 </ModalScreen>
@@ -213,24 +196,23 @@ const styles = StyleSheet.create({
     },
     innerContainer: {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center'
     },
     topContainer: {
         minHeight: IMAGE_HEIGHT_SMALL,
         alignSelf: 'center',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'stretch',
     },
     loginFormContainer: {
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'stretch',
         width: '80%'
     },
     inputContainer: {
         justifyContent: 'center',
         alignItems: 'stretch',
-        marginBottom: 20
     },
     elevatedInputContainer: {
         backgroundColor: colors.whiteColor,
@@ -263,30 +245,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    eulaContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'row',
-        marginTop: 10,
-        marginBottom: 10
-    },
-    eulaTextContainer: {
-        height: '70%',
-    },
-    eulaText: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center',
-        alignSelf: 'center',
-    },
-    eulaLink: {
-        color: colors.linkColor,
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center',
-        alignSelf: 'center',
-        textDecorationLine: 'underline'
-    },
     image: {
         height: IMAGE_HEIGHT,
         minHeight: IMAGE_HEIGHT_SMALL,
@@ -317,7 +275,6 @@ const styles = StyleSheet.create({
     buttonContainer: {
         alignItems: 'stretch'
     },
-
     loginButton: {
         borderRadius: 50,
         height: 50,
@@ -327,7 +284,7 @@ const styles = StyleSheet.create({
         elevation: 5,
         backgroundColor: colors.submitButtonColor
     },
-    loginButtonText: {
+    buttonText: {
         color: colors.whiteColor
     },
     icon: {

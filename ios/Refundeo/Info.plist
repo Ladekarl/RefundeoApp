@@ -40,6 +40,10 @@
 	<false/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
+    <key>NSCameraUsageDescription</key>
+    <string>We need to use your camera for scanning QRCodes</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>We need to access your photo library to upload photos as documentation</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>

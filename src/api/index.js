@@ -32,13 +32,13 @@ export default class Api {
             const error = await response.json();
             switch (error.error) {
                 case -1:
-                    throw strings('wrong_password');
+                    throw strings('login.wrong_password');
                 case -2:
-                    throw strings('user_does_not_exist');
+                    throw strings('login.user_does_not_exist');
                 case -3:
-                    throw strings('missing_password');
+                    throw strings('login.missing_password');
                 case -4:
-                    throw strings('missing_username')
+                    throw strings('login.missing_username')
             }
         }
 
@@ -50,8 +50,8 @@ export default class Api {
         if (user && user.token && user.roles && user.roles.indexOf('User') > -1) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             await LocalStorage.setUser(user);
-        } else if(!user.roles || user.roles.indexOf('User') < 0) {
-            throw strings('user_not_customer');
+        } else if (!user.roles || user.roles.indexOf('User') < 0) {
+            throw strings('login.user_not_customer');
         }
         return user;
     }
@@ -75,7 +75,7 @@ export default class Api {
 
         const user = await response.json();
         if (user && user.token) {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            user.refreshToken = refreshToken;
             await LocalStorage.setUser(user);
         }
 

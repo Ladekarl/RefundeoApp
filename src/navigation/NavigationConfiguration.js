@@ -3,6 +3,7 @@ import SplashScreen from '../containers/SplashScreen';
 import LoginScreen from '../containers/Login';
 import SettingsScreen from '../components/Settings';
 import DrawerScreen from '../containers/Drawer';
+import RegisterScreen from '../containers/Register';
 import colors from '../shared/colors';
 import {Platform, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-fa-icons';
@@ -53,6 +54,7 @@ const routeConfiguration = {
         screen: StackNavigator({
             SplashScreen: {screen: SplashScreen},
             Login: {screen: LoginScreen},
+            Register: {screen: RegisterScreen}
         }, {headerMode: 'none', initialRouteName: 'SplashScreen'})
     },
     mainFlow: {

@@ -13,6 +13,7 @@
   },
   "login": {
     "login_button": "LOGIN",
+    "already_have_account": "Already have an account?",
     "error_user_does_not_exist_in_database": "User does not exist in database",
     "something_went_wrong": "Something went wrong. Please try again",
     "email_placeholder": "Username",

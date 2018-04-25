@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import colors from '../shared/colors';
+import {StyleSheet, Text, TouchableOpacity, Linking} from 'react-native';
 import Icon from 'react-native-fa-icons';
+import QRCodeScanner from 'react-native-qrcode-scanner';
 
 export default class OverviewScreen extends Component {
 
@@ -16,25 +16,47 @@ export default class OverviewScreen extends Component {
         super(props);
     }
 
+    onSuccess(e) {
+        Linking
+            .openURL(e.data)
+    }
+
     render() {
         return (
-            <View style={styles.container}>
-                <Text>Overview works!</Text>
-            </View>
+            <QRCodeScanner
+                onRead={this.onSuccess.bind(this)}
+                topContent={
+                    <Text style={styles.centerText}>
+                        Go to <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on your computer and scan
+                        the QR code.
+                    </Text>
+                }
+                bottomContent={
+                    <TouchableOpacity style={styles.buttonTouchable}>
+                        <Text style={styles.buttonText}>OK. Got it!</Text>
+                    </TouchableOpacity>
+                }
+            />
         );
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
+    centerText: {
         flex: 1,
-        backgroundColor: colors.backgroundColor,
-        justifyContent: 'center',
-        alignItems: 'center'
+        fontSize: 18,
+        padding: 32,
+        color: '#777',
     },
-    tabBarIcon: {
-        fontSize: 20,
-        height: undefined,
-        width: undefined,
-    }
+    textBold: {
+        fontWeight: '500',
+        color: '#000',
+    },
+    buttonText: {
+        fontSize: 21,
+        color: 'rgb(0,122,255)',
+    },
+    buttonTouchable: {
+        padding: 16,
+    },
 });

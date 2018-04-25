@@ -7,10 +7,13 @@ export default {
     navigateInitial,
     toggleDrawer,
     openDrawer,
+    navigateLogIn,
     closeDrawer,
     navigateSettings,
     navigateDrawerSettings,
     navigateDrawerHome,
+    openModal,
+    closeModal,
     login,
     logout,
     signUp,
@@ -41,6 +44,12 @@ function navigateAndResetToLogin() {
 function navigateLogOut() {
     return {
         type: types.NAVIGATE_LOG_OUT
+    }
+}
+
+function navigateLogIn() {
+    return {
+        type: types.NAVIGATE_LOG_IN
     }
 }
 
@@ -86,12 +95,32 @@ function navigateDrawerHome() {
     }
 }
 
+function openModal(modalName) {
+    return {
+        type: types.NAVIGATE_OPEN_MODAL,
+        modal: {
+            name: modalName,
+            open: true
+        }
+    }
+}
+
+function closeModal(modalName) {
+    return {
+        type: types.NAVIGATE_CLOSE_MODAL,
+        modal: {
+            name: modalName,
+            open: false
+        }
+    }
+}
+
 function login(username, password) {
     if (!username) {
-        return loginError(strings('missing_username'));
+        return loginError(strings('login.missing_username'));
     }
     if (!password) {
-        return loginError(strings('missing_password'));
+        return loginError(strings('login.missing_password'));
     }
     return dispatch => {
         dispatch({type: types.AUTH_LOGGING_IN});

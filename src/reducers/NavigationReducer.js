@@ -3,8 +3,9 @@ import {RootNavigator} from '../navigation/NavigationConfiguration';
 import types from '../actions/ActionTypes';
 
 const initialState = {
-    currentRoute: 'Login',
+    currentRoute: 'SplashScreen',
     drawerOpen: false,
+    modal: {},
     ...RootNavigator.router.getStateForAction(NavigationActions.navigate({routeName: 'loginFlow'}))
 };
 
@@ -29,7 +30,15 @@ export default function navigationReducer(state = initialState, action = {}) {
         }
         case types.NAVIGATE_LOGGED_OUT: {
             nextState = {
-                ...navigateAndReset('Login', state, true),
+                ...navigateAndReset('SplashScreen', state, true),
+                currentRoute: 'SplashScreen'
+            };
+            break;
+        }
+        case types.NAVIGATE_LOG_IN: {
+            const navigationAction = NavigationActions.navigate({routeName: 'Login'});
+            nextState = {
+                ...RootNavigator.router.getStateForAction(navigationAction, state),
                 currentRoute: 'Login'
             };
             break;
@@ -91,6 +100,24 @@ export default function navigationReducer(state = initialState, action = {}) {
             nextState = {
                 ...RootNavigator.router.getStateForAction(action, state),
                 drawerOpen: action.routeName === 'DrawerOpen'
+            };
+            break;
+        }
+        case types.NAVIGATE_CLOSE_MODAL: {
+            const modal = Object.assign({}, state.modal);
+            modal[action.modal.name] = action.modal.open;
+            nextState = {
+                ...state,
+                modal
+            };
+            break;
+        }
+        case types.NAVIGATE_OPEN_MODAL: {
+            const modal = Object.assign({}, state.modal);
+            modal[action.modal.name] = action.modal.open;
+            nextState = {
+                ...state,
+                modal
             };
             break;
         }

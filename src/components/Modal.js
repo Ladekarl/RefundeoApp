@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BackHandler, Modal, Picker, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Modal, Picker, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import PropTypes from 'prop-types';
 import colors from '../shared/colors';
 import {strings} from '../shared/i18n';
@@ -38,18 +38,6 @@ export default class ModalScreen extends Component {
         super(props);
     }
 
-    componentDidMount() {
-        BackHandler.addEventListener('hardwareBackPress', this.backAction);
-    }
-
-    componentWillUnmount() {
-        BackHandler.removeEventListener('hardwareBackPress', this.backAction);
-    }
-
-    backAction = () => {
-        this.props.onBack();
-    };
-
     render() {
         const {
             onPickerValueChange,
@@ -60,6 +48,7 @@ export default class ModalScreen extends Component {
             visible,
             onSubmit,
             onCancel,
+            onBack,
             noCancelButton,
             noSubmitButton,
             children
@@ -69,7 +58,7 @@ export default class ModalScreen extends Component {
             <Modal
                 animationType='fade'
                 transparent={true}
-                onRequestClose={onCancel}
+                onRequestClose={onBack}
                 visible={visible}>
                 <View style={styles.modalContainer}>
                     <View style={[styles.modalInnerContainer]}>
@@ -123,15 +112,18 @@ const styles = StyleSheet.create({
         top: 0,
         bottom: 0,
         alignItems: 'center',
+        flex: 1,
         justifyContent: 'center',
         backgroundColor: 'rgba(0,0,0,0.5)'
     },
     modalInnerContainer: {
-        width: '90%',
         maxHeight: '90%',
+        width: '90%',
         borderRadius: 15,
+        alignItems: 'center',
         justifyContent: 'center',
         opacity: 1,
+        flex: 1,
         backgroundColor: colors.backgroundColor
     },
     modalTopContainer: {
@@ -142,12 +134,15 @@ const styles = StyleSheet.create({
     modalCenterContainer: {
         borderBottomWidth: StyleSheet.hairlineWidth,
         borderTopWidth: StyleSheet.hairlineWidth,
-        padding: 12
+        paddingLeft: 12,
+        paddingRight: 12,
+        flex: 1
     },
     modalBottomContainer: {
         justifyContent: 'center',
+        width: '100%',
         alignItems: 'stretch',
-        padding: 12
+        padding: 6
     },
     modalPickerContainer: {
         padding: 10,
@@ -158,14 +153,13 @@ const styles = StyleSheet.create({
         backgroundColor: colors.cancelButtonColor,
         borderRadius: 5,
         alignItems: 'center',
-        margin: 5
+        margin: 6
     },
     modalSubmitButton: {
-        margin: 5,
+        margin: 6,
         alignItems: 'center',
         backgroundColor: colors.submitButtonColor,
-        borderRadius: 5,
-        marginBottom: 10
+        borderRadius: 5
     },
     modalButtonText: {
         fontSize: 15,

@@ -13,6 +13,7 @@
   },
   "login": {
     "login_button": "LOG IND",
+    "already_have_account": "Har du allerede en konto?",
     "error_user_does_not_exist_in_database": "Brugeren eksisterer ikke i databasen",
     "something_went_wrong": "Noget gik galt. Prøv igen.",
     "email_placeholder": "Brugernavn",
