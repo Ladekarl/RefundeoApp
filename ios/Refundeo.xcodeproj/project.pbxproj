@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -34,18 +35,23 @@
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* RefundeoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* RefundeoTests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
+		3100584FF7234023B00DF89A /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8C05AAF7D50C46B090AEA1E0 /* FontAwesome.ttf */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
+		74DDB0C691554A8CB78E8A17 /* ReactNativeGlobalProps.app in Frameworks */ = {isa = PBXBuildFile; fileRef = A48CD5882A554D088F766309 /* ReactNativeGlobalProps.app */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		A1AE4D63E64BCBFA7A06728B /* Pods_Refundeo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8733D97E9B791C1973917D73 /* Pods_Refundeo.framework */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
-		59B8951C618943299EE9FF1E /* libRNDocumentPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA677BBEE8384F3C806669FE /* libRNDocumentPicker.a */; };
-		02E5BD7155C74E5EBB2F416A /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC380986124145CA893949B9 /* libRNFetchBlob.a */; };
-		46ACD13E376448B0BDA50787 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63F070EC8BB340B7B6728B01 /* libRNFS.a */; };
-		8329B62EFD06429F8FA11274 /* ReactNativeGlobalProps.app in Resources */ = {isa = PBXBuildFile; fileRef = A650D45BAB46491CB83D2105 /* ReactNativeGlobalProps.app */; };
-		B894A15B2BC04346AA7BD60F /* ReactNativeGlobalPropsTests.xctest in Resources */ = {isa = PBXBuildFile; fileRef = 144D3AD2389D46C5BE5E7DAA /* ReactNativeGlobalPropsTests.xctest */; };
-		E38BDCF552534CA88C9D33BC /* libRNI18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA1D51862AE48EA9F398B32 /* libRNI18n.a */; };
-		C15D95901AA94FA694894541 /* libRNI18n-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 748D5F87FFE5449796C913DE /* libRNI18n-tvOS.a */; };
-		592A7E92E0A748599DD79854 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B3DF6DB9E0E4A6E82B27E49 /* libRNImagePicker.a */; };
-		6DA6180C6A4B4B7FBEE4238B /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E74416EAD6AC4E7892D37421 /* FontAwesome.ttf */; };
+		B0B0A7C34DAC421A9951E3AE /* ReactNativeGlobalPropsTests.xctest in Frameworks */ = {isa = PBXBuildFile; fileRef = EC72EABFFA43464697369D8C /* ReactNativeGlobalPropsTests.xctest */; };
+		CB6F70B92094B7DD0000BE7C /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CB6F708A2094B7DB0000BE7C /* Lato-BoldItalic.ttf */; };
+		CB6F70BA2094B7DD0000BE7C /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CB6F70B02094B7DB0000BE7C /* Lato-Bold.ttf */; };
+		CB6F70BB2094B7DD0000BE7C /* Lato-Hairline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CB6F70B12094B7DC0000BE7C /* Lato-Hairline.ttf */; };
+		CB6F70BC2094B7DD0000BE7C /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CB6F70B22094B7DC0000BE7C /* Lato-Black.ttf */; };
+		CB6F70BD2094B7DD0000BE7C /* Lato-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CB6F70B32094B7DC0000BE7C /* Lato-BlackItalic.ttf */; };
+		CB6F70BE2094B7DD0000BE7C /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CB6F70B42094B7DC0000BE7C /* Lato-Italic.ttf */; };
+		CB6F70BF2094B7DD0000BE7C /* Lato-HairlineItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CB6F70B52094B7DD0000BE7C /* Lato-HairlineItalic.ttf */; };
+		CB6F70C02094B7DD0000BE7C /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CB6F70B62094B7DD0000BE7C /* Lato-Light.ttf */; };
+		CB6F70C12094B7DD0000BE7C /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CB6F70B72094B7DD0000BE7C /* Lato-LightItalic.ttf */; };
+		CB6F70C22094B7DD0000BE7C /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CB6F70B82094B7DD0000BE7C /* Lato-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -322,6 +328,27 @@
 			remoteGlobalIDString = 358F4ED71D1E81A9004DF814;
 			remoteInfo = RCTBlob;
 		};
+		CB6F71042094DC920000BE7C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 25890A2BF1144EB1B152B4CA /* ReactNativeGlobalProps.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 13B07F961A680F5B00A75B9A;
+			remoteInfo = ReactNativeGlobalProps;
+		};
+		CB6F71062094DC920000BE7C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 25890A2BF1144EB1B152B4CA /* ReactNativeGlobalProps.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 00E356EE1AD99517003FC87E;
+			remoteInfo = ReactNativeGlobalPropsTests;
+		};
+		CBE6D5062094ECEE00A5466A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 83CBBA2D1A601D0E00E9B192;
+			remoteInfo = React;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -334,6 +361,7 @@
 		00E356EE1AD99517003FC87E /* RefundeoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RefundeoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* RefundeoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RefundeoTests.m; sourceTree = "<group>"; };
+		114E768D30AA40D829353D9F /* Pods-Refundeo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Refundeo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Refundeo/Pods-Refundeo.debug.xcconfig"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Refundeo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Refundeo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -344,28 +372,29 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Refundeo/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Refundeo/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		25890A2BF1144EB1B152B4CA /* ReactNativeGlobalProps.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeGlobalProps.xcodeproj; path = "../node_modules/react-native-global-props/ios/ReactNativeGlobalProps.xcodeproj"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* Refundeo-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Refundeo-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* Refundeo-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Refundeo-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		8733D97E9B791C1973917D73 /* Pods_Refundeo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Refundeo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C05AAF7D50C46B090AEA1E0 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-fa-icons/fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		A48CD5882A554D088F766309 /* ReactNativeGlobalProps.app */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ReactNativeGlobalProps.app; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
-		AB0FBE14502C43E2821F82BA /* RNDocumentPicker.xcodeproj */ = {isa = PBXFileReference; name = "RNDocumentPicker.xcodeproj"; path = "../node_modules/react-native-document-picker/ios/RNDocumentPicker.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		CA677BBEE8384F3C806669FE /* libRNDocumentPicker.a */ = {isa = PBXFileReference; name = "libRNDocumentPicker.a"; path = "libRNDocumentPicker.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		52B4276B26B947478CB2BB91 /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; name = "RNFetchBlob.xcodeproj"; path = "../node_modules/react-native-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		EC380986124145CA893949B9 /* libRNFetchBlob.a */ = {isa = PBXFileReference; name = "libRNFetchBlob.a"; path = "libRNFetchBlob.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		B894E8B2A8FB4617A793BCF5 /* RNFS.xcodeproj */ = {isa = PBXFileReference; name = "RNFS.xcodeproj"; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		63F070EC8BB340B7B6728B01 /* libRNFS.a */ = {isa = PBXFileReference; name = "libRNFS.a"; path = "libRNFS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		9823FCCF2D034D67BB0531E3 /* ReactNativeGlobalProps.xcodeproj */ = {isa = PBXFileReference; name = "ReactNativeGlobalProps.xcodeproj"; path = "../node_modules/react-native-global-props/ios/ReactNativeGlobalProps.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		A650D45BAB46491CB83D2105 /* ReactNativeGlobalProps.app */ = {isa = PBXFileReference; name = "ReactNativeGlobalProps.app"; path = "ReactNativeGlobalProps.app"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.application; explicitFileType = undefined; includeInIndex = 0; };
-		144D3AD2389D46C5BE5E7DAA /* ReactNativeGlobalPropsTests.xctest */ = {isa = PBXFileReference; name = "ReactNativeGlobalPropsTests.xctest"; path = "ReactNativeGlobalPropsTests.xctest"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.cfbundle; explicitFileType = undefined; includeInIndex = 0; };
-		350970F20EE346C387A15845 /* RNI18n.xcodeproj */ = {isa = PBXFileReference; name = "RNI18n.xcodeproj"; path = "../node_modules/react-native-i18n/ios/RNI18n.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		FAA1D51862AE48EA9F398B32 /* libRNI18n.a */ = {isa = PBXFileReference; name = "libRNI18n.a"; path = "libRNI18n.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		748D5F87FFE5449796C913DE /* libRNI18n-tvOS.a */ = {isa = PBXFileReference; name = "libRNI18n-tvOS.a"; path = "libRNI18n-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		0FE46652232C4AEDAFCFF193 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; name = "RNImagePicker.xcodeproj"; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		6B3DF6DB9E0E4A6E82B27E49 /* libRNImagePicker.a */ = {isa = PBXFileReference; name = "libRNImagePicker.a"; path = "libRNImagePicker.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		E74416EAD6AC4E7892D37421 /* FontAwesome.ttf */ = {isa = PBXFileReference; name = "FontAwesome.ttf"; path = "../node_modules/react-native-fa-icons/fonts/FontAwesome.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		CB6F708A2094B7DB0000BE7C /* Lato-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-BoldItalic.ttf"; path = "../assets/fonts/Lato-BoldItalic.ttf"; sourceTree = "<group>"; };
+		CB6F70B02094B7DB0000BE7C /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-Bold.ttf"; path = "../assets/fonts/Lato-Bold.ttf"; sourceTree = "<group>"; };
+		CB6F70B12094B7DC0000BE7C /* Lato-Hairline.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-Hairline.ttf"; path = "../assets/fonts/Lato-Hairline.ttf"; sourceTree = "<group>"; };
+		CB6F70B22094B7DC0000BE7C /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-Black.ttf"; path = "../assets/fonts/Lato-Black.ttf"; sourceTree = "<group>"; };
+		CB6F70B32094B7DC0000BE7C /* Lato-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-BlackItalic.ttf"; path = "../assets/fonts/Lato-BlackItalic.ttf"; sourceTree = "<group>"; };
+		CB6F70B42094B7DC0000BE7C /* Lato-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-Italic.ttf"; path = "../assets/fonts/Lato-Italic.ttf"; sourceTree = "<group>"; };
+		CB6F70B52094B7DD0000BE7C /* Lato-HairlineItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-HairlineItalic.ttf"; path = "../assets/fonts/Lato-HairlineItalic.ttf"; sourceTree = "<group>"; };
+		CB6F70B62094B7DD0000BE7C /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-Light.ttf"; path = "../assets/fonts/Lato-Light.ttf"; sourceTree = "<group>"; };
+		CB6F70B72094B7DD0000BE7C /* Lato-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-LightItalic.ttf"; path = "../assets/fonts/Lato-LightItalic.ttf"; sourceTree = "<group>"; };
+		CB6F70B82094B7DD0000BE7C /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-Regular.ttf"; path = "../assets/fonts/Lato-Regular.ttf"; sourceTree = "<group>"; };
+		DD836F9644D14EB0327A2346 /* Pods-Refundeo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Refundeo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Refundeo/Pods-Refundeo.release.xcconfig"; sourceTree = "<group>"; };
+		EC72EABFFA43464697369D8C /* ReactNativeGlobalPropsTests.xctest */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ReactNativeGlobalPropsTests.xctest; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -394,13 +423,9 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				59B8951C618943299EE9FF1E /* libRNDocumentPicker.a in Frameworks */,
-				02E5BD7155C74E5EBB2F416A /* libRNFetchBlob.a in Frameworks */,
-				46ACD13E376448B0BDA50787 /* libRNFS.a in Frameworks */,
-				8329B62EFD06429F8FA11274 /* ReactNativeGlobalProps.app in Resources */,
-				B894A15B2BC04346AA7BD60F /* ReactNativeGlobalPropsTests.xctest in Resources */,
-				E38BDCF552534CA88C9D33BC /* libRNI18n.a in Frameworks */,
-				592A7E92E0A748599DD79854 /* libRNImagePicker.a in Frameworks */,
+				74DDB0C691554A8CB78E8A17 /* ReactNativeGlobalProps.app in Frameworks */,
+				B0B0A7C34DAC421A9951E3AE /* ReactNativeGlobalPropsTests.xctest in Frameworks */,
+				A1AE4D63E64BCBFA7A06728B /* Pods_Refundeo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,7 +441,6 @@
 				2D02E4C61E0B4AEC006451C7 /* libRCTSettings-tvOS.a in Frameworks */,
 				2D02E4C71E0B4AEC006451C7 /* libRCTText-tvOS.a in Frameworks */,
 				2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */,
-				C15D95901AA94FA694894541 /* libRNI18n-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -551,8 +575,18 @@
 			isa = PBXGroup;
 			children = (
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
+				8733D97E9B791C1973917D73 /* Pods_Refundeo.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5DB6C5146A0B518188CCCEA9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				114E768D30AA40D829353D9F /* Pods-Refundeo.debug.xcconfig */,
+				DD836F9644D14EB0327A2346 /* Pods-Refundeo.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
@@ -576,8 +610,8 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
+				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
 				ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */,
 				00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */,
@@ -588,12 +622,7 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
-				AB0FBE14502C43E2821F82BA /* RNDocumentPicker.xcodeproj */,
-				52B4276B26B947478CB2BB91 /* RNFetchBlob.xcodeproj */,
-				B894E8B2A8FB4617A793BCF5 /* RNFS.xcodeproj */,
-				9823FCCF2D034D67BB0531E3 /* ReactNativeGlobalProps.xcodeproj */,
-				350970F20EE346C387A15845 /* RNI18n.xcodeproj */,
-				0FE46652232C4AEDAFCFF193 /* RNImagePicker.xcodeproj */,
+				25890A2BF1144EB1B152B4CA /* ReactNativeGlobalProps.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -615,7 +644,9 @@
 				00E356EF1AD99517003FC87E /* RefundeoTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				778E899FF0614B24912C8BC0 /* Resources */,
+				5DB6C5146A0B518188CCCEA9 /* Pods */,
+				CB3097E2FA8F44A4B35C569E /* Resources */,
+				CB6F70CF2094DC900000BE7C /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -642,14 +673,41 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		778E899FF0614B24912C8BC0 /* Resources */ = {
-			isa = "PBXGroup";
+		CB3097E2FA8F44A4B35C569E /* Resources */ = {
+			isa = PBXGroup;
 			children = (
-				E74416EAD6AC4E7892D37421 /* FontAwesome.ttf */,
+				CB6F70B22094B7DC0000BE7C /* Lato-Black.ttf */,
+				CB6F70B32094B7DC0000BE7C /* Lato-BlackItalic.ttf */,
+				CB6F70B02094B7DB0000BE7C /* Lato-Bold.ttf */,
+				CB6F708A2094B7DB0000BE7C /* Lato-BoldItalic.ttf */,
+				CB6F70B12094B7DC0000BE7C /* Lato-Hairline.ttf */,
+				CB6F70B52094B7DD0000BE7C /* Lato-HairlineItalic.ttf */,
+				CB6F70B42094B7DC0000BE7C /* Lato-Italic.ttf */,
+				CB6F70B62094B7DD0000BE7C /* Lato-Light.ttf */,
+				CB6F70B72094B7DD0000BE7C /* Lato-LightItalic.ttf */,
+				CB6F70B82094B7DD0000BE7C /* Lato-Regular.ttf */,
+				8C05AAF7D50C46B090AEA1E0 /* FontAwesome.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
-			path = "";
+		};
+		CB6F70CF2094DC900000BE7C /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				A48CD5882A554D088F766309 /* ReactNativeGlobalProps.app */,
+				EC72EABFFA43464697369D8C /* ReactNativeGlobalPropsTests.xctest */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		CB6F71002094DC920000BE7C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CB6F71052094DC920000BE7C /* ReactNativeGlobalProps.app */,
+				CB6F71072094DC920000BE7C /* ReactNativeGlobalPropsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -676,6 +734,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Refundeo" */;
 			buildPhases = (
+				180454ACB2915B000C4AF38C /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
@@ -684,6 +743,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				CBE6D5072094ECEE00A5466A /* PBXTargetDependency */,
 			);
 			name = Refundeo;
 			productName = "Hello World";
@@ -738,6 +798,9 @@
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = 2AFEAX4TBH;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -809,6 +872,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = CB6F71002094DC920000BE7C /* Products */;
+					ProjectRef = 25890A2BF1144EB1B152B4CA /* ReactNativeGlobalProps.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1081,6 +1148,20 @@
 			remoteRef = ADBDB9261DFEBF0700ED6528 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		CB6F71052094DC920000BE7C /* ReactNativeGlobalProps.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = ReactNativeGlobalProps.app;
+			remoteRef = CB6F71042094DC920000BE7C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CB6F71072094DC920000BE7C /* ReactNativeGlobalPropsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ReactNativeGlobalPropsTests.xctest;
+			remoteRef = CB6F71062094DC920000BE7C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -1095,9 +1176,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB6F70BD2094B7DD0000BE7C /* Lato-BlackItalic.ttf in Resources */,
+				CB6F70BC2094B7DD0000BE7C /* Lato-Black.ttf in Resources */,
+				CB6F70BF2094B7DD0000BE7C /* Lato-HairlineItalic.ttf in Resources */,
+				CB6F70C02094B7DD0000BE7C /* Lato-Light.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				CB6F70BA2094B7DD0000BE7C /* Lato-Bold.ttf in Resources */,
+				CB6F70BB2094B7DD0000BE7C /* Lato-Hairline.ttf in Resources */,
+				CB6F70C12094B7DD0000BE7C /* Lato-LightItalic.ttf in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				6DA6180C6A4B4B7FBEE4238B /* FontAwesome.ttf in Resources */,
+				3100584FF7234023B00DF89A /* FontAwesome.ttf in Resources */,
+				CB6F70C22094B7DD0000BE7C /* Lato-Regular.ttf in Resources */,
+				CB6F70BE2094B7DD0000BE7C /* Lato-Italic.ttf in Resources */,
+				CB6F70B92094B7DD0000BE7C /* Lato-BoldItalic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1132,6 +1223,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		180454ACB2915B000C4AF38C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Refundeo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1197,6 +1306,11 @@
 			target = 2D02E47A1E0B4A5D006451C7 /* Refundeo-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
+		CBE6D5072094ECEE00A5466A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = React;
+			targetProxy = CBE6D5062094ECEE00A5466A /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -1220,35 +1334,23 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)"
+				);
 				INFOPLIST_FILE = RefundeoTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Refundeo.app/Refundeo";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)\..\node_modules\react-native-document-picker\ios\RNDocumentPicker",
-					"$(SRCROOT)\..\node_modules\react-native-fetch-blob\ios/**",
-					"$(SRCROOT)\..\node_modules\react-native-fs/**",
-					"$(SRCROOT)\..\node_modules\react-native-global-props\ios\ReactNativeGlobalProps/**",
-					"$(SRCROOT)\..\node_modules\react-native-i18n\ios",
-					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
-				);
 			};
 			name = Debug;
 		};
@@ -1257,44 +1359,38 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)"
+				);
 				INFOPLIST_FILE = RefundeoTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Refundeo.app/Refundeo";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)\..\node_modules\react-native-document-picker\ios\RNDocumentPicker",
-					"$(SRCROOT)\..\node_modules\react-native-fetch-blob\ios/**",
-					"$(SRCROOT)\..\node_modules\react-native-fs/**",
-					"$(SRCROOT)\..\node_modules\react-native-global-props\ios\ReactNativeGlobalProps/**",
-					"$(SRCROOT)\..\node_modules\react-native-i18n\ios",
-					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
-				);
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 114E768D30AA40D829353D9F /* Pods-Refundeo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = 2AFEAX4TBH;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)"
+				);
+				"HEADER_SEARCH_PATHS[arch=*]" = "$(inherited)";
 				INFOPLIST_FILE = Refundeo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1302,25 +1398,23 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.refundeo;
 				PRODUCT_NAME = Refundeo;
 				VERSIONING_SYSTEM = "apple-generic";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)\..\node_modules\react-native-document-picker\ios\RNDocumentPicker",
-					"$(SRCROOT)\..\node_modules\react-native-fetch-blob\ios/**",
-					"$(SRCROOT)\..\node_modules\react-native-fs/**",
-					"$(SRCROOT)\..\node_modules\react-native-global-props\ios\ReactNativeGlobalProps/**",
-					"$(SRCROOT)\..\node_modules\react-native-i18n\ios",
-					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
-				);
 			};
 			name = Debug;
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DD836F9644D14EB0327A2346 /* Pods-Refundeo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2AFEAX4TBH;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)"
+				);
+				"HEADER_SEARCH_PATHS[arch=*]" = "$(inherited)";
 				INFOPLIST_FILE = Refundeo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1328,17 +1422,9 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.refundeo;
 				PRODUCT_NAME = Refundeo;
 				VERSIONING_SYSTEM = "apple-generic";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)\..\node_modules\react-native-document-picker\ios\RNDocumentPicker",
-					"$(SRCROOT)\..\node_modules\react-native-fetch-blob\ios/**",
-					"$(SRCROOT)\..\node_modules\react-native-fs/**",
-					"$(SRCROOT)\..\node_modules\react-native-global-props\ios\ReactNativeGlobalProps/**",
-					"$(SRCROOT)\..\node_modules\react-native-i18n\ios",
-					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
-				);
 			};
 			name = Release;
 		};
@@ -1354,8 +1440,16 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)"
+				);
 				INFOPLIST_FILE = "Refundeo-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1365,26 +1459,6 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)\..\node_modules\react-native-document-picker\ios\RNDocumentPicker",
-					"$(SRCROOT)\..\node_modules\react-native-fetch-blob\ios/**",
-					"$(SRCROOT)\..\node_modules\react-native-fs/**",
-					"$(SRCROOT)\..\node_modules\react-native-global-props\ios\ReactNativeGlobalProps/**",
-					"$(SRCROOT)\..\node_modules\react-native-i18n\ios",
-					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
-				);
 			};
 			name = Debug;
 		};
@@ -1400,8 +1474,16 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)"
+				);
 				INFOPLIST_FILE = "Refundeo-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1411,26 +1493,6 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)\..\node_modules\react-native-document-picker\ios\RNDocumentPicker",
-					"$(SRCROOT)\..\node_modules\react-native-fetch-blob\ios/**",
-					"$(SRCROOT)\..\node_modules\react-native-fs/**",
-					"$(SRCROOT)\..\node_modules\react-native-global-props\ios\ReactNativeGlobalProps/**",
-					"$(SRCROOT)\..\node_modules\react-native-i18n\ios",
-					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
-				);
 			};
 			name = Release;
 		};
@@ -1445,8 +1507,16 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)"
+				);
 				INFOPLIST_FILE = "Refundeo-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1456,26 +1526,6 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Refundeo-tvOS.app/Refundeo-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)\..\node_modules\react-native-document-picker\ios\RNDocumentPicker",
-					"$(SRCROOT)\..\node_modules\react-native-fetch-blob\ios/**",
-					"$(SRCROOT)\..\node_modules\react-native-fs/**",
-					"$(SRCROOT)\..\node_modules\react-native-global-props\ios\ReactNativeGlobalProps/**",
-					"$(SRCROOT)\..\node_modules\react-native-i18n\ios",
-					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
-				);
 			};
 			name = Debug;
 		};
@@ -1490,8 +1540,16 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)"
+				);
 				INFOPLIST_FILE = "Refundeo-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1501,26 +1559,6 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Refundeo-tvOS.app/Refundeo-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)\..\node_modules\react-native-document-picker\ios\RNDocumentPicker",
-					"$(SRCROOT)\..\node_modules\react-native-fetch-blob\ios/**",
-					"$(SRCROOT)\..\node_modules\react-native-fs/**",
-					"$(SRCROOT)\..\node_modules\react-native-global-props\ios\ReactNativeGlobalProps/**",
-					"$(SRCROOT)\..\node_modules\react-native-i18n\ios",
-					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
-				);
 			};
 			name = Release;
 		};
