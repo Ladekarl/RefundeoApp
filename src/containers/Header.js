@@ -10,8 +10,7 @@ import {bindActionCreators} from 'redux';
 class HeaderScreen extends Component {
 
     static propTypes = {
-        actions: PropTypes.object.isRequired,
-        navigation: PropTypes.object.isRequired
+        actions: PropTypes.object.isRequired
     };
 
     constructor(props) {
@@ -49,7 +48,7 @@ const styles = StyleSheet.create({
         backgroundColor: Platform.OS === 'ios' ? colors.inactiveTabColor : colors.backgroundColor,
         paddingLeft: 25,
         paddingRight: 25,
-        paddingTop: Platform.OS === 'ios' ? 40 : 20,
+        paddingTop: 20,
         paddingBottom: 10
     },
     headerText: {

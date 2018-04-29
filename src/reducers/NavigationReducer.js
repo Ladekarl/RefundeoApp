@@ -12,6 +12,7 @@ const initialState = {
 export default function navigationReducer(state = initialState, action = {}) {
     let nextState = null;
     switch (action.type) {
+        case NavigationActions.BACK:
         case types.NAVIGATE_BACK: {
             const navigationAction = NavigationActions.back({});
             const backState = RootNavigator.router.getStateForAction(navigationAction, state);

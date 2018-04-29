@@ -11,10 +11,13 @@ import React from 'react';
 import Header from '../containers/Header';
 import HomeNavigator from './HomeNavigator';
 
-const defaultPageNavigationOptions = ({navigation}) => ({
+const noHeaderNavigationOptions = {headerMode: 'none'};
+
+const headerBackNavigationOptions = ({navigation}) => ({
     headerLeft:
-        <TouchableOpacity style={styles.defaultHeaderLeftButton} onPress={() => navigation.navigate('DrawerToggle')}>
-            <Icon name='navicon' style={styles.defaultHeaderLeftIcon}/>
+        <TouchableOpacity style={styles.defaultHeaderLeftButton}
+                          onPress={() => navigation.goBack()}>
+            <Icon name='arrow-left' style={styles.defaultHeaderLeftIcon}/>
         </TouchableOpacity>,
     headerTitleStyle: {
         fontSize: 20,
@@ -24,9 +27,30 @@ const defaultPageNavigationOptions = ({navigation}) => ({
     headerTintColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.inactiveTabColor
 });
 
-const homeNavigatorOptions = ({navigation}) => ({
-    headerMode: 'none',
-    header: (<Header navigation={navigation}/>),
+const defaultPageNavigationOptions = ({navigation}) => ({
+    headerLeft:
+        Platform.OS === 'ios' ?
+            <TouchableOpacity style={styles.defaultHeaderLeftButton}
+                              onPress={() => navigation.goBack()}>
+                <Icon name='arrow-left' style={styles.defaultHeaderLeftIcon}/>
+            </TouchableOpacity> :
+            <TouchableOpacity style={styles.defaultHeaderLeftButton}
+                              onPress={() => navigation.navigate('DrawerToggle')}>
+                <Icon name='navicon' style={styles.defaultHeaderLeftIcon}/>
+            </TouchableOpacity>
+    ,
+    headerTitleStyle: {
+        fontSize: 20,
+        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.inactiveTabColor
+    },
+    headerStyle: styles.defaultHeaderStyle,
+    headerTintColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.inactiveTabColor
+});
+
+
+const homeNavigatorOptions = () => ({
+    header: (<Header/>),
+    ...noHeaderNavigationOptions,
 });
 
 const MainDrawerNavigator = DrawerNavigator({
@@ -52,10 +76,10 @@ const MainDrawerNavigator = DrawerNavigator({
 const routeConfiguration = {
     loginFlow: {
         screen: StackNavigator({
-            SplashScreen: {screen: SplashScreen},
-            Login: {screen: LoginScreen},
-            Register: {screen: RegisterScreen}
-        }, {headerMode: 'none', initialRouteName: 'SplashScreen'})
+            SplashScreen: {screen: SplashScreen, navigationOptions: noHeaderNavigationOptions},
+            Login: {screen: LoginScreen, navigationOptions: headerBackNavigationOptions},
+            Register: {screen: RegisterScreen, navigationOptions: headerBackNavigationOptions}
+        }, {initialRouteName: 'SplashScreen'})
     },
     mainFlow: {
         screen: MainDrawerNavigator
@@ -64,7 +88,7 @@ const routeConfiguration = {
 
 const rootNavigatorOptions = {
     initialRouteName: 'loginFlow',
-    headerMode: 'none'
+    ...noHeaderNavigationOptions
 };
 
 const RootNavigator = StackNavigator(routeConfiguration, rootNavigatorOptions);

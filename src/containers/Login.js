@@ -30,11 +30,6 @@ const IMAGE_HEIGHT_SMALL = 0;
 
 class LoginScreen extends Component {
 
-    // noinspection JSUnusedGlobalSymbols
-    static navigationOptions = {
-        header: null,
-    };
-
     static propTypes = {
         actions: PropTypes.object.isRequired,
         state: PropTypes.object.isRequired

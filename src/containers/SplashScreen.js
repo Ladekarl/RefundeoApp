@@ -167,7 +167,8 @@ const styles = StyleSheet.create({
         borderWidth: StyleSheet.hairlineWidth,
         borderColor: colors.activeTabColor,
         height: 30,
-        padding: 10,
+        paddingLeft: 10,
+        paddingRight: 10,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: colors.white
