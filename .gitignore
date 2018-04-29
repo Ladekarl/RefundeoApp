@@ -24,7 +24,7 @@ project.xcworkspace
 
 # Android/IntelliJ
 #
-android/gradle.properties
+build/
 .idea
 .gradle
 local.properties
@@ -52,9 +52,8 @@ buck-out/
 */fastlane/Preview.html
 */fastlane/screenshots
 
-*.env
-GoogleService-Info.plist
-google-services.json
-
 # Bundle artifact
 *.jsbundle
+
+Pods/
+.env

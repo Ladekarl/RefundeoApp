@@ -1,12 +1,6 @@
 import React, {Component} from 'react';
-import {Platform, StatusBar, StyleSheet} from 'react-native';
+import {Platform, StatusBar, StyleSheet, Text, TextInput} from 'react-native';
 import colors from './shared/colors';
-import {
-    setCustomActivityIndicator,
-    setCustomText,
-    setCustomTextInput,
-    setCustomTouchableOpacity,
-} from 'react-native-global-props';
 import {Provider} from 'react-redux';
 import {configureStore} from './store';
 import AppNavigator from './navigation/AppNavigator';
@@ -17,24 +11,36 @@ export default class App extends Component {
 
     constructor(props) {
         super(props);
+        this.setDefaultFontFamily();
+    }
 
-        const customTextProps = {
+    setDefaultFontFamily = () => {
+        let components = [Text, TextInput];
+
+        const customProps = {
             style: {
                 fontFamily: 'Lato'
             }
         };
-        const customTouchableOpacityProps = {
-            hitSlop: {top: 15, right: 15, left: 15, bottom: 15}
-        };
-        const customActivityIndicator = {
-            color: colors.inactiveTabColor
-        };
 
-        setCustomText(customTextProps);
-        setCustomTouchableOpacity(customTouchableOpacityProps);
-        setCustomActivityIndicator(customActivityIndicator);
-        setCustomTextInput(customTextProps);
-    }
+        for (let i = 0; i < components.length; i++) {
+            const TextRender = components[i].prototype.render;
+            const initialDefaultProps = components[i].prototype.constructor.defaultProps;
+            components[i].prototype.constructor.defaultProps = {
+                ...initialDefaultProps,
+                ...customProps
+            };
+            components[i].prototype.render = function render() {
+                let oldProps = this.props;
+                this.props = {...this.props, style: [customProps.style, this.props.style]};
+                try {
+                    return TextRender.apply(this, arguments);
+                } finally {
+                    this.props = oldProps;
+                }
+            };
+        }
+    };
 
     render() {
         if (Platform.OS === 'ios') {
