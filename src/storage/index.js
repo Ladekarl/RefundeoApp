@@ -1,5 +1,6 @@
 import {AsyncStorage} from 'react-native';
-import {TOKEN_STORAGE_KEY, USER_STORAGE_KEY} from 'react-native-dotenv';
+// noinspection ES6CheckImport
+import {USER_STORAGE_KEY} from 'react-native-dotenv';
 
 export default class LocalStorage {
 
