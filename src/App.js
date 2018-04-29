@@ -32,6 +32,7 @@ export default class App extends Component {
             };
             components[i].prototype.render = function render() {
                 let oldProps = this.props;
+                // eslint-disable-next-line react/prop-types
                 this.props = {...this.props, style: [customProps.style, this.props.style]};
                 try {
                     return TextRender.apply(this, arguments);
