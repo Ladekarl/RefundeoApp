@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, TouchableOpacity, Linking} from 'react-native';
+import {Alert, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-fa-icons';
 import QRCodeScanner from 'react-native-qrcode-scanner';
+import colors from '../shared/colors';
 
 export default class OverviewScreen extends Component {
 
     // noinspection JSUnusedGlobalSymbols
     static navigationOptions = {
-        tabBarLabel: 'Oversigt',
         tabBarIcon: ({tintColor}) => (
             <Icon name='home' style={[styles.tabBarIcon, {color: tintColor}]}/>),
     };
@@ -16,47 +16,59 @@ export default class OverviewScreen extends Component {
         super(props);
     }
 
-    onSuccess(e) {
-        Linking
-            .openURL(e.data)
-    }
+    onSuccess = (e) => {
+        Alert.alert('QR Kode blev scannet', JSON.stringify(e.data));
+    };
+
+    reactivate = () => {
+        this.qrCodeScanner.reactivate();
+    };
+
+    qrCodeScanner;
 
     render() {
         return (
             <QRCodeScanner
-                onRead={this.onSuccess.bind(this)}
+                ref={ref => this.qrCodeScanner = ref}
+                onRead={this.onSuccess}
+                containerStyle={styles.container}
+                showMarker={false}
                 topContent={
                     <Text style={styles.centerText}>
-                        Go to <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on your computer and scan
-                        the QR code.
+                        Scan QR Koden på din kvittering
                     </Text>
                 }
+                cameraStyle={styles.cameraStyle}
                 bottomContent={
-                    <TouchableOpacity style={styles.buttonTouchable}>
-                        <Text style={styles.buttonText}>OK. Got it!</Text>
+                    <TouchableOpacity style={styles.buttonTouchable} onPress={this.reactivate}>
+                        <Text style={styles.buttonText}>Reactivate</Text>
                     </TouchableOpacity>
                 }
-            />
+            ><Text>
+                Hej
+            </Text></QRCodeScanner>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: colors.backgroundColor
+    },
     centerText: {
         flex: 1,
         fontSize: 18,
-        padding: 32,
-        color: '#777',
-    },
-    textBold: {
-        fontWeight: '500',
-        color: '#000',
+        padding: 32
     },
     buttonText: {
         fontSize: 21,
-        color: 'rgb(0,122,255)',
+        color: colors.submitButtonColor
     },
     buttonTouchable: {
         padding: 16,
     },
+    cameraStyle: {
+        borderRadius: 20,
+        padding: 20
+    }
 });
