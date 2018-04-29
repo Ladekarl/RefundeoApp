@@ -40,8 +40,6 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -58,6 +56,18 @@
 	<string>$(PRODUCT_NAME) needs to use your camera for scanning QRCodes</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) needs to access your photo library to upload photos as documentation</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+    <string>$(PRODUCT_NAME) needs to use bluetooth for connection with other devices</string>
+    <key>NSCalendarsUsageDescription</key>
+    <string>$(PRODUCT_NAME) needs to use calendars for storing events</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>$(PRODUCT_NAME) needs to use your location to know where you are</string>
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>$(PRODUCT_NAME) needs to use speech recognition for determining you voice</string>
+    <key>NSAppleMusicUsageDescription</key>
+    <string>$(PRODUCT_NAME) needs to use apple music for listening to music</string>
+    <key>NSMotionUsageDescription</key>
+    <string>$(PRODUCT_NAME) needs to use motion for detecting motion</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>FontAwesome.ttf</string>

@@ -31,7 +31,7 @@ allprojects {
  */
 ext {
     compileSdkVersion           = 26
-    targetSdkVersion            = 22
+    targetSdkVersion            = 23
     buildToolsVersion           = "27.0.3"
     googlePlayServicesVersion   = "12.0.1"
     supportLibVersion           = "26.0.1"
