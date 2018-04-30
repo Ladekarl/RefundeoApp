@@ -11,14 +11,21 @@
   "settings": {
     "settings": "Indstillinger"
   },
+  "register": {
+    "register": "Tilmeld",
+    "register_button": "TILMELD",
+    "facebook_button": "LOG IND MED FACEBOOK"
+  },
   "login": {
     "login_button": "LOG IND",
+    "unknown_error": "Der skete en fejl. Prøv venligst igen senere.",
+    "login": "Log ind",
     "already_have_account": "Har du allerede en konto?",
     "error_user_does_not_exist_in_database": "Brugeren eksisterer ikke i databasen",
     "something_went_wrong": "Noget gik galt. Prøv igen.",
-    "email_placeholder": "Brugernavn",
+    "email_placeholder": "Brugernavn eller email",
     "password_placeholder": "Kodeord",
-    "missing_username": "Indtast brugernavn",
+    "missing_username": "Indtast brugernavn eller email",
     "missing_password": "Indtast password",
     "user_does_not_exist": "Brugeren eksisterer ikke",
     "wrong_password": "Forkert password",

@@ -10,14 +10,17 @@ import PropTypes from 'prop-types';
 
 class RegisterScreen extends Component {
 
-    // noinspection JSUnusedGlobalSymbols
-    static navigationOptions = {
-        header: null,
-    };
-
     static propTypes = {
         actions: PropTypes.object.isRequired,
         state: PropTypes.object.isRequired
+    };
+
+    // noinspection JSUnusedGlobalSymbols
+    static navigationOptions = {
+        title: strings('register.register'),
+        headerTitleStyle: {
+            fontSize: 18
+        }
     };
 
     constructor(props) {

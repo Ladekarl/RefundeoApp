@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Animated, Dimensions, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ActivityIndicator, Animated, Dimensions, Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import colors from '../shared/colors';
 import Actions from '../actions/Actions';
 import {connect} from 'react-redux';
@@ -7,14 +7,15 @@ import {bindActionCreators} from 'redux';
 import PropTypes from 'prop-types';
 import LocalStorage from '../storage';
 import {strings} from '../shared/i18n';
+import {AccessToken, LoginManager} from 'react-native-fbsdk';
 
 const window = Dimensions.get('window');
 const IMAGE_HEIGHT = window.width / 2;
 const CONTAINER_HEIGHT = window.height / 2;
 const CONTAINER_HEIGHT_SMALL = window.height / 6;
-const IMAGE_HEIGHT_SMALL = window.width / 2;
+const IMAGE_HEIGHT_SMALL = window.width / 3;
 
-class SplashScreen extends Component {
+class InitialScreen extends Component {
 
     // noinspection JSUnusedGlobalSymbols
     static navigationOptions = {
@@ -38,7 +39,7 @@ class SplashScreen extends Component {
     }
 
     componentDidMount() {
-        SplashScreen._shouldNavigate().then(shouldNavigate => {
+        this._shouldNavigate().then(shouldNavigate => {
             if (shouldNavigate) {
                 this.props.actions.navigateInitial();
             } else {
@@ -51,10 +52,10 @@ class SplashScreen extends Component {
         });
     }
 
-    static async _shouldNavigate() {
+    _shouldNavigate = async () => {
         const user = await LocalStorage.getUser();
         return user && user.token;
-    }
+    };
 
     _animate = (containerHeight, imageHeight) => {
         const friction = 40;
@@ -78,8 +79,28 @@ class SplashScreen extends Component {
         ]).start();
     };
 
+    loginFacebook = () => {
+        LoginManager.logInWithReadPermissions(['email', 'user_birthday', 'user_location']).then(
+            result => {
+                if (result.isCancelled) {
+                    this.props.actions.facebookLoginError(strings('login.unknown_error'));
+                }
+                else {
+                    AccessToken.getCurrentAccessToken().then((data) => {
+                        this.props.actions.loginFacebook(data.accessToken.toString());
+                    }).catch(() => {
+                        this.props.actions.facebookLoginError(strings('login.unknown_error'));
+                    });
+                }
+            },
+            () => {
+                this.props.actions.facebookLoginError(strings('login.unknown_error'));
+            }
+        );
+    };
+
     render() {
-        const {fetching} = this.props.state;
+        const {fetching, facebookLoginError} = this.props.state;
         return (
             <View style={styles.container}>
                 <Animated.View style={[styles.topContainer, {height: this.state.containerHeight}]}>
@@ -93,17 +114,23 @@ class SplashScreen extends Component {
                     height: this.state.bottomContainerHeight,
                     marginTop: this.state.offsetY
                 }]}>
+                    <View style={styles.errorContainer}>
+                        <Text style={styles.errorText}>{facebookLoginError}</Text>
+                    </View>
                     <TouchableOpacity style={styles.facebookButton}
-                                      onPress={() => {
-                                      }} // TODO something
+                                      onPress={this.loginFacebook}
                                       disabled={fetching}>
-                        <Text style={styles.buttonText}>LOGIN WITH FACEBOOK</Text>
+                        <View style={styles.facebookIconContainer}>
+                            <Image style={styles.facebookIcon}
+                                   source={require('../../assets/images/facebook-icon.png')}/>
+                        </View>
+                        <Text style={styles.buttonText}>{strings('register.facebook_button')}</Text>
+                        <View style={styles.facebookAligner}/>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.signUpButton}
-                                      onPress={() => {
-                                      }} // TODO something
+                                      onPress={this.props.actions.navigateRegister}
                                       disabled={fetching}>
-                        <Text style={styles.buttonText}>SIGN UP</Text>
+                        <Text style={styles.buttonText}>{strings('register.register_button')}</Text>
                     </TouchableOpacity>
                     <View style={styles.alreadyCustomerContainer}>
                         <Text style={styles.alreadyCustomerText}>{strings('login.already_have_account')}</Text>
@@ -114,6 +141,11 @@ class SplashScreen extends Component {
                         </TouchableOpacity>
                     </View>
                 </Animated.View>
+                }
+                {fetching &&
+                <View style={styles.loadingContainer}>
+                    <ActivityIndicator size='large' color={colors.inactiveTabColor} style={styles.activityIndicator}/>
+                </View>
                 }
             </View>
         );
@@ -144,12 +176,13 @@ const styles = StyleSheet.create({
     facebookButton: {
         borderRadius: 50,
         height: 50,
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
+        flexDirection: 'row',
         padding: 18,
         marginBottom: 10,
         elevation: 5,
-        backgroundColor: colors.submitButtonColor
+        backgroundColor: colors.facebookColor
     },
     signUpButton: {
         borderRadius: 50,
@@ -173,8 +206,29 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: colors.white
     },
+    facebookIconContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start'
+    },
+    facebookIcon: {
+        height: 20,
+        width: 20,
+        marginRight: 10,
+        marginLeft: 10,
+        justifyContent: 'center',
+    },
     buttonText: {
-        color: colors.whiteColor
+        color: colors.whiteColor,
+        fontWeight: 'bold',
+        fontSize: 12,
+        minWidth: '80%',
+        textAlign: 'center',
+        flex: 1,
+        justifyContent: 'center'
+    },
+    facebookAligner: {
+        flex: 1
     },
     alreadyCustomerText: {
         fontWeight: 'bold',
@@ -190,6 +244,27 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         marginTop: 40,
+    },
+    errorContainer: {
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    errorText: {
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontWeight: 'bold',
+        color: colors.submitButtonColor
+    },
+    loadingContainer: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 });
 
@@ -212,4 +287,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(SplashScreen);
+)(InitialScreen);

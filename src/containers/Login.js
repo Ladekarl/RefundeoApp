@@ -25,7 +25,7 @@ import PropTypes from 'prop-types';
 const window = Dimensions.get('window');
 const IMAGE_HEIGHT = window.width / 2;
 const CONTAINER_HEIGHT = window.height / 2;
-const CONTAINER_HEIGHT_SMALL = window.height / 6;
+const CONTAINER_HEIGHT_SMALL = window.height / 8;
 const IMAGE_HEIGHT_SMALL = 0;
 
 class LoginScreen extends Component {
@@ -33,6 +33,14 @@ class LoginScreen extends Component {
     static propTypes = {
         actions: PropTypes.object.isRequired,
         state: PropTypes.object.isRequired
+    };
+
+    // noinspection JSUnusedGlobalSymbols
+    static navigationOptions = {
+        title: strings('login.login'),
+        headerTitleStyle: {
+            fontSize: 18
+        }
     };
 
     constructor(props) {
@@ -107,7 +115,7 @@ class LoginScreen extends Component {
     };
 
     _renderShared = () => {
-        const {fetching, error, navigation} = this.props.state;
+        const {fetching, loginError, navigation} = this.props.state;
         return (
             <View style={styles.innerContainer}>
                 <View style={styles.loginFormContainer}>
@@ -144,7 +152,7 @@ class LoginScreen extends Component {
                                        onChangeText={password => this.setState({password})}/>
                         </View>
                         <View style={styles.errorContainer}>
-                            <Text style={styles.errorText}>{error}</Text>
+                            <Text style={styles.errorText}>{loginError}</Text>
                         </View>
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity style={styles.loginButton}
@@ -265,7 +273,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        color: colors.errorColor
+        fontWeight: 'bold',
+        color: colors.submitButtonColor
     },
     buttonContainer: {
         alignItems: 'stretch'
@@ -280,7 +289,9 @@ const styles = StyleSheet.create({
         backgroundColor: colors.submitButtonColor
     },
     buttonText: {
-        color: colors.whiteColor
+        color: colors.whiteColor,
+        fontSize: 12,
+        fontWeight: 'bold'
     },
     icon: {
         fontSize: 20,

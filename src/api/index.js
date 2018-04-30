@@ -14,6 +14,25 @@ async function authHeader() {
 }
 
 export default class Api {
+
+    static async getTokenFacebook(accessToken) {
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({accessToken, scopes: ['offline_access']})
+        };
+
+        const response = await fetch(`${API_URL}/Token/Facebook`, requestOptions);
+
+        if (!response.ok) {
+            throw response.statusText;
+        }
+
+        const user = await response.json();
+
+        return this.saveUser(user);
+    }
+
     static async getToken(username, password) {
         const requestOptions = {
             method: 'POST',
@@ -28,32 +47,15 @@ export default class Api {
 
         const response = await fetch(`${API_URL}/Token`, requestOptions);
 
-        if (response.status === 400) {
-            const error = await response.json();
-            switch (error.error) {
-                case -1:
-                    throw strings('login.wrong_password');
-                case -2:
-                    throw strings('login.user_does_not_exist');
-                case -3:
-                    throw strings('login.missing_password');
-                case -4:
-                    throw strings('login.missing_username')
-            }
-        }
+        await this.checkLoginResponse(response);
 
         if (!response.ok) {
-            throw response;
+            throw response.statusText;
         }
 
         const user = await response.json();
-        if (user && user.token && user.roles && user.roles.indexOf('User') > -1) {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            await LocalStorage.setUser(user);
-        } else if (!user.roles || user.roles.indexOf('User') < 0) {
-            throw strings('login.user_not_customer');
-        }
-        return user;
+
+        return this.saveUser(user);
     }
 
     static async RefreshToken(refreshToken) {
@@ -79,6 +81,32 @@ export default class Api {
             await LocalStorage.setUser(user);
         }
 
+        return user;
+    }
+
+    static async checkLoginResponse(response) {
+        if (response.status === 400) {
+            const error = await response.json();
+            switch (error.error) {
+                case -1:
+                    throw strings('login.wrong_password');
+                case -2:
+                    throw strings('login.user_does_not_exist');
+                case -3:
+                    throw strings('login.missing_password');
+                case -4:
+                    throw strings('login.missing_username')
+            }
+        }
+    }
+
+    static async saveUser(user) {
+        if (user && user.token && user.roles && user.roles.indexOf('User') > -1) {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            await LocalStorage.setUser(user);
+        } else if (!user.roles || user.roles.indexOf('User') < 0) {
+            throw strings('login.user_not_customer');
+        }
         return user;
     }
 }

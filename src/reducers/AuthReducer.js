@@ -3,7 +3,8 @@ import types from '../actions/ActionTypes';
 const initialState = {
     loggedIn: false,
     fetching: false,
-    error: '',
+    loginError: '',
+    facebookLoginError: '',
     user: {
         id: '',
         token: '',
@@ -31,10 +32,18 @@ export default function authReducer(state = initialState, action = {}) {
         case types.AUTH_LOGIN_ERROR: {
             nextState = {
                 ...state,
-                error: action.error,
+                loginError: action.loginError,
                 fetching: false
             };
             break;
+        }
+        case types.AUTH_FACEBOOK_LOGIN_ERROR: {
+          nextState = {
+              ...state,
+              facebookLoginError: action.facebookLoginError,
+              fetching: false
+          };
+          break;
         }
         case types.AUTH_LOGIN_SUCCESS: {
             nextState = {

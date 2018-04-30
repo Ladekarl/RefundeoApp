@@ -2,12 +2,14 @@ import types from './ActionTypes';
 import LocalStorage from '../storage';
 import {strings} from '../shared/i18n';
 import Api from '../api';
+import {LoginManager} from 'react-native-fbsdk';
 
 export default {
     navigateInitial,
     toggleDrawer,
     openDrawer,
     navigateLogIn,
+    navigateRegister,
     closeDrawer,
     navigateSettings,
     navigateDrawerSettings,
@@ -15,9 +17,10 @@ export default {
     openModal,
     closeModal,
     login,
+    loginFacebook,
     logout,
-    signUp,
     navigateBack,
+    facebookLoginError
 };
 
 function navigateInitial() {
@@ -50,6 +53,12 @@ function navigateLogOut() {
 function navigateLogIn() {
     return {
         type: types.NAVIGATE_LOG_IN
+    }
+}
+
+function navigateRegister() {
+    return {
+        type: types.NAVIGATE_REGISTER
     }
 }
 
@@ -115,6 +124,22 @@ function closeModal(modalName) {
     }
 }
 
+function loginFacebook(accessToken) {
+    return dispatch => {
+        dispatch({type: types.AUTH_LOGGING_IN});
+        Api.getTokenFacebook(accessToken).then(user => {
+            if (!user) {
+                dispatch(facebookLoginError(strings('login.error_user_does_not_exist_in_database')));
+            } else {
+                dispatch(loginSuccess(user));
+                dispatch(navigateAndResetToMainFlow())
+            }
+        }).catch(() => {
+            dispatch(facebookLoginError(strings('login.unknown_error')));
+        });
+    };
+}
+
 function login(username, password) {
     if (!username) {
         return loginError(strings('login.missing_username'));
@@ -131,23 +156,20 @@ function login(username, password) {
                 dispatch(loginSuccess(user));
                 dispatch(navigateAndResetToMainFlow())
             }
-        }).catch((error) => {
-            dispatch(loginError(error || ''));
+        }).catch(() => {
+            dispatch(loginError(strings('login.unknown_error')));
         });
     };
 }
 
 function logout() {
     return dispatch => {
+        LoginManager.logOut();
         LocalStorage.removeUser().then(() => {
             dispatch(logoutSuccess());
             dispatch(navigateLogOut());
         });
     };
-}
-
-function signUp() {
-    return {type: types.NAVIGATE_SIGN_UP};
 }
 
 function navigateBack() {
@@ -157,7 +179,14 @@ function navigateBack() {
 function loginError(error) {
     return {
         type: types.AUTH_LOGIN_ERROR,
-        error
+        loginError: error.toString()
+    }
+}
+
+function facebookLoginError(error) {
+    return {
+        type: types.AUTH_FACEBOOK_LOGIN_ERROR,
+        facebookLoginError: error.toString()
     }
 }
 

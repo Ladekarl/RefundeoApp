@@ -1,5 +1,5 @@
 import {DrawerNavigator, StackNavigator} from 'react-navigation';
-import SplashScreen from '../containers/SplashScreen';
+import InitialScreen from '../containers/Initial';
 import LoginScreen from '../containers/Login';
 import SettingsScreen from '../components/Settings';
 import DrawerScreen from '../containers/Drawer';
@@ -76,10 +76,10 @@ const MainDrawerNavigator = DrawerNavigator({
 const routeConfiguration = {
     loginFlow: {
         screen: StackNavigator({
-            SplashScreen: {screen: SplashScreen, navigationOptions: noHeaderNavigationOptions},
+            Initial: {screen: InitialScreen, navigationOptions: noHeaderNavigationOptions},
             Login: {screen: LoginScreen, navigationOptions: headerBackNavigationOptions},
             Register: {screen: RegisterScreen, navigationOptions: headerBackNavigationOptions}
-        }, {initialRouteName: 'SplashScreen'})
+        }, {initialRouteName: 'Initial'})
     },
     mainFlow: {
         screen: MainDrawerNavigator

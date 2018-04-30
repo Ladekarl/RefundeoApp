@@ -11,15 +11,22 @@
   "settings": {
     "settings": "Settings"
   },
+  "register": {
+    "register": "Sign up",
+    "register_button": "SIGN UP",
+    "facebook_button": "JOIN US WITH FACEBOOK"
+  },
   "login": {
     "login_button": "LOGIN",
+    "unknown_error": "An error occurred. Please try again later.",
+    "login": "Login",
     "already_have_account": "Already have an account?",
     "error_user_does_not_exist_in_database": "User does not exist in database",
     "something_went_wrong": "Something went wrong. Please try again",
-    "email_placeholder": "Username",
+    "email_placeholder": "Username or email",
     "password_placeholder": "Password",
-    "missing_username": "Indtast brugernavn",
-    "missing_password": "Indtast password",
+    "missing_username": "Please enter username or email",
+    "missing_password": "Please enter password",
     "user_does_not_exist": "The user does not exist",
     "wrong_password": "Wrong password",
     "user_not_customer": "Please login through administration site",

@@ -3,7 +3,7 @@ import {RootNavigator} from '../navigation/NavigationConfiguration';
 import types from '../actions/ActionTypes';
 
 const initialState = {
-    currentRoute: 'SplashScreen',
+    currentRoute: 'Initial',
     drawerOpen: false,
     modal: {},
     ...RootNavigator.router.getStateForAction(NavigationActions.navigate({routeName: 'loginFlow'}))
@@ -31,8 +31,8 @@ export default function navigationReducer(state = initialState, action = {}) {
         }
         case types.NAVIGATE_LOGGED_OUT: {
             nextState = {
-                ...navigateAndReset('SplashScreen', state, true),
-                currentRoute: 'SplashScreen'
+                ...navigateAndReset('Initial', state, true),
+                currentRoute: 'Initial'
             };
             break;
         }
@@ -41,6 +41,14 @@ export default function navigationReducer(state = initialState, action = {}) {
             nextState = {
                 ...RootNavigator.router.getStateForAction(navigationAction, state),
                 currentRoute: 'Login'
+            };
+            break;
+        }
+        case types.NAVIGATE_REGISTER: {
+            const navigationAction = NavigationActions.navigate({routeName: 'Register'});
+            nextState = {
+                ...RootNavigator.router.getStateForAction(navigationAction, state),
+                currentRoute: 'Register'
             };
             break;
         }

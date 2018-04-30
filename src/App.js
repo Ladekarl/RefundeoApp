@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StatusBar, StyleSheet} from 'react-native';
+import {Platform, StatusBar} from 'react-native';
 import colors from './shared/colors';
 import {
     setCustomActivityIndicator,
@@ -42,15 +42,8 @@ export default class App extends Component {
         }
         return (
             <Provider store={store}>
-                <AppNavigator style={styles.container}/>
+                <AppNavigator/>
             </Provider>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: colors.backgroundColor,
-    }
-});
