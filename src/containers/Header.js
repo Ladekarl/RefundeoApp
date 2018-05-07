@@ -6,6 +6,7 @@ import Icon from 'react-native-fa-icons';
 import Actions from '../actions/Actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import {hasDrawer} from "../navigation/NavigationConfiguration";
 
 class HeaderScreen extends Component {
 
@@ -28,9 +29,11 @@ class HeaderScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
+                {hasDrawer &&
                 <TouchableOpacity style={styles.headerButton} onPress={this.openDrawer}>
                     <Icon name='bars' style={styles.icon}/>
                 </TouchableOpacity>
+                }
                 <Text style={styles.headerText}>Refundeo</Text>
                 <TouchableOpacity style={styles.headerButton} onPress={this.openSettings}>
                     <Icon name='cog' style={styles.icon}/>

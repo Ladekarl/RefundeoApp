@@ -97,6 +97,14 @@ export default function navigationReducer(state = initialState, action = {}) {
             };
             break;
         }
+        case types.NAVIGATE_SCANNER: {
+            const navigationAction = NavigationActions.navigate({routeName: 'Scanner'});
+            nextState = {
+                ...RootNavigator.router.getStateForAction(navigationAction, state),
+                currentRoute: 'Scanner'
+            };
+            break;
+        }
         case types.NAVIGATE_DRAWER_HOME: {
             nextState = {
                 ...navigateDrawer('Home', state),
@@ -158,9 +166,8 @@ const navigateDrawer = (routeName, state) => {
             routeName
         });
         return RootNavigator.router.getStateForAction(action, state);
-    } else {
-        action = NavigationActions.navigate({routeName: 'DrawerClose'});
     }
+    action = NavigationActions.navigate({routeName: 'DrawerClose'});
     return RootNavigator.router.getStateForAction(action, state);
 };
 

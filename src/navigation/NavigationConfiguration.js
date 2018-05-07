@@ -5,13 +5,15 @@ import SettingsScreen from '../components/Settings';
 import DrawerScreen from '../containers/Drawer';
 import RegisterScreen from '../containers/Register';
 import colors from '../shared/colors';
-import {Platform, StyleSheet, TouchableOpacity} from 'react-native';
+import {Platform, StyleSheet, TouchableOpacity, Dimensions} from 'react-native';
 import Icon from 'react-native-fa-icons';
 import React from 'react';
 import Header from '../containers/Header';
 import HomeNavigator from './HomeNavigator';
 
+const {width, height} = Dimensions.get('screen');
 const noHeaderNavigationOptions = {headerMode: 'none'};
+const hasDrawer = false;
 
 const headerBackNavigationOptions = ({navigation}) => ({
     headerLeft:
@@ -27,7 +29,7 @@ const headerBackNavigationOptions = ({navigation}) => ({
     headerTintColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.inactiveTabColor
 });
 
-const defaultPageNavigationOptions = ({navigation}) => ({
+const drawerPageNavigationOptions = ({navigation}) => ({
     headerLeft:
         Platform.OS === 'ios' ?
             <TouchableOpacity style={styles.defaultHeaderLeftButton}
@@ -61,7 +63,7 @@ const MainDrawerNavigator = DrawerNavigator({
     },
     Settings: {
         screen: StackNavigator({
-            Settings: {screen: SettingsScreen, navigationOptions: defaultPageNavigationOptions}
+            Settings: {screen: SettingsScreen, navigationOptions: drawerPageNavigationOptions}
         })
     }
 }, {
@@ -70,7 +72,13 @@ const MainDrawerNavigator = DrawerNavigator({
         activeBackgroundColor: colors.backgroundColor,
         activeTintColor: colors.activeTabColor,
         inactiveTintColor: colors.inactiveTabColor
-    }
+    },
+    drawerWidth: Math.min(height, width) * 0.8
+});
+
+const MainStackNavigator = StackNavigator({
+    Home: {screen: HomeNavigator, navigationOptions: homeNavigatorOptions},
+    Settings: {screen: SettingsScreen, navigationOptions: headerBackNavigationOptions}
 });
 
 const routeConfiguration = {
@@ -82,7 +90,7 @@ const routeConfiguration = {
         }, {initialRouteName: 'Initial'})
     },
     mainFlow: {
-        screen: MainDrawerNavigator
+        screen: hasDrawer ? MainDrawerNavigator : MainStackNavigator
     }
 };
 
@@ -95,7 +103,8 @@ const RootNavigator = StackNavigator(routeConfiguration, rootNavigatorOptions);
 
 export {
     RootNavigator,
-    MainDrawerNavigator
+    MainDrawerNavigator,
+    hasDrawer
 };
 
 const styles = StyleSheet.create({

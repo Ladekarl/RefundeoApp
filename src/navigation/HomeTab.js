@@ -1,14 +1,19 @@
 import {TabNavigator} from 'react-navigation';
-import OverviewScreen from '../components/Overview';
+import OverviewScreen from '../containers/Overview';
 import colors from '../shared/colors';
 import {Platform} from 'react-native';
+import ScannerScreen from '../components/Scanner';
 
 const HomeTab = TabNavigator({
     Overview: {
         screen: OverviewScreen
+    },
+    Scanner: {
+        screen: ScannerScreen
     }
 }, {
     animationEnabled: true,
+    swipeEnabled: true,
     tabBarOptions: {
         activeTintColor: colors.activeTabColor,
         inactiveTintColor: colors.inactiveTabColor,

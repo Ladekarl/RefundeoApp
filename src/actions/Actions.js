@@ -13,6 +13,7 @@ export default {
     closeDrawer,
     navigateSettings,
     navigateDrawerSettings,
+    navigateScanner,
     navigateDrawerHome,
     openModal,
     closeModal,
@@ -47,6 +48,12 @@ function navigateAndResetToLogin() {
 function navigateLogOut() {
     return {
         type: types.NAVIGATE_LOG_OUT
+    }
+}
+
+function navigateScanner() {
+    return {
+        type: types.NAVIGATE_SCANNER
     }
 }
 
