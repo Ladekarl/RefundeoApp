@@ -27,7 +27,7 @@ export default class App extends Component {
             hitSlop: {top: 15, right: 15, left: 15, bottom: 15}
         };
         const customActivityIndicator = {
-            color: colors.inactiveTabColor
+            color: colors.activeTabColor
         };
 
         setCustomText(customTextProps);

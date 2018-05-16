@@ -144,7 +144,7 @@ class InitialScreen extends Component {
                 }
                 {fetching &&
                 <View style={styles.loadingContainer}>
-                    <ActivityIndicator size='large' color={colors.inactiveTabColor} style={styles.activityIndicator}/>
+                    <ActivityIndicator size='large' color={colors.activeTabColor} style={styles.activityIndicator}/>
                 </View>
                 }
             </View>

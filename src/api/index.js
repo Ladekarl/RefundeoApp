@@ -1,20 +1,8 @@
-import LocalStorage from '../storage';
-import {strings} from '../shared/i18n';
+import Helpers from './helpers';
 
 const API_URL = 'https://refundeo20180331121625.azurewebsites.net';
 
-async function authHeader() {
-    let user = await LocalStorage.getUser();
-
-    if (user && user.token) {
-        return {'Authorization': 'Bearer ' + user.token};
-    } else {
-        return {};
-    }
-}
-
 export default class Api {
-
     static async getTokenFacebook(accessToken) {
         const requestOptions = {
             method: 'POST',
@@ -30,7 +18,7 @@ export default class Api {
 
         const user = await response.json();
 
-        return this.saveUser(user);
+        return Helpers.saveUser(user);
     }
 
     static async getToken(username, password) {
@@ -47,7 +35,7 @@ export default class Api {
 
         const response = await fetch(`${API_URL}/Token`, requestOptions);
 
-        await this.checkLoginResponse(response);
+        await Helpers.checkLoginResponse(response);
 
         if (!response.ok) {
             throw response.statusText;
@@ -55,10 +43,10 @@ export default class Api {
 
         const user = await response.json();
 
-        return this.saveUser(user);
+        return Helpers.saveUser(user);
     }
 
-    static async RefreshToken(refreshToken) {
+    static async getTokenFromRefreshToken(refreshToken) {
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -69,44 +57,29 @@ export default class Api {
             })
         };
 
-        const response = await fetch(`${API_URL}/Token`, requestOptions);
+        const response = await fetch(`${API_URL}/Token/Facebook`, requestOptions);
 
         if (!response.ok) {
             throw response.statusText;
         }
 
         const user = await response.json();
-        if (user && user.token) {
-            user.refreshToken = refreshToken;
-            await LocalStorage.setUser(user);
-        }
 
-        return user;
+        return Helpers.saveUser(user);
     }
 
-    static async checkLoginResponse(response) {
-        if (response.status === 400) {
-            const error = await response.json();
-            switch (error.error) {
-                case -1:
-                    throw strings('login.wrong_password');
-                case -2:
-                    throw strings('login.user_does_not_exist');
-                case -3:
-                    throw strings('login.missing_password');
-                case -4:
-                    throw strings('login.missing_username')
-            }
-        }
-    }
+    static async getRefundCases() {
+        const requestOptions = {
+            method: 'GET',
+            headers: await Helpers.authHeader()
+        };
 
-    static async saveUser(user) {
-        if (user && user.token && user.roles && user.roles.indexOf('User') > -1) {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            await LocalStorage.setUser(user);
-        } else if (!user.roles || user.roles.indexOf('User') < 0) {
-            throw strings('login.user_not_customer');
+        const response = await fetch(`${API_URL}/api/user/refundcase`, requestOptions);
+
+        if (!response.ok) {
+            throw response.statusText;
         }
-        return user;
+
+        return await response.json();
     }
 }

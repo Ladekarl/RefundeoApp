@@ -1,7 +1,7 @@
 import {DrawerNavigator, StackNavigator} from 'react-navigation';
 import InitialScreen from '../containers/Initial';
 import LoginScreen from '../containers/Login';
-import SettingsScreen from '../components/Settings';
+import SettingsScreen from '../containers/Settings';
 import DrawerScreen from '../containers/Drawer';
 import RegisterScreen from '../containers/Register';
 import colors from '../shared/colors';
@@ -9,7 +9,7 @@ import {Platform, StyleSheet, TouchableOpacity, Dimensions} from 'react-native';
 import Icon from 'react-native-fa-icons';
 import React from 'react';
 import Header from '../containers/Header';
-import HomeNavigator from './HomeNavigator';
+import HomeTab from './HomeTab';
 
 const {width, height} = Dimensions.get('screen');
 const noHeaderNavigationOptions = {headerMode: 'none'};
@@ -23,10 +23,10 @@ const headerBackNavigationOptions = ({navigation}) => ({
         </TouchableOpacity>,
     headerTitleStyle: {
         fontSize: 20,
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.inactiveTabColor
+        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
     },
     headerStyle: styles.defaultHeaderStyle,
-    headerTintColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.inactiveTabColor
+    headerTintColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
 });
 
 const drawerPageNavigationOptions = ({navigation}) => ({
@@ -43,10 +43,10 @@ const drawerPageNavigationOptions = ({navigation}) => ({
     ,
     headerTitleStyle: {
         fontSize: 20,
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.inactiveTabColor
+        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
     },
     headerStyle: styles.defaultHeaderStyle,
-    headerTintColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.inactiveTabColor
+    headerTintColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
 });
 
 
@@ -58,7 +58,7 @@ const homeNavigatorOptions = () => ({
 const MainDrawerNavigator = DrawerNavigator({
     Home: {
         screen: StackNavigator({
-            Home: {screen: HomeNavigator, navigationOptions: homeNavigatorOptions}
+            Home: {screen: HomeTab, navigationOptions: homeNavigatorOptions}
         })
     },
     Settings: {
@@ -71,13 +71,13 @@ const MainDrawerNavigator = DrawerNavigator({
     contentOptions: {
         activeBackgroundColor: colors.backgroundColor,
         activeTintColor: colors.activeTabColor,
-        inactiveTintColor: colors.inactiveTabColor
+        inactiveTintColor: colors.activeTabColor
     },
     drawerWidth: Math.min(height, width) * 0.8
 });
 
 const MainStackNavigator = StackNavigator({
-    Home: {screen: HomeNavigator, navigationOptions: homeNavigatorOptions},
+    Home: {screen: HomeTab, navigationOptions: homeNavigatorOptions},
     Settings: {screen: SettingsScreen, navigationOptions: headerBackNavigationOptions}
 });
 
@@ -119,11 +119,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
         height: undefined,
         width: undefined,
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.inactiveTabColor
+        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
     },
     defaultHeaderStyle: {
         elevation: 1,
-        backgroundColor: Platform.OS === 'ios' ? colors.inactiveTabColor : colors.backgroundColor,
+        backgroundColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor,
         margin: 0,
         paddingBottom: Platform.OS === 'ios' ? 10 : 0
     }

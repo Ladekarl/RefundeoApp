@@ -21,7 +21,8 @@ export default {
     loginFacebook,
     logout,
     navigateBack,
-    facebookLoginError
+    facebookLoginError,
+    getRefundCases
 };
 
 function navigateInitial() {
@@ -30,6 +31,7 @@ function navigateInitial() {
             if (user && user.token) {
                 dispatch(loginSuccess(user));
                 dispatch(navigateAndResetToMainFlow());
+                dispatch(getRefundCases());
             } else {
                 dispatch(navigateAndResetToLogin());
             }
@@ -135,11 +137,12 @@ function loginFacebook(accessToken) {
     return dispatch => {
         dispatch({type: types.AUTH_LOGGING_IN});
         Api.getTokenFacebook(accessToken).then(user => {
-            if (!user) {
-                dispatch(facebookLoginError(strings('login.error_user_does_not_exist_in_database')));
-            } else {
+            if (user && user.token) {
                 dispatch(loginSuccess(user));
-                dispatch(navigateAndResetToMainFlow())
+                dispatch(navigateAndResetToMainFlow());
+                dispatch(getRefundCases());
+            } else {
+                dispatch(facebookLoginError(strings('login.error_user_does_not_exist_in_database')));
             }
         }).catch(() => {
             dispatch(facebookLoginError(strings('login.unknown_error')));
@@ -157,16 +160,48 @@ function login(username, password) {
     return dispatch => {
         dispatch({type: types.AUTH_LOGGING_IN});
         Api.getToken(username, password).then(user => {
-            if (!user) {
-                dispatch(loginError(strings('login.error_user_does_not_exist_in_database')));
-            } else {
+            if (user && user.token) {
                 dispatch(loginSuccess(user));
-                dispatch(navigateAndResetToMainFlow())
+                dispatch(navigateAndResetToMainFlow());
+                dispatch(getRefundCases());
+            } else {
+                dispatch(loginError(strings('login.error_user_does_not_exist_in_database')));
             }
         }).catch(() => {
             dispatch(loginError(strings('login.unknown_error')));
         });
     };
+}
+
+function getRefundCases() {
+    return dispatch => {
+        dispatch(gettingRefundCases());
+        Api.getRefundCases().then((refundCases) => {
+            dispatch(getRefundCasesSuccess(refundCases));
+        }).catch(() => {
+            dispatch(getRefundCasesError('Some error text'));
+        });
+    }
+}
+
+function gettingRefundCases() {
+    return {
+        type: types.REFUND_GETTING_REFUND_CASES
+    }
+}
+
+function getRefundCasesSuccess(refundCases = []) {
+    return {
+        type: types.REFUND_GET_REFUND_CASES_SUCCESS,
+        refundCases
+    }
+}
+
+function getRefundCasesError(error = '') {
+    return {
+        type: types.REFUND_GET_REFUND_CASES_ERROR,
+        getRefundCasesError: error
+    }
 }
 
 function logout() {
@@ -183,14 +218,14 @@ function navigateBack() {
     return {type: types.NAVIGATE_BACK};
 }
 
-function loginError(error) {
+function loginError(error = '') {
     return {
         type: types.AUTH_LOGIN_ERROR,
         loginError: error.toString()
     }
 }
 
-function facebookLoginError(error) {
+function facebookLoginError(error = '') {
     return {
         type: types.AUTH_FACEBOOK_LOGIN_ERROR,
         facebookLoginError: error.toString()

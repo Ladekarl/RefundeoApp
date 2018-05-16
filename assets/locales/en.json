@@ -9,12 +9,19 @@
     "cancel": "CANCEL"
   },
   "settings": {
-    "settings": "Settings"
+    "settings": "Settings",
+    "profile": "Profile",
+    "name": "Name:",
+    "email": "Email or username:",
+    "change_password": "Change password",
+    "country": "Country",
+    "bank_reg": "Bank reg nr.",
+    "bank_account": "Bank account nr."
   },
   "register": {
     "register": "Sign up",
     "register_button": "SIGN UP",
-    "facebook_button": "JOIN US WITH FACEBOOK"
+    "facebook_button": "LOGIN WITH FACEBOOK"
   },
   "login": {
     "login_button": "LOGIN",
