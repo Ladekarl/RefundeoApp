@@ -134,7 +134,7 @@ class LoginScreen extends Component {
                                        textAlignVertical={'center'}
                                        editable={!fetching}
                                        underlineColorAndroid='transparent'
-                                       selectionColor={colors.inactiveTabColor}
+                                       selectionColor={colors.activeTabColor}
                                        value={this.state.username}
                                        onChangeText={username => this.setState({username})}/>
                         </View>
@@ -146,7 +146,7 @@ class LoginScreen extends Component {
                                        editable={!fetching}
                                        autoCapitalize='none'
                                        underlineColorAndroid='transparent'
-                                       selectionColor={colors.inactiveTabColor}
+                                       selectionColor={colors.activeTabColor}
                                        placeholder={strings('login.password_placeholder')}
                                        value={this.state.password}
                                        onChangeText={password => this.setState({password})}/>
@@ -165,7 +165,7 @@ class LoginScreen extends Component {
                 </View>
                 {fetching &&
                 <View style={styles.loadingContainer}>
-                    <ActivityIndicator size='large' color={colors.inactiveTabColor} style={styles.activityIndicator}/>
+                    <ActivityIndicator size='large' color={colors.activeTabColor} style={styles.activityIndicator}/>
                 </View>
                 }
                 <ModalScreen
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0,
-        borderColor: colors.inactiveTabColor,
+        borderColor: colors.activeTabColor,
     },
     firstInput: {
         marginBottom: 20
@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginLeft: 5,
         marginRight: 5,
-        color: colors.inactiveTabColor
+        color: colors.activeTabColor
     },
     activityIndicator: {
         elevation: 10

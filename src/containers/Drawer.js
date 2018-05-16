@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     headerContainer: {
         flex: 0.5,
         justifyContent: 'center',
-        backgroundColor: Platform.OS === 'ios' ? colors.inactiveTabColor : colors.backgroundColor
+        backgroundColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor
     },
     headerIconTextContainer: {
         flexDirection: 'row',
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
         elevation: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.inactiveTabColor
+        backgroundColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
     },
     footerIconContainer: {
         marginTop: 10,
@@ -111,13 +111,13 @@ const styles = StyleSheet.create({
         fontSize: 35,
         height: undefined,
         width: undefined,
-        color: Platform.OS === 'ios' ? colors.inactiveTabColor : colors.backgroundColor
+        color: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor
     },
     footerIcon: {
         fontSize: 25,
         height: undefined,
         width: undefined,
-        color: colors.inactiveTabColor,
+        color: colors.activeTabColor,
         margin: 5
     },
     headerText: {
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         fontWeight: 'bold',
         fontSize: 15,
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.inactiveTabColor
+        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
     },
     divider: {
         borderBottomWidth: StyleSheet.hairlineWidth

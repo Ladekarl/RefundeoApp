@@ -4,6 +4,7 @@ import types from '../actions/ActionTypes';
 
 const initialState = {
     currentRoute: 'Initial',
+    drawerRoute: '',
     drawerOpen: false,
     modal: {},
     ...RootNavigator.router.getStateForAction(NavigationActions.navigate({routeName: 'loginFlow'}))
@@ -16,39 +17,49 @@ export default function navigationReducer(state = initialState, action = {}) {
         case types.NAVIGATE_BACK: {
             const navigationAction = NavigationActions.back({});
             const backState = RootNavigator.router.getStateForAction(navigationAction, state);
+            let currentRoute = getCurrentRoute(backState);
             nextState = {
                 ...backState,
-                currentRoute: getCurrentRoute(backState)
+                currentRoute: currentRoute,
+                drawerRoute: currentRoute
             };
             break;
         }
         case types.NAVIGATE_LOGGED_IN: {
             nextState = {
+                ...state,
                 ...navigateAndReset('mainFlow', state),
-                currentRoute: 'Home'
+                currentRoute: 'Home',
+                drawerRoute: 'Home'
             };
             break;
         }
         case types.NAVIGATE_LOGGED_OUT: {
             nextState = {
+                ...state,
                 ...navigateAndReset('Initial', state, true),
-                currentRoute: 'Initial'
+                currentRoute: 'Initial',
+                drawerRoute: ''
             };
             break;
         }
         case types.NAVIGATE_LOG_IN: {
             const navigationAction = NavigationActions.navigate({routeName: 'Login'});
             nextState = {
+                ...state,
                 ...RootNavigator.router.getStateForAction(navigationAction, state),
-                currentRoute: 'Login'
+                currentRoute: 'Login',
+                drawerRoute: ''
             };
             break;
         }
         case types.NAVIGATE_REGISTER: {
             const navigationAction = NavigationActions.navigate({routeName: 'Register'});
             nextState = {
+                ...state,
                 ...RootNavigator.router.getStateForAction(navigationAction, state),
-                currentRoute: 'Register'
+                currentRoute: 'Register',
+                drawerRoute: ''
             };
             break;
         }
@@ -60,6 +71,7 @@ export default function navigationReducer(state = initialState, action = {}) {
             const routeName = state.drawerOpen ? 'DrawerClose' : 'DrawerOpen';
             const navigationAction = NavigationActions.navigate({routeName});
             nextState = {
+                ...state,
                 ...RootNavigator.router.getStateForAction(navigationAction, state),
                 drawerOpen: !state.drawerOpen
             };
@@ -68,6 +80,7 @@ export default function navigationReducer(state = initialState, action = {}) {
         case types.NAVIGATE_OPEN_DRAWER: {
             const navigationAction = NavigationActions.navigate({routeName: 'DrawerOpen'});
             nextState = {
+                ...state,
                 ...RootNavigator.router.getStateForAction(navigationAction, state),
                 drawerOpen: true
             };
@@ -76,6 +89,7 @@ export default function navigationReducer(state = initialState, action = {}) {
         case types.NAVIGATE_CLOSE_DRAWER: {
             const navigationAction = NavigationActions.navigate({routeName: 'DrawerClose'});
             nextState = {
+                ...state,
                 ...RootNavigator.router.getStateForAction(navigationAction, state),
                 drawerOpen: false
             };
@@ -84,15 +98,19 @@ export default function navigationReducer(state = initialState, action = {}) {
         case types.NAVIGATE_SETTINGS: {
             const navigationAction = NavigationActions.navigate({routeName: 'Settings'});
             nextState = {
+                ...state,
                 ...RootNavigator.router.getStateForAction(navigationAction, state),
-                currentRoute: 'Settings'
+                currentRoute: 'Settings',
+                drawerRoute: 'Settings'
             };
             break;
         }
         case types.NAVIGATE_DRAWER_SETTINGS: {
             nextState = {
+                ...state,
                 ...navigateDrawer('Settings', state),
                 currentRoute: 'Settings',
+                drawerRoute: 'Settings',
                 drawerOpen: false,
             };
             break;
@@ -100,23 +118,36 @@ export default function navigationReducer(state = initialState, action = {}) {
         case types.NAVIGATE_SCANNER: {
             const navigationAction = NavigationActions.navigate({routeName: 'Scanner'});
             nextState = {
+                ...state,
                 ...RootNavigator.router.getStateForAction(navigationAction, state),
-                currentRoute: 'Scanner'
+                currentRoute: 'Scanner',
+                drawerRoute: 'Home'
             };
             break;
         }
         case types.NAVIGATE_DRAWER_HOME: {
             nextState = {
+                ...state,
                 ...navigateDrawer('Home', state),
                 currentRoute: 'Home',
+                drawerRoute: 'Home',
                 drawerOpen: false,
             };
             break;
         }
         case NavigationActions.NAVIGATE: {
             nextState = {
+                ...state,
                 ...RootNavigator.router.getStateForAction(action, state),
                 drawerOpen: action.routeName === 'DrawerOpen'
+            };
+            break;
+        }
+        case NavigationActions.COMPLETE_TRANSITION: {
+            nextState = {
+                ...state,
+                ...RootNavigator.router.getStateForAction(action, state),
+                currentRoute: action.key,
             };
             break;
         }
@@ -140,6 +171,7 @@ export default function navigationReducer(state = initialState, action = {}) {
         }
         default:
             nextState = {
+                ...state,
                 ...RootNavigator.router.getStateForAction(action, state)
             };
             break;
@@ -159,9 +191,9 @@ const navigateAndReset = (routeName, state, isNested) => {
 };
 
 const navigateDrawer = (routeName, state) => {
-    let currentRoute = state.currentRoute;
+    let drawerRoute = state.drawerRoute;
     let action;
-    if (currentRoute !== routeName) {
+    if (drawerRoute !== routeName) {
         action = NavigationActions.navigate({
             routeName
         });

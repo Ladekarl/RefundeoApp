@@ -4,8 +4,8 @@ export default new ThemeManager({
     refundeoTheme: {
         backgroundColor: '#faf7f7',
         slightlyDarkerColor: '#f0eded',
-        activeTabColor: '#b5b5b5',
-        inactiveTabColor: '#303880',
+        inactiveTabColor: '#b5b5b5',
+        activeTabColor: '#303880',
         logoutIconColor: '#dd1d00',
         logoutTextColor: '#dd513d',
         cancelButtonColor: '#ac3429',

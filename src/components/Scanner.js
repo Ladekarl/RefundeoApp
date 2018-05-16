@@ -14,22 +14,16 @@ export default class ScannerScreen extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            shouldShowCamera: false
-        }
     }
 
     onSuccess = (e) => {
         Alert.alert('QR Kode blev scannet', JSON.stringify(e.data));
     };
 
-    qrCodeScanner;
-
     render() {
         return (
             <View style={styles.container}>
                 <QRCodeScanner
-                    ref={ref => this.qrCodeScanner = ref}
                     onRead={this.onSuccess}
                     containerStyle={styles.cameraContainer}
                     showMarker={false}
@@ -42,7 +36,7 @@ export default class ScannerScreen extends Component {
                         </View>
                     }
                     cameraStyle={styles.cameraStyle}
-                />}
+                />
             </View>
         );
     }
@@ -62,6 +56,7 @@ const styles = StyleSheet.create({
     },
     centerText: {
         fontSize: 15,
+        fontWeight: 'bold'
     },
     cameraStyle: {
         borderRadius: 2
@@ -73,6 +68,6 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     tabBarIcon: {
-        fontSize: Platform.OS === 'ios' ? 20 : 15
+        fontSize: 20
     }
 });

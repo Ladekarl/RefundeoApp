@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View, Platform} from 'react-native';
+import {RefreshControl, ScrollView, StyleSheet, Platform} from 'react-native';
 import Icon from 'react-native-fa-icons';
 import colors from '../shared/colors';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import Actions from '../actions/Actions';
 import PropTypes from 'prop-types';
+import EmptyOverviewScreen from '../components/EmptyOverview';
+import RefundCaseScreen from '../components/RefundCase';
 
 class OverviewScreen extends Component {
 
@@ -16,14 +18,12 @@ class OverviewScreen extends Component {
     };
 
     static propTypes = {
-        actions: PropTypes.object.isRequired
+        actions: PropTypes.object.isRequired,
+        state: PropTypes.object.isRequired
     };
 
     constructor(props) {
         super(props);
-        this.state = {
-            shouldShowCamera: false
-        }
     }
 
     navigateScanner = () => {
@@ -31,27 +31,25 @@ class OverviewScreen extends Component {
     };
 
     render() {
+        const {actions, state} = this.props;
         return (
-            <View style={styles.container}>
-                <View>
-                    <View style={styles.topContainer}>
-                        <Text style={styles.buttonText}>
-                            Velkommen til Refundeo
-                        </Text>
-                    </View>
-                    <View style={styles.middleContainer}>
-                        <TouchableOpacity style={styles.logoButtonContainer} onPress={this.navigateScanner}>
-                            <Image style={styles.logoButton}
-                                   source={require('../../assets/images/refundeo_logo.png')}/>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.bottomContainer}>
-                        <Text style={styles.buttonText}>
-                            For at starte skal du trykke på knappen og scanne QR koden på din kvittering
-                        </Text>
-                    </View>
-                </View>
-            </View>
+            <ScrollView
+                style={styles.container}
+                contentContainerStyle={styles.scrollContainer}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={state.fetchingRefundCases}
+                        onRefresh={actions.getRefundCases}
+                    />
+                }>
+                {!state.fetchingRefundCases && state.refundCases.length === 0 &&
+                <EmptyOverviewScreen actions={actions}/>
+                }
+                {state.refundCases.map((key, refundCase) => (
+                    // TODO: List all refund cases and open refundcasescreen on click
+                    <RefundCaseScreen key={key} actions={actions} refundCase={refundCase}/>
+                ))}
+            </ScrollView>
         );
     }
 }
@@ -60,40 +58,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.backgroundColor,
-        justifyContent: 'center',
-        alignItems: 'center',
+    },
+    scrollContainer: {
+        flex: 1,
+        backgroundColor: colors.backgroundColor,
+        justifyContent: 'space-between',
         padding: 10
-    },
-    logoButtonContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignSelf: 'center',
-        backgroundColor: colors.slightlyDarkerColor,
-        borderWidth: StyleSheet.hairlineWidth,
-        borderRadius: 200,
-        zIndex: 0
-    },
-    logoButton: {
-        zIndex: 9999,
-        margin: 15
-    },
-    buttonText: {
-        textAlign: 'center',
-        fontSize: 18,
-        padding: 32
-    },
-    bottomContainer: {
-        flex: 1
-    },
-    middleContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    topContainer: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        alignItems: 'center'
     },
     tabBarIcon: {
         fontSize: Platform.OS === 'ios' ? 20 : 15
@@ -101,11 +71,9 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-    const navigation = state.navigationReducer;
     return {
         state: {
-            navigation,
-            ...state.authReducer
+            ...state.refundReducer
         }
     }
 };

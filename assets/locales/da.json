@@ -9,7 +9,14 @@
     "cancel": "ANNULLER"
   },
   "settings": {
-    "settings": "Indstillinger"
+    "settings": "Indstillinger",
+    "profile": "Profil",
+    "name": "Navn:",
+    "email": "Email eller brugernavn:",
+    "change_password": "Skift adgangskode",
+    "country": "Land",
+    "bank_reg": "Bank reg nr.",
+    "bank_account": "Bank konto nr."
   },
   "register": {
     "register": "Tilmeld",
