@@ -19,7 +19,7 @@ const headerBackNavigationOptions = ({navigation}) => ({
     headerLeft:
         <TouchableOpacity style={styles.defaultHeaderLeftButton}
                           onPress={() => navigation.goBack()}>
-            <Icon name='arrow-left' style={styles.defaultHeaderLeftIcon}/>
+            <Icon name={Platform.OS === 'ios' ? 'angle-left' : 'arrow-left'} style={styles.defaultHeaderLeftIcon}/>
         </TouchableOpacity>,
     headerTitleStyle: {
         fontSize: 20,
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     defaultHeaderLeftIcon: {
-        fontSize: 20,
+        fontSize: Platform.OS === 'ios' ? 25 : 20,
         height: undefined,
         width: undefined,
         color: Platform.OS === 'ios' ? colors.backgroundColor : colors.inactiveTabColor

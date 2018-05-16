@@ -21,10 +21,12 @@ const HomeTab = TabNavigator({
             backgroundColor: colors.backgroundColor,
         },
         style: {
-            paddingTop: Platform.OS === 'ios' ? 20 : 2,
-            paddingBottom: Platform.OS === 'ios' ? 20 : 2,
+            paddingTop: Platform.OS === 'ios' ? 0 : 2,
+            paddingBottom: Platform.OS === 'ios' ? 0 : 2,
             backgroundColor: colors.backgroundColor,
             elevation: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
         },
         labelStyle: {
             display: 'none'

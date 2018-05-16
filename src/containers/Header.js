@@ -52,10 +52,10 @@ const styles = StyleSheet.create({
         paddingLeft: 25,
         paddingRight: 25,
         paddingTop: 20,
-        paddingBottom: 10
+        paddingBottom: 9
     },
     headerText: {
-        fontSize: 20,
+        fontSize: 16,
         color: Platform.OS === 'ios' ? colors.backgroundColor : colors.inactiveTabColor,
         fontWeight: 'bold'
     },
@@ -72,6 +72,8 @@ const styles = StyleSheet.create({
         fontSize: Platform.OS === 'ios' ? 20 : 15,
         height: undefined,
         width: undefined,
+        alignItems: 'center',
+        justifyContent: 'center',
         color: Platform.OS === 'ios' ? colors.backgroundColor : colors.backgroundColor
     }
 });

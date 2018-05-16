@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Alert, StyleSheet, Text, View} from 'react-native';
+import {Alert, StyleSheet, Text, View, Platform} from 'react-native';
 import Icon from 'react-native-fa-icons';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import colors from '../shared/colors';
@@ -72,4 +72,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center'
     },
+    tabBarIcon: {
+        fontSize: Platform.OS === 'ios' ? 20 : 15
+    }
 });
