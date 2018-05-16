@@ -23,27 +23,27 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>CFBundleURLTypes</key>
-    <array>
-        <dict>
-        <key>CFBundleURLSchemes</key>
-        <array>
-            <string>fb618541648483874</string>
-        </array>
-        </dict>
-    </array>
-    <key>FacebookAppID</key>
-    <string>618541648483874</string>
-    <key>FacebookDisplayName</key>
-    <string>Refundeo</string>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb618541648483874</string>
+			</array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>618541648483874</string>
+	<key>FacebookDisplayName</key>
+	<string>Refundeo</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>fbapi</string>
-        <string>fb-messenger-share-api</string>
-        <string>fbauth2</string>
-        <string>fbshareextension</string>
-    </array>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-share-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>

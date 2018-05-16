@@ -91,11 +91,11 @@ const styles = StyleSheet.create({
         width: undefined,
         alignItems: 'center',
         justifyContent: 'center',
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.backgroundColor
+        color: colors.backgroundColor
     },
     noDrawerIcon: {
-        fontSize: 25,
-        color: colors.activeTabColor
+        fontSize: 18,
+        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
     }
 });
 

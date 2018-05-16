@@ -12,6 +12,7 @@ export default class ModalScreen extends Component {
         isPicker: PropTypes.bool,
         pickerItems: PropTypes.array,
         modalTitle: PropTypes.string.isRequired,
+        noChildren: PropTypes.bool,
         visible: PropTypes.bool.isRequired,
         onSubmit: PropTypes.func,
         onCancel: PropTypes.func,
@@ -51,7 +52,8 @@ export default class ModalScreen extends Component {
             onBack,
             noCancelButton,
             noSubmitButton,
-            children
+            children,
+            noChildren
         } = this.props;
 
         return (
@@ -76,7 +78,7 @@ export default class ModalScreen extends Component {
                                 </Picker>
                             </View>
                             }
-                            {children}
+                            {!noChildren && children}
                         </View>
                         {(!noCancelButton || !noSubmitButton) &&
                         <View style={styles.modalBottomContainer}>
@@ -111,10 +113,10 @@ const styles = StyleSheet.create({
         left: 0,
         top: 0,
         bottom: 0,
+        height: '100%',
         alignItems: 'center',
-        flex: 1,
         justifyContent: 'center',
-        backgroundColor: 'rgba(0,0,0,0.5)'
+        backgroundColor: 'rgba(0,0,0,0.2)'
     },
     modalInnerContainer: {
         maxHeight: '90%',
@@ -123,7 +125,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 1,
-        flex: 1,
         backgroundColor: colors.backgroundColor
     },
     modalTopContainer: {
@@ -132,11 +133,11 @@ const styles = StyleSheet.create({
         padding: 12
     },
     modalCenterContainer: {
+        width: '100%',
         borderBottomWidth: StyleSheet.hairlineWidth,
         borderTopWidth: StyleSheet.hairlineWidth,
         paddingLeft: 12,
         paddingRight: 12,
-        flex: 1
     },
     modalBottomContainer: {
         justifyContent: 'center',

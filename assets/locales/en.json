@@ -12,11 +12,14 @@
     "settings": "Settings",
     "profile": "Profile",
     "name": "Name:",
+    "first_name": "First name:",
+    "last_name": "Last name:",
     "email": "Email or username:",
     "change_password": "Change password",
     "country": "Country",
     "bank_reg": "Bank reg nr.",
-    "bank_account": "Bank account nr."
+    "bank_account": "Bank account nr.",
+    "sign_out": "Sign out"
   },
   "register": {
     "register": "Sign up",

@@ -15,8 +15,8 @@ const HomeTab = TabNavigator({
     animationEnabled: true,
     swipeEnabled: true,
     tabBarOptions: {
-        activeTintColor: Platform.OS === 'ios' ? colors.inactiveTabColor : colors.activeTabColor,
-        inactiveTintColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.inactiveTabColor,
+        activeTintColor: colors.activeTabColor,
+        inactiveTintColor: colors.inactiveTabColor,
         tabStyle: {
             backgroundColor: colors.backgroundColor,
         },

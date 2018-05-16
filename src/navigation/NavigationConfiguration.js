@@ -22,7 +22,7 @@ const headerBackNavigationOptions = ({navigation}) => ({
             <Icon name={Platform.OS === 'ios' ? 'angle-left' : 'arrow-left'} style={styles.defaultHeaderLeftIcon}/>
         </TouchableOpacity>,
     headerTitleStyle: {
-        fontSize: 20,
+        fontSize: 18,
         color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
     },
     headerStyle: styles.defaultHeaderStyle,

@@ -1,6 +1,13 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {
+    Text,
+    StyleSheet,
+    View,
+    TouchableOpacity,
+    ImageBackground,
+} from 'react-native';
 import colors from '../shared/colors';
+
 import PropTypes from 'prop-types';
 import {strings} from '../shared/i18n';
 
@@ -10,51 +17,127 @@ export default class RefundCaseScreen extends Component {
         refundCase: PropTypes.object.isRequired
     };
 
-    navigateScanner = () => {
-        this.props.actions.navigateScanner();
-    };
-
     render() {
         const {actions, refundCase} = this.props;
+
         return (
-            <View>
-                <View style={styles.rowContainer}>
-                    <Text style={styles.leftText}>Amount</Text>
-                    <Text style={styles.rightText}>{refundCase.amount}</Text>
+            <TouchableOpacity
+                    style={styles.container}
+                    onPress={() => {}}>
+                <View style={styles.cardContainer}>
+                    <ImageBackground
+                        style={styles.bannerImage}
+                        source={require('../../assets/images/refundeo_logo.png')}
+                        borderRadius={2}>
+                        <View style={styles.bannerTextContainer}>
+                            <View style={styles.bannerTextBarContainer}>
+                                <Text style={styles.cityText}>name</Text>
+                                <Text style={styles.cityText}>distance</Text>
+                            </View>
+                        </View>
+                    </ImageBackground>
+                    <View style={styles.contentContainer}>
+                        <View style={styles.descriptionContainer}>
+                            <Text style={styles.descriptionText}>Description</Text>
+                        </View>
+                        <View style={styles.temperatureContainer}>
+                            <Text
+                                style={styles.temperatureText}>temp</Text>
+                        </View>
+                        <View style={styles.weatherDetailsContainer}>
+                            <View style={styles.weatherDetailContainer}>
+                                <Text
+                                    style={styles.weatherDetailsText}>wind</Text>
+                            </View>
+                            <View style={styles.weatherDetailContainer}>
+                                <Text
+                                    style={styles.weatherDetailsText}>weather</Text>
+                            </View>
+                            <View style={styles.weatherDetailContainer}>
+                                <Text
+                                    style={styles.weatherDetailsText}>pressure</Text>
+                            </View>
+                        </View>
+                    </View>
                 </View>
-                <View style={styles.rowContainer}>
-                    <Text style={styles.leftText}>Is accepted</Text>
-                    <Text style={styles.rightText}>{refundCase.isAccepted}</Text>
-                </View>
-                <View style={styles.rowContainer}>
-                    <Text style={styles.leftText}>Is requested</Text>
-                    <Text style={styles.rightText}>{refundCase.isRequested}</Text>
-                </View>
-                <View style={styles.rowContainer}>
-                    <Text style={styles.leftText}>Refund amount</Text>
-                    <Text style={styles.rightText}>{refundCase.refundAmount}</Text>
-                </View>
-            </View>
+            </TouchableOpacity>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    rowContainer: {
+    container: {
+        justifyContent: 'flex-start',
+        backgroundColor: colors.backgroundColor,
+        padding: 3
+    },
+    cardContainer: {
+        height: 160,
+        marginBottom: 7,
+        backgroundColor: colors.weatherCardBackgroundColor,
+        borderRadius: 2,
+        elevation: 1,
+    },
+    bannerImage: {
+        width: '100%',
+        borderRadius: 50,
+        height: 70
+    },
+    bannerTextContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'flex-end'
+    },
+    bannerTextBarContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        width: '100%',
+        padding: 3,
+        opacity: 0.7,
+        backgroundColor: colors.weatherBannerBackgroundColor,
+        paddingLeft: 10,
+        paddingRight: 10
+    },
+    cityText: {
+        fontSize: 15,
+        color: colors.weatherBannerTextColor,
+    },
+    contentContainer: {
+        flex: 1,
+        justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 2,
-        marginTop: 2,
-        backgroundColor: colors.whiteColor,
-        padding: 15,
+        flexDirection: 'row',
+        margin: 20
     },
-    leftText: {
+    descriptionContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        minWidth: 1,
+    },
+    descriptionText: {
+        textAlign: 'center'
+    },
+    temperatureContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
+    },
+    temperatureText: {
+        fontSize: 20,
+    },
+    weatherDetailsContainer: {
+        flex: 1
+    },
+    weatherDetailContainer: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        padding: 2
+    },
+    weatherDetailsText: {
+        fontSize: 12,
+        paddingTop: 1,
         marginLeft: 10
-    },
-    rightText: {
-        marginRight: 10,
-        color: colors.submitButtonColor
     }
 });
-

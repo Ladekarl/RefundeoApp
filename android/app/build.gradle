@@ -148,6 +148,7 @@ android {
 }
 
 dependencies {
+    api project(':react-native-linear-gradient')
     api project(':react-native-fbsdk')
     api project(':react-native-camera')
     api project(':react-native-image-picker')

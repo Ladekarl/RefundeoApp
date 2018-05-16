@@ -39,13 +39,14 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new FBSDKPackage(mCallbackManager),
-            new RNCameraPackage(),
+            new LinearGradientPackage(),
             new ImagePickerPackage(),
             new RNI18nPackage(),
             new RNFSPackage(),
             new RNFetchBlobPackage(),
-            new ReactNativeDocumentPicker()
+            new ReactNativeDocumentPicker(),
+            new RNCameraPackage(),
+            new FBSDKPackage(mCallbackManager)
       );
     }
 

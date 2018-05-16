@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {Alert, StyleSheet, Text, View, Platform} from 'react-native';
+import {Alert, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-fa-icons';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import colors from '../shared/colors';
+import LinearGradient from 'react-native-linear-gradient';
 
 export default class ScannerScreen extends Component {
 
@@ -22,7 +23,7 @@ export default class ScannerScreen extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <LinearGradient colors={[colors.activeTabColor, colors.gradientColor]} style={styles.container}>
                 <QRCodeScanner
                     onRead={this.onSuccess}
                     containerStyle={styles.cameraContainer}
@@ -37,7 +38,7 @@ export default class ScannerScreen extends Component {
                     }
                     cameraStyle={styles.cameraStyle}
                 />
-            </View>
+            </LinearGradient>
         );
     }
 }
@@ -52,11 +53,12 @@ const styles = StyleSheet.create({
     },
     cameraContainer: {
         flex: 1,
-        backgroundColor: colors.backgroundColor,
+        backgroundColor: 'transparent'
     },
     centerText: {
         fontSize: 15,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: colors.backgroundColor
     },
     cameraStyle: {
         borderRadius: 2

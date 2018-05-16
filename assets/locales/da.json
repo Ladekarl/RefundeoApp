@@ -12,11 +12,14 @@
     "settings": "Indstillinger",
     "profile": "Profil",
     "name": "Navn:",
+    "first_name": "Fornavn:",
+    "last_name": "Efternavn:",
     "email": "Email eller brugernavn:",
     "change_password": "Skift adgangskode",
     "country": "Land",
     "bank_reg": "Bank reg nr.",
-    "bank_account": "Bank konto nr."
+    "bank_account": "Bank konto nr.",
+    "sign_out": "Log ud"
   },
   "register": {
     "register": "Tilmeld",
