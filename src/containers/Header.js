@@ -82,8 +82,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     leftLogo: {
-        height: 35,
-        width: 35
+        height: Platform.OS === 'ios' ? 20 : 25,
+        width: Platform.OS === 'ios' ? 20 : 25,
+        tintColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
     },
     drawerIcon: {
         fontSize: Platform.OS === 'ios' ? 20 : 15,
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
         color: colors.backgroundColor
     },
     noDrawerIcon: {
-        fontSize: 18,
+        fontSize: Platform.OS === 'ios' ? 20 : 25,
         color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
     }
 });

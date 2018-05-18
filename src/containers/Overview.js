@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {RefreshControl, ScrollView, StyleSheet, View} from 'react-native';
+import {RefreshControl, ScrollView, StyleSheet, Text, Platform} from 'react-native';
 import Icon from 'react-native-fa-icons';
 import colors from '../shared/colors';
 import {connect} from 'react-redux';
@@ -15,7 +15,7 @@ class OverviewScreen extends Component {
     // noinspection JSUnusedGlobalSymbols
     static navigationOptions = {
         tabBarIcon: ({tintColor}) => (
-            <Icon name='home' style={[styles.tabBarIcon, {color: tintColor}]}/>),
+            <Icon name='list' style={[styles.tabBarIcon, {color: tintColor}]}/>),
     };
 
     static propTypes = {
@@ -31,17 +31,23 @@ class OverviewScreen extends Component {
         this.props.actions.navigateScanner();
     };
 
+    getLinearGradientColors = () => {
+        return Platform.OS === 'ios' ? [colors.activeTabColor, colors.gradientColor] : [colors.whiteColor, colors.backgroundColor, colors.slightlyDarkerColor];
+    };
+
     render() {
         const {actions, state} = this.props;
         const {refundCases, fetchingRefundCases} = state;
 
         return (
-            <LinearGradient colors={[colors.activeTabColor, colors.gradientColor]} style={styles.linearGradient}>
+            <LinearGradient colors={this.getLinearGradientColors()} style={styles.linearGradient}>
                 <ScrollView
                     style={[styles.container, refundCases && refundCases.length > 0 ? styles.refundCasesContainer : {}]}
-                    contentContainerStyle={[styles.scrollContainer, refundCases && refundCases.length > 0 ? styles.refundCasesContainer : {}]}
+                    indicatorStyle={Platform.OS === 'ios' ? 'white' : 'black'}
+                    contentContainerStyle={[styles.scrollContainer, refundCases && refundCases.length > 0 ? styles.refundCaseScrollContainer : {}]}
                     refreshControl={
                         <RefreshControl
+                            tintColor={Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor}
                             refreshing={fetchingRefundCases}
                             onRefresh={actions.getRefundCases}
                         />
@@ -50,7 +56,6 @@ class OverviewScreen extends Component {
                     <EmptyOverviewScreen actions={actions}/>
                     }
                     {refundCases.map((refundCase, i) => (
-                        // TODO: List all refund cases and open refundcasescreen on click
                         <RefundCaseScreen key={i} actions={actions} refundCase={refundCase}/>
                     ))}
                 </ScrollView>
@@ -63,22 +68,29 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.backgroundColor,
+        paddingTop: Platform.OS === 'ios' ? 0 : 5,
+        paddingBottom: 5
     },
     refundCasesContainer: {
-        backgroundColor: 'transparent'
+        backgroundColor: 'transparent',
     },
     scrollContainer: {
         flex: 1,
         backgroundColor: colors.backgroundColor,
-        justifyContent: 'space-between',
-        padding: 10
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        paddingLeft: 5,
+        paddingRight: 5,
+    },
+    refundCaseScrollContainer: {
+        backgroundColor: 'transparent',
+        alignItems: 'center'
     },
     tabBarIcon: {
         fontSize: 20
     },
     linearGradient: {
-        flex: 1,
-        backgroundColor: colors.backgroundColor
+        flex: 1
     }
 });
 
@@ -87,13 +99,13 @@ const mapStateToProps = state => {
         state: {
             ...state.refundReducer
         }
-    }
+    };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         actions: bindActionCreators(Actions, dispatch)
-    }
+    };
 };
 
 export default connect(

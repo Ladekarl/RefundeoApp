@@ -31,58 +31,61 @@ class SettingsScreen extends Component {
             modalTitle: '',
             modalVisible: false,
             modalValue: '',
-            modalShowInput: false,
-            modalTextValue: ''
+            modalShowInput: false
         };
     }
 
+    componentWillUnmount() {
+        this.closeModal();
+    }
+
     showChangeFirstName = () => {
-        this.setModalState('Change first name', true, this.props.state.user.firstName, true);
+        this.setModalState(strings('settings.first_name_title'), true, this.props.state.user.firstName, true, strings('settings.first_name_placeholder'));
         this.submitFunction = () => {
-            this.props.actions.changeFirstName(this.state.modalTextValue);
-        }
+            this.props.actions.changeFirstName(this.state.modalValue);
+        };
     };
 
     showChangeLastName = () => {
-        this.setModalState('Change last name', true, this.props.state.user.lastName, true, strings('settings.last_name'));
+        this.setModalState(strings('settings.last_name_title'), true, this.props.state.user.lastName, true, strings('settings.last_name_placeholder'));
         this.submitFunction = () => {
-            this.props.actions.changeLastName(this.state.modalTextValue);
-        }
+            this.props.actions.changeLastName(this.state.modalValue);
+        };
     };
 
     showChangeCountry = () => {
-        this.setModalState('Change country', true, this.props.state.user.country, true, strings('settings.first_name'));
+        this.setModalState(strings('settings.country_title'), true, this.props.state.user.country, true, strings('settings.country_placeholder'));
         this.submitFunction = () => {
-            this.props.actions.changeCountry(this.state.modalTextValue);
-        }
+            this.props.actions.changeCountry(this.state.modalValue);
+        };
     };
 
     showChangeBankReg = () => {
-        this.setModalState('Change bank registration number', true, this.props.state.user.bankRegNumber, true, strings('settings.bank_reg'));
+        this.setModalState(strings('settings.bank_reg_title'), true, this.props.state.user.bankRegNumber, true, strings('settings.bank_reg_placeholder'));
         this.submitFunction = () => {
-            this.props.actions.changeRegNumber(this.state.modalTextValue);
-        }
+            this.props.actions.changeRegNumber(this.state.modalValue);
+        };
     };
 
     showChangeBankAccount = () => {
-        this.setModalState('Change bank account', true, this.props.state.user.bankAccountNumber, true, strings('settings.bank_account'));
+        this.setModalState(strings('settings.bank_account_title'), true, this.props.state.user.bankAccountNumber, true, strings('settings.bank_account_placeholder'));
         this.submitFunction = () => {
-            this.props.actions.changeAccountNumber(this.state.modalTextValue);
-        }
+            this.props.actions.changeAccountNumber(this.state.modalValue);
+        };
     };
 
     showChangePassword = () => {
-        this.setModalState('Change password', true, '', false, '');
+        this.setModalState(strings('settings.change_password_title'), true, '', false, '');
         this.submitFunction = () => {
-            this.props.actions.changePassword(this.state.modalTextValue);
-        }
+            this.props.actions.changePassword(this.state.modalValue);
+        };
     };
 
     showSignOut = () => {
-        this.setModalState('Are you sure you wish to sign out?', true, '', false, '');
+        this.setModalState(strings('settings.sign_out_title'), true, '', false, '');
         this.submitFunction = () => {
             this.props.actions.logout();
-        }
+        };
     };
 
     closeModal = () => {
@@ -91,9 +94,9 @@ class SettingsScreen extends Component {
         });
     };
 
-    changeModalTextValue = (text) => {
+    changeModalValue = (text) => {
         this.setState({
-            modalTextValue: text
+            modalValue: text
         });
     };
 
@@ -105,12 +108,10 @@ class SettingsScreen extends Component {
             modalShowInput: showInput,
             modalPlaceholder: placeholder
         });
-        if (showInput && this.modalTextInput) {
-            this.modalTextInput.focus();
-        }
     }
 
-    submitFunction = () => {};
+    submitFunction = () => {
+    };
 
     render() {
         const {state} = this.props;
@@ -148,7 +149,7 @@ class SettingsScreen extends Component {
                     <Text style={styles.rightText}>{state.user.bankAccountNumber}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.rowContainer} onPress={this.showSignOut}>
-                    <Text style={styles.leftRedText}>Sign out</Text>
+                    <Text style={styles.leftRedText}>{strings('settings.sign_out')}</Text>
                     <Text style={styles.rightText}>{state.user.bankAccountNumber}</Text>
                 </TouchableOpacity>
                 <ModalScreen
@@ -163,8 +164,11 @@ class SettingsScreen extends Component {
                             ref={this.modalTextInput}
                             style={styles.modalInput}
                             value={this.state.modalValue}
-                            onChangeText={this.changeModalTextValue}
+                            onChangeText={this.changeModalValue}
                             placeholder={this.state.modalPlaceholder}
+                            selectionColor={colors.inactiveTabColor}
+                            underlineColorAndroid={colors.activeTabColor}
+                            tintColor={colors.activeTabColor}
                             numberOfLines={1}
                             editable={true}
                         />
@@ -221,7 +225,9 @@ const styles = StyleSheet.create({
         marginBottom: 15
     },
     modalInput: {
-        fontSize: 18
+        textAlign: 'center',
+        minWidth: '50%',
+        fontSize: 18,
     }
 });
 

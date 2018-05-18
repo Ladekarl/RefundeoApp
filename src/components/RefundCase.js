@@ -3,13 +3,13 @@ import {
     Text,
     StyleSheet,
     View,
+    Platform,
     TouchableOpacity,
     ImageBackground,
 } from 'react-native';
 import colors from '../shared/colors';
 
 import PropTypes from 'prop-types';
-import {strings} from '../shared/i18n';
 
 export default class RefundCaseScreen extends Component {
     static propTypes = {
@@ -22,41 +22,40 @@ export default class RefundCaseScreen extends Component {
 
         return (
             <TouchableOpacity
-                    style={styles.container}
-                    onPress={() => {}}>
-                <View style={styles.cardContainer}>
-                    <ImageBackground
-                        style={styles.bannerImage}
-                        source={require('../../assets/images/refundeo_logo.png')}
-                        borderRadius={2}>
-                        <View style={styles.bannerTextContainer}>
-                            <View style={styles.bannerTextBarContainer}>
-                                <Text style={styles.cityText}>name</Text>
-                                <Text style={styles.cityText}>distance</Text>
-                            </View>
+                style={styles.container}
+                onPress={() => {
+                }}>
+                <ImageBackground
+                    style={styles.bannerImage}
+                    source={require('../../assets/images/refundeo_logo.png')}
+                    borderRadius={2}>
+                    <View style={styles.bannerTextContainer}>
+                        <View style={styles.bannerTextBarContainer}>
+                            <Text style={styles.cityText}>name</Text>
+                            <Text style={styles.cityText}>distance</Text>
                         </View>
-                    </ImageBackground>
-                    <View style={styles.contentContainer}>
-                        <View style={styles.descriptionContainer}>
-                            <Text style={styles.descriptionText}>Description</Text>
-                        </View>
-                        <View style={styles.temperatureContainer}>
+                    </View>
+                </ImageBackground>
+                <View style={styles.contentContainer}>
+                    <View style={styles.descriptionContainer}>
+                        <Text style={styles.descriptionText}>Description</Text>
+                    </View>
+                    <View style={styles.temperatureContainer}>
+                        <Text
+                            style={styles.temperatureText}>temp</Text>
+                    </View>
+                    <View style={styles.weatherDetailsContainer}>
+                        <View style={styles.weatherDetailContainer}>
                             <Text
-                                style={styles.temperatureText}>temp</Text>
+                                style={styles.weatherDetailsText}>wind</Text>
                         </View>
-                        <View style={styles.weatherDetailsContainer}>
-                            <View style={styles.weatherDetailContainer}>
-                                <Text
-                                    style={styles.weatherDetailsText}>wind</Text>
-                            </View>
-                            <View style={styles.weatherDetailContainer}>
-                                <Text
-                                    style={styles.weatherDetailsText}>weather</Text>
-                            </View>
-                            <View style={styles.weatherDetailContainer}>
-                                <Text
-                                    style={styles.weatherDetailsText}>pressure</Text>
-                            </View>
+                        <View style={styles.weatherDetailContainer}>
+                            <Text
+                                style={styles.weatherDetailsText}>weather</Text>
+                        </View>
+                        <View style={styles.weatherDetailContainer}>
+                            <Text
+                                style={styles.weatherDetailsText}>pressure</Text>
                         </View>
                     </View>
                 </View>
@@ -67,16 +66,13 @@ export default class RefundCaseScreen extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent: 'flex-start',
-        backgroundColor: colors.backgroundColor,
-        padding: 3
-    },
-    cardContainer: {
         height: 160,
-        marginBottom: 7,
-        backgroundColor: colors.weatherCardBackgroundColor,
+        backgroundColor: colors.backgroundColor,
         borderRadius: 2,
         elevation: 1,
+        margin: 5,
+        alignSelf: 'center',
+        borderWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0
     },
     bannerImage: {
         width: '100%',

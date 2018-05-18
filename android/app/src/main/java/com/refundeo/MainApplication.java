@@ -2,6 +2,7 @@ package com.refundeo;
 
 import android.app.Application;
 
+import com.BV.LinearGradient.LinearGradientPackage;
 import com.facebook.react.ReactApplication;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import org.reactnative.camera.RNCameraPackage;

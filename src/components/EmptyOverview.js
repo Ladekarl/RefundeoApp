@@ -42,7 +42,7 @@ export default class EmptyOverviewScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.backgroundColor,
+        backgroundColor: 'transparent',
         justifyContent: 'space-between',
         padding: 10
     },
