@@ -47,7 +47,8 @@
   "register": {
     "register": "Sign up",
     "register_button": "SIGN UP",
-    "facebook_button": "LOGIN WITH FACEBOOK"
+    "facebook_button": "LOGIN WITH FACEBOOK",
+    "more_information": "We need a bit more information about you"
   },
   "login": {
     "login_button": "LOGIN",

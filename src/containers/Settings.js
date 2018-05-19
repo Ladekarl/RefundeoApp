@@ -31,7 +31,8 @@ class SettingsScreen extends Component {
 
     static propTypes = {
         actions: PropTypes.object.isRequired,
-        state: PropTypes.object.isRequired
+        state: PropTypes.object.isRequired,
+        noPassword: PropTypes.bool
     };
 
     modalTextInput;
@@ -54,7 +55,6 @@ class SettingsScreen extends Component {
 
         this.state = {
             modalTitle: '',
-            modalVisible: false,
             modalValue: '',
             newPasswordValue: '',
             confPasswordValue: '',
@@ -73,23 +73,23 @@ class SettingsScreen extends Component {
     }
 
     showChangeFirstName = () => {
-        this.setModalState(strings('settings.first_name_title'), true, this.props.state.user.firstName, true, strings('settings.first_name_placeholder'), 'firstName');
+        this.setModalState(strings('settings.first_name_title'), this.props.state.user.firstName, true, strings('settings.first_name_placeholder'), 'firstName');
     };
 
     showChangeLastName = () => {
-        this.setModalState(strings('settings.last_name_title'), true, this.props.state.user.lastName, true, strings('settings.last_name_placeholder'), 'lastName');
+        this.setModalState(strings('settings.last_name_title'), this.props.state.user.lastName, true, strings('settings.last_name_placeholder'), 'lastName');
     };
 
     showChangeBankReg = () => {
-        this.setModalState(strings('settings.bank_reg_title'), true, this.props.state.user.bankRegNumber, true, strings('settings.bank_reg_placeholder'), 'bankRegNumber', 'phone-pad');
+        this.setModalState(strings('settings.bank_reg_title'), this.props.state.user.bankRegNumber, true, strings('settings.bank_reg_placeholder'), 'bankRegNumber', 'phone-pad');
     };
 
     showChangeBankAccount = () => {
-        this.setModalState(strings('settings.bank_account_title'), true, this.props.state.user.bankAccountNumber, true, strings('settings.bank_account_placeholder'), 'bankAccountNumber', 'phone-pad');
+        this.setModalState(strings('settings.bank_account_title'), this.props.state.user.bankAccountNumber, true, strings('settings.bank_account_placeholder'), 'bankAccountNumber', 'phone-pad');
     };
 
     showChangePassword = () => {
-        this.setModalState(strings('settings.change_password_title'), true, '', true, strings('settings.change_password_placeholder'), '', 'default', true);
+        this.setModalState(strings('settings.change_password_title'), '', true, strings('settings.change_password_placeholder'), '', 'default', true);
         this.submitFunction = () => {
             let oldPassword = this.state.modalValue;
             let newPassword = this.state.newPasswordValue;
@@ -120,7 +120,7 @@ class SettingsScreen extends Component {
     };
 
     showSignOut = () => {
-        this.setModalState(strings('settings.sign_out_title'), true);
+        this.setModalState(strings('settings.sign_out_title'));
         this.submitFunction = () => {
             this.closeModal();
             this.props.actions.logout();
@@ -128,9 +128,7 @@ class SettingsScreen extends Component {
     };
 
     closeModal = () => {
-        this.setState({
-            modalVisible: false
-        });
+        return this.props.actions.closeModal('settingsModal');
     };
 
     changeModalValue = (text) => {
@@ -151,10 +149,9 @@ class SettingsScreen extends Component {
         });
     };
 
-    setModalState(title, visible, value = '', showInput = false, placeholder = '', propToChange = '', modalInputType = 'default', isChangePassword = false) {
+    setModalState(title, value = '', showInput = false, placeholder = '', propToChange = '', modalInputType = 'default', isChangePassword = false) {
         this.setState({
             modalTitle: title,
-            modalVisible: visible,
             modalValue: value,
             modalShowInput: showInput,
             modalPlaceholder: placeholder,
@@ -167,6 +164,8 @@ class SettingsScreen extends Component {
         if (showInput && this.modalTextInput) {
             this.modalTextInput.focus();
         }
+
+        this.props.actions.openModal('settingsModal');
 
         this.submitFunction = this.defaultSubmitFunction;
     }
@@ -213,11 +212,12 @@ class SettingsScreen extends Component {
     };
 
     render() {
-        const {state, actions} = this.props;
+        const {state, actions, noPassword} = this.props;
 
         return (
             <ScrollView
                 style={styles.container}
+                keyboardShouldPersistTaps={'always'}
                 refreshControl={
                     <RefreshControl
                         tintColor={colors.activeTabColor}
@@ -240,15 +240,17 @@ class SettingsScreen extends Component {
                     <Text style={styles.leftText}>{strings('settings.last_name')}</Text>
                     <Text style={styles.rightText}>{state.user.lastName}</Text>
                 </TouchableOpacity>
-                <View style={styles.rowContainer}>
-                    <Text style={styles.leftText}>{strings('settings.country')}</Text>
+                <View style={styles.countryContainer}>
                     <CountryPicker
                         onChange={this.countryChanged}
                         cca2={this.state.cca2}
                         translation='eng'
                         closeable={true}
                         filterable={true}>
-                        <Text style={styles.rightText}>{state.user.country}</Text>
+                        <View style={styles.countryRowContainer}>
+                            <Text style={styles.leftText}>{strings('settings.country')}</Text>
+                            <Text style={styles.rightText}>{state.user.country}</Text>
+                        </View>
                     </CountryPicker>
                 </View>
                 <TouchableOpacity style={styles.rowContainer} onPress={this.showChangeBankReg}>
@@ -259,15 +261,17 @@ class SettingsScreen extends Component {
                     <Text style={styles.leftText}>{strings('settings.bank_account')}</Text>
                     <Text style={styles.rightText}>{state.user.bankAccountNumber}</Text>
                 </TouchableOpacity>
+                {!noPassword &&
                 <TouchableOpacity style={styles.rowContainer} onPress={this.showChangePassword}>
                     <Text style={styles.leftButtonText}>{strings('settings.change_password')}</Text>
                 </TouchableOpacity>
+                }
                 <TouchableOpacity style={styles.rowContainer} onPress={this.showSignOut}>
                     <Text style={styles.leftRedText}>{strings('settings.sign_out')}</Text>
                 </TouchableOpacity>
                 <ModalScreen
                     modalTitle={this.state.modalTitle}
-                    visible={this.state.modalVisible}
+                    visible={state.navigation.modal['settingsModal'] || false}
                     onCancel={this.closeModal}
                     noChildren={!this.state.modalShowInput}
                     onSubmit={this.submitFunction}
@@ -281,7 +285,6 @@ class SettingsScreen extends Component {
                             onChangeText={this.changeModalValue}
                             autoFocus={true}
                             maxLength={64}
-                            clearButtonMode={'always'}
                             placeholder={this.state.modalPlaceholder}
                             selectionColor={colors.inactiveTabColor}
                             underlineColorAndroid={colors.activeTabColor}
@@ -357,6 +360,17 @@ const styles = StyleSheet.create({
         backgroundColor: colors.whiteColor,
         padding: 15,
     },
+    countryContainer: {
+        marginBottom: 10,
+        marginTop: 10,
+    },
+    countryRowContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: colors.whiteColor,
+        padding: 15,
+    },
     sectionHeaderContainer: {
         backgroundColor: colors.backgroundColor,
         flexDirection: 'row',
@@ -396,7 +410,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         minWidth: '80%',
         fontSize: 15,
-        margin: Platform.OS === 'ios' ? 5 : 0
+        marginTop: Platform.OS === 'ios' ? 10 : 0
     },
     modalInputErrorText: {
         textAlign: 'center',
@@ -405,8 +419,10 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
+    const navigation = state.navigationReducer;
     return {
         state: {
+            navigation,
             ...state.authReducer
         }
     };

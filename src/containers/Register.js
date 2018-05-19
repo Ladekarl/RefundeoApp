@@ -61,7 +61,7 @@ class RegisterScreen extends Component {
                     onBack={this.closeEulaModal}
                     onCancel={this.closeEulaModal}
                     visible={this.props.state.navigation.modal['eulaModal'] || false}>
-                    <ScrollView>
+                    <ScrollView style={styles.eulaModalContainer}>
                         <Text>{Platform.OS === 'ios' ? strings('login.eula_ios') : strings('login.eula_android')}</Text>
                     </ScrollView>
                 </ModalScreen>
@@ -77,6 +77,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 10,
         marginBottom: 10
+    },
+    eulaModalContainer: {
+      maxHeight: '60%'
     },
     eulaText: {
         alignItems: 'center',

@@ -63,6 +63,25 @@ export default function navigationReducer(state = initialState, action = {}) {
             };
             break;
         }
+        case types.NAVIGATE_REGISTER_EXTRA_RESET: {
+            nextState = {
+                ...state,
+                ...navigateAndReset('RegisterExtra', state, true),
+                currentRoute: 'RegisterExtra',
+                drawerRoute: ''
+            };
+            break;
+        }
+        case types.NAVIGATE_REGISTER_EXTRA: {
+            const navigationAction = NavigationActions.navigate({routeName: 'RegisterExtra'});
+            nextState = {
+                ...state,
+                ...RootNavigator.router.getStateForAction(navigationAction, state),
+                currentRoute: 'RegisterExtra',
+                drawerRoute: ''
+            };
+            break;
+        }
         case types.NAVIGATE_LOG_OUT: {
             nextState = initialState;
             break;

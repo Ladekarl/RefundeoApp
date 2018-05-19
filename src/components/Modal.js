@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Modal, Picker, StyleSheet, Text, TouchableOpacity, View, Platform} from 'react-native';
+import {Modal, Picker, StyleSheet, Text, TouchableOpacity, View, Platform, KeyboardAvoidingView} from 'react-native';
 import PropTypes from 'prop-types';
 import colors from '../shared/colors';
 import {strings} from '../shared/i18n';
@@ -62,8 +62,8 @@ export default class ModalScreen extends Component {
                 transparent={true}
                 onRequestClose={onBack}
                 visible={visible}>
-                <View style={styles.modalContainer}>
-                    <View style={[styles.modalInnerContainer]}>
+                <KeyboardAvoidingView style={styles.modalContainer} keyboardVerticalOffset={-100} behavior='padding' enabled={Platform.OS === 'ios'}>
+                    <View style={styles.modalInnerContainer}>
                         <View style={styles.modalTopContainer}>
                             <Text style={styles.modalTitleText}>{modalTitle}</Text>
                         </View>
@@ -99,9 +99,9 @@ export default class ModalScreen extends Component {
                         </View>
                         }
                     </View>
-                </View>
+                </KeyboardAvoidingView>
             </Modal>
-        )
+        );
     }
 }
 
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'transparent'
+        backgroundColor: Platform.OS === 'ios' ? 'rgba(0,0,0,0.3)' : 'transparent'
     },
     modalInnerContainer: {
         maxHeight: '100%',
@@ -126,7 +126,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         opacity: 1,
         elevation: 5,
-        borderWidth: Platform.OS === 'ios' ? 1 : 0,
         backgroundColor: colors.backgroundColor
     },
     modalTopContainer: {

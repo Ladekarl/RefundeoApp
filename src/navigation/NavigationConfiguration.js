@@ -4,6 +4,7 @@ import LoginScreen from '../containers/Login';
 import SettingsScreen from '../containers/Settings';
 import DrawerScreen from '../containers/Drawer';
 import RegisterScreen from '../containers/Register';
+import RegisterExtraScreen from '../containers/RegisterExtra';
 import colors from '../shared/colors';
 import {Platform, StyleSheet, TouchableOpacity, Dimensions} from 'react-native';
 import Icon from 'react-native-fa-icons';
@@ -86,7 +87,8 @@ const routeConfiguration = {
         screen: StackNavigator({
             Initial: {screen: InitialScreen, navigationOptions: noHeaderNavigationOptions},
             Login: {screen: LoginScreen, navigationOptions: headerBackNavigationOptions},
-            Register: {screen: RegisterScreen, navigationOptions: headerBackNavigationOptions}
+            Register: {screen: RegisterScreen, navigationOptions: headerBackNavigationOptions},
+            RegisterExtra: {screen: RegisterExtraScreen, navigationOptions: headerBackNavigationOptions},
         }, {initialRouteName: 'Initial'})
     },
     mainFlow: {

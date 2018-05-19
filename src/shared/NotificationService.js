@@ -49,68 +49,20 @@ export default class NotificationService {
     }
 
     static _onRegistered(deviceToken) {
-        remoteNotificationsDeviceToken = deviceToken;
-        Alert.alert(
-            'Registered For Remote Push',
-            `Device Token: ${deviceToken}`,
-            [{
-                text: 'Dismiss',
-                onPress: null,
-            }]
-        );
     }
 
     static _onRegistrationError(error) {
-        Alert.alert(
-            'Failed To Register For Remote Push',
-            `Error (${error.code}): ${error.message}`,
-            [{
-                text: 'Dismiss',
-                onPress: null,
-            }]
-        );
     }
 
     static _onRemoteNotification(notification) {
-        Alert.alert(
-            'Push Notification Received',
-            'Alert message: ' + notification.getMessage(),
-            [{
-                text: 'Dismiss',
-                onPress: null,
-            }]
-        );
     }
 
     static _onAzureNotificationHubRegistered(registrationInfo) {
-        Alert.alert('Registered For Azure notification hub',
-            'Registered For Azure notification hub',
-            [{
-                text: 'Dismiss',
-                onPress: null,
-            }]
-        );
     }
 
     static _onAzureNotificationHubRegistrationError(error) {
-        Alert.alert(
-            'Failed To Register For Azure Notification Hub',
-            `Error (${error.code}): ${error.message}`,
-            [{
-                text: 'Dismiss',
-                onPress: null,
-            }]
-        );
     }
 
     static _onLocalNotification(notification) {
-        Alert.alert(
-            'Local Notification Received',
-            'Alert message: ' + notification.getMessage(),
-            [{
-                text: 'Dismiss',
-                onPress: null,
-            }]
-        );
     }
 }

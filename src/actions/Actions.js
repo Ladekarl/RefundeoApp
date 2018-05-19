@@ -8,6 +8,7 @@ import NotificationService from '../shared/NotificationService';
 
 export default {
     navigateInitial,
+    navigateAndResetToMainFlow,
     toggleDrawer,
     openDrawer,
     navigateLogIn,
@@ -36,8 +37,12 @@ function navigateInitial() {
             if (user && user.token) {
                 NotificationService.register();
                 dispatch(loginSuccess(user));
-                dispatch(navigateAndResetToMainFlow());
-                dispatch(getRefundCases());
+                if (missingUserInfo(user)) {
+                    dispatch(navigateRegisterExtraReset());
+                } else {
+                    dispatch(navigateAndResetToMainFlow());
+                    dispatch(getRefundCases());
+                }
             } else {
                 dispatch(navigateAndResetToLogin());
             }
@@ -74,6 +79,18 @@ function navigateLogIn() {
 function navigateRegister() {
     return {
         type: types.NAVIGATE_REGISTER
+    };
+}
+
+function navigateRegisterExtra() {
+    return {
+        type: types.NAVIGATE_REGISTER_EXTRA
+    };
+}
+
+function navigateRegisterExtraReset() {
+    return {
+        type: types.NAVIGATE_REGISTER_EXTRA_RESET
     };
 }
 
@@ -144,10 +161,14 @@ function loginFacebook(accessToken) {
         dispatch({type: types.AUTH_LOGGING_IN});
         Api.getTokenFacebook(accessToken).then(user => {
             if (user && user.token) {
-                NotificationService.register();
                 dispatch(loginSuccess(user));
-                dispatch(navigateAndResetToMainFlow());
-                dispatch(getRefundCases());
+                NotificationService.register();
+                if (missingUserInfo(user)) {
+                    dispatch(navigateRegisterExtra());
+                } else {
+                    dispatch(navigateAndResetToMainFlow());
+                    dispatch(getRefundCases());
+                }
             } else {
                 dispatch(facebookLoginError(strings('login.error_user_does_not_exist_in_database')));
             }
@@ -170,8 +191,12 @@ function login(username, password) {
             if (user && user.token) {
                 NotificationService.register();
                 dispatch(loginSuccess(user));
-                dispatch(navigateAndResetToMainFlow());
-                dispatch(getRefundCases());
+                if (missingUserInfo(user)) {
+                    dispatch(navigateRegisterExtra());
+                } else {
+                    dispatch(navigateAndResetToMainFlow());
+                    dispatch(getRefundCases());
+                }
             } else {
                 dispatch(loginError(strings('login.error_user_does_not_exist_in_database')));
             }
@@ -344,6 +369,10 @@ function changePasswordError(error = '') {
         type: types.AUTH_CHANGE_PASSWORD_ERROR,
         error
     };
+}
+
+function missingUserInfo(user) {
+    return !user.firstName || !user.lastName || !user.country || !user.bankAccountNumber || !user.bankRegNumber;
 }
 
 

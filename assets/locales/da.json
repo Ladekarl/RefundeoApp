@@ -46,7 +46,8 @@
   "register": {
     "register": "Tilmeld",
     "register_button": "TILMELD",
-    "facebook_button": "LOG IND MED FACEBOOK"
+    "facebook_button": "LOG IND MED FACEBOOK",
+    "more_information": "Vi skal bruge lidt flere informationer om dig"
   },
   "login": {
     "login_button": "LOG IND",

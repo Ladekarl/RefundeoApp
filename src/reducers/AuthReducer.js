@@ -65,6 +65,7 @@ export default function authReducer(state = initialState, action = {}) {
             nextState = {
                 ...state,
                 user: action.user,
+                fetching: false,
                 ...resetErrors
             };
             break;
