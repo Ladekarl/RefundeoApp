@@ -148,6 +148,10 @@ android {
 }
 
 dependencies {
+    api 'com.google.firebase:firebase-core:15.0.2'
+    api project(':react-native-azurenotificationhub')
+    api 'com.google.android.gms:play-services-gcm:15.0.1'
+    api 'com.google.firebase:firebase-messaging:15.0.2'
     api project(':react-native-linear-gradient')
     api project(':react-native-fbsdk')
     api project(':react-native-camera')
@@ -178,3 +182,5 @@ configurations.all {
         }
     }
 }
+
+apply plugin: 'com.google.gms.google-services'

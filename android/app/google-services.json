@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "589685213433",
+    "firebase_url": "https://refundeo.firebaseio.com",
+    "project_id": "refundeo",
+    "storage_bucket": "refundeo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:589685213433:android:970840932782c203",
+        "android_client_info": {
+          "package_name": "com.refundeo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "589685213433-ndjldnupli8nmhl9hsa73ff7jsl1f676.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0Wm_SD9t-fbnvEvAJiaHbHyH1vokYMSE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
