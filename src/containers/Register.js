@@ -59,9 +59,10 @@ class RegisterScreen extends Component {
                     noCancelButton={false}
                     onSubmit={this.closeEulaModal}
                     onBack={this.closeEulaModal}
+                    contentContainerStyle={styles.eulaModalContainer}
                     onCancel={this.closeEulaModal}
                     visible={this.props.state.navigation.modal['eulaModal'] || false}>
-                    <ScrollView style={styles.eulaModalContainer}>
+                    <ScrollView style={styles.eulaScrollContainer}>
                         <Text>{Platform.OS === 'ios' ? strings('login.eula_ios') : strings('login.eula_android')}</Text>
                     </ScrollView>
                 </ModalScreen>
@@ -79,7 +80,11 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     eulaModalContainer: {
-      maxHeight: '60%'
+        height: '100%',
+        width: '100%'
+    },
+    eulaScrollContainer: {
+        height: '70%'
     },
     eulaText: {
         alignItems: 'center',
@@ -104,13 +109,13 @@ const mapStateToProps = state => {
             navigation,
             ...state.authReducer
         }
-    }
+    };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         actions: bindActionCreators(Actions, dispatch)
-    }
+    };
 };
 
 export default connect(

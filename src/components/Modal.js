@@ -19,7 +19,10 @@ export default class ModalScreen extends Component {
         onBack: PropTypes.func,
         noCancelButton: PropTypes.bool,
         noSubmitButton: PropTypes.bool,
-        containerStyle: PropTypes.array,
+        contentContainerStyle: PropTypes.oneOfType([
+            PropTypes.number,
+            PropTypes.object
+        ]),
         children: PropTypes.element
     };
 
@@ -32,7 +35,8 @@ export default class ModalScreen extends Component {
         onPickerValueChange: () => {
         },
         onBack: () => {
-        }
+        },
+        contentContainerStyle: {}
     };
 
     constructor(props) {
@@ -53,7 +57,8 @@ export default class ModalScreen extends Component {
             noCancelButton,
             noSubmitButton,
             children,
-            noChildren
+            noChildren,
+            contentContainerStyle
         } = this.props;
 
         return (
@@ -62,8 +67,9 @@ export default class ModalScreen extends Component {
                 transparent={true}
                 onRequestClose={onBack}
                 visible={visible}>
-                <KeyboardAvoidingView style={styles.modalContainer} keyboardVerticalOffset={-100} behavior='padding' enabled={Platform.OS === 'ios'}>
-                    <View style={styles.modalInnerContainer}>
+                <KeyboardAvoidingView style={styles.modalContainer} keyboardVerticalOffset={-100} behavior='padding'
+                                      enabled={Platform.OS === 'ios'}>
+                    <View style={[styles.modalInnerContainer, contentContainerStyle]}>
                         <View style={styles.modalTopContainer}>
                             <Text style={styles.modalTitleText}>{modalTitle}</Text>
                         </View>
