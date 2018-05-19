@@ -36,7 +36,7 @@
     "sign_out": "Sign out",
     "sign_out_title": "Are you sure?",
     "error_title": "Something went wrong",
-    "change_password_error": "Could not change password.\nIf you signed in via facebook you will not be able to change your password.\nOtherwise please try again.",
+    "change_password_error": "Could not change password.\nPlease try again.",
     "change_user_error": "Could not update the settings Please try again.",
     "error_password_not_same": "New password and confirm password does not match.",
     "error_password_too_short": "The password must be at least 8 characters.",

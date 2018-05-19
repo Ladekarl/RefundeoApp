@@ -18,6 +18,9 @@ const initialState = {
         country: '',
         bankAccountNumber: '',
         bankRegNumber: '',
+        isOauth: false,
+        acceptedPrivacyPolicy: false,
+        privacyPolicy: '',
         refreshToken: ''
     }
 };

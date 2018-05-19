@@ -261,7 +261,7 @@ class SettingsScreen extends Component {
                     <Text style={styles.leftText}>{strings('settings.bank_account')}</Text>
                     <Text style={styles.rightText}>{state.user.bankAccountNumber}</Text>
                 </TouchableOpacity>
-                {!noPassword &&
+                {!noPassword && !state.user.isOauth &&
                 <TouchableOpacity style={styles.rowContainer} onPress={this.showChangePassword}>
                     <Text style={styles.leftButtonText}>{strings('settings.change_password')}</Text>
                 </TouchableOpacity>
