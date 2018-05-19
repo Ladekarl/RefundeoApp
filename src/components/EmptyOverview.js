@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Image, Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
+import {strings} from '../shared/i18n';
 
 export default class EmptyOverviewScreen extends Component {
     static propTypes = {
@@ -17,7 +18,7 @@ export default class EmptyOverviewScreen extends Component {
             <View style={styles.container}>
                 <View style={styles.topContainer}>
                     <Text style={styles.welcomeText}>
-                        Velkommen til Refundeo
+                        {strings('overview.welcome_text')}
                     </Text>
                 </View>
                 <View style={styles.middleContainer}>
@@ -28,10 +29,10 @@ export default class EmptyOverviewScreen extends Component {
                 </View>
                 <View style={styles.bottomContainer}>
                     <Text style={styles.buttonText}>
-                        Du har endnu ingen refunderinger
+                        {strings('overview.no_refunds_text')}
                     </Text>
                     <Text style={styles.buttonText}>
-                        Tryk på knappen og scan QR koden på din kvittering
+                        {strings('overview.get_started_text')}
                     </Text>
                 </View>
             </View>
@@ -42,7 +43,6 @@ export default class EmptyOverviewScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'transparent',
         justifyContent: 'space-between',
         padding: 10
     },
@@ -64,11 +64,14 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontWeight: 'bold',
         fontSize: 18,
+        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
     },
     buttonText: {
         textAlign: 'center',
         fontWeight: 'bold',
         fontSize: 15,
+        margin: 5,
+        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
     },
     bottomContainer: {
         flex: 1,

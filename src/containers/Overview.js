@@ -42,9 +42,9 @@ class OverviewScreen extends Component {
         return (
             <LinearGradient colors={this.getLinearGradientColors()} style={styles.linearGradient}>
                 <ScrollView
-                    style={[styles.container, refundCases && refundCases.length > 0 ? styles.refundCasesContainer : {}]}
+                    style={styles.container}
                     indicatorStyle={Platform.OS === 'ios' ? 'white' : 'black'}
-                    contentContainerStyle={[styles.scrollContainer, refundCases && refundCases.length > 0 ? styles.refundCaseScrollContainer : {}]}
+                    contentContainerStyle={styles.scrollContainer}
                     refreshControl={
                         <RefreshControl
                             tintColor={Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor}
@@ -66,25 +66,13 @@ class OverviewScreen extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: colors.backgroundColor,
-        paddingTop: Platform.OS === 'ios' ? 0 : 5,
-        paddingBottom: 5
-    },
-    refundCasesContainer: {
         backgroundColor: 'transparent',
     },
     scrollContainer: {
         flex: 1,
-        backgroundColor: colors.backgroundColor,
+        backgroundColor: 'transparent',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        paddingLeft: 5,
-        paddingRight: 5,
-    },
-    refundCaseScrollContainer: {
-        backgroundColor: 'transparent',
-        alignItems: 'center'
     },
     tabBarIcon: {
         fontSize: 20

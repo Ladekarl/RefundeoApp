@@ -72,5 +72,10 @@
   },
   "scanner": {
     "top_text": "Scan the QR code on your receipt"
+  },
+  "overview": {
+    "welcome_text": "Welcome to Refundeo",
+    "no_refunds_text": "You don't have any refunds.",
+    "get_started_text": "Push the button to scan the QR code on your receipt."
   }
 }

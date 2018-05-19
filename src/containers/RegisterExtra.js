@@ -52,11 +52,13 @@ class RegisterExtraScreen extends Component {
                 <View style={styles.topContainer}>
                     <Text style={styles.topText}>{strings('register.more_information')}</Text>
                 </View>
-                <SettingsScreen
-                    state={state}
-                    noPassword={true}
-                    actions={actions}
-                />
+                <View style={styles.settingsContainer}>
+                    <SettingsScreen
+                        state={state}
+                        noPassword={true}
+                        actions={actions}
+                    />
+                </View>
                 <Text style={styles.errorText}>{this.state.error}</Text>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity style={styles.loginButton}
@@ -65,11 +67,6 @@ class RegisterExtraScreen extends Component {
                         <Text style={styles.buttonText}>{strings('login.login_button')}</Text>
                     </TouchableOpacity>
                 </View>
-                {state.fetching &&
-                <View style={styles.loadingContainer}>
-                    <ActivityIndicator size='large' color={colors.activeTabColor} style={styles.activityIndicator}/>
-                </View>
-                }
             </View>
         );
     }
@@ -110,22 +107,14 @@ const styles = StyleSheet.create({
         elevation: 5,
         backgroundColor: colors.submitButtonColor
     },
+    settingsContainer: {
+        flex: 1,
+        borderWidth: StyleSheet.hairlineWidth
+    },
     buttonText: {
         color: colors.whiteColor,
         fontSize: 12,
         fontWeight: 'bold'
-    },
-    loadingContainer: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    activityIndicator: {
-        elevation: 10
     },
     errorText: {
         marginTop: 10,

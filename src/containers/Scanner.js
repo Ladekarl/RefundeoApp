@@ -39,20 +39,25 @@ class ScannerScreen extends Component {
         return (
             <LinearGradient colors={this.getLinearGradientColors()} style={styles.container}>
                 {state.currentRoute === 'Scanner' &&
-                    <QRCodeScanner
-                        onRead={this.onSuccess}
-                        containerStyle={styles.cameraContainer}
-                        showMarker={true}
-                        reactivateTimeout={2}
-                        topContent={
-                            <View style={styles.cameraTopContainer}>
-                                <Text style={styles.centerText}>
-                                    {strings('scanner.top_text')}
-                                </Text>
-                            </View>
-                        }
-                        cameraStyle={styles.cameraStyle}
-                    />
+                <QRCodeScanner
+                    onRead={this.onSuccess}
+                    containerStyle={styles.cameraContainer}
+                    showMarker={true}
+                    customMarker={
+                        <View style={styles.rectangleContainer}>
+                            <View style={styles.rectangle}/>
+                        </View>
+                    }
+                    reactivateTimeout={2}
+                    topContent={
+                        <View style={styles.cameraTopContainer}>
+                            <Text style={styles.centerText}>
+                                {strings('scanner.top_text')}
+                            </Text>
+                        </View>
+                    }
+                    cameraStyle={styles.cameraStyle}
+                />
                 }
             </LinearGradient>
         );
@@ -74,7 +79,7 @@ const styles = StyleSheet.create({
     centerText: {
         fontSize: 15,
         fontWeight: 'bold',
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.blackColor
+        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
     },
     cameraStyle: {
         borderRadius: 2
@@ -87,7 +92,21 @@ const styles = StyleSheet.create({
     },
     tabBarIcon: {
         fontSize: 20
-    }
+    },
+    rectangleContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'transparent',
+    },
+
+    rectangle: {
+        height: 250,
+        width: 250,
+        borderWidth: 2,
+        borderColor: colors.activeTabColor,
+        backgroundColor: 'transparent',
+    },
 });
 
 const mapStateToProps = state => {
