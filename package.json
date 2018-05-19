@@ -9,11 +9,13 @@
     "ios": "react-native run-ios"
   },
   "dependencies": {
+    "moment": "^2.22.1",
     "prop-types": "^15.6.1",
     "react": "16.3.1",
     "react-native": "0.55.3",
     "react-native-camera": "^1.1.2",
     "react-native-color-theme": "^0.0.1",
+    "react-native-country-picker-modal": "^0.5.1",
     "react-native-document-picker": "^2.1.0",
     "react-native-fa-icons": "^3.0.1",
     "react-native-fbsdk": "^0.7.0",

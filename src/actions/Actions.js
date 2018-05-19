@@ -3,6 +3,7 @@ import LocalStorage from '../storage';
 import {strings} from '../shared/i18n';
 import Api from '../api';
 import {LoginManager} from 'react-native-fbsdk';
+import {Alert} from 'react-native';
 
 export default {
     navigateInitial,
@@ -22,7 +23,10 @@ export default {
     logout,
     navigateBack,
     facebookLoginError,
-    getRefundCases
+    getRefundCases,
+    changeUser,
+    getUser,
+    changePassword,
 };
 
 function navigateInitial() {
@@ -242,3 +246,100 @@ function loginSuccess(user) {
 function logoutSuccess() {
     return {type: types.AUTH_LOGOUT_SUCCESS}
 }
+
+function changeUser(newUser) {
+    return dispatch => {
+        dispatch(changingUser());
+        Api.updateUser(newUser).then((user) => {
+            dispatch(changeUserSuccess(user));
+        }).catch(() => {
+            Alert.alert(strings('settings.error_title'), strings('settings.change_user_error'));
+            dispatch(changeUserError(strings('settings.change_user_error')));
+        });
+    }
+}
+
+function changingUser() {
+    return {
+        type: types.AUTH_CHANGING_USER
+    }
+}
+
+function changeUserSuccess(user) {
+    return {
+        type: types.AUTH_CHANGE_USER_SUCCESS,
+        user
+    }
+}
+
+function changeUserError(error) {
+    return {
+        type: types.AUTH_CHANGE_USER_ERROR,
+        error
+    }
+}
+
+function getUser() {
+    return dispatch => {
+        dispatch(gettingUser());
+        Api.getUser().then((user) => {
+            dispatch(getUserSuccess(user));
+        }).catch(() => {
+            dispatch(getUserError('Could not get user'));
+        });
+    }
+}
+
+function gettingUser() {
+    return {
+        type: types.AUTH_GETTING_USER
+    }
+}
+
+function getUserSuccess(user) {
+    return {
+        type: types.AUTH_GET_USER_SUCCESS,
+        user
+    }
+}
+
+function getUserError(error) {
+    return {
+        type: types.AUTH_GET_USER_ERROR,
+        error
+    }
+}
+
+function changePassword(oldPassword, newPassword, confPassword) {
+    return dispatch => {
+        dispatch(changingPassword());
+        Api.changePassword(oldPassword, newPassword, confPassword).then(() => {
+            dispatch(changePasswordSuccess());
+        }).catch(() => {
+            Alert.alert(strings('settings.error_title'), strings('settings.change_password_error'));
+            dispatch(changePasswordError(strings('settings.change_password_error')));
+        });
+    }
+}
+
+function changingPassword() {
+    return {
+        type: types.AUTH_CHANGING_PASSWORD
+    }
+}
+
+function changePasswordSuccess() {
+    return {
+        type: types.AUTH_CHANGE_PASSWORD_SUCCESS
+    }
+}
+
+function changePasswordError(error = '') {
+    return {
+        type: types.AUTH_CHANGE_PASSWORD_ERROR,
+        error
+    }
+}
+
+
+

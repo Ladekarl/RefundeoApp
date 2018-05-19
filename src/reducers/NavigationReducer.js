@@ -144,10 +144,12 @@ export default function navigationReducer(state = initialState, action = {}) {
             break;
         }
         case NavigationActions.COMPLETE_TRANSITION: {
+            const transitionState = RootNavigator.router.getStateForAction(action, state);
+            const currentRoute = getCurrentRoute(transitionState);
             nextState = {
                 ...state,
-                ...RootNavigator.router.getStateForAction(action, state),
-                currentRoute: action.key,
+                ...transitionState,
+                currentRoute: currentRoute,
             };
             break;
         }

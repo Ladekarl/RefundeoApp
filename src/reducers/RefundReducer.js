@@ -1,6 +1,42 @@
 import types from '../actions/ActionTypes';
 
-const initialState = {
+type Merchant = {
+    id: string,
+    companyName: string,
+    cvrNumber: string,
+    refundPercentage: number
+}
+
+type Customer = {
+    id: string,
+    username: string,
+    firstName: string,
+    lastName: string,
+    country: string
+}
+
+type RefundCase = {
+    id: number,
+    amount: number,
+    refundAmount: number,
+    isRequested: boolean,
+    isAccepted: boolean,
+    qrCode: string,
+    documentation: string,
+    dateCreated: string,
+    dateRequested: string,
+    merchant: Merchant,
+    customer: Customer,
+    companyName: string,
+}
+
+type RefundReducerState = {
+    refundCases: Array<RefundCase>,
+    fetchingRefundCases: boolean,
+    getRefundCasesError: string
+}
+
+const initialState: RefundReducerState = {
     refundCases: [],
     fetchingRefundCases: false,
     getRefundCasesError: ''

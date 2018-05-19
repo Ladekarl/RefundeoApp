@@ -23,7 +23,7 @@ export default class Helpers {
                 case -3:
                     throw strings('login.missing_password');
                 case -4:
-                    throw strings('login.missing_username')
+                    throw strings('login.missing_username');
             }
         }
     }
@@ -36,5 +36,19 @@ export default class Helpers {
             throw strings('login.user_not_customer');
         }
         return user;
+    }
+
+    static async updateUser(newUser) {
+        let user;
+        try {
+             user = await LocalStorage.getUser();
+        } catch(error) {
+            user = {};
+        }
+        const updatedUser = {
+            ...user,
+            ...newUser
+        };
+        return await this.saveUser(updatedUser);
     }
 }

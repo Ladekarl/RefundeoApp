@@ -6,12 +6,36 @@ import {
     Platform,
     TouchableOpacity,
     ImageBackground,
+    Alert
 } from 'react-native';
 import colors from '../shared/colors';
+import moment from 'moment';
+import I18n from 'react-native-i18n';
 
 import PropTypes from 'prop-types';
 
 export default class RefundCaseScreen extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            dateCreatedFormatted: ''
+        };
+    }
+
+    componentWillMount() {
+        const dateCreatedFormatted = this.formatDate(new Date(this.props.refundCase.dateCreated));
+        this.setState({
+            dateCreatedFormatted
+        })
+    }
+
+    formatDate(date) {
+        const locale = I18n.currentLocale();
+        return moment(date).locale(locale).format('L');
+    }
+
     static propTypes = {
         actions: PropTypes.object.isRequired,
         refundCase: PropTypes.object.isRequired
@@ -31,31 +55,29 @@ export default class RefundCaseScreen extends Component {
                     borderRadius={2}>
                     <View style={styles.bannerTextContainer}>
                         <View style={styles.bannerTextBarContainer}>
-                            <Text style={styles.cityText}>name</Text>
-                            <Text style={styles.cityText}>distance</Text>
+                            <Text style={styles.headlineText}>{refundCase.merchant.companyName}</Text>
+                            <Text style={styles.headlineText}>{this.state.dateCreatedFormatted}</Text>
                         </View>
                     </View>
                 </ImageBackground>
                 <View style={styles.contentContainer}>
-                    <View style={styles.descriptionContainer}>
+                    <View style={styles.detailsContainer}>
                         <Text style={styles.descriptionText}>Description</Text>
                     </View>
-                    <View style={styles.temperatureContainer}>
-                        <Text
-                            style={styles.temperatureText}>temp</Text>
+                    <View style={styles.centerContentContainer}>
+                        <Text style={styles.bigText}>Mangler dokumentation</Text>
                     </View>
-                    <View style={styles.weatherDetailsContainer}>
-                        <View style={styles.weatherDetailContainer}>
+                    <View style={styles.detailsContainer}>
+                        <View style={styles.detailContainer}>
                             <Text
-                                style={styles.weatherDetailsText}>wind</Text>
+                                style={styles.detailText}>Amount</Text>
                         </View>
-                        <View style={styles.weatherDetailContainer}>
-                            <Text
-                                style={styles.weatherDetailsText}>weather</Text>
+                        <View style={styles.detailContainer}>
+                            <Text style={styles.detailText}>weather</Text>
                         </View>
-                        <View style={styles.weatherDetailContainer}>
+                        <View style={styles.detailContainer}>
                             <Text
-                                style={styles.weatherDetailsText}>pressure</Text>
+                                style={styles.detailText}>pressure</Text>
                         </View>
                     </View>
                 </View>
@@ -68,7 +90,7 @@ const styles = StyleSheet.create({
     container: {
         height: 160,
         backgroundColor: colors.backgroundColor,
-        borderRadius: 2,
+        borderRadius: 3,
         elevation: 1,
         margin: 5,
         alignSelf: 'center',
@@ -89,14 +111,14 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         width: '100%',
         padding: 3,
-        opacity: 0.7,
-        backgroundColor: colors.weatherBannerBackgroundColor,
+        opacity: 0.8,
+        backgroundColor: colors.activeTabColor,
         paddingLeft: 10,
         paddingRight: 10
     },
-    cityText: {
+    headlineText: {
         fontSize: 15,
-        color: colors.weatherBannerTextColor,
+        color: colors.backgroundColor,
     },
     contentContainer: {
         flex: 1,
@@ -107,31 +129,30 @@ const styles = StyleSheet.create({
     },
     descriptionContainer: {
         flex: 1,
-        flexDirection: 'column',
         justifyContent: 'center',
-        minWidth: 1,
+        margin: 5
     },
     descriptionText: {
         textAlign: 'center'
     },
-    temperatureContainer: {
+    centerContentContainer: {
         alignItems: 'center',
         justifyContent: 'center',
         flex: 1,
     },
-    temperatureText: {
+    bigText: {
         fontSize: 20,
     },
-    weatherDetailsContainer: {
+    detailsContainer: {
         flex: 1
     },
-    weatherDetailContainer: {
+    detailContainer: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
         padding: 2
     },
-    weatherDetailsText: {
+    detailText: {
         fontSize: 12,
         paddingTop: 1,
         marginLeft: 10

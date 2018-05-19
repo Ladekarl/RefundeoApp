@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Modal, Picker, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Modal, Picker, StyleSheet, Text, TouchableOpacity, View, Platform} from 'react-native';
 import PropTypes from 'prop-types';
 import colors from '../shared/colors';
 import {strings} from '../shared/i18n';
@@ -116,15 +116,17 @@ const styles = StyleSheet.create({
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'rgba(0,0,0,0.2)'
+        backgroundColor: 'transparent'
     },
     modalInnerContainer: {
-        maxHeight: '90%',
+        maxHeight: '100%',
         width: '90%',
         borderRadius: 5,
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 1,
+        elevation: 5,
+        borderWidth: Platform.OS === 'ios' ? 1 : 0,
         backgroundColor: colors.backgroundColor
     },
     modalTopContainer: {
@@ -152,7 +154,7 @@ const styles = StyleSheet.create({
     },
     modalCancelButton: {
         backgroundColor: colors.cancelButtonColor,
-        borderRadius: 5,
+        borderRadius: 2,
         alignItems: 'center',
         margin: 6
     },
@@ -160,12 +162,12 @@ const styles = StyleSheet.create({
         margin: 6,
         alignItems: 'center',
         backgroundColor: colors.submitButtonColor,
-        borderRadius: 5
+        borderRadius: 2
     },
     modalButtonText: {
         fontSize: 15,
-        marginTop: 15,
-        marginBottom: 15,
+        marginTop: 10,
+        marginBottom: 10,
         color: colors.backgroundColor,
         fontWeight: 'bold'
     },
