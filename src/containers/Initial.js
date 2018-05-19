@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import LocalStorage from '../storage';
 import {strings} from '../shared/i18n';
 import {AccessToken, LoginManager} from 'react-native-fbsdk';
+import NotificationService from '../shared/NotificationService';
 
 const window = Dimensions.get('window');
 const IMAGE_HEIGHT = window.width / 2;

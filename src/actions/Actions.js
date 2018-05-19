@@ -4,6 +4,7 @@ import {strings} from '../shared/i18n';
 import Api from '../api';
 import {LoginManager} from 'react-native-fbsdk';
 import {Alert} from 'react-native';
+import NotificationService from '../shared/NotificationService';
 
 export default {
     navigateInitial,
@@ -33,6 +34,7 @@ function navigateInitial() {
     return dispatch => {
         LocalStorage.getUser().then(user => {
             if (user && user.token) {
+                NotificationService.register();
                 dispatch(loginSuccess(user));
                 dispatch(navigateAndResetToMainFlow());
                 dispatch(getRefundCases());
@@ -48,73 +50,73 @@ function navigateInitial() {
 function navigateAndResetToLogin() {
     return {
         type: types.NAVIGATE_LOGGED_OUT
-    }
+    };
 }
 
 function navigateLogOut() {
     return {
         type: types.NAVIGATE_LOG_OUT
-    }
+    };
 }
 
 function navigateScanner() {
     return {
         type: types.NAVIGATE_SCANNER
-    }
+    };
 }
 
 function navigateLogIn() {
     return {
         type: types.NAVIGATE_LOG_IN
-    }
+    };
 }
 
 function navigateRegister() {
     return {
         type: types.NAVIGATE_REGISTER
-    }
+    };
 }
 
 function navigateAndResetToMainFlow() {
     return {
         type: types.NAVIGATE_LOGGED_IN
-    }
+    };
 }
 
 function toggleDrawer() {
     return {
         type: types.NAVIGATE_TOGGLE_DRAWER
-    }
+    };
 }
 
 function openDrawer() {
     return {
         type: types.NAVIGATE_OPEN_DRAWER
-    }
+    };
 }
 
 function closeDrawer() {
     return {
         type: types.NAVIGATE_CLOSE_DRAWER
-    }
+    };
 }
 
 function navigateSettings() {
     return {
         type: types.NAVIGATE_SETTINGS
-    }
+    };
 }
 
 function navigateDrawerSettings() {
     return {
         type: types.NAVIGATE_DRAWER_SETTINGS
-    }
+    };
 }
 
 function navigateDrawerHome() {
     return {
         type: types.NAVIGATE_DRAWER_HOME
-    }
+    };
 }
 
 function openModal(modalName) {
@@ -124,7 +126,7 @@ function openModal(modalName) {
             name: modalName,
             open: true
         }
-    }
+    };
 }
 
 function closeModal(modalName) {
@@ -134,7 +136,7 @@ function closeModal(modalName) {
             name: modalName,
             open: false
         }
-    }
+    };
 }
 
 function loginFacebook(accessToken) {
@@ -142,6 +144,7 @@ function loginFacebook(accessToken) {
         dispatch({type: types.AUTH_LOGGING_IN});
         Api.getTokenFacebook(accessToken).then(user => {
             if (user && user.token) {
+                NotificationService.register();
                 dispatch(loginSuccess(user));
                 dispatch(navigateAndResetToMainFlow());
                 dispatch(getRefundCases());
@@ -165,6 +168,7 @@ function login(username, password) {
         dispatch({type: types.AUTH_LOGGING_IN});
         Api.getToken(username, password).then(user => {
             if (user && user.token) {
+                NotificationService.register();
                 dispatch(loginSuccess(user));
                 dispatch(navigateAndResetToMainFlow());
                 dispatch(getRefundCases());
@@ -185,27 +189,27 @@ function getRefundCases() {
         }).catch(() => {
             dispatch(getRefundCasesError('Some error text'));
         });
-    }
+    };
 }
 
 function gettingRefundCases() {
     return {
         type: types.REFUND_GETTING_REFUND_CASES
-    }
+    };
 }
 
 function getRefundCasesSuccess(refundCases = []) {
     return {
         type: types.REFUND_GET_REFUND_CASES_SUCCESS,
         refundCases
-    }
+    };
 }
 
 function getRefundCasesError(error = '') {
     return {
         type: types.REFUND_GET_REFUND_CASES_ERROR,
         getRefundCasesError: error
-    }
+    };
 }
 
 function logout() {
@@ -214,6 +218,7 @@ function logout() {
         LocalStorage.removeUser().then(() => {
             dispatch(logoutSuccess());
             dispatch(navigateLogOut());
+            NotificationService.unregister();
         });
     };
 }
@@ -226,25 +231,25 @@ function loginError(error = '') {
     return {
         type: types.AUTH_LOGIN_ERROR,
         loginError: error.toString()
-    }
+    };
 }
 
 function facebookLoginError(error = '') {
     return {
         type: types.AUTH_FACEBOOK_LOGIN_ERROR,
         facebookLoginError: error.toString()
-    }
+    };
 }
 
 function loginSuccess(user) {
     return {
         type: types.AUTH_LOGIN_SUCCESS,
         user
-    }
+    };
 }
 
 function logoutSuccess() {
-    return {type: types.AUTH_LOGOUT_SUCCESS}
+    return {type: types.AUTH_LOGOUT_SUCCESS};
 }
 
 function changeUser(newUser) {
@@ -256,27 +261,27 @@ function changeUser(newUser) {
             Alert.alert(strings('settings.error_title'), strings('settings.change_user_error'));
             dispatch(changeUserError(strings('settings.change_user_error')));
         });
-    }
+    };
 }
 
 function changingUser() {
     return {
         type: types.AUTH_CHANGING_USER
-    }
+    };
 }
 
 function changeUserSuccess(user) {
     return {
         type: types.AUTH_CHANGE_USER_SUCCESS,
         user
-    }
+    };
 }
 
 function changeUserError(error) {
     return {
         type: types.AUTH_CHANGE_USER_ERROR,
         error
-    }
+    };
 }
 
 function getUser() {
@@ -287,27 +292,27 @@ function getUser() {
         }).catch(() => {
             dispatch(getUserError('Could not get user'));
         });
-    }
+    };
 }
 
 function gettingUser() {
     return {
         type: types.AUTH_GETTING_USER
-    }
+    };
 }
 
 function getUserSuccess(user) {
     return {
         type: types.AUTH_GET_USER_SUCCESS,
         user
-    }
+    };
 }
 
 function getUserError(error) {
     return {
         type: types.AUTH_GET_USER_ERROR,
         error
-    }
+    };
 }
 
 function changePassword(oldPassword, newPassword, confPassword) {
@@ -319,26 +324,26 @@ function changePassword(oldPassword, newPassword, confPassword) {
             Alert.alert(strings('settings.error_title'), strings('settings.change_password_error'));
             dispatch(changePasswordError(strings('settings.change_password_error')));
         });
-    }
+    };
 }
 
 function changingPassword() {
     return {
         type: types.AUTH_CHANGING_PASSWORD
-    }
+    };
 }
 
 function changePasswordSuccess() {
     return {
         type: types.AUTH_CHANGE_PASSWORD_SUCCESS
-    }
+    };
 }
 
 function changePasswordError(error = '') {
     return {
         type: types.AUTH_CHANGE_PASSWORD_ERROR,
         error
-    }
+    };
 }
 
 

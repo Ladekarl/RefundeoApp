@@ -24,7 +24,6 @@ const initialState = {
 
 
 const resetErrors = {
-    fetching: false,
     changeUserError: '',
     changePasswordError: '',
     facebookLoginError: '',
