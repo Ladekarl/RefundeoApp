@@ -218,6 +218,12 @@ function register(username, password, confPassword, acceptedTermsOfService, term
     if (!checkEmail(username)) {
         return registerError(username + strings('register.not_email'));
     }
+    if (!acceptedTermsOfService) {
+        return registerError(strings('register.accept_terms_of_service'));
+    }
+    if (!acceptedPrivacyPolicy) {
+        return registerError(strings('register.accept_privacy_policy'));
+    }
     return dispatch => {
         dispatch({type: types.AUTH_REGISTERING});
         Api.register(username, password, acceptedTermsOfService, termsOfService, acceptedPrivacyPolicy, privacyPolicy).then(user => {
@@ -423,9 +429,7 @@ function changePasswordError(error = '') {
 }
 
 function missingUserInfo(user) {
-    const termsOfService = Platform.OS === 'ios' ? strings('register.terms_of_service_ios') : strings('register.terms_of_service_android');
-    const privacyPolicy = Platform.OS === 'ios' ? strings('register.privacy_policy_ios') : strings('register.privacy_policy_android');
-    return !user.firstName || !user.lastName || !user.country || !user.bankAccountNumber || !user.bankRegNumber || user.privacyPolicy != privacyPolicy;
+    return !user.firstName || !user.lastName || !user.country || !user.bankAccountNumber || !user.bankRegNumber || !user.acceptedPrivacyPolicy || !user.acceptedTermsOfService;
 }
 
 function checkPassword(newPassword, confPassword) {

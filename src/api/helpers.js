@@ -1,7 +1,11 @@
 import {strings} from '../shared/i18n';
 import LocalStorage from '../storage';
+import {Platform} from 'react-native';
 
 export default class Helpers {
+    static termsOfService = strings('register.terms_of_service');
+    static privacyPolicy = strings('register.privacy_policy');
+
     static async authHeader() {
         let user = await LocalStorage.getUser();
 
@@ -60,7 +64,12 @@ export default class Helpers {
 
     static async saveUser(user) {
         if (user && user.token && user.roles && user.roles.indexOf('User') > -1) {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            if (user.acceptedPrivacyPolicy && user.privacyPolicy != Helpers.privacyPolicy) {
+                user.acceptedPrivacyPolicy = false;
+            }
+            if (user.acceptedTermsOfService && user.termsOfService != Helpers.termsOfService) {
+                user.acceptedTermsOfService = false;
+            }
             await LocalStorage.setUser(user);
         } else if (!user.roles || user.roles.indexOf('User') < 0) {
             throw strings('login.user_not_customer');
@@ -79,6 +88,6 @@ export default class Helpers {
             ...user,
             ...newUser
         };
-        return await this.saveUser(updatedUser);
+        return this.saveUser(updatedUser);
     }
 }

@@ -7,6 +7,7 @@ import {
     TextInput,
     TouchableOpacity,
     View,
+    Switch,
     Keyboard,
     RefreshControl
 } from 'react-native';
@@ -33,12 +34,17 @@ class SettingsScreen extends Component {
         actions: PropTypes.object.isRequired,
         state: PropTypes.object.isRequired,
         noPassword: PropTypes.bool,
-        noSignOut: PropTypes.bool
+        noSignOut: PropTypes.bool,
+        editablePolicies: PropTypes.bool
     };
 
     modalTextInput;
     secondTextInput;
     thirdTextInput;
+
+
+    termsOfService = strings('register.terms_of_service');
+    privacyPolicy = strings('register.privacy_policy');
 
     constructor(props) {
         super(props);
@@ -212,8 +218,38 @@ class SettingsScreen extends Component {
         }
     };
 
+    acceptTermsOfService = (isAccepted) => {
+        let user = this.props.state.user;
+        user.acceptedTermsOfService = isAccepted;
+        user.termsOfService = this.termsOfService;
+        this.props.actions.changeUser(user);
+    };
+
+    acceptPrivacyPolicy = (isAccepted) => {
+        let user = this.props.state.user;
+        user.acceptedPrivacyPolicy = isAccepted;
+        user.privacyPolicy = this.privacyPolicy;
+        this.props.actions.changeUser(user);
+    };
+
+    closeTermsOfServiceModal = () => {
+        return this.props.actions.closeModal('termsOfServiceModal');
+    };
+
+    openTermsOfServiceModal = () => {
+        return this.props.actions.openModal('termsOfServiceModal');
+    };
+
+    closePrivacyPolicyModal = () => {
+        return this.props.actions.closeModal('privacyPolicyModal');
+    };
+
+    openPrivacyPolicyModal = () => {
+        return this.props.actions.openModal('privacyPolicyModal');
+    };
+
     render() {
-        const {state, actions, noPassword, noSignOut} = this.props;
+        const {state, actions, noPassword, noSignOut, editablePolicies} = this.props;
 
         return (
             <ScrollView
@@ -267,6 +303,26 @@ class SettingsScreen extends Component {
                     <Text style={styles.leftButtonText}>{strings('settings.change_password')}</Text>
                 </TouchableOpacity>
                 }
+                <TouchableOpacity style={styles.rowContainer} onPress={this.openTermsOfServiceModal}>
+                    <Text style={styles.leftButtonText}>{strings('register.terms_of_service_2')}</Text>
+                    {editablePolicies &&
+                    <Switch value={state.user.acceptedTermsOfService}
+                            tintColor={Platform.OS === 'ios' ? colors.activeTabColor : undefined}
+                            thumbTintColor={colors.activeTabColor}
+                            onValueChange={this.acceptTermsOfService}
+                    />
+                    }
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.rowContainer} onPress={this.openPrivacyPolicyModal}>
+                    <Text style={styles.leftButtonText}>{strings('register.privacy_policy_2')}</Text>
+                    {editablePolicies &&
+                    <Switch value={state.user.acceptedPrivacyPolicy}
+                            tintColor={Platform.OS === 'ios' ? colors.activeTabColor : undefined}
+                            thumbTintColor={colors.activeTabColor}
+                            onValueChange={this.acceptPrivacyPolicy}
+                    />
+                    }
+                </TouchableOpacity>
                 {!noSignOut &&
                 <TouchableOpacity style={styles.rowContainer} onPress={this.showSignOut}>
                     <Text style={styles.leftRedText}>{strings('settings.sign_out')}</Text>
@@ -344,6 +400,30 @@ class SettingsScreen extends Component {
                         <Text style={styles.modalInputErrorText}>{this.state.modalInputError}</Text>
                     </View>
                 </ModalScreen>
+                <ModalScreen
+                    modalTitle={strings('register.terms_of_service_title')}
+                    noCancelButton={true}
+                    onSubmit={this.closeTermsOfServiceModal}
+                    onBack={this.closeTermsOfServiceModal}
+                    contentContainerStyle={styles.eulaModalContainer}
+                    onCancel={this.closeTermsOfServiceModal}
+                    visible={this.props.state.navigation.modal['termsOfServiceModal'] || false}>
+                    <ScrollView style={styles.eulaScrollContainer}>
+                        <Text>{strings('register.terms_of_service')}</Text>
+                    </ScrollView>
+                </ModalScreen>
+                <ModalScreen
+                    modalTitle={strings('register.privacy_policy_title')}
+                    noCancelButton={true}
+                    onSubmit={this.closePrivacyPolicyModal}
+                    onBack={this.closePrivacyPolicyModal}
+                    contentContainerStyle={styles.eulaModalContainer}
+                    onCancel={this.closePrivacyPolicyModal}
+                    visible={this.props.state.navigation.modal['privacyPolicyModal'] || false}>
+                    <ScrollView style={styles.eulaScrollContainer}>
+                        <Text>{strings('register.privacy_policy')}</Text>
+                    </ScrollView>
+                </ModalScreen>
             </ScrollView>
         );
     }
@@ -418,6 +498,13 @@ const styles = StyleSheet.create({
     modalInputErrorText: {
         textAlign: 'center',
         color: colors.cancelButtonColor
+    },
+    eulaModalContainer: {
+        height: '100%',
+        width: '100%'
+    },
+    eulaScrollContainer: {
+        height: '70%'
     }
 });
 

@@ -21,7 +21,9 @@ const initialState = {
         bankRegNumber: '',
         isOauth: false,
         acceptedPrivacyPolicy: false,
+        acceptedTermsOfService: false,
         privacyPolicy: '',
+        termsOfService: '',
         refreshToken: ''
     }
 };

@@ -34,14 +34,23 @@ class RegisterExtraScreen extends Component {
             country,
             bankAccountNumber,
             bankRegNumber,
+            acceptedPrivacyPolicy,
+            acceptedTermsOfService
         } = this.props.state.user;
 
         if (firstName && lastName && country && bankAccountNumber && bankRegNumber) {
             this.props.actions.navigateAndResetToMainFlow();
             this.props.actions.getRefundCases();
-        } else {
-            this.setState({error: strings('settings.error_password_not_filled')});
+            return;
         }
+        if (!acceptedTermsOfService) {
+            this.setState({error: strings('register.accept_terms_of_service')});
+        }
+        if (!acceptedPrivacyPolicy) {
+            this.setState({error: strings('register.accept_privacy_policy')});
+        }
+        this.setState({error: strings('settings.error_fields_empty')});
+
     };
 
 
@@ -58,6 +67,7 @@ class RegisterExtraScreen extends Component {
                         noPassword={true}
                         noSignOut={true}
                         actions={actions}
+                        editablePolicies={true}
                     />
                 </View>
                 <Text style={styles.errorText}>{this.state.error}</Text>

@@ -47,6 +47,8 @@ class RegisterScreen extends Component {
     firstInput;
     secondInput;
     thirdInput;
+    termsOfService = strings('register.terms_of_service');
+    privacyPolicy = strings('register.privacy_policy');
 
     constructor(props) {
         super(props);
@@ -99,10 +101,8 @@ class RegisterScreen extends Component {
     onRegisterPress = () => {
         Keyboard.dismiss();
         const {username, password, confirmPassword, acceptedTermsOfService, acceptedPrivacyPolicy} = this.state;
-        const termsOfService = Platform.OS === 'ios' ? strings('register.terms_of_service_ios') : strings('register.terms_of_service_android');
-        const privacyPolicy = Platform.OS === 'ios' ? strings('register.privacy_policy_ios') : strings('register.privacy_policy_android');
 
-        this.props.actions.register(username, password, confirmPassword, acceptedTermsOfService, termsOfService, acceptedPrivacyPolicy, privacyPolicy);
+        this.props.actions.register(username, password, confirmPassword, acceptedTermsOfService, this.termsOfService, acceptedPrivacyPolicy, this.privacyPolicy);
     };
 
     closeTermsOfServiceModal = () => {
@@ -245,7 +245,7 @@ class RegisterScreen extends Component {
                         onCancel={this.closeTermsOfServiceModal}
                         visible={this.props.state.navigation.modal['termsOfServiceModal'] || false}>
                         <ScrollView style={styles.eulaScrollContainer}>
-                            <Text>{Platform.OS === 'ios' ? strings('register.terms_of_service_ios') : strings('register.terms_of_service_android')}</Text>
+                            <Text>{strings('register.terms_of_service')}</Text>
                         </ScrollView>
                     </ModalScreen>
                     <ModalScreen
@@ -257,7 +257,7 @@ class RegisterScreen extends Component {
                         onCancel={this.closePrivacyPolicyModal}
                         visible={this.props.state.navigation.modal['privacyPolicyModal'] || false}>
                         <ScrollView style={styles.eulaScrollContainer}>
-                            <Text>{Platform.OS === 'ios' ? strings('register.privacy_policy_ios') : strings('register.privacy_policy_android')}</Text>
+                            <Text>{strings('register.privacy_policy')}</Text>
                         </ScrollView>
                     </ModalScreen>
                 </View>

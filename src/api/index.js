@@ -47,7 +47,6 @@ export default class Api {
         return Helpers.saveUser(user);
     }
 
-
     static async register(username, password, acceptedTermsOfService, termsOfService, acceptedPrivacyPolicy, privacyPolicy) {
         const requestOptions = {
             method: 'POST',
@@ -130,7 +129,11 @@ export default class Api {
                 lastName: user.lastName,
                 country: user.country,
                 bankRegNumber: user.bankRegNumber,
-                bankAccountNumber: user.bankAccountNumber
+                bankAccountNumber: user.bankAccountNumber,
+                acceptedPrivacyPolicy: user.acceptedPrivacyPolicy,
+                privacyPolicy: user.privacyPolicy,
+                acceptedTermsOfService: user.acceptedTermsOfService,
+                termsOfService: user.termsOfService
             })
         };
 
