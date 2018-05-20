@@ -22,6 +22,7 @@ export default {
     closeModal,
     login,
     loginFacebook,
+    register,
     logout,
     navigateBack,
     facebookLoginError,
@@ -206,6 +207,38 @@ function login(username, password) {
     };
 }
 
+function register(username, password, confPassword) {
+    if (!username) {
+        return registerError(strings('login.missing_username'));
+    }
+    const passError = checkPassword(password, confPassword);
+    if (passError) {
+        return registerError(passError);
+    }
+    if (!checkEmail(username)) {
+        return registerError(username + strings('register.not_email'));
+    }
+    return dispatch => {
+        dispatch({type: types.AUTH_REGISTERING});
+        Api.register(username, password).then(user => {
+            if (user && user.token) {
+                NotificationService.register();
+                dispatch(registerSuccess(user));
+                if (missingUserInfo(user)) {
+                    dispatch(navigateRegisterExtra());
+                } else {
+                    dispatch(navigateAndResetToMainFlow());
+                    dispatch(getRefundCases());
+                }
+            } else {
+                dispatch(registerError(strings('register.unknown_error')));
+            }
+        }).catch((error) => {
+            dispatch(registerError(error));
+        });
+    };
+}
+
 function getRefundCases() {
     return dispatch => {
         dispatch(gettingRefundCases());
@@ -259,6 +292,13 @@ function loginError(error = '') {
     };
 }
 
+function registerError(error = '') {
+    return {
+        type: types.AUTH_REGISTER_ERROR,
+        registerError: error
+    };
+}
+
 function facebookLoginError(error = '') {
     return {
         type: types.AUTH_FACEBOOK_LOGIN_ERROR,
@@ -269,6 +309,13 @@ function facebookLoginError(error = '') {
 function loginSuccess(user) {
     return {
         type: types.AUTH_LOGIN_SUCCESS,
+        user
+    };
+}
+
+function registerSuccess(user) {
+    return {
+        type: types.AUTH_REGISTER_SUCCESS,
         user
     };
 }
@@ -341,6 +388,10 @@ function getUserError(error) {
 }
 
 function changePassword(oldPassword, newPassword, confPassword) {
+    const passError = checkPassword(newPassword, confPassword);
+    if (passError) {
+        return changePasswordError(passError);
+    }
     return dispatch => {
         dispatch(changingPassword());
         Api.changePassword(oldPassword, newPassword, confPassword).then(() => {
@@ -372,7 +423,35 @@ function changePasswordError(error = '') {
 }
 
 function missingUserInfo(user) {
-    return !user.firstName || !user.lastName || !user.country || !user.bankAccountNumber || !user.bankRegNumber;
+    return !user.firstName || !user.lastName || !user.country || !user.bankAccountNumber || user.bankRegNumber;
+}
+
+function checkPassword(newPassword, confPassword) {
+    if (newPassword && confPassword && newPassword === confPassword) {
+        // noinspection EqualityComparisonWithCoercionJS
+        const hasLowerCase = newPassword.toUpperCase() != newPassword;
+        const uniqueChars = String.prototype.concat(...new Set(newPassword)).length;
+        if (hasLowerCase && newPassword.length >= 8 && uniqueChars >= 4) {
+            return null;
+        }
+        else if (newPassword.length < 8) {
+            return strings('settings.error_password_too_short');
+        }
+        else if (uniqueChars < 4) {
+            return strings('settings.error_password_not_unique');
+        }
+        else if (!hasLowerCase) {
+            return strings('settings.error_password_only_uppercase');
+        }
+    } else if (!newPassword || !confPassword) {
+        return strings('settings.error_password_not_filled');
+    } else {
+        return strings('settings.error_password_not_same');
+    }
+}
+
+function checkEmail(email) {
+    return /^(([^<>()\[\].,;:\s@"]+(.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})/.test(email);
 }
 
 

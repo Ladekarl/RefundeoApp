@@ -47,6 +47,31 @@ export default class Api {
         return Helpers.saveUser(user);
     }
 
+
+    static async register(username, password) {
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                username,
+                password,
+                scopes: ['offline_access']
+            })
+        };
+
+        const response = await fetch(`${API_URL}/api/user/account`, requestOptions);
+
+        await Helpers.checkRegisterResponse(response);
+
+        if (!response.ok) {
+            throw response.statusText;
+        }
+
+        const user = await response.json();
+
+        return Helpers.saveUser(user);
+    }
+
     static async getTokenFromRefreshToken(refreshToken) {
         const requestOptions = {
             method: 'POST',

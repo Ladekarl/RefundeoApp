@@ -8,6 +8,7 @@ const initialState = {
     changePasswordError: '',
     facebookLoginError: '',
     getUserError: '',
+    registerError: '',
     user: {
         id: '',
         token: '',
@@ -30,12 +31,14 @@ const resetErrors = {
     changeUserError: '',
     changePasswordError: '',
     facebookLoginError: '',
-    getUserError: ''
+    getUserError: '',
+    registerError: ''
 };
 
 export default function authReducer(state = initialState, action = {}) {
     let nextState = null;
     switch (action.type) {
+        case types.AUTH_REGISTERING:
         case types.AUTH_GETTING_USER:
         case types.AUTH_CHANGING_USER:
         case types.AUTH_CHANGING_PASSWORD:
@@ -63,6 +66,15 @@ export default function authReducer(state = initialState, action = {}) {
             };
             break;
         }
+        case types.AUTH_REGISTER_ERROR: {
+            nextState = {
+                ...state,
+                registerError: action.registerError,
+                fetching: false
+            };
+            break;
+        }
+        case types.AUTH_REGISTER_SUCCESS:
         case types.AUTH_GET_USER_SUCCESS:
         case types.AUTH_LOGIN_SUCCESS: {
             nextState = {

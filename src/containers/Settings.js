@@ -32,7 +32,8 @@ class SettingsScreen extends Component {
     static propTypes = {
         actions: PropTypes.object.isRequired,
         state: PropTypes.object.isRequired,
-        noPassword: PropTypes.bool
+        noPassword: PropTypes.bool,
+        noSignOut: PropTypes.bool
     };
 
     modalTextInput;
@@ -212,7 +213,7 @@ class SettingsScreen extends Component {
     };
 
     render() {
-        const {state, actions, noPassword} = this.props;
+        const {state, actions, noPassword, noSignOut} = this.props;
 
         return (
             <ScrollView
@@ -266,9 +267,11 @@ class SettingsScreen extends Component {
                     <Text style={styles.leftButtonText}>{strings('settings.change_password')}</Text>
                 </TouchableOpacity>
                 }
+                {!noSignOut &&
                 <TouchableOpacity style={styles.rowContainer} onPress={this.showSignOut}>
                     <Text style={styles.leftRedText}>{strings('settings.sign_out')}</Text>
                 </TouchableOpacity>
+                }
                 <ModalScreen
                     modalTitle={this.state.modalTitle}
                     visible={state.navigation.modal['settingsModal'] || false}

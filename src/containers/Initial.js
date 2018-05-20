@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
         padding: 18,
         elevation: 5,
         marginTop: 10,
-        backgroundColor: colors.cancelButtonColor
+        backgroundColor: colors.greenButtonColor
     },
     loginButton: {
         marginLeft: 10,

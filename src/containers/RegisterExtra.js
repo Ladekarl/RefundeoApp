@@ -56,6 +56,7 @@ class RegisterExtraScreen extends Component {
                     <SettingsScreen
                         state={state}
                         noPassword={true}
+                        noSignOut={true}
                         actions={actions}
                     />
                 </View>

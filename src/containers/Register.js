@@ -1,12 +1,32 @@
 import React, {Component} from 'react';
-import {ActivityIndicator, Platform, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+    ActivityIndicator,
+    Animated,
+    Dimensions,
+    Keyboard,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from 'react-native';
 import colors from '../shared/colors';
+import Icon from 'react-native-fa-icons';
 import {strings} from '../shared/i18n';
 import ModalScreen from '../components/Modal';
 import Actions from '../actions/Actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+
+const window = Dimensions.get('window');
+const IMAGE_HEIGHT = window.width / 2;
+const CONTAINER_HEIGHT = window.height / 2.5;
+const CONTAINER_HEIGHT_SMALL = window.height / 8;
+const IMAGE_HEIGHT_SMALL = 0;
 
 class RegisterScreen extends Component {
 
@@ -23,82 +43,283 @@ class RegisterScreen extends Component {
         }
     };
 
+    firstInput;
+    secondInput;
+    thirdInput;
+
     constructor(props) {
         super(props);
+        this.state = {
+            username: '',
+            password: '',
+            confirmPassword: '',
+            imageHeight: new Animated.Value(IMAGE_HEIGHT),
+            containerHeight: new Animated.Value(CONTAINER_HEIGHT)
+        };
     }
 
-    closeEulaModal = () => {
-        return this.props.actions.closeModal('eulaModal');
+    componentDidMount() {
+        this.keyboardWillShowSub = Keyboard.addListener(Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow', this._keyboardWillShow);
+        this.keyboardWillHideSub = Keyboard.addListener(Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide', this._keyboardWillHide);
+    }
+
+    componentWillUnmount() {
+        this.keyboardWillShowSub.remove();
+        this.keyboardWillHideSub.remove();
+    }
+
+    _keyboardWillShow = () => {
+        this._animate(CONTAINER_HEIGHT_SMALL, IMAGE_HEIGHT_SMALL);
     };
 
-    openEulaModal = () => {
-        return this.props.actions.openModal('eulaModal');
+    _keyboardWillHide = () => {
+        this._animate(CONTAINER_HEIGHT, IMAGE_HEIGHT);
+    };
+
+    _animate(containerHeight, imageHeight) {
+        const friction = 20;
+        const tension = 220;
+        Animated.parallel([
+            Animated.spring(this.state.containerHeight, {
+                friction,
+                tension,
+                toValue: containerHeight
+            }),
+            Animated.spring(this.state.imageHeight, {
+                friction,
+                tension: tension / 1.5,
+                toValue: imageHeight
+            })
+        ]).start();
+    }
+
+    onRegisterPress = () => {
+        Keyboard.dismiss();
+        const {username, password, confirmPassword} = this.state;
+        this._register(username.trim(), password, confirmPassword);
+    };
+
+    _register = (username, password, confirmPassword) => {
+        this.props.actions.register(username, password, confirmPassword);
     };
 
     render() {
-        const {state} = this.props;
+        const {fetching, registerError, navigation} = this.props.state;
         return (
-            <View style={styles.container}>
-                <View style={styles.eulaContainer}>
-                    <Text style={styles.eulaText}>
-                        {strings('login.eula_agreement_1')}
-                        <Text
-                            onPress={this.openEulaModal}
-                            style={styles.eulaLink}>
-                            {strings('login.eula_agreement_2')}
-                        </Text>
-                    </Text>
+            <KeyboardAvoidingView style={styles.container} behavior='padding'>
+                <View style={styles.innerContainer}>
+                    <View style={styles.loginFormContainer}>
+                        <Animated.View style={[styles.topContainer, {height: this.state.containerHeight}]}>
+                            <Animated.Image
+                                style={[styles.image, {height: this.state.imageHeight}]}
+                                source={require('../../assets/images/refundeo_logo.png')}
+                            />
+                        </Animated.View>
+                        <View style={styles.inputContainer}>
+                            <View style={[styles.elevatedInputContainer, styles.firstInput]}>
+                                <Icon name='envelope' style={styles.icon}/>
+                                <TextInput style={styles.usernameInput}
+                                           ref={(input) => this.firstInput = input}
+                                           placeholder={strings('login.email_placeholder')}
+                                           autoCapitalize='none'
+                                           textAlignVertical='center'
+                                           editable={!fetching}
+                                           returnKeyType='next'
+                                           keyboardType={'email-address'}
+                                           underlineColorAndroid='transparent'
+                                           autoCorrect={false}
+                                           selectionColor={colors.activeTabColor}
+                                           onSubmitEditing={() => this.secondInput.focus()}
+                                           value={this.state.username}
+                                           onChangeText={username => this.setState({username})}/>
+                            </View>
+                            <View style={styles.elevatedInputContainer}>
+                                <Icon name='lock' style={[styles.icon, styles.secondIcon]}/>
+                                <TextInput style={styles.passwordInput}
+                                           ref={(input) => this.secondInput = input}
+                                           secureTextEntry={true}
+                                           textAlignVertical='center'
+                                           editable={!fetching}
+                                           returnKeyType='next'
+                                           autoCapitalize='none'
+                                           underlineColorAndroid='transparent'
+                                           autoCorrect={false}
+                                           selectionColor={colors.activeTabColor}
+                                           onSubmitEditing={() => this.thirdInput.focus()}
+                                           placeholder={strings('login.password_placeholder')}
+                                           value={this.state.password}
+                                           onChangeText={password => this.setState({password})}/>
+                            </View>
+                            <View style={[styles.elevatedInputContainer, styles.thirdInput]}>
+                                <Icon name='lock' style={[styles.icon, styles.secondIcon]}/>
+                                <TextInput style={styles.passwordInput}
+                                           ref={(input) => this.thirdInput = input}
+                                           secureTextEntry={true}
+                                           textAlignVertical='center'
+                                           editable={!fetching}
+                                           returnKeyType='done'
+                                           autoCapitalize='none'
+                                           underlineColorAndroid='transparent'
+                                           autoCorrect={false}
+                                           selectionColor={colors.activeTabColor}
+                                           placeholder={strings('register.confirm_password_placeholder')}
+                                           value={this.state.confirmPassword}
+                                           onChangeText={confirmPassword => this.setState({confirmPassword})}/>
+                            </View>
+                            <View style={styles.errorContainer}>
+                                <Text style={styles.errorText}>{registerError}</Text>
+                            </View>
+                            <View style={styles.buttonContainer}>
+                                <TouchableOpacity style={styles.registerButton}
+                                                  onPress={this.onRegisterPress}
+                                                  disabled={fetching}>
+                                    <Text style={styles.buttonText}>{strings('register.register_button')}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                    {fetching &&
+                    <View style={styles.loadingContainer}>
+                        <ActivityIndicator size='large' color={colors.activeTabColor} style={styles.activityIndicator}/>
+                    </View>
+                    }
+                    <ModalScreen
+                        modalTitle={strings('login.eula_title')}
+                        noCancelButton={false}
+                        onSubmit={this.closeEulaModal}
+                        onBack={this.closeEulaModal}
+                        onCancel={this.closeEulaModal}
+                        visible={navigation.modal['eulaModal'] || false}>
+                        <ScrollView>
+                            <Text>{Platform.OS === 'ios' ? strings('login.eula_ios') : strings('login.eula_android')}</Text>
+                        </ScrollView>
+                    </ModalScreen>
                 </View>
-                {state.fetching &&
-                <View style={styles.loadingContainer}>
-                    <ActivityIndicator size='large' color={colors.activeTabColor} style={styles.activityIndicator}/>
-                </View>
-                }
-                <ModalScreen
-                    modalTitle={strings('login.eula_title')}
-                    noCancelButton={false}
-                    onSubmit={this.closeEulaModal}
-                    onBack={this.closeEulaModal}
-                    contentContainerStyle={styles.eulaModalContainer}
-                    onCancel={this.closeEulaModal}
-                    visible={this.props.state.navigation.modal['eulaModal'] || false}>
-                    <ScrollView style={styles.eulaScrollContainer}>
-                        <Text>{Platform.OS === 'ios' ? strings('login.eula_ios') : strings('login.eula_android')}</Text>
-                    </ScrollView>
-                </ModalScreen>
-            </View>
+            </KeyboardAvoidingView>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    eulaContainer: {
+    container: {
+        flex: 1,
+        backgroundColor: colors.backgroundColor,
+    },
+    innerContainer: {
+        flex: 1,
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    topContainer: {
+        minHeight: IMAGE_HEIGHT_SMALL,
+        alignSelf: 'center',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'stretch',
+    },
+    loginFormContainer: {
+        justifyContent: 'space-between',
+        alignItems: 'stretch',
+        width: '80%'
+    },
+    inputContainer: {
+        justifyContent: 'center',
+        alignItems: 'stretch',
+    },
+    elevatedInputContainer: {
+        backgroundColor: colors.whiteColor,
+        borderRadius: 50,
+        elevation: 5,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingTop: 3,
+        paddingBottom: 3,
         flexDirection: 'row',
-        marginTop: 10,
-        marginBottom: 10
-    },
-    eulaModalContainer: {
-        height: '100%',
-        width: '100%'
-    },
-    eulaScrollContainer: {
-        height: '70%'
-    },
-    eulaText: {
+        alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
-        textAlign: 'center',
-        alignSelf: 'center',
+        borderWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0,
+        borderColor: colors.activeTabColor,
     },
-    eulaLink: {
-        color: colors.linkColor,
+    firstInput: {
+        marginBottom: 20
+    },
+    thirdInput: {
+        marginTop: 20
+    },
+    secondIcon: {
+        marginLeft: 10,
+        marginRight: 6
+    },
+    errorContainer: {
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    loadingContainer: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    image: {
+        height: IMAGE_HEIGHT,
+        minHeight: IMAGE_HEIGHT_SMALL,
+        resizeMode: 'contain'
+    },
+    usernameInput: {
+        flex: 1,
+        fontSize: 16,
+        height: 40,
+        padding: 5,
+        marginTop: 1,
+        marginBottom: 1
+    },
+    passwordInput: {
+        flex: 1,
+        fontSize: 16,
+        height: 40,
+        padding: 5,
+        marginTop: 1,
+        marginBottom: 1
+    },
+    errorText: {
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontWeight: 'bold',
+        color: colors.submitButtonColor
+    },
+    buttonContainer: {
+        alignItems: 'stretch'
+    },
+    registerButton: {
+        borderRadius: 50,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 18,
+        elevation: 5,
+        backgroundColor: colors.greenButtonColor
+    },
+    buttonText: {
+        color: colors.whiteColor,
+        fontSize: 12,
+        fontWeight: 'bold'
+    },
+    icon: {
+        fontSize: 20,
+        marginLeft: 5,
         alignItems: 'center',
         justifyContent: 'center',
-        textAlign: 'center',
         alignSelf: 'center',
-        textDecorationLine: 'underline'
+        marginRight: 5,
+        color: colors.activeTabColor
+    },
+    activityIndicator: {
+        elevation: 10
     }
 });
 

@@ -5,6 +5,7 @@ import types from '../actions/ActionTypes';
 const initialState = {
     currentRoute: 'Initial',
     drawerRoute: '',
+    previousRoute: '',
     drawerOpen: false,
     modal: {},
     ...RootNavigator.router.getStateForAction(NavigationActions.navigate({routeName: 'loginFlow'}))
@@ -12,6 +13,8 @@ const initialState = {
 
 export default function navigationReducer(state = initialState, action = {}) {
     let nextState = null;
+    let previousRoute = state.currentRoute;
+
     switch (action.type) {
         case NavigationActions.BACK:
         case types.NAVIGATE_BACK: {
@@ -197,7 +200,9 @@ export default function navigationReducer(state = initialState, action = {}) {
             };
             break;
     }
-    return nextState || state;
+    nextState = nextState || state;
+    nextState.previousRoute = previousRoute;
+    return nextState;
 }
 
 const navigateAndReset = (routeName, state, isNested) => {

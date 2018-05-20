@@ -43,6 +43,9 @@ class LoginScreen extends Component {
         }
     };
 
+    firstInput;
+    secondInput;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -98,97 +101,81 @@ class LoginScreen extends Component {
         this.props.actions.login(username, password);
     };
 
-    _renderIos = () => {
-        return (
-            <KeyboardAvoidingView style={styles.container} behavior='padding'>
-                {this._renderShared()}
-            </KeyboardAvoidingView>
-        );
-    };
-
-    _renderAndroid = () => {
-        return (
-            <View style={styles.container}>
-                {this._renderShared()}
-            </View>
-        );
-    };
-
-    _renderShared = () => {
+    render() {
         const {fetching, loginError, navigation} = this.props.state;
         return (
-            <View style={styles.innerContainer}>
-                <View style={styles.loginFormContainer}>
-                    <Animated.View style={[styles.topContainer, {height: this.state.containerHeight}]}>
-                        <Animated.Image
-                            style={[styles.image, {height: this.state.imageHeight}]}
-                            source={require('../../assets/images/refundeo_logo.png')}
-                        />
-                    </Animated.View>
-                    <View style={styles.inputContainer}>
-                        <View style={[styles.elevatedInputContainer, styles.firstInput]}>
-                            <Icon name={'user'} style={styles.icon}/>
-                            <TextInput style={styles.usernameInput}
-                                       placeholder={strings('login.email_placeholder')}
-                                       autoCapitalize='none'
-                                       textAlignVertical={'center'}
-                                       editable={!fetching}
-                                       underlineColorAndroid='transparent'
-                                       selectionColor={colors.activeTabColor}
-                                       value={this.state.username}
-                                       onChangeText={username => this.setState({username})}/>
-                        </View>
-                        <View style={styles.elevatedInputContainer}>
-                            <Icon name={'lock'} style={styles.icon}/>
-                            <TextInput style={styles.passwordInput}
-                                       secureTextEntry={true}
-                                       textAlignVertical={'center'}
-                                       editable={!fetching}
-                                       autoCapitalize='none'
-                                       underlineColorAndroid='transparent'
-                                       selectionColor={colors.activeTabColor}
-                                       placeholder={strings('login.password_placeholder')}
-                                       value={this.state.password}
-                                       onChangeText={password => this.setState({password})}/>
-                        </View>
-                        <View style={styles.errorContainer}>
-                            <Text style={styles.errorText}>{loginError}</Text>
-                        </View>
-                        <View style={styles.buttonContainer}>
-                            <TouchableOpacity style={styles.loginButton}
-                                              onPress={this.onLoginPress}
-                                              disabled={fetching}>
-                                <Text style={styles.buttonText}>{strings('login.login_button')}</Text>
-                            </TouchableOpacity>
+            <KeyboardAvoidingView style={styles.container} behavior='padding'>
+                <View style={styles.innerContainer}>
+                    <View style={styles.loginFormContainer}>
+                        <Animated.View style={[styles.topContainer, {height: this.state.containerHeight}]}>
+                            <Animated.Image
+                                style={[styles.image, {height: this.state.imageHeight}]}
+                                source={require('../../assets/images/refundeo_logo.png')}
+                            />
+                        </Animated.View>
+                        <View style={styles.inputContainer}>
+                            <View style={[styles.elevatedInputContainer, styles.firstInput]}>
+                                <Icon name={'envelope'} style={styles.icon}/>
+                                <TextInput style={styles.usernameInput}
+                                           ref={(input) => this.firstInput = input}
+                                           placeholder={strings('login.email_placeholder')}
+                                           autoCapitalize='none'
+                                           textAlignVertical='center'
+                                           editable={!fetching}
+                                           returnKeyType='next'
+                                           keyboardType={'email-address'}
+                                           underlineColorAndroid='transparent'
+                                           selectionColor={colors.activeTabColor}
+                                           onSubmitEditing={() => this.secondInput.focus()}
+                                           value={this.state.username}
+                                           onChangeText={username => this.setState({username})}/>
+                            </View>
+                            <View style={styles.elevatedInputContainer}>
+                                <Icon name={'lock'} style={[styles.icon, styles.secondIcon]}/>
+                                <TextInput style={styles.passwordInput}
+                                           ref={(input) => this.secondInput = input}
+                                           secureTextEntry={true}
+                                           textAlignVertical='center'
+                                           editable={!fetching}
+                                           returnKeyType='done'
+                                           autoCapitalize='none'
+                                           underlineColorAndroid='transparent'
+                                           selectionColor={colors.activeTabColor}
+                                           placeholder={strings('login.password_placeholder')}
+                                           value={this.state.password}
+                                           onChangeText={password => this.setState({password})}/>
+                            </View>
+                            <View style={styles.errorContainer}>
+                                <Text style={styles.errorText}>{loginError}</Text>
+                            </View>
+                            <View style={styles.buttonContainer}>
+                                <TouchableOpacity style={styles.loginButton}
+                                                  onPress={this.onLoginPress}
+                                                  disabled={fetching}>
+                                    <Text style={styles.buttonText}>{strings('login.login_button')}</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
+                    {fetching &&
+                    <View style={styles.loadingContainer}>
+                        <ActivityIndicator size='large' color={colors.activeTabColor} style={styles.activityIndicator}/>
+                    </View>
+                    }
+                    <ModalScreen
+                        modalTitle={strings('login.eula_title')}
+                        noCancelButton={false}
+                        onSubmit={this.closeEulaModal}
+                        onBack={this.closeEulaModal}
+                        onCancel={this.closeEulaModal}
+                        visible={navigation.modal['eulaModal'] || false}>
+                        <ScrollView>
+                            <Text>{Platform.OS === 'ios' ? strings('login.eula_ios') : strings('login.eula_android')}</Text>
+                        </ScrollView>
+                    </ModalScreen>
                 </View>
-                {fetching &&
-                <View style={styles.loadingContainer}>
-                    <ActivityIndicator size='large' color={colors.activeTabColor} style={styles.activityIndicator}/>
-                </View>
-                }
-                <ModalScreen
-                    modalTitle={strings('login.eula_title')}
-                    noCancelButton={false}
-                    onSubmit={this.closeEulaModal}
-                    onBack={this.closeEulaModal}
-                    onCancel={this.closeEulaModal}
-                    visible={navigation.modal['eulaModal'] || false}>
-                    <ScrollView>
-                        <Text>{Platform.OS === 'ios' ? strings('login.eula_ios') : strings('login.eula_android')}</Text>
-                    </ScrollView>
-                </ModalScreen>
-            </View>
+            </KeyboardAvoidingView>
         );
-    };
-
-    render() {
-        if (Platform.OS === 'ios') {
-            return this._renderIos();
-        } else {
-            return this._renderAndroid();
-        }
     }
 }
 
@@ -226,6 +213,7 @@ const styles = StyleSheet.create({
         paddingTop: 3,
         paddingBottom: 3,
         flexDirection: 'row',
+        alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0,
@@ -233,6 +221,10 @@ const styles = StyleSheet.create({
     },
     firstInput: {
         marginBottom: 20
+    },
+    secondIcon: {
+        marginLeft: 10,
+        marginRight: 6
     },
     errorContainer: {
         height: 50,
@@ -296,6 +288,9 @@ const styles = StyleSheet.create({
     icon: {
         fontSize: 20,
         marginLeft: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
         marginRight: 5,
         color: colors.activeTabColor
     },
@@ -311,13 +306,13 @@ const mapStateToProps = state => {
             navigation,
             ...state.authReducer
         }
-    }
+    };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         actions: bindActionCreators(Actions, dispatch)
-    }
+    };
 };
 
 export default connect(

@@ -1,5 +1,5 @@
 import {NOTIFICATION_SENDER_ID} from 'react-native-dotenv';
-import {Platform, Alert} from 'react-native';
+import {Platform} from 'react-native';
 
 let NotificationHub = null;
 if (Platform.OS === 'ios') {
@@ -18,6 +18,10 @@ let hubOptions = {
 };
 
 export default class NotificationService {
+
+    static getDeviceToken() {
+        return remoteNotificationsDeviceToken;
+    }
 
     static async _requestPermissions() {
         NotificationHub.addEventListener('register', NotificationService._onRegistered);
@@ -49,6 +53,7 @@ export default class NotificationService {
     }
 
     static _onRegistered(deviceToken) {
+        remoteNotificationsDeviceToken = deviceToken;
     }
 
     static _onRegistrationError(error) {
