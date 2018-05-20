@@ -16,7 +16,6 @@ import {
 import colors from '../shared/colors';
 import Icon from 'react-native-fa-icons';
 import {strings} from '../shared/i18n';
-import ModalScreen from '../components/Modal';
 import Actions from '../actions/Actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -162,17 +161,6 @@ class LoginScreen extends Component {
                         <ActivityIndicator size='large' color={colors.activeTabColor} style={styles.activityIndicator}/>
                     </View>
                     }
-                    <ModalScreen
-                        modalTitle={strings('login.eula_title')}
-                        noCancelButton={false}
-                        onSubmit={this.closeEulaModal}
-                        onBack={this.closeEulaModal}
-                        onCancel={this.closeEulaModal}
-                        visible={navigation.modal['eulaModal'] || false}>
-                        <ScrollView>
-                            <Text>{Platform.OS === 'ios' ? strings('login.eula_ios') : strings('login.eula_android')}</Text>
-                        </ScrollView>
-                    </ModalScreen>
                 </View>
             </KeyboardAvoidingView>
         );

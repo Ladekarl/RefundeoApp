@@ -3,7 +3,7 @@ import LocalStorage from '../storage';
 import {strings} from '../shared/i18n';
 import Api from '../api';
 import {LoginManager} from 'react-native-fbsdk';
-import {Alert} from 'react-native';
+import {Alert, Platform} from 'react-native';
 import NotificationService from '../shared/NotificationService';
 
 export default {
@@ -207,7 +207,7 @@ function login(username, password) {
     };
 }
 
-function register(username, password, confPassword) {
+function register(username, password, confPassword, acceptedTermsOfService, termsOfService, acceptedPrivacyPolicy, privacyPolicy) {
     if (!username) {
         return registerError(strings('login.missing_username'));
     }
@@ -220,7 +220,7 @@ function register(username, password, confPassword) {
     }
     return dispatch => {
         dispatch({type: types.AUTH_REGISTERING});
-        Api.register(username, password).then(user => {
+        Api.register(username, password, acceptedTermsOfService, termsOfService, acceptedPrivacyPolicy, privacyPolicy).then(user => {
             if (user && user.token) {
                 NotificationService.register();
                 dispatch(registerSuccess(user));
@@ -423,7 +423,9 @@ function changePasswordError(error = '') {
 }
 
 function missingUserInfo(user) {
-    return !user.firstName || !user.lastName || !user.country || !user.bankAccountNumber || !user.bankRegNumber;
+    const termsOfService = Platform.OS === 'ios' ? strings('register.terms_of_service_ios') : strings('register.terms_of_service_android');
+    const privacyPolicy = Platform.OS === 'ios' ? strings('register.privacy_policy_ios') : strings('register.privacy_policy_android');
+    return !user.firstName || !user.lastName || !user.country || !user.bankAccountNumber || !user.bankRegNumber || user.privacyPolicy != privacyPolicy;
 }
 
 function checkPassword(newPassword, confPassword) {

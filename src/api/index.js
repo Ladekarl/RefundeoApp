@@ -48,13 +48,17 @@ export default class Api {
     }
 
 
-    static async register(username, password) {
+    static async register(username, password, acceptedTermsOfService, termsOfService, acceptedPrivacyPolicy, privacyPolicy) {
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 username,
                 password,
+                acceptedTermsOfService,
+                termsOfService,
+                acceptedPrivacyPolicy,
+                privacyPolicy,
                 scopes: ['offline_access']
             })
         };
@@ -110,7 +114,7 @@ export default class Api {
 
         const user = await response.json();
 
-        return Helpers.updateUser(user)
+        return Helpers.updateUser(user);
     }
 
     static async updateUser(user) {

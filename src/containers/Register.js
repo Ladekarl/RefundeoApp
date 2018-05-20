@@ -8,6 +8,7 @@ import {
     Platform,
     ScrollView,
     StyleSheet,
+    Switch,
     Text,
     TextInput,
     TouchableOpacity,
@@ -24,7 +25,7 @@ import PropTypes from 'prop-types';
 
 const window = Dimensions.get('window');
 const IMAGE_HEIGHT = window.width / 2;
-const CONTAINER_HEIGHT = window.height / 2.5;
+const CONTAINER_HEIGHT = window.height / 4;
 const CONTAINER_HEIGHT_SMALL = window.height / 8;
 const IMAGE_HEIGHT_SMALL = 0;
 
@@ -54,7 +55,9 @@ class RegisterScreen extends Component {
             password: '',
             confirmPassword: '',
             imageHeight: new Animated.Value(IMAGE_HEIGHT),
-            containerHeight: new Animated.Value(CONTAINER_HEIGHT)
+            containerHeight: new Animated.Value(CONTAINER_HEIGHT),
+            acceptedTermsOfService: false,
+            acceptedPrivacyPolicy: false
         };
     }
 
@@ -95,16 +98,31 @@ class RegisterScreen extends Component {
 
     onRegisterPress = () => {
         Keyboard.dismiss();
-        const {username, password, confirmPassword} = this.state;
-        this._register(username.trim(), password, confirmPassword);
+        const {username, password, confirmPassword, acceptedTermsOfService, acceptedPrivacyPolicy} = this.state;
+        const termsOfService = Platform.OS === 'ios' ? strings('register.terms_of_service_ios') : strings('register.terms_of_service_android');
+        const privacyPolicy = Platform.OS === 'ios' ? strings('register.privacy_policy_ios') : strings('register.privacy_policy_android');
+
+        this.props.actions.register(username, password, confirmPassword, acceptedTermsOfService, termsOfService, acceptedPrivacyPolicy, privacyPolicy);
     };
 
-    _register = (username, password, confirmPassword) => {
-        this.props.actions.register(username, password, confirmPassword);
+    closeTermsOfServiceModal = () => {
+        return this.props.actions.closeModal('termsOfServiceModal');
+    };
+
+    openTermsOfServiceModal = () => {
+        return this.props.actions.openModal('termsOfServiceModal');
+    };
+
+    closePrivacyPolicyModal = () => {
+        return this.props.actions.closeModal('privacyPolicyModal');
+    };
+
+    openPrivacyPolicyModal = () => {
+        return this.props.actions.openModal('privacyPolicyModal');
     };
 
     render() {
-        const {fetching, registerError, navigation} = this.props.state;
+        const {fetching, registerError} = this.props.state;
         return (
             <KeyboardAvoidingView style={styles.container} behavior='padding'>
                 <View style={styles.innerContainer}>
@@ -166,6 +184,41 @@ class RegisterScreen extends Component {
                                            value={this.state.confirmPassword}
                                            onChangeText={confirmPassword => this.setState({confirmPassword})}/>
                             </View>
+                            <View style={styles.eulaContainer}>
+                                <Switch disabled={fetching}
+                                        value={this.state.acceptedTermsOfService}
+                                        tintColor={Platform.OS === 'ios' ? colors.activeTabColor : undefined}
+                                        thumbTintColor={colors.activeTabColor}
+                                        onValueChange={acceptedTermsOfService => this.setState({acceptedTermsOfService})}>
+                                </Switch>
+                                <View style={styles.eulaTextContainer}>
+                                    <Text
+                                        style={styles.eulaContainerText}>{strings('register.terms_of_service_1')}</Text>
+                                    <TouchableOpacity style={styles.eulaButton}
+                                                      onPress={this.openTermsOfServiceModal}
+                                                      disabled={fetching}>
+                                        <Text
+                                            style={styles.eulaButtonText}>{strings('register.terms_of_service_2')}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                            <View style={styles.eulaContainer}>
+                                <Switch disabled={fetching}
+                                        tintColor={Platform.OS === 'ios' ? colors.activeTabColor : undefined}
+                                        thumbTintColor={colors.activeTabColor}
+                                        value={this.state.acceptedPrivacyPolicy}
+                                        onValueChange={acceptedPrivacyPolicy => this.setState({acceptedPrivacyPolicy})}>
+                                </Switch>
+                                <View style={styles.eulaTextContainer}>
+                                    <Text style={styles.eulaContainerText}>{strings('register.privacy_policy_1')}</Text>
+                                    <TouchableOpacity style={styles.eulaButton}
+                                                      onPress={this.openPrivacyPolicyModal}
+                                                      disabled={fetching}>
+                                        <Text
+                                            style={styles.eulaButtonText}>{strings('register.privacy_policy_2')}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
                             <View style={styles.errorContainer}>
                                 <Text style={styles.errorText}>{registerError}</Text>
                             </View>
@@ -184,14 +237,27 @@ class RegisterScreen extends Component {
                     </View>
                     }
                     <ModalScreen
-                        modalTitle={strings('login.eula_title')}
-                        noCancelButton={false}
-                        onSubmit={this.closeEulaModal}
-                        onBack={this.closeEulaModal}
-                        onCancel={this.closeEulaModal}
-                        visible={navigation.modal['eulaModal'] || false}>
-                        <ScrollView>
-                            <Text>{Platform.OS === 'ios' ? strings('login.eula_ios') : strings('login.eula_android')}</Text>
+                        modalTitle={strings('register.terms_of_service_title')}
+                        noCancelButton={true}
+                        onSubmit={this.closeTermsOfServiceModal}
+                        onBack={this.closeTermsOfServiceModal}
+                        contentContainerStyle={styles.eulaModalContainer}
+                        onCancel={this.closeTermsOfServiceModal}
+                        visible={this.props.state.navigation.modal['termsOfServiceModal'] || false}>
+                        <ScrollView style={styles.eulaScrollContainer}>
+                            <Text>{Platform.OS === 'ios' ? strings('register.terms_of_service_ios') : strings('register.terms_of_service_android')}</Text>
+                        </ScrollView>
+                    </ModalScreen>
+                    <ModalScreen
+                        modalTitle={strings('register.privacy_policy_title')}
+                        noCancelButton={true}
+                        onSubmit={this.closePrivacyPolicyModal}
+                        onBack={this.closePrivacyPolicyModal}
+                        contentContainerStyle={styles.eulaModalContainer}
+                        onCancel={this.closePrivacyPolicyModal}
+                        visible={this.props.state.navigation.modal['privacyPolicyModal'] || false}>
+                        <ScrollView style={styles.eulaScrollContainer}>
+                            <Text>{Platform.OS === 'ios' ? strings('register.privacy_policy_ios') : strings('register.privacy_policy_android')}</Text>
                         </ScrollView>
                     </ModalScreen>
                 </View>
@@ -244,7 +310,8 @@ const styles = StyleSheet.create({
         marginBottom: 20
     },
     thirdInput: {
-        marginTop: 20
+        marginTop: 20,
+        marginBottom: 20
     },
     secondIcon: {
         marginLeft: 10,
@@ -320,6 +387,46 @@ const styles = StyleSheet.create({
     },
     activityIndicator: {
         elevation: 10
+    },
+    eulaContainer: {
+        marginLeft: 10,
+        marginRight: 10,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginBottom: 20
+    },
+    eulaModalContainer: {
+        height: '100%',
+        width: '100%'
+    },
+    eulaScrollContainer: {
+        height: '70%'
+    },
+    eulaTextContainer: {
+        marginLeft: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    eulaContainerText: {
+        fontWeight: 'bold',
+    },
+    eulaButton: {
+        marginLeft: 10,
+        borderRadius: 2,
+        borderWidth: StyleSheet.hairlineWidth,
+        borderColor: colors.activeTabColor,
+        height: 30,
+        paddingLeft: 10,
+        paddingRight: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.white
+    },
+    eulaButtonText: {
+        color: colors.submitButtonColor,
+        fontWeight: 'bold'
     }
 });
 
