@@ -423,7 +423,7 @@ function changePasswordError(error = '') {
 }
 
 function missingUserInfo(user) {
-    return !user.firstName || !user.lastName || !user.country || !user.bankAccountNumber || user.bankRegNumber;
+    return !user.firstName || !user.lastName || !user.country || !user.bankAccountNumber || !user.bankRegNumber;
 }
 
 function checkPassword(newPassword, confPassword) {
