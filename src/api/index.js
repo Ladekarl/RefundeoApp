@@ -1,5 +1,7 @@
 import Helpers, {API_URL} from './Helpers';
 import LocalStorage from '../storage';
+import RNFetchBlob from 'react-native-fetch-blob';
+import Guid from '../shared/Guid';
 
 export default class Api {
     static async getTokenFacebook(accessToken) {
@@ -60,7 +62,7 @@ export default class Api {
 
         const user = await response.json();
 
-        return Helpers.saveUser(user);
+        return await Helpers.saveUser(user);
     }
 
     static async getUser() {
@@ -75,7 +77,7 @@ export default class Api {
 
         const user = await response.json();
 
-        return Helpers.updateUser(user);
+        return await Helpers.updateUser(user);
     }
 
     static async updateUser(user) {
@@ -101,7 +103,7 @@ export default class Api {
 
         await Helpers.fetchAuthenticated(`${API_URL}/api/user/account`, requestOptions);
 
-        return Helpers.updateUser(user);
+        return await Helpers.updateUser(user);
     }
 
     static async changePassword(oldPassword, newPassword, passwordConfirmation) {
@@ -118,7 +120,7 @@ export default class Api {
             })
         };
 
-        await Helpers.fetchAuthenticated(`${API_URL}/api/account/ChangePassword`, requestOptions);
+        return await Helpers.fetchAuthenticated(`${API_URL}/api/account/ChangePassword`, requestOptions);
     }
 
     static async getRefundCases() {
@@ -129,6 +131,49 @@ export default class Api {
 
         const response = await Helpers.fetchAuthenticated(`${API_URL}/api/user/refundcase`, requestOptions);
 
-        return await response.json();
+        const refundCases = await response.json();
+
+        refundCases.sort((a, b) => {
+            return new Date(b.dateCreated) - new Date(a.dateCreated);
+        });
+
+        return refundCases;
+    }
+
+    static async uploadDocumentation(refundCase, documentation) {
+        RNFetchBlob.config({fileCache: true, appendExt: 'jpg'});
+        const fs = RNFetchBlob.fs;
+        const base64 = await fs.readFile(documentation, 'base64');
+
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                ...await Helpers.authHeader(),
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                ImageName: Guid(),
+                Image: base64,
+                ImageType: 'image/jpg'
+            })
+        };
+
+        const requestUrl = `${API_URL}/api/user/refundcase/${refundCase.id}/doc`;
+        return await fetch(requestUrl, requestOptions);
+    }
+
+    static async requestRefund(refundCase) {
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                ...await Helpers.authHeader(),
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                isRequested: true
+            })
+        };
+
+        return await Helpers.fetchAuthenticated(`${API_URL}/api/user/refundcase/${refundCase.id}/request`, requestOptions);
     }
 }

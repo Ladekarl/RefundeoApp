@@ -21,13 +21,13 @@ type RefundCase = {
     refundAmount: number,
     isRequested: boolean,
     isAccepted: boolean,
+    isRejected: boolean,
     qrCode: string,
     documentation: string,
     dateCreated: string,
     dateRequested: string,
     merchant: Merchant,
-    customer: Customer,
-    companyName: string,
+    customer: Customer
 }
 
 type RefundReducerState = {
@@ -39,7 +39,11 @@ type RefundReducerState = {
 const initialState: RefundReducerState = {
     refundCases: [],
     fetchingRefundCases: false,
-    getRefundCasesError: ''
+    fetchingDocumentation: false,
+    fetchingRequestRefund: false,
+    getRefundCasesError: '',
+    documentationError: '',
+    requestRefundError: ''
 };
 
 export default function refundReducer(state = initialState, action = {}) {
@@ -48,14 +52,16 @@ export default function refundReducer(state = initialState, action = {}) {
         case types.REFUND_GETTING_REFUND_CASES:
             nextState = {
                 ...state,
-                fetchingRefundCases: true
+                fetchingRefundCases: true,
+                getRefundCasesError: ''
             };
             break;
         case types.REFUND_GET_REFUND_CASES_SUCCESS:
             nextState = {
                 ...state,
                 fetchingRefundCases: false,
-                refundCases: action.refundCases
+                refundCases: action.refundCases,
+                getRefundCasesError: ''
             };
             break;
         case types.REFUND_GET_REFUND_CASES_ERROR:
@@ -65,6 +71,47 @@ export default function refundReducer(state = initialState, action = {}) {
                 getRefundCasesError: action.getRefundCasesError
             };
             break;
+        case types.REFUND_UPLOADING_DOCUMENTATION:
+            nextState = {
+                ...state,
+                fetchingDocumentation: true,
+                documentationError: ''
+            };
+            break;
+        case types.REFUND_UPLOAD_DOCUMENTATION_ERROR:
+            nextState = {
+                ...state,
+                fetchingDocumentation: false,
+                documentationError: action.documentationError
+            };
+            break;
+        case types.REFUND_UPLOAD_DOCUMENTATION_SUCCESS:
+            nextState = {
+                ...state,
+                fetchingDocumentation: false,
+                documentationError: ''
+            };
+            break;
+        case types.REFUND_REQUESTING_REFUND:
+            nextState = {
+                ...state,
+                fetchingRequestRefund: true,
+                requestRefundError: ''
+            };
+            break;
+        case types.REFUND_REQUEST_REFUND_SUCCESS:
+            nextState = {
+                ...state,
+                fetchingRequestRefund: false,
+                requestRefundError: ''
+            };
+            break;
+        case types.REFUND_REQUEST_REFUND_ERROR:
+            nextState = {
+                ...state,
+                fetchingRequestRefund: false,
+                requestRefundError: action.requestRefundError
+            };
     }
     return nextState || state;
 }

@@ -3,7 +3,7 @@ import LocalStorage from '../storage';
 import {strings} from '../shared/i18n';
 import Api from '../api';
 import {LoginManager} from 'react-native-fbsdk';
-import {Alert, Platform} from 'react-native';
+import {Alert} from 'react-native';
 import NotificationService from '../shared/NotificationService';
 
 export default {
@@ -11,6 +11,7 @@ export default {
     navigateAndResetToMainFlow,
     toggleDrawer,
     openDrawer,
+    uploadDocumentation,
     navigateLogIn,
     navigateRegister,
     closeDrawer,
@@ -30,6 +31,7 @@ export default {
     changeUser,
     getUser,
     changePassword,
+    requestRefund
 };
 
 function navigateInitial() {
@@ -242,6 +244,76 @@ function register(username, password, confPassword, acceptedTermsOfService, term
         }).catch((error) => {
             dispatch(registerError(error));
         });
+    };
+}
+
+function uploadDocumentation(refundCase, documentation) {
+    return dispatch => {
+        dispatch(uploadingDocumentation());
+        Api.uploadDocumentation(refundCase, documentation).then(() => {
+            dispatch(getRefundCases());
+            dispatch(uploadDocumentationSuccess());
+        }).catch((response) => {
+            if (shouldLogout(response)) {
+                dispatch(logout());
+            } else {
+                dispatch(uploadDocumentationError(strings('refund_case.upload_documentation_error')));
+            }
+        });
+    };
+}
+
+function requestRefund(refundCase) {
+    return dispatch => {
+        dispatch(requestingRefund());
+        Api.requestRefund(refundCase).then(() => {
+            dispatch(getRefundCases());
+            dispatch(requestingRefundSuccess());
+        }).catch((response) => {
+            if (shouldLogout(response)) {
+                dispatch(logout());
+            } else {
+                dispatch(requestingRefundError(strings('refund_case.request_refund_error')));
+            }
+        });
+    };
+}
+
+function requestingRefund() {
+    return {
+        type: types.REFUND_REQUESTING_REFUND
+    };
+}
+
+function requestingRefundSuccess() {
+    return {
+        type: types.REFUND_REQUEST_REFUND_SUCCESS
+    };
+}
+
+function requestingRefundError(requestRefundError = '') {
+    return {
+        type: types.REFUND_REQUEST_REFUND_ERROR,
+        requestRefundError
+    };
+}
+
+function uploadingDocumentation() {
+    return {
+        type: types.REFUND_UPLOADING_DOCUMENTATION
+    };
+}
+
+function uploadDocumentationSuccess() {
+    return {
+        type: types.REFUND_UPLOAD_DOCUMENTATION_SUCCESS
+    };
+}
+
+function uploadDocumentationError(error = '') {
+    return {
+        type: types.REFUND_UPLOAD_DOCUMENTATION_ERROR,
+        documentationError: error
     };
 }
 

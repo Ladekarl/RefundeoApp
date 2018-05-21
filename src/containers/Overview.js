@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {RefreshControl, ScrollView, StyleSheet, Text, Platform} from 'react-native';
+import {RefreshControl, ScrollView, StyleSheet, Platform, View, FlatList} from 'react-native';
 import Icon from 'react-native-fa-icons';
 import colors from '../shared/colors';
 import {connect} from 'react-redux';
@@ -35,30 +35,33 @@ class OverviewScreen extends Component {
         return Platform.OS === 'ios' ? [colors.activeTabColor, colors.gradientColor] : [colors.whiteColor, colors.backgroundColor, colors.slightlyDarkerColor];
     };
 
+    _renderRefundCase = ({item}) => (
+        <RefundCaseScreen actions={this.props.actions} refundCase={item}/>
+    );
+
+    _keyExtractor = (refundCase) => refundCase.id.toString();
+
     render() {
         const {actions, state} = this.props;
-        const {refundCases, fetchingRefundCases} = state;
+        const {refundCases, fetchingRefundCases, fetchingDocumentation, fetchingRequestRefund} = state;
 
         return (
             <LinearGradient colors={this.getLinearGradientColors()} style={styles.linearGradient}>
-                <ScrollView
+                <FlatList
                     style={styles.container}
-                    indicatorStyle={Platform.OS === 'ios' ? 'white' : 'black'}
-                    contentContainerStyle={styles.scrollContainer}
+                    contentContainerStyle={[styles.scrollContainer, refundCases.length === 0 ? styles.emptyContainer : {}]}
                     refreshControl={
                         <RefreshControl
                             tintColor={Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor}
-                            refreshing={fetchingRefundCases}
+                            refreshing={fetchingRefundCases || fetchingDocumentation || fetchingRequestRefund}
                             onRefresh={actions.getRefundCases}
                         />
-                    }>
-                    {!fetchingRefundCases && refundCases.length === 0 &&
-                    <EmptyOverviewScreen actions={actions}/>
                     }
-                    {refundCases.map((refundCase, i) => (
-                        <RefundCaseScreen key={i} actions={actions} refundCase={refundCase}/>
-                    ))}
-                </ScrollView>
+                    data={refundCases}
+                    keyExtractor={this._keyExtractor}
+                    renderItem={this._renderRefundCase}
+                    ListEmptyComponent={!fetchingRefundCases ? <EmptyOverviewScreen actions={actions}/> : undefined}
+                />
             </LinearGradient>
         );
     }
@@ -69,10 +72,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
     },
     scrollContainer: {
-        flex: 1,
         backgroundColor: 'transparent',
         justifyContent: 'flex-start',
         alignItems: 'center',
+    },
+    emptyContainer: {
+        flex: 1
     },
     tabBarIcon: {
         fontSize: 20

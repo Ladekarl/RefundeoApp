@@ -34,7 +34,8 @@ const resetErrors = {
     changePasswordError: '',
     facebookLoginError: '',
     getUserError: '',
-    registerError: ''
+    registerError: '',
+    loginError: ''
 };
 
 export default function authReducer(state = initialState, action = {}) {
