@@ -38,7 +38,7 @@ class RegisterExtraScreen extends Component {
             acceptedTermsOfService
         } = this.props.state.user;
 
-        if (firstName && lastName && country && bankAccountNumber && bankRegNumber) {
+        if (firstName && lastName && country && bankAccountNumber && bankRegNumber && acceptedPrivacyPolicy && acceptedTermsOfService) {
             this.props.actions.navigateAndResetToMainFlow();
             this.props.actions.getRefundCases();
             return;
@@ -49,7 +49,7 @@ class RegisterExtraScreen extends Component {
         if (!acceptedPrivacyPolicy) {
             this.setState({error: strings('register.accept_privacy_policy')});
         }
-        this.setState({error: strings('settings.error_fields_empty')});
+        this.setState({error: strings('register.required_fields')});
 
     };
 

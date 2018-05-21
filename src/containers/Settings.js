@@ -19,6 +19,7 @@ import Actions from '../actions/Actions';
 import PropTypes from 'prop-types';
 import ModalScreen from '../components/Modal';
 import CountryPicker, {getAllCountries} from 'react-native-country-picker-modal';
+import Icon from 'react-native-fa-icons';
 
 class SettingsScreen extends Component {
 
@@ -262,19 +263,34 @@ class SettingsScreen extends Component {
                         onRefresh={actions.getUser}
                     />
                 }>
-                <View style={styles.sectionHeaderContainer}>
+                <View style={[styles.sectionHeaderContainer, styles.sectionTopContainer]}>
                     <Text style={styles.sectionHeaderText}>{strings('settings.profile')}</Text>
                 </View>
                 <View style={styles.rowContainer}>
-                    <Text style={styles.leftText}>{strings('settings.email')}</Text>
+                    <View style={styles.rowInnerContainer}>
+                        {!state.user.username &&
+                        <Icon name='exclamation-circle' style={styles.requiredIcon}/>
+                        }
+                        <Text style={styles.leftText}>{strings('settings.email')}</Text>
+                    </View>
                     <Text style={styles.rightText}>{state.user.username}</Text>
                 </View>
                 <TouchableOpacity style={styles.rowContainer} onPress={this.showChangeFirstName}>
-                    <Text style={styles.leftText}>{strings('settings.first_name')}</Text>
+                    <View style={styles.rowInnerContainer}>
+                        {!state.user.firstName &&
+                        <Icon name='exclamation-circle' style={styles.requiredIcon}/>
+                        }
+                        <Text style={styles.leftText}>{strings('settings.first_name')}</Text>
+                    </View>
                     <Text style={styles.rightText}>{state.user.firstName}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.rowContainer} onPress={this.showChangeLastName}>
-                    <Text style={styles.leftText}>{strings('settings.last_name')}</Text>
+                    <View style={styles.rowInnerContainer}>
+                        {!state.user.lastName &&
+                        <Icon name='exclamation-circle' style={styles.requiredIcon}/>
+                        }
+                        <Text style={styles.leftText}>{strings('settings.last_name')}</Text>
+                    </View>
                     <Text style={styles.rightText}>{state.user.lastName}</Text>
                 </TouchableOpacity>
                 <View style={styles.countryContainer}>
@@ -285,17 +301,32 @@ class SettingsScreen extends Component {
                         closeable={true}
                         filterable={true}>
                         <View style={styles.countryRowContainer}>
-                            <Text style={styles.leftText}>{strings('settings.country')}</Text>
+                            <View style={styles.rowInnerContainer}>
+                                {!state.user.country &&
+                                <Icon name='exclamation-circle' style={styles.requiredIcon}/>
+                                }
+                                <Text style={styles.leftText}>{strings('settings.country')}</Text>
+                            </View>
                             <Text style={styles.rightText}>{state.user.country}</Text>
                         </View>
                     </CountryPicker>
                 </View>
                 <TouchableOpacity style={styles.rowContainer} onPress={this.showChangeBankReg}>
-                    <Text style={styles.leftText}>{strings('settings.bank_reg')}</Text>
+                    <View style={styles.rowInnerContainer}>
+                        {!state.user.bankRegNumber &&
+                        <Icon name='exclamation-circle' style={styles.requiredIcon}/>
+                        }
+                        <Text style={styles.leftText}>{strings('settings.bank_reg')}</Text>
+                    </View>
                     <Text style={styles.rightText}>{state.user.bankRegNumber}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.rowContainer} onPress={this.showChangeBankAccount}>
-                    <Text style={styles.leftText}>{strings('settings.bank_account')}</Text>
+                    <View style={styles.rowInnerContainer}>
+                        {!state.user.bankAccountNumber &&
+                        <Icon name='exclamation-circle' style={styles.requiredIcon}/>
+                        }
+                        <Text style={styles.leftText}>{strings('settings.bank_account')}</Text>
+                    </View>
                     <Text style={styles.rightText}>{state.user.bankAccountNumber}</Text>
                 </TouchableOpacity>
                 {!noPassword && !state.user.isOauth &&
@@ -303,18 +334,36 @@ class SettingsScreen extends Component {
                     <Text style={styles.leftButtonText}>{strings('settings.change_password')}</Text>
                 </TouchableOpacity>
                 }
+                <View style={styles.sectionHeaderContainer}>
+                    <Text style={styles.sectionHeaderText}>{strings('settings.legal_privacy')}</Text>
+                </View>
                 <TouchableOpacity style={styles.rowContainer} onPress={this.openTermsOfServiceModal}>
-                    <Text style={styles.leftButtonText}>{strings('register.terms_of_service_2')}</Text>
+                    <View style={styles.rowInnerContainer}>
+                        {!state.user.acceptedTermsOfService &&
+                        <Icon name='exclamation-circle' style={styles.requiredIcon}/>
+                        }
+                        {editablePolicies &&
+                        <Text style={styles.leftText}>{strings('register.terms_of_service_1')}</Text>
+                        }
+                        <Text style={styles.leftButtonText}>{strings('register.terms_of_service_2')}</Text>
+                    </View>
                     {editablePolicies &&
                     <Switch value={state.user.acceptedTermsOfService}
                             tintColor={Platform.OS === 'ios' ? colors.activeTabColor : undefined}
                             thumbTintColor={colors.activeTabColor}
-                            onValueChange={this.acceptTermsOfService}
-                    />
+                            onValueChange={this.acceptTermsOfService}/>
                     }
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.rowContainer} onPress={this.openPrivacyPolicyModal}>
-                    <Text style={styles.leftButtonText}>{strings('register.privacy_policy_2')}</Text>
+                    <View style={styles.rowInnerContainer}>
+                        {!state.user.acceptedPrivacyPolicy &&
+                        <Icon name='exclamation-circle' style={styles.requiredIcon}/>
+                        }
+                        {editablePolicies &&
+                        <Text style={styles.leftText}>{strings('register.privacy_policy_1')}</Text>
+                        }
+                        <Text style={styles.leftButtonText}>{strings('register.privacy_policy_2')}</Text>
+                    </View>
                     {editablePolicies &&
                     <Switch value={state.user.acceptedPrivacyPolicy}
                             tintColor={Platform.OS === 'ios' ? colors.activeTabColor : undefined}
@@ -324,8 +373,12 @@ class SettingsScreen extends Component {
                     }
                 </TouchableOpacity>
                 {!noSignOut &&
-                <TouchableOpacity style={styles.rowContainer} onPress={this.showSignOut}>
-                    <Text style={styles.leftRedText}>{strings('settings.sign_out')}</Text>
+                <View style={styles.sectionHeaderContainer}>
+                </View>
+                }
+                {!noSignOut &&
+                <TouchableOpacity style={styles.rowCenterContainer} onPress={this.showSignOut}>
+                    <Text style={styles.redText}>{strings('settings.sign_out')}</Text>
                 </TouchableOpacity>
                 }
                 <ModalScreen
@@ -438,14 +491,28 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        marginBottom: 5,
+        marginTop: 5,
+        backgroundColor: colors.whiteColor,
+        padding: 15,
+    },
+    rowCenterContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
         marginBottom: 10,
         marginTop: 10,
         backgroundColor: colors.whiteColor,
         padding: 15,
     },
+    rowInnerContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     countryContainer: {
-        marginBottom: 10,
-        marginTop: 10,
+        marginBottom: 5,
+        marginTop: 5,
     },
     countryRowContainer: {
         flexDirection: 'row',
@@ -454,13 +521,16 @@ const styles = StyleSheet.create({
         backgroundColor: colors.whiteColor,
         padding: 15,
     },
+    sectionTopContainer: {
+        marginTop: Platform.OS === 'ios' ? 15 : 20
+    },
     sectionHeaderContainer: {
         backgroundColor: colors.backgroundColor,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: Platform.OS === 'ios' ? 15 : 20,
-        marginBottom: 5,
+        marginTop: 10,
+        marginBottom: 10,
         marginLeft: 15
     },
     leftText: {
@@ -470,12 +540,11 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         color: colors.submitButtonColor
     },
-    leftRedText: {
-        marginLeft: 10,
+    redText: {
         color: colors.cancelButtonColor
     },
     sectionHeaderText: {
-        fontSize: 18,
+        fontSize: 16,
         marginLeft: 10,
         textAlign: 'center'
     },
@@ -504,8 +573,14 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     eulaScrollContainer: {
-        height: '70%'
-    }
+        height: '80%'
+    },
+    requiredIcon: {
+        fontSize: 15,
+        height: undefined,
+        width: undefined,
+        color: colors.cancelButtonColor
+    },
 });
 
 const mapStateToProps = state => {

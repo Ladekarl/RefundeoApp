@@ -250,8 +250,12 @@ function getRefundCases() {
         dispatch(gettingRefundCases());
         Api.getRefundCases().then((refundCases) => {
             dispatch(getRefundCasesSuccess(refundCases));
-        }).catch(() => {
-            dispatch(getRefundCasesError('Some error text'));
+        }).catch((response) => {
+            if (shouldLogout(response)) {
+                dispatch(logout());
+            } else {
+                dispatch(getRefundCasesError('Some error text'));
+            }
         });
     };
 }
@@ -335,9 +339,13 @@ function changeUser(newUser) {
         dispatch(changingUser());
         Api.updateUser(newUser).then((user) => {
             dispatch(changeUserSuccess(user));
-        }).catch(() => {
-            Alert.alert(strings('settings.error_title'), strings('settings.change_user_error'));
-            dispatch(changeUserError(strings('settings.change_user_error')));
+        }).catch((response) => {
+            if (shouldLogout(response)) {
+                dispatch(logout());
+            } else {
+                Alert.alert(strings('settings.error_title'), strings('settings.change_user_error'));
+                dispatch(changeUserError(strings('settings.change_user_error')));
+            }
         });
     };
 }
@@ -367,8 +375,12 @@ function getUser() {
         dispatch(gettingUser());
         Api.getUser().then((user) => {
             dispatch(getUserSuccess(user));
-        }).catch(() => {
-            dispatch(getUserError('Could not get user'));
+        }).catch((response) => {
+            if (shouldLogout(response)) {
+                dispatch(logout());
+            } else {
+                dispatch(getUserError('Could not get user'));
+            }
         });
     };
 }
@@ -402,9 +414,13 @@ function changePassword(oldPassword, newPassword, confPassword) {
         dispatch(changingPassword());
         Api.changePassword(oldPassword, newPassword, confPassword).then(() => {
             dispatch(changePasswordSuccess());
-        }).catch(() => {
-            Alert.alert(strings('settings.error_title'), strings('settings.change_password_error'));
-            dispatch(changePasswordError(strings('settings.change_password_error')));
+        }).catch((response) => {
+            if (shouldLogout(response)) {
+                dispatch(logout());
+            } else {
+                Alert.alert(strings('settings.error_title'), strings('settings.change_password_error'));
+                dispatch(changePasswordError(strings('settings.change_password_error')));
+            }
         });
     };
 }
@@ -459,6 +475,11 @@ function checkPassword(newPassword, confPassword) {
 function checkEmail(email) {
     return /^(([^<>()\[\].,;:\s@"]+(.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})/.test(email);
 }
+
+function shouldLogout(response) {
+    return response.status === 401 || response.status === 404 || response.status === 403;
+}
+
 
 
 

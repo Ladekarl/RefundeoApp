@@ -1,7 +1,5 @@
-import Helpers from './helpers';
+import Helpers, {API_URL} from './Helpers';
 import LocalStorage from '../storage';
-
-const API_URL = 'https://refundeo20180331121625.azurewebsites.net';
 
 export default class Api {
     static async getTokenFacebook(accessToken) {
@@ -13,9 +11,7 @@ export default class Api {
 
         const response = await fetch(`${API_URL}/Token/Facebook`, requestOptions);
 
-        if (!response.ok) {
-            throw response.statusText;
-        }
+        Helpers.handleResponse(response);
 
         const user = await response.json();
 
@@ -36,11 +32,7 @@ export default class Api {
 
         const response = await fetch(`${API_URL}/Token`, requestOptions);
 
-        await Helpers.checkLoginResponse(response);
-
-        if (!response.ok) {
-            throw response.statusText;
-        }
+        await Helpers.handleLoginResponse(response);
 
         const user = await response.json();
 
@@ -64,33 +56,7 @@ export default class Api {
 
         const response = await fetch(`${API_URL}/api/user/account`, requestOptions);
 
-        await Helpers.checkRegisterResponse(response);
-
-        if (!response.ok) {
-            throw response.statusText;
-        }
-
-        const user = await response.json();
-
-        return Helpers.saveUser(user);
-    }
-
-    static async getTokenFromRefreshToken(refreshToken) {
-        const requestOptions = {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                grantType: 'refresh_token',
-                refreshToken,
-                scopes: ['offline_access']
-            })
-        };
-
-        const response = await fetch(`${API_URL}/Token/Facebook`, requestOptions);
-
-        if (!response.ok) {
-            throw response.statusText;
-        }
+        await Helpers.handleRegisterResponse(response);
 
         const user = await response.json();
 
@@ -105,11 +71,7 @@ export default class Api {
 
         const savedUser = await LocalStorage.getUser();
 
-        const response = await fetch(`${API_URL}/api/user/account/${encodeURIComponent(savedUser.id)}`, requestOptions);
-
-        if (!response.ok) {
-            throw response;
-        }
+        const response = await Helpers.fetchAuthenticated(`${API_URL}/api/user/account/${encodeURIComponent(savedUser.id)}`, requestOptions);
 
         const user = await response.json();
 
@@ -137,11 +99,7 @@ export default class Api {
             })
         };
 
-        const response = await fetch(`${API_URL}/api/user/account`, requestOptions);
-
-        if (!response.ok) {
-            throw response;
-        }
+        await Helpers.fetchAuthenticated(`${API_URL}/api/user/account`, requestOptions);
 
         return Helpers.updateUser(user);
     }
@@ -160,11 +118,7 @@ export default class Api {
             })
         };
 
-        const response = await fetch(`${API_URL}/api/account/ChangePassword`, requestOptions);
-
-        if (!response.ok) {
-            throw response;
-        }
+        await Helpers.fetchAuthenticated(`${API_URL}/api/account/ChangePassword`, requestOptions);
     }
 
     static async getRefundCases() {
@@ -173,11 +127,7 @@ export default class Api {
             headers: await Helpers.authHeader()
         };
 
-        const response = await fetch(`${API_URL}/api/user/refundcase`, requestOptions);
-
-        if (!response.ok) {
-            throw response.statusText;
-        }
+        const response = await Helpers.fetchAuthenticated(`${API_URL}/api/user/refundcase`, requestOptions);
 
         return await response.json();
     }

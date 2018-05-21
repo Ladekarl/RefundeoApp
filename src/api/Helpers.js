@@ -1,6 +1,7 @@
 import {strings} from '../shared/i18n';
 import LocalStorage from '../storage';
-import {Platform} from 'react-native';
+
+export const API_URL = 'https://refundeo20180331121625.azurewebsites.net';
 
 export default class Helpers {
     static termsOfService = strings('register.terms_of_service');
@@ -16,7 +17,13 @@ export default class Helpers {
         }
     }
 
-    static async checkLoginResponse(response) {
+    static handleResponse(response) {
+        if (!response.ok) {
+            throw response;
+        }
+    }
+
+    static async handleLoginResponse(response) {
         if (response.status === 400) {
             const error = await response.json();
             switch (error.error) {
@@ -32,9 +39,10 @@ export default class Helpers {
                     throw strings('login.unknown_error');
             }
         }
+        Helpers.handleResponse(response);
     }
 
-    static async checkRegisterResponse(response) {
+    static async handleRegisterResponse(response) {
         if (response.status === 400) {
             const respObj = await response.json();
             for (let error of respObj.errors)
@@ -60,6 +68,32 @@ export default class Helpers {
 
                 }
         }
+        Helpers.handleResponse(response);
+    }
+
+    static async fetchAuthenticated(request, requestOptions) {
+        const response = await fetch(request, requestOptions);
+        return Helpers.handleAuthenticatedResponse(request, requestOptions, response);
+    }
+
+    static async handleAuthenticatedResponse(request, requestOptions, response) {
+        // If response is 401 attempt to gain new token from refresh token
+        if (response.status === 401 || response.status === 403) {
+            const user = await LocalStorage.getUser();
+            if (user.refreshToken) {
+                await Helpers.getTokenFromRefreshToken(user.refreshToken);
+                // Perform request again with new token
+                requestOptions.headers = {
+                    ...requestOptions.headers,
+                    ...await Helpers.authHeader()
+                };
+                response = await fetch(request, requestOptions);
+            } else {
+                throw response;
+            }
+        }
+        Helpers.handleResponse(response);
+        return response;
     }
 
     static async saveUser(user) {
@@ -89,5 +123,25 @@ export default class Helpers {
             ...newUser
         };
         return this.saveUser(updatedUser);
+    }
+
+    static async getTokenFromRefreshToken(refreshToken) {
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                grantType: 'refresh_token',
+                refreshToken,
+                scopes: ['offline_access']
+            })
+        };
+
+        const response = await fetch(`${API_URL}/Token`, requestOptions);
+
+        Helpers.handleResponse(response);
+
+        const user = await response.json();
+
+        return Helpers.saveUser(user);
     }
 }

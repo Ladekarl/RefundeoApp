@@ -401,7 +401,7 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     eulaScrollContainer: {
-        height: '70%'
+        height: '80%'
     },
     eulaTextContainer: {
         marginLeft: 10,
