@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ActivityIndicator, Alert, Platform, StyleSheet, Text, View} from 'react-native';
+import {ActivityIndicator, Platform, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-fa-icons';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import colors from '../shared/colors';
@@ -29,6 +29,12 @@ class ScannerScreen extends Component {
         super(props);
     }
 
+    componentWillUpdate() {
+        if(!this.props.state.fetchingClaimRefundCase && this.qrCodeScanner) {
+            this.qrCodeScanner.reactivate();
+        }
+    }
+
     onSuccess = (e) => {
         const refundCaseId = e.data;
         this.props.actions.claimRefundCase(refundCaseId);
@@ -43,10 +49,6 @@ class ScannerScreen extends Component {
         const fetching = state.fetchingClaimRefundCase;
         const error = state.claimRefundCaseError;
         const navigation = state.navigation;
-
-        if(!fetching && this.qrCodeScanner) {
-            this.qrCodeScanner.reactivate();
-        }
 
         return (
             <LinearGradient colors={this.getLinearGradientColors()} style={styles.container}>

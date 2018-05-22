@@ -1,12 +1,32 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux';
-import thunk from 'redux-thunk'
-import rootReducer from '../reducers'
+import thunk from 'redux-thunk';
+import reducers from '../reducers';
 import {createReactNavigationReduxMiddleware, createReduxBoundAddListener} from 'react-navigation-redux-helpers';
+import types from '../actions/ActionTypes';
+import storage from 'redux-persist/lib/storage';
+import {persistStore, persistReducer} from 'redux-persist';
 
 export let addListener;
 
+const persistConfig = {
+    key: 'root',
+    storage,
+};
+
 export function configureStore() {
-    const reducer = combineReducers(rootReducer);
+    const appReducer = combineReducers(reducers);
+
+    const rootReducer = (state, action) => {
+        if (action.type === types.AUTH_LOGOUT_SUCCESS) {
+            Object.keys(state).forEach(key => {
+                storage.removeItem(`persist:${key}`);
+            });
+            state = undefined;
+        }
+        return appReducer(state, action);
+    };
+
+    const persistedReducer = persistReducer(persistConfig, rootReducer);
 
     const navigationMiddleware = createReactNavigationReduxMiddleware(
         'root',
@@ -16,7 +36,7 @@ export function configureStore() {
     addListener = createReduxBoundAddListener('root');
 
     const store = createStore(
-        reducer,
+        persistedReducer,
         applyMiddleware(thunk, navigationMiddleware)
     );
     if (module.hot) {
@@ -25,5 +45,6 @@ export function configureStore() {
             store.replaceReducer(nextRootReducer);
         });
     }
-    return store;
+    let persistor = persistStore(store);
+    return {store, persistor};
 }

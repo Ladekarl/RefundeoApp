@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {Platform, StatusBar, Text, TextInput} from 'react-native';
-import colors from './shared/colors';
 import {Provider} from 'react-redux';
 import {configureStore} from './store';
 import AppNavigator from './navigation/AppNavigator';
+import {PersistGate} from 'redux-persist/integration/react';
 
-const store = configureStore();
+const {store, persistor} = configureStore();
 
 export default class App extends Component {
 
@@ -32,6 +32,7 @@ export default class App extends Component {
             };
             components[i].prototype.render = function render() {
                 let oldProps = this.props;
+// eslint-disable-next-line react/prop-types
                 this.props = {...this.props, style: [customProps.style, this.props.style]};
                 try {
                     return TextRender.apply(this, arguments);
@@ -48,7 +49,9 @@ export default class App extends Component {
         }
         return (
             <Provider store={store}>
-                <AppNavigator/>
+                <PersistGate loading={null} persistor={persistor}>
+                    <AppNavigator/>
+                </PersistGate>
             </Provider>
         );
     }
