@@ -99,11 +99,11 @@
   },
   "refund_case": {
     "upload_documentation": "Upload documentation",
-    "send_documentation": "Send documentation",
+    "send_documentation": "Request refund",
     "pending_approval": "Pending approval",
-    "denied": "Denied",
+    "denied": "Rejected",
     "approved": "Approved",
-    "amount": "Amount:",
+    "amount": "Purchase amount:",
     "refund_amount": "Refund amount:",
     "choose_photo": "Choose photo",
     "permission_try_again": "Please try again",
@@ -111,6 +111,7 @@
     "permission_title": "Permission denied",
     "permission_text": "To upload documentation we need to access your camera and choose photos from your library.",
     "upload_documentation_error": "Failed to upload documentation. Please try again.",
-    "request_refund_error": "Failed to request refund. Please try again."
+    "request_refund_error": "Failed to request refund. Please try again.",
+    "request_documentation": "You are requesting with this documentation"
   }
 }

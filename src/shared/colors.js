@@ -16,6 +16,7 @@ export default new ThemeManager({
         errorColor: 'red',
         whiteColor: 'white',
         blackColor: 'black',
+        darkTextColor: '#5a5a5a',
         linkColor: 'blue'
     },
 });

@@ -145,6 +145,8 @@ export default class Api {
         const fs = RNFetchBlob.fs;
         const base64 = await fs.readFile(documentation, 'base64');
 
+
+
         const requestOptions = {
             method: 'POST',
             headers: {

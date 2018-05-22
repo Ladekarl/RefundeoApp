@@ -99,11 +99,11 @@
   },
   "refund_case": {
     "upload_documentation": "Upload dokumentation",
-    "send_documentation": "Indsend dokumentation",
+    "send_documentation": "Anmod om refusion",
     "pending_approval": "Afventer bekræftelse",
     "denied": "Afvist",
     "approved": "Godkendt",
-    "amount": "Beløb:",
+    "amount": "Købsbeløb:",
     "refund_amount": "Refusionsbeløb:",
     "choose_photo": "Vælg billede",
     "permission_try_again": "Prøv venligst igen",
@@ -111,6 +111,7 @@
     "permission_title": "Tilladelse afvist",
     "permission_text": "For at uploade dokumentation skal vi bruge adgang til dig kamera og kunne vælge billeder fra dit bibliotek.",
     "upload_documentation_error": "Kunne ikke uploade dokumentation. Prøv venligst igen.",
-    "request_refund_error": "Kunne ikke anmode om refusion. Prøv venligst igen."
+    "request_refund_error": "Kunne ikke anmode om refusion. Prøv venligst igen.",
+    "request_documentation": "Du anmoder med denne dokumentation"
   }
 }

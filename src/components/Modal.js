@@ -130,7 +130,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         alignItems: 'center',
         justifyContent: 'center',
-        opacity: 1,
         elevation: 5,
         backgroundColor: colors.backgroundColor
     },
@@ -178,6 +177,7 @@ const styles = StyleSheet.create({
     },
     modalTitleText: {
         fontSize: 18,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        textAlign: 'center'
     }
 });
