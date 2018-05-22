@@ -39,24 +39,6 @@ class OverviewScreen extends Component {
         this.props.actions.navigateScanner();
     };
 
-    getLinearGradientColors = () => {
-        return Platform.OS === 'ios' ? [colors.activeTabColor, colors.gradientColor] : [colors.whiteColor, colors.backgroundColor, colors.slightlyDarkerColor];
-    };
-
-    _renderRefundCase = ({item}) => (
-        <RefundCaseScreen refundCase={item} onPress={this.onRefundCasePress} onIconPress={this.handleIconPressed}/>
-    );
-
-    _keyExtractor = (refundCase) => refundCase.id.toString();
-
-    _renderSeparator = () => {
-        return (
-            <View
-                style={styles.separatorStyle}
-            />
-        );
-    };
-
     handleIconPressed = (refundCase) => {
         this.pressedRefundCase = refundCase;
         this._showImagePicker();
@@ -130,6 +112,24 @@ class OverviewScreen extends Component {
         this.props.actions.openModal('refundCaseModal');
     };
 
+    getLinearGradientColors = () => {
+        return Platform.OS === 'ios' ? [colors.activeTabColor, colors.gradientColor] : [colors.whiteColor, colors.backgroundColor, colors.slightlyDarkerColor];
+    };
+
+    _renderRefundCase = ({item}) => (
+        <RefundCaseScreen refundCase={item} onPress={this.onRefundCasePress} onIconPress={this.handleIconPressed}/>
+    );
+
+    _keyExtractor = (refundCase) => refundCase.id.toString();
+
+    _renderSeparator = () => {
+        return (
+            <View
+                style={styles.separatorStyle}
+            />
+        );
+    };
+
     render() {
         const {actions, state} = this.props;
         const {refundCases, fetchingRefundCases, fetchingDocumentation, fetchingRequestRefund, navigation} = state;
@@ -189,8 +189,8 @@ const styles = StyleSheet.create({
     },
     separatorStyle: {
         height: 1,
-        backgroundColor: '#CED0CE',
-        marginLeft: 80,
+        backgroundColor: colors.separatorColor,
+        marginLeft: 65,
         marginBottom: 5
     },
     modalContentContainer: {

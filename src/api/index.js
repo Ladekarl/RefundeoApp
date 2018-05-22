@@ -145,8 +145,6 @@ export default class Api {
         const fs = RNFetchBlob.fs;
         const base64 = await fs.readFile(documentation, 'base64');
 
-
-
         const requestOptions = {
             method: 'POST',
             headers: {
@@ -177,5 +175,16 @@ export default class Api {
         };
 
         return await Helpers.fetchAuthenticated(`${API_URL}/api/user/refundcase/${refundCase.id}/request`, requestOptions);
+    }
+
+    static async claimRefundCase(refundCaseId) {
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                ...await Helpers.authHeader(),
+            }
+        };
+
+        return await Helpers.fetchAuthenticated(`${API_URL}/api/user/refundcase/${refundCaseId}/claim`, requestOptions);
     }
 }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Alert, Platform, StyleSheet, Text, View} from 'react-native';
+import {ActivityIndicator, Alert, Platform, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-fa-icons';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import colors from '../shared/colors';
@@ -19,15 +19,19 @@ class ScannerScreen extends Component {
     };
 
     static propTypes = {
-        state: PropTypes.object.isRequired
+        state: PropTypes.object.isRequired,
+        actions: PropTypes.object.isRequired
     };
+
+    qrCodeScanner;
 
     constructor(props) {
         super(props);
     }
 
     onSuccess = (e) => {
-        Alert.alert('QR Kode blev scannet', JSON.stringify(e.data));
+        const refundCaseId = e.data;
+        this.props.actions.claimRefundCase(refundCaseId);
     };
 
     getLinearGradientColors = () => {
@@ -36,13 +40,23 @@ class ScannerScreen extends Component {
 
     render() {
         const {state} = this.props;
+        const fetching = state.fetchingClaimRefundCase;
+        const error = state.claimRefundCaseError;
+        const navigation = state.navigation;
+
+        if(!fetching && this.qrCodeScanner) {
+            this.qrCodeScanner.reactivate();
+        }
+
         return (
             <LinearGradient colors={this.getLinearGradientColors()} style={styles.container}>
-                {state.currentRoute === 'Scanner' &&
+                {navigation.currentRoute === 'Scanner' &&
                 <QRCodeScanner
                     onRead={this.onSuccess}
+                    ref={ref => this.qrCodeScanner = ref}
                     containerStyle={styles.cameraContainer}
                     showMarker={true}
+                    fadeIn={false}
                     customMarker={
                         <View style={styles.rectangleContainer}>
                             <View style={styles.rectangle}/>
@@ -50,14 +64,26 @@ class ScannerScreen extends Component {
                     }
                     reactivateTimeout={2}
                     topContent={
-                        <View style={styles.cameraTopContainer}>
-                            <Text style={styles.centerText}>
+                        <View style={styles.cameraContentContainer}>
+                            <Text style={styles.centerTopText}>
                                 {strings('scanner.top_text')}
+                            </Text>
+                        </View>
+                    }
+                    bottomContent={
+                        <View style={styles.cameraContentContainer}>
+                            <Text style={styles.centerBottomText}>
+                                {error}
                             </Text>
                         </View>
                     }
                     cameraStyle={styles.cameraStyle}
                 />
+                }
+                {fetching &&
+                <View style={styles.loadingContainer}>
+                    <ActivityIndicator size='large' color={colors.activeTabColor} style={styles.activityIndicator}/>
+                </View>
                 }
             </LinearGradient>
         );
@@ -76,15 +102,20 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'transparent'
     },
-    centerText: {
+    centerTopText: {
         fontSize: 15,
         fontWeight: 'bold',
         color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
     },
+    centerBottomText: {
+        fontSize: 15,
+        fontWeight: 'bold',
+        color: colors.cancelButtonColor
+    },
     cameraStyle: {
         borderRadius: 2
     },
-    cameraTopContainer: {
+    cameraContentContainer: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -99,7 +130,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: 'transparent',
     },
-
     rectangle: {
         height: 250,
         width: 250,
@@ -107,12 +137,28 @@ const styles = StyleSheet.create({
         borderColor: colors.activeTabColor,
         backgroundColor: 'transparent',
     },
+    loadingContainer: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'transparent'
+    },
+    activityIndicator: {
+        elevation: 10,
+        backgroundColor: 'transparent'
+    }
 });
 
 const mapStateToProps = state => {
+    const navigation = state.navigationReducer;
     return {
         state: {
-            ...state.navigationReducer
+            navigation,
+            ...state.refundReducer
         }
     };
 };

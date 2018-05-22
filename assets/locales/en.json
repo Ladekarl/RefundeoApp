@@ -112,6 +112,8 @@
     "permission_text": "To upload documentation we need to access your camera and choose photos from your library.",
     "upload_documentation_error": "Failed to upload documentation. Please try again.",
     "request_refund_error": "Failed to request refund. Please try again.",
-    "request_documentation": "You are requesting with this documentation"
+    "request_documentation": "You are requesting with this documentation",
+    "claim_refund_case_error": "Something went wrong. Please try again",
+    "refund_case_already_claimed": "The refund has already been claimed."
   }
 }

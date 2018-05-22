@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     bannerTextContainer: {
         flexDirection: 'row',
         alignItems: 'flex-start',
-        marginLeft: 60,
+        marginLeft: 45,
     },
     bannerTextBarContainer: {
         flexDirection: 'row',
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
         color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
     },
     iconContainer: {
-        minWidth: 60,
+        width: 45,
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
         height: undefined,
         width: undefined,
         fontSize: 25,
-        marginRight: 5
+        marginRight: 10
     },
     doneIcon: {
         color: colors.greenButtonColor
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
     documentationIcon: {
         height: 40,
         width: 40,
-        marginRight: 5,
+        marginRight: 10,
         borderRadius: 20
     },
     documentationButton: {

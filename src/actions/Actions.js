@@ -11,6 +11,7 @@ export default {
     navigateAndResetToMainFlow,
     toggleDrawer,
     openDrawer,
+    claimRefundCase,
     uploadDocumentation,
     navigateLogIn,
     navigateRegister,
@@ -18,6 +19,7 @@ export default {
     navigateSettings,
     navigateDrawerSettings,
     navigateScanner,
+    navgiateOverview,
     navigateDrawerHome,
     openModal,
     closeModal,
@@ -71,6 +73,12 @@ function navigateScanner() {
     return {
         type: types.NAVIGATE_SCANNER
     };
+}
+
+function navgiateOverview() {
+    return {
+        type: types.NAVIGATE_OVERVIEW
+    }
 }
 
 function navigateLogIn() {
@@ -277,6 +285,45 @@ function requestRefund(refundCase) {
             }
         });
     };
+}
+
+function claimRefundCase(refundCaseId) {
+    return dispatch => {
+      dispatch(claimingRefundCase());
+      Api.claimRefundCase(refundCaseId).then(() => {
+          dispatch(getRefundCases());
+          dispatch(navgiateOverview());
+          dispatch(claimRefundCaseSuccess());
+      }).catch((response) => {
+         if(shouldLogout(response)) {
+             dispatch(logout());
+         } else if(response.status === 400) {
+             dispatch(claimRefundCaseError(strings('refund_case.refund_case_already_claimed')));
+         }
+         else {
+             dispatch(claimRefundCaseError(strings('refund_case.claim_refund_case_error')));
+         }
+      });
+    };
+}
+
+function claimingRefundCase() {
+    return {
+        type: types.REFUND_CLAIMING_REFUND_CASE
+    }
+}
+
+function claimRefundCaseSuccess() {
+    return {
+        type: types.REFUND_CLAIM_REFUND_CASE_SUCCESS
+    }
+}
+
+function claimRefundCaseError(claimRefundCaseError = '') {
+    return {
+        type: types.REFUND_CLAIM_REFUND_CASE_ERROR,
+        claimRefundCaseError
+    }
 }
 
 function requestingRefund() {

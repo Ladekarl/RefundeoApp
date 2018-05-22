@@ -41,9 +41,11 @@ const initialState: RefundReducerState = {
     fetchingRefundCases: false,
     fetchingDocumentation: false,
     fetchingRequestRefund: false,
+    fetchingClaimRefundCase: false,
     getRefundCasesError: '',
     documentationError: '',
-    requestRefundError: ''
+    requestRefundError: '',
+    claimRefundCaseError: ''
 };
 
 export default function refundReducer(state = initialState, action = {}) {
@@ -112,6 +114,28 @@ export default function refundReducer(state = initialState, action = {}) {
                 fetchingRequestRefund: false,
                 requestRefundError: action.requestRefundError
             };
+            break;
+        case types.REFUND_CLAIMING_REFUND_CASE:
+            nextState = {
+                ...state,
+                fetchingClaimRefundCase: true,
+                claimRefundCaseError: ''
+            };
+            break;
+        case types.REFUND_CLAIM_REFUND_CASE_SUCCESS:
+            nextState = {
+                ...state,
+                fetchingClaimRefundCase: false,
+                claimRefundCaseError: ''
+            };
+            break;
+        case types.REFUND_CLAIM_REFUND_CASE_ERROR:
+            nextState = {
+                ...state,
+                fetchingClaimRefundCase: false,
+                claimRefundCaseError: action.claimRefundCaseError
+            };
+            break;
     }
     return nextState || state;
 }

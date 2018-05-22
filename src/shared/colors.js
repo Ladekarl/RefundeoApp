@@ -15,6 +15,7 @@ export default new ThemeManager({
         facebookColor: '#3B5998',
         errorColor: 'red',
         whiteColor: 'white',
+        separatorColor: '#CED0CE',
         blackColor: 'black',
         darkTextColor: '#5a5a5a',
         linkColor: 'blue'
