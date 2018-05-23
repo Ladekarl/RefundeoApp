@@ -6,7 +6,6 @@ import {
     Keyboard,
     KeyboardAvoidingView,
     Platform,
-    ScrollView,
     StyleSheet,
     Text,
     TextInput,
@@ -22,7 +21,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
 const window = Dimensions.get('window');
-const IMAGE_HEIGHT = window.width / 2;
+const IMAGE_HEIGHT = window.width / 3;
 const CONTAINER_HEIGHT = window.height / 2;
 const CONTAINER_HEIGHT_SMALL = window.height / 8;
 const IMAGE_HEIGHT_SMALL = 0;
@@ -42,7 +41,6 @@ class LoginScreen extends Component {
         }
     };
 
-    firstInput;
     secondInput;
 
     constructor(props) {
@@ -101,7 +99,7 @@ class LoginScreen extends Component {
     };
 
     render() {
-        const {fetching, loginError, navigation} = this.props.state;
+        const {fetching, loginError} = this.props.state;
         return (
             <KeyboardAvoidingView style={styles.container} behavior='padding'>
                 <View style={styles.innerContainer}>

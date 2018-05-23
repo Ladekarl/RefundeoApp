@@ -24,7 +24,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
 const window = Dimensions.get('window');
-const IMAGE_HEIGHT = window.width / 2;
+const IMAGE_HEIGHT = window.width / 4;
 const CONTAINER_HEIGHT = window.height / 4;
 const CONTAINER_HEIGHT_SMALL = window.height / 8;
 const IMAGE_HEIGHT_SMALL = 0;

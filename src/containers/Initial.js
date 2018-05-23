@@ -10,7 +10,7 @@ import {strings} from '../shared/i18n';
 import {AccessToken, LoginManager} from 'react-native-fbsdk';
 
 const window = Dimensions.get('window');
-const IMAGE_HEIGHT = window.width / 2;
+const IMAGE_HEIGHT = window.width / 3;
 const CONTAINER_HEIGHT = window.height / 2;
 const CONTAINER_HEIGHT_SMALL = window.height / 6;
 const IMAGE_HEIGHT_SMALL = window.width / 3;

@@ -24,8 +24,8 @@
 		3100584FF7234023B00DF89A /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8C05AAF7D50C46B090AEA1E0 /* FontAwesome.ttf */; };
 		47C6BDDF1160452D8952FAC2 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43ED2C976E6640E595F6944A /* libRCTFBSDK.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
+		6FF2BC39D15E4A5BB12A854E /* libPods-Refundeo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D34CADEBAC3AC006B8D1A8 /* libPods-Refundeo.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		A90D1BB242B99597AF125889 /* libPods-Refundeo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9DFD8DACEEDA01776ED1FA2 /* libPods-Refundeo.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		CB6F70B92094B7DD0000BE7C /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CB6F708A2094B7DB0000BE7C /* Lato-BoldItalic.ttf */; };
 		CB6F70BA2094B7DD0000BE7C /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CB6F70B02094B7DB0000BE7C /* Lato-Bold.ttf */; };
@@ -349,6 +349,7 @@
 		00E356EE1AD99517003FC87E /* RefundeoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RefundeoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* RefundeoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RefundeoTests.m; sourceTree = "<group>"; };
+		07D34CADEBAC3AC006B8D1A8 /* libPods-Refundeo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Refundeo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		114E768D30AA40D829353D9F /* Pods-Refundeo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Refundeo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Refundeo/Pods-Refundeo.debug.xcconfig"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
@@ -382,7 +383,6 @@
 		CB77E4E820B02F4200CE401A /* WindowsAzureMessaging.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WindowsAzureMessaging.xcodeproj; path = "../node_modules/react-native-azurenotificationhub/ios/WindowsAzureMessaging.xcodeproj"; sourceTree = "<group>"; };
 		CBB70D4A2095E33A0003DF7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Refundeo/Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		DD836F9644D14EB0327A2346 /* Pods-Refundeo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Refundeo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Refundeo/Pods-Refundeo.release.xcconfig"; sourceTree = "<group>"; };
-		E9DFD8DACEEDA01776ED1FA2 /* libPods-Refundeo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Refundeo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -398,8 +398,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB77E4F020B02F7200CE401A /* libRCTAzureNotificationHubManager.a in Frameworks */,
 				CB77E4EF20B02F6D00CE401A /* libWindowsAzureMessaging.a in Frameworks */,
+				CB77E4F020B02F7200CE401A /* libRCTAzureNotificationHubManager.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -413,8 +413,8 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				A90D1BB242B99597AF125889 /* libPods-Refundeo.a in Frameworks */,
 				47C6BDDF1160452D8952FAC2 /* libRCTFBSDK.a in Frameworks */,
+				6FF2BC39D15E4A5BB12A854E /* libPods-Refundeo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,7 +542,7 @@
 			isa = PBXGroup;
 			children = (
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
-				E9DFD8DACEEDA01776ED1FA2 /* libPods-Refundeo.a */,
+				07D34CADEBAC3AC006B8D1A8 /* libPods-Refundeo.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -720,7 +720,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				F79A57C349C99D5BF718B8DF /* [CP] Copy Pods Resources */,
+				1F9BBC13B54AC94B2B366B48 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1185,7 +1185,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F79A57C349C99D5BF718B8DF /* [CP] Copy Pods Resources */ = {
+		1F9BBC13B54AC94B2B366B48 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1276,6 +1276,7 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Refundeo.app/Refundeo";
 			};
 			name = Debug;
@@ -1303,6 +1304,7 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Refundeo.app/Refundeo";
 			};
 			name = Release;
@@ -1317,58 +1319,7 @@
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 2AFEAX4TBH;
 				HEADER_SEARCH_PATHS = (
-					"<Multiple",
-					"values>",
-					"$(SRCROOT)/../node_modules/react-native-azurenotificationhub/ios/**",
-				);
-				"HEADER_SEARCH_PATHS[arch=*]" = (
 					"$(inherited)",
-					"$(SRCROOT)..\node_modules\neact-native-fbsdkiosRCTFBSDK/**",
-				);
-				INFOPLIST_FILE = Refundeo/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/BVLinearGradient\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/Bolts\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/DoubleConversion\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKCoreKit\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKLoginKit\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKShareKit\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/Folly\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/RNFS\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/RNI18n\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/React\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/ReactNativePermissions\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/glog\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/react-native-camera\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/react-native-document-picker\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/react-native-fetch-blob\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/react-native-image-picker\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/yoga\"",
-				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-lc++",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.refundeo;
-				PRODUCT_NAME = Refundeo;
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = Debug;
-		};
-		13B07F951A680F5B00A75B9A /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = DD836F9644D14EB0327A2346 /* Pods-Refundeo.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Refundeo/Refundeo.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2AFEAX4TBH;
-				HEADER_SEARCH_PATHS = (
-					"<Multiple",
-					"values>",
 					"$(SRCROOT)/../node_modules/react-native-azurenotificationhub/ios/**",
 				);
 				"HEADER_SEARCH_PATHS[arch=*]" = "$(inherited)";
@@ -1401,6 +1352,54 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.refundeo;
 				PRODUCT_NAME = Refundeo;
+				SKIP_INSTALL = NO;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		13B07F951A680F5B00A75B9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DD836F9644D14EB0327A2346 /* Pods-Refundeo.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Refundeo/Refundeo.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2AFEAX4TBH;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-azurenotificationhub/ios/**",
+				);
+				"HEADER_SEARCH_PATHS[arch=*]" = "$(inherited)";
+				INFOPLIST_FILE = Refundeo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/BVLinearGradient\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Bolts\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/DoubleConversion\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKCoreKit\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKLoginKit\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKShareKit\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Folly\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RNFS\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RNI18n\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/React\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/ReactNativePermissions\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/glog\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/react-native-camera\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/react-native-document-picker\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/react-native-fetch-blob\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/react-native-image-picker\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/yoga\"",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.refundeo;
+				PRODUCT_NAME = Refundeo;
+				SKIP_INSTALL = NO;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -1445,6 +1444,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
 			};
 			name = Debug;
 		};
@@ -1480,6 +1480,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
