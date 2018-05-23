@@ -35,6 +35,7 @@ target 'Refundeo' do
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
   pod 'FBSDKLoginKit'
   pod 'FBSDKShareKit'
+  pod 'Firebase/Core'
 
 end
 

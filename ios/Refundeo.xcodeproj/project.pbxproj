@@ -39,6 +39,8 @@
 		CB6F70C22094B7DD0000BE7C /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CB6F70B82094B7DD0000BE7C /* Lato-Regular.ttf */; };
 		CB77E4EF20B02F6D00CE401A /* libWindowsAzureMessaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB77E4EE20B02F4200CE401A /* libWindowsAzureMessaging.a */; };
 		CB77E4F020B02F7200CE401A /* libRCTAzureNotificationHubManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB77E4E720B02F3C00CE401A /* libRCTAzureNotificationHubManager.a */; };
+		CBA4A7D720B6277900A32902 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBA4A7D620B6277900A32902 /* GoogleService-Info.plist */; };
+		CBA4A7D820B6277900A32902 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBA4A7D620B6277900A32902 /* GoogleService-Info.plist */; };
 		CBB70D4B2095E33A0003DF7F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = CBB70D492095E33A0003DF7F /* LaunchScreen.xib */; };
 /* End PBXBuildFile section */
 
@@ -381,6 +383,7 @@
 		CB77E4AB20B0269100CE401A /* Refundeo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Refundeo.entitlements; path = Refundeo/Refundeo.entitlements; sourceTree = "<group>"; };
 		CB77E4E220B02F3C00CE401A /* RCTAzureNotificationHubManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAzureNotificationHubManager.xcodeproj; path = "../node_modules/react-native-azurenotificationhub/ios/RCTAzureNotificationHubManager.xcodeproj"; sourceTree = "<group>"; };
 		CB77E4E820B02F4200CE401A /* WindowsAzureMessaging.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WindowsAzureMessaging.xcodeproj; path = "../node_modules/react-native-azurenotificationhub/ios/WindowsAzureMessaging.xcodeproj"; sourceTree = "<group>"; };
+		CBA4A7D620B6277900A32902 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CBB70D4A2095E33A0003DF7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Refundeo/Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		DD836F9644D14EB0327A2346 /* Pods-Refundeo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Refundeo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Refundeo/Pods-Refundeo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -503,6 +506,7 @@
 		13B07FAE1A68108700A75B9A /* Refundeo */ = {
 			isa = PBXGroup;
 			children = (
+				CBA4A7D620B6277900A32902 /* GoogleService-Info.plist */,
 				CB77E4AB20B0269100CE401A /* Refundeo.entitlements */,
 				CBB70D492095E33A0003DF7F /* LaunchScreen.xib */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -1127,6 +1131,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBA4A7D820B6277900A32902 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1147,6 +1152,7 @@
 				CB6F70C22094B7DD0000BE7C /* Lato-Regular.ttf in Resources */,
 				CB6F70BE2094B7DD0000BE7C /* Lato-Italic.ttf in Resources */,
 				CB6F70B92094B7DD0000BE7C /* Lato-BoldItalic.ttf in Resources */,
+				CBA4A7D720B6277900A32902 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
