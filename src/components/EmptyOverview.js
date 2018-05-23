@@ -57,6 +57,8 @@ const styles = StyleSheet.create({
         elevation: 10
     },
     logoButton: {
+        height: 100,
+        width: 100,
         zIndex: 9999,
         margin: 15
     },
