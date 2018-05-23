@@ -106,7 +106,7 @@ class InitialScreen extends Component {
                 <Animated.View style={[styles.topContainer, {height: this.state.containerHeight}]}>
                     <Animated.Image
                         style={[styles.image, {height: this.state.imageHeight}]}
-                        source={require('../../assets/images/refundeo_logo.png')}
+                        source={require('../../assets/refundeo_logo.png')}
                     />
                 </Animated.View>
                 {this.state.shouldShowLogin &&
@@ -122,7 +122,7 @@ class InitialScreen extends Component {
                                       disabled={fetching}>
                         <View style={styles.facebookIconContainer}>
                             <Image style={styles.facebookIcon}
-                                   source={require('../../assets/images/facebook-icon.png')}/>
+                                   source={require('../../assets/facebook-icon.png')}/>
                         </View>
                         <Text style={styles.buttonText}>{strings('register.facebook_button')}</Text>
                         <View style={styles.facebookAligner}/>

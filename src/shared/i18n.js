@@ -1,8 +1,8 @@
 'use strict';
 
 import I18n from 'react-native-i18n';
-import en from '../../assets/locales/en.json';
-import da from '../../assets/locales/da.json';
+import en from '../../locales/en.json';
+import da from '../../locales/da.json';
 
 // Should the app fallback to English if user locale doesn't exists
 I18n.fallbacks = true;

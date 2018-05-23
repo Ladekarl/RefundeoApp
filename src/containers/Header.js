@@ -36,7 +36,7 @@ class HeaderScreen extends Component {
                 }
                 {!hasDrawer &&
                 <View style={styles.noDrawerHeader}>
-                    <Image style={styles.leftLogo} source={require('../../assets/images/refundeo_logo.png')}/>
+                    <Image style={styles.leftLogo} source={require('../../assets/refundeo_logo.png')}/>
                 </View>
                 }
                 <Text style={styles.headerText}>Refundeo</Text>

@@ -130,7 +130,7 @@ class RegisterScreen extends Component {
                         <Animated.View style={[styles.topContainer, {height: this.state.containerHeight}]}>
                             <Animated.Image
                                 style={[styles.image, {height: this.state.imageHeight}]}
-                                source={require('../../assets/images/refundeo_logo.png')}
+                                source={require('../../assets/refundeo_logo.png')}
                             />
                         </Animated.View>
                         <View style={styles.inputContainer}>

@@ -24,7 +24,7 @@ export default class EmptyOverviewScreen extends Component {
                 <View style={styles.middleContainer}>
                     <TouchableOpacity style={styles.logoButtonContainer} onPress={this.navigateScanner}>
                         <Image style={styles.logoButton}
-                               source={require('../../assets/images/refundeo_logo.png')}/>
+                               source={require('../../assets/refundeo_logo.png')}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.bottomContainer}>
