@@ -36,6 +36,9 @@ target 'Refundeo' do
   pod 'FBSDKLoginKit'
   pod 'FBSDKShareKit'
   pod 'Firebase/Core'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Messaging'
+  pod 'react-native-fcm', :path => '../node_modules/react-native-fcm'
 
 end
 

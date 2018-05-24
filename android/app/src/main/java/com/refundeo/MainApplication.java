@@ -18,7 +18,7 @@ import com.facebook.soloader.SoLoader;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
-import com.azure.reactnative.notificationhub.ReactNativeNotificationHubPackage;
+import com.evollu.react.fcm.FIRMessagingPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -48,7 +48,7 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFetchBlobPackage(),
             new ReactNativeDocumentPicker(),
             new RNCameraPackage(),
-            new ReactNativeNotificationHubPackage(),
+            new FIRMessagingPackage(),
             new FBSDKPackage(mCallbackManager)
       );
     }
