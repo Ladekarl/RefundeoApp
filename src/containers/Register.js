@@ -124,7 +124,7 @@ class RegisterScreen extends Component {
     render() {
         const {fetching, registerError} = this.props.state;
         return (
-            <KeyboardAvoidingView style={styles.container} behavior='padding'>
+            <KeyboardAvoidingView style={styles.container} keyboardVerticalOffset={-50} behavior='padding'>
                 <View style={styles.innerContainer}>
                     <View style={styles.loginFormContainer}>
                         <Animated.View style={[styles.topContainer, {height: this.state.containerHeight}]}>
@@ -281,15 +281,18 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'stretch',
+        flex: 1
     },
     loginFormContainer: {
         justifyContent: 'space-between',
         alignItems: 'stretch',
-        width: '80%'
+        width: '80%',
+        flex: 1,
+        paddingBottom: '5%'
     },
     inputContainer: {
         justifyContent: 'center',
-        alignItems: 'stretch',
+        alignItems: 'stretch'
     },
     elevatedInputContainer: {
         backgroundColor: colors.whiteColor,

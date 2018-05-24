@@ -180,11 +180,14 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'stretch',
+        flex: 1
     },
     loginFormContainer: {
         justifyContent: 'space-between',
         alignItems: 'stretch',
-        width: '80%'
+        width: '80%',
+        flex: 1,
+        paddingBottom: '10%'
     },
     inputContainer: {
         justifyContent: 'center',

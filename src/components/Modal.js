@@ -67,8 +67,7 @@ export default class ModalScreen extends Component {
                 transparent={true}
                 onRequestClose={onBack}
                 visible={visible}>
-                <KeyboardAvoidingView style={styles.modalContainer} keyboardVerticalOffset={-100} behavior='padding'
-                                      enabled={Platform.OS === 'ios'}>
+                <KeyboardAvoidingView style={styles.modalContainer} keyboardVerticalOffset={-100} behavior='padding'>
                     <View style={[styles.modalInnerContainer, contentContainerStyle]}>
                         <View style={styles.modalTopContainer}>
                             <Text style={styles.modalTitleText}>{modalTitle}</Text>
