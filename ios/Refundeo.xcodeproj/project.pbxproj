@@ -17,7 +17,6 @@
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
@@ -28,6 +27,7 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		CB273B9420B7342200FCCD2B /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = CB273B9320B7342100FCCD2B /* main.jsbundle */; };
+		CB273B9720B7388200FCCD2B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB273B9620B7388200FCCD2B /* Images.xcassets */; };
 		CBA4A7D720B6277900A32902 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBA4A7D620B6277900A32902 /* GoogleService-Info.plist */; };
 		CBA4A7D820B6277900A32902 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBA4A7D620B6277900A32902 /* GoogleService-Info.plist */; };
 		CBA4A81720B62EB800A32902 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CBA4A80D20B62EB800A32902 /* Lato-LightItalic.ttf */; };
@@ -352,7 +352,6 @@
 		13B07F961A680F5B00A75B9A /* Refundeo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Refundeo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Refundeo/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Refundeo/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Refundeo/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Refundeo/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Refundeo/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
@@ -366,6 +365,7 @@
 		B424A83DB81741D081FD29C0 /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTFBSDK.xcodeproj; path = "../node_modules/react-native-fbsdk/ios/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; };
 		CB273B9320B7342100FCCD2B /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		CB273B9520B734AF00FCCD2B /* da-DK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "da-DK"; path = "Refundeo/da-DK.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		CB273B9620B7388200FCCD2B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		CB77E4AB20B0269100CE401A /* Refundeo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Refundeo.entitlements; path = Refundeo/Refundeo.entitlements; sourceTree = "<group>"; };
 		CBA4A7D620B6277900A32902 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CBA4A80D20B62EB800A32902 /* Lato-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-LightItalic.ttf"; path = "../fonts/Lato-LightItalic.ttf"; sourceTree = "<group>"; };
@@ -501,10 +501,10 @@
 				CB273B9320B7342100FCCD2B /* main.jsbundle */,
 				CBA4A7D620B6277900A32902 /* GoogleService-Info.plist */,
 				CB77E4AB20B0269100CE401A /* Refundeo.entitlements */,
+				CB273B9620B7388200FCCD2B /* Images.xcassets */,
 				CBB70D492095E33A0003DF7F /* LaunchScreen.xib */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
-				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -1101,13 +1101,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				CBA4A82720B62EB800A32902 /* Lato-Light.ttf in Resources */,
 				CBA4A81920B62EB800A32902 /* Lato-Bold.ttf in Resources */,
 				CBA4A82320B62EB800A32902 /* Lato-Hairline.ttf in Resources */,
 				CBA4A82120B62EB800A32902 /* Lato-HairlineItalic.ttf in Resources */,
 				CBA4A82920B62EB800A32902 /* Lato-BoldItalic.ttf in Resources */,
 				CBA4A82520B62EB800A32902 /* Lato-Black.ttf in Resources */,
+				CB273B9720B7388200FCCD2B /* Images.xcassets in Resources */,
 				CBA4A81720B62EB800A32902 /* Lato-LightItalic.ttf in Resources */,
 				3100584FF7234023B00DF89A /* FontAwesome.ttf in Resources */,
 				CBA4A81B20B62EB800A32902 /* Lato-Regular.ttf in Resources */,
