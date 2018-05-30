@@ -17,6 +17,8 @@ import {strings} from '../shared/i18n';
 
 export default class RefundCaseScreen extends Component {
 
+    static supportedLocales = ['da', 'en'];
+
     static propTypes = {
         refundCase: PropTypes.object.isRequired,
         onPress: PropTypes.func,
@@ -50,7 +52,8 @@ export default class RefundCaseScreen extends Component {
 
     _formatDate(date) {
         const locale = I18n.currentLocale();
-        return moment(date).locale(locale.indexOf("-") === -1 ? locale : locale.substr(0, locale.indexOf('-'))).format('LL');
+        const localeFormatted = locale.indexOf("-") === -1 ? locale : locale.substr(0, locale.indexOf('-'));
+        return moment(date).locale(RefundCaseScreen.supportedLocales.indexOf(localeFormatted) > -1 ? localeFormatted : 'en').format('LL');
     }
 
     _getRefundCaseIcon = (refundCase) => {
