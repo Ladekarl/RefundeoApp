@@ -49,7 +49,7 @@ export default class RefundCaseScreen extends Component {
     };
 
     _formatDate(date) {
-        const locale = I18n.currentLocale().split('-')[0];
+        const locale = I18n.currentLocale();
         return moment(date).locale(locale.indexOf("-") === -1 ? locale : locale.substr(0, locale.indexOf('-'))).format('LL');
     }
 
