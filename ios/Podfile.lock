@@ -15,8 +15,6 @@ PODS:
     - FBSDKCoreKit
   - FBSDKShareKit (4.32.0):
     - FBSDKCoreKit (~> 4.32.0)
-  - Firebase/Analytics (5.0.0):
-    - Firebase/Core
   - Firebase/Core (5.0.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 5.0.0)
@@ -66,9 +64,6 @@ PODS:
   - react-native-camera/RN (1.1.2):
     - React
   - react-native-document-picker (2.1.0):
-    - React
-  - react-native-fcm (15.0.2):
-    - Firebase/Messaging
     - React
   - react-native-fetch-blob (0.10.6):
     - React/Core
@@ -122,15 +117,12 @@ DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBSDKLoginKit
   - FBSDKShareKit
-  - Firebase/Analytics
   - Firebase/Core
   - Firebase/Messaging
-  - FirebaseMessaging
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-document-picker (from `../node_modules/react-native-document-picker`)
-  - react-native-fcm (from `../node_modules/react-native-fcm`)
   - react-native-fetch-blob (from `../node_modules/react-native-fetch-blob`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - React/Core (from `../node_modules/react-native`)
@@ -177,8 +169,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-camera"
   react-native-document-picker:
     :path: "../node_modules/react-native-document-picker"
-  react-native-fcm:
-    :path: "../node_modules/react-native-fcm"
   react-native-fetch-blob:
     :path: "../node_modules/react-native-fetch-blob"
   react-native-image-picker:
@@ -213,7 +203,6 @@ SPEC CHECKSUMS:
   React: aa2040dbb6f317b95314968021bd2888816e03d5
   react-native-camera: ab22041dcf0403d88f2ae4b9ea3ed2644e680423
   react-native-document-picker: e7934f6a3c898a1b62fa68b1f09371beef6ac51a
-  react-native-fcm: 7de3ba1108aba709c3d2b4237594554eb5f6f026
   react-native-fetch-blob: 63394b1d7b0781547b3e4463b3195790177b1222
   react-native-image-picker: 42cfe2c8435d893414f8714a81e480313cb1412b
   ReactNativePermissions: 9f2d9c45c98800795e6c2ed330e25d11a66a8169
@@ -221,6 +210,6 @@ SPEC CHECKSUMS:
   RNI18n: db9be06a40336f04d136f24dd5de3f5eb9f3207c
   yoga: a23273df0088bf7f2bb7e5d7b00044ea57a2a54a
 
-PODFILE CHECKSUM: d672cb262c6077e42befa5abe1d030ad9a16f0db
+PODFILE CHECKSUM: 59de1f6153535ade62bfc80e4ed5f52177e0fed3
 
 COCOAPODS: 1.5.2
