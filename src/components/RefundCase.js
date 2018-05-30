@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import colors from '../shared/colors';
 import moment from 'moment';
+import 'moment/locale/da';
 import I18n from 'react-native-i18n';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-fa-icons';
@@ -48,8 +49,8 @@ export default class RefundCaseScreen extends Component {
     };
 
     _formatDate(date) {
-        const locale = I18n.currentLocale();
-        return moment(date).locale(locale).format('LL');
+        const locale = I18n.currentLocale().split('-')[0];
+        return moment(date).locale(locale.indexOf("-") === -1 ? locale : locale.substr(0, locale.indexOf('-'))).format('LL');
     }
 
     _getRefundCaseIcon = (refundCase) => {
