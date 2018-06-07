@@ -8,12 +8,11 @@ import Actions from '../actions/Actions';
 import PropTypes from 'prop-types';
 import EmptyOverviewScreen from '../components/EmptyOverview';
 import RefundCaseScreen from '../components/RefundCase';
-import LinearGradient from 'react-native-linear-gradient';
 import {strings} from '../shared/i18n';
 import ImagePicker from 'react-native-image-picker';
 import ModalScreen from '../components/Modal';
 
-const {height, width} = Dimensions.get('window');
+const {height} = Dimensions.get('window');
 
 class OverviewScreen extends Component {
 
@@ -112,10 +111,6 @@ class OverviewScreen extends Component {
         this.props.actions.openModal('refundCaseModal');
     };
 
-    getLinearGradientColors = () => {
-        return Platform.OS === 'ios' ? [colors.activeTabColor, colors.gradientColor] : [colors.whiteColor, colors.backgroundColor, colors.slightlyDarkerColor];
-    };
-
     _renderRefundCase = ({item}) => (
         <RefundCaseScreen refundCase={item} onPress={this.onRefundCasePress} onIconPress={this.handleIconPressed}/>
     );
@@ -135,13 +130,13 @@ class OverviewScreen extends Component {
         const {refundCases, fetchingRefundCases, fetchingDocumentation, fetchingRequestRefund, navigation} = state;
 
         return (
-            <LinearGradient colors={this.getLinearGradientColors()} style={styles.linearGradient}>
+            <View style={styles.container}>
                 <FlatList
-                    style={styles.container}
+                    style={styles.flatListContainer}
                     contentContainerStyle={[styles.scrollContainer, refundCases.length === 0 ? styles.emptyContainer : {}]}
                     refreshControl={
                         <RefreshControl
-                            tintColor={Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor}
+                            tintColor={colors.activeTabColor}
                             refreshing={fetchingRefundCases || fetchingDocumentation || fetchingRequestRefund}
                             onRefresh={actions.getRefundCases}
                         />
@@ -164,14 +159,14 @@ class OverviewScreen extends Component {
                                source={{uri: this.refundCaseImage}}/>
                     </TouchableOpacity>
                 </ModalScreen>
-            </LinearGradient>
+            </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: 'transparent',
+    flatListContainer: {
+        backgroundColor: colors.backgroundColor,
     },
     scrollContainer: {
         backgroundColor: 'transparent',
@@ -184,7 +179,7 @@ const styles = StyleSheet.create({
     tabBarIcon: {
         fontSize: 20
     },
-    linearGradient: {
+    container: {
         flex: 1
     },
     separatorStyle: {

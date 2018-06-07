@@ -1,8 +1,9 @@
+import {StyleSheet, Platform} from 'react-native';
 import {TabNavigator} from 'react-navigation';
 import OverviewScreen from '../containers/Overview';
 import colors from '../shared/colors';
-import {Platform} from 'react-native';
 import ScannerScreen from '../containers/Scanner';
+import StoresScreen from '../containers/Stores';
 
 const HomeTab = TabNavigator({
     Overview: {
@@ -10,21 +11,31 @@ const HomeTab = TabNavigator({
     },
     Scanner: {
         screen: ScannerScreen
+    },
+    Stores: {
+        screen: StoresScreen
     }
 }, {
     animationEnabled: false,
-    swipeEnabled: true,
+    swipeEnabled: false,
     lazy: false,
+    tabBarPosition: 'bottom',
     tabBarOptions: {
         activeTintColor: colors.activeTabColor,
         inactiveTintColor: colors.inactiveTabColor,
         tabStyle: {
             backgroundColor: colors.backgroundColor,
+            justifyContent: 'center',
+            alignItems: 'center',
+            margin: 0
         },
         style: {
-            paddingBottom: Platform.OS === 'ios' ? 0 : 2,
-            backgroundColor: colors.backgroundColor,
+            height: 50,
+            backgroundColor : colors.backgroundColor,
+            borderTopWidth: StyleSheet.hairlineWidth,
+            borderTopColor: colors.separatorColor,
             elevation: 1,
+            paddingTop: Platform.OS === 'ios' ? 0 : 4
         },
         labelStyle: {
             display: 'none'

@@ -18,34 +18,25 @@ class HeaderScreen extends Component {
         super(props);
     }
 
-    openDrawer = () => {
-        this.props.actions.toggleDrawer();
-    };
-
-    openSettings = () => {
-        this.props.actions.navigateSettings();
-    };
-
     render() {
         return (
             <View style={styles.container}>
                 {hasDrawer &&
-                <TouchableOpacity style={styles.headerButton} onPress={this.openDrawer}>
+                <TouchableOpacity style={styles.headerButton} onPress={this.props.actions.toggleDrawer}>
                     <Icon name='bars' style={styles.drawerIcon}/>
                 </TouchableOpacity>
                 }
                 {!hasDrawer &&
                 <View style={styles.noDrawerHeader}>
-                    <Image style={styles.leftLogo} source={require('../../assets/refundeo_logo.png')}/>
                 </View>
                 }
                 <Text style={styles.headerText}>Refundeo</Text>
                 <TouchableOpacity style={hasDrawer ? styles.headerButton : styles.noDrawerHeader}
-                                  onPress={this.openSettings}>
-                    <Icon name='cog' style={hasDrawer ? styles.drawerIcon : styles.noDrawerIcon}/>
+                                  onPress={this.props.actions.navigateSettings}>
+                    <Icon name='user-circle' style={hasDrawer ? styles.drawerIcon : styles.noDrawerIcon}/>
                 </TouchableOpacity>
             </View>
-        )
+        );
     }
 }
 
@@ -57,8 +48,9 @@ const styles = StyleSheet.create({
         backgroundColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor,
         paddingLeft: 25,
         paddingRight: 25,
-        paddingTop: 20,
-        paddingBottom: 9
+        paddingTop: Platform.OS === 'ios' ? 20 : 10,
+        paddingBottom: Platform.OS === 'ios' ? 9 : 4,
+        elevation: 1
     },
     headerText: {
         fontSize: 16,
@@ -82,8 +74,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     leftLogo: {
-        height: Platform.OS === 'ios' ? 20 : 25,
-        width: Platform.OS === 'ios' ? 20 : 25,
+        height: 20,
+        width: 20,
         tintColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
     },
     drawerIcon: {
@@ -95,7 +87,7 @@ const styles = StyleSheet.create({
         color: colors.backgroundColor
     },
     noDrawerIcon: {
-        fontSize: Platform.OS === 'ios' ? 20 : 25,
+        fontSize: 20,
         color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
     }
 });
@@ -106,13 +98,13 @@ const mapStateToProps = state => {
         state: {
             navigation
         }
-    }
+    };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         actions: bindActionCreators(Actions, dispatch)
-    }
+    };
 };
 
 export default connect(

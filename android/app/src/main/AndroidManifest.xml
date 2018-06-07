@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <uses-sdk
             android:minSdkVersion="16"
@@ -20,6 +21,10 @@
 
         <meta-data android:name="com.google.firebase.messaging.default_notification_icon"
                    android:resource="@mipmap/ic_notif"/>
+
+        <meta-data
+                android:name="com.google.android.geo.API_KEY"
+                android:value="AIzaSyC06JE1ll4-gDqCc2VsADpBPAzrXw6E8EU"/>
 
         <meta-data
                 android:name="com.facebook.sdk.ApplicationId"

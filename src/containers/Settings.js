@@ -28,9 +28,10 @@ class SettingsScreen extends Component {
         title: strings('settings.settings'),
         headerTitleStyle: {
             fontSize: 18
-        }
+        },
+        tabBarIcon: ({tintColor}) => (
+            <Icon name='user-circle' style={[styles.tabBarIcon, {color: tintColor}]}/>),
     };
-
     static propTypes = {
         actions: PropTypes.object.isRequired,
         state: PropTypes.object.isRequired,
@@ -486,6 +487,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.backgroundColor,
+    },
+    tabBarIcon: {
+        fontSize: 20
     },
     rowContainer: {
         flexDirection: 'row',

@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
         width: '100%',
         padding: 3,
         opacity: 0.8,
-        backgroundColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor,
+        backgroundColor: colors.activeTabColor,
         borderTopLeftRadius: 30,
         borderBottomLeftRadius: 30,
         paddingLeft: 10,
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     },
     headlineText: {
         fontSize: 15,
-        color: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor,
+        color: colors.backgroundColor,
     },
     contentContainer: {
         flex: 1,
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: 'bold',
         textAlign: 'right',
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
+        color: colors.activeTabColor
     },
     iconContainer: {
         width: 45,
@@ -229,11 +229,11 @@ const styles = StyleSheet.create({
         fontSize: 12,
         marginRight: 5,
         fontWeight: 'bold',
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.darkTextColor
+        color: colors.darkTextColor
     },
     detailText: {
         fontSize: 12,
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.darkTextColor
+        color: colors.darkTextColor
     },
     refundCaseIcon: {
         height: undefined,
@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
         color: colors.cancelButtonColor
     },
     pendingIcon: {
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
+        color: colors.activeTabColor
     },
     documentationIcon: {
         height: 40,
@@ -261,13 +261,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     uploadIcon: {
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
+        color: colors.activeTabColor
     },
     angleRightIcon: {
         height: undefined,
         width: undefined,
         fontSize: 25,
         marginLeft: 5,
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
+        color: colors.activeTabColor
     }
 });

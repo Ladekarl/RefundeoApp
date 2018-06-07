@@ -6,23 +6,31 @@ target 'Refundeo' do
   # React Native currently does not support use_frameworks!
   # use_frameworks!
 
-  pod 'React', :path => '../node_modules/react-native', :subspecs => [
+  rn_path = '../node_modules/react-native'
+  rn_maps_path = '../node_modules/react-native-maps'
+
+  pod 'yoga', path: "#{rn_path}/ReactCommon/yoga/yoga.podspec"
+  pod 'React', path: rn_path, subspecs: [
     'Core',
     'CxxBridge',
-    'DevSupport', # Enables In-App Devmenu
-    'RCTText',
-    'RCTImage',
-    'RCTNetwork',
-    'RCTWebSocket', # Needed for debugging
+    'DevSupport',
     'RCTAnimation',
+    'RCTActionSheet',
+    'RCTAnimation',
+    'RCTGeolocation',
+    'RCTImage',
+    'RCTLinkingIOS',
+    'RCTNetwork',
+    'RCTSettings',
+    'RCTText',
+    'RCTVibration',
+    'RCTWebSocket',
   ]
 
-  pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
-
   # Third party deps podspec link
-  pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
-  pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
-  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+  pod 'DoubleConversion', :podspec => "#{rn_path}/third-party-podspecs/DoubleConversion.podspec"
+  pod 'glog', :podspec => "#{rn_path}/third-party-podspecs/glog.podspec"
+  pod 'Folly', :podspec => "#{rn_path}/third-party-podspecs/Folly.podspec"
   
   # Third party pods
   pod 'react-native-document-picker', :path => '../node_modules/react-native-document-picker'
@@ -32,11 +40,16 @@ target 'Refundeo' do
   pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
   pod 'react-native-camera', :path => '../node_modules/react-native-camera'
   pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
-  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
   pod 'FBSDKLoginKit'
   pod 'FBSDKShareKit'
   pod 'Firebase/Core'   
   pod 'Firebase/Messaging'
+
+  # react-native-maps dependencies
+  pod 'react-native-maps', path: rn_maps_path
+  pod 'react-native-google-maps', path: rn_maps_path
+  pod 'GoogleMaps'
+  pod 'Google-Maps-iOS-Utils'
 
 end
 

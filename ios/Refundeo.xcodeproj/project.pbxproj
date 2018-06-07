@@ -29,7 +29,6 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		B3358F815B54451390B8BE01 /* refundeo_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = CCCAB3D084E348138CA63940 /* refundeo_logo.png */; };
-		CB273B9420B7342200FCCD2B /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = CB273B9320B7342100FCCD2B /* main.jsbundle */; };
 		CB273B9720B7388200FCCD2B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB273B9620B7388200FCCD2B /* Images.xcassets */; };
 		CBA4A7D720B6277900A32902 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBA4A7D620B6277900A32902 /* GoogleService-Info.plist */; };
 		CBA4A7D820B6277900A32902 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBA4A7D620B6277900A32902 /* GoogleService-Info.plist */; };
@@ -375,7 +374,6 @@
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B424A83DB81741D081FD29C0 /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTFBSDK.xcodeproj; path = "../node_modules/react-native-fbsdk/ios/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; };
 		C9DF66F9C7E34C79B25DFA0B /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
-		CB273B9320B7342100FCCD2B /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		CB273B9520B734AF00FCCD2B /* da-DK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "da-DK"; path = "Refundeo/da-DK.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		CB273B9620B7388200FCCD2B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		CB77E4AB20B0269100CE401A /* Refundeo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Refundeo.entitlements; path = Refundeo/Refundeo.entitlements; sourceTree = "<group>"; };
@@ -513,7 +511,6 @@
 		13B07FAE1A68108700A75B9A /* Refundeo */ = {
 			isa = PBXGroup;
 			children = (
-				CB273B9320B7342100FCCD2B /* main.jsbundle */,
 				CBA4A7D620B6277900A32902 /* GoogleService-Info.plist */,
 				CB77E4AB20B0269100CE401A /* Refundeo.entitlements */,
 				CB273B9620B7388200FCCD2B /* Images.xcassets */,
@@ -1151,7 +1148,6 @@
 				CBA4A81B20B62EB800A32902 /* Lato-Regular.ttf in Resources */,
 				CBA4A81F20B62EB800A32902 /* Lato-BlackItalic.ttf in Resources */,
 				CBB70D4B2095E33A0003DF7F /* LaunchScreen.xib in Resources */,
-				CB273B9420B7342200FCCD2B /* main.jsbundle in Resources */,
 				CBA4A81D20B62EB800A32902 /* Lato-Italic.ttf in Resources */,
 				CBA4A7D720B6277900A32902 /* GoogleService-Info.plist in Resources */,
 				6E3CC5137AA74C508CB7DE36 /* facebook-icon.png in Resources */,
@@ -1202,10 +1198,12 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Refundeo/Pods-Refundeo-resources.sh",
 				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

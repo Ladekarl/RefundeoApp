@@ -3,7 +3,6 @@ import {ActivityIndicator, Platform, StyleSheet, Text, View} from 'react-native'
 import Icon from 'react-native-fa-icons';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import colors from '../shared/colors';
-import LinearGradient from 'react-native-linear-gradient';
 import {strings} from '../shared/i18n';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -14,8 +13,20 @@ class ScannerScreen extends Component {
 
     // noinspection JSUnusedGlobalSymbols
     static navigationOptions = {
-        tabBarIcon: ({tintColor}) => (
-            <Icon name='camera' style={[styles.tabBarIcon, {color: tintColor}]}/>),
+        tabBarIcon: ({tintColor}) => {
+            let newTintColor = tintColor === colors.activeTabColor ? colors.inactiveTabColor : colors.backgroundColor;
+            if(Platform.OS === 'ios') {
+                return (
+                    <View style={styles.tabBarContainerIOs}>
+                        <Icon name='camera' style={[styles.tabBarIconIOs, {color: newTintColor}]}/>
+                    </View>
+                );
+            } else {
+                return (
+                    <Icon name='camera' style={[styles.tabBarIconAndroid, {color: tintColor}]}/>
+                )
+            }
+        }
     };
 
     static propTypes = {
@@ -30,7 +41,7 @@ class ScannerScreen extends Component {
     }
 
     componentWillUpdate() {
-        if(!this.props.state.fetchingClaimRefundCase && this.qrCodeScanner) {
+        if (!this.props.state.fetchingClaimRefundCase && this.qrCodeScanner) {
             this.qrCodeScanner.reactivate();
         }
     }
@@ -40,10 +51,6 @@ class ScannerScreen extends Component {
         this.props.actions.claimRefundCase(refundCaseId);
     };
 
-    getLinearGradientColors = () => {
-        return Platform.OS === 'ios' ? [colors.activeTabColor, colors.gradientColor] : [colors.whiteColor, colors.backgroundColor, colors.slightlyDarkerColor];
-    };
-
     render() {
         const {state} = this.props;
         const fetching = state.fetchingClaimRefundCase;
@@ -51,7 +58,7 @@ class ScannerScreen extends Component {
         const navigation = state.navigation;
 
         return (
-            <LinearGradient colors={this.getLinearGradientColors()} style={styles.container}>
+            <View style={styles.container}>
                 {navigation.currentRoute === 'Scanner' &&
                 <QRCodeScanner
                     onRead={this.onSuccess}
@@ -87,7 +94,7 @@ class ScannerScreen extends Component {
                     <ActivityIndicator size='large' color={colors.activeTabColor} style={styles.activityIndicator}/>
                 </View>
                 }
-            </LinearGradient>
+            </View>
         );
     }
 }
@@ -123,7 +130,20 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center'
     },
-    tabBarIcon: {
+    tabBarContainerIOs: {
+        height: 60,
+        width: 60,
+        borderRadius: 100,
+        backgroundColor: colors.activeTabColor,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop: 10,
+        paddingBottom: 10
+    },
+    tabBarIconIOs: {
+        fontSize: 25
+    },
+    tabBarIconAndroid: {
         fontSize: 20
     },
     rectangleContainer: {
