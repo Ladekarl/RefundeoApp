@@ -564,7 +564,7 @@ function changePasswordError(error = '') {
 }
 
 function missingUserInfo(user) {
-    return !user.firstName || !user.lastName || !user.country || !user.bankAccountNumber || !user.bankRegNumber || !user.acceptedPrivacyPolicy || !user.acceptedTermsOfService;
+    return !user.firstName || !user.lastName || !user.country || !user.swift || !user.acceptedPrivacyPolicy || !user.acceptedTermsOfService;
 }
 
 function checkPassword(newPassword, confPassword) {

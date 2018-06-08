@@ -24,15 +24,12 @@
     "change_password_placeholder": "Nuværende adganskode",
     "change_password_new_password_placeholder": "Ny adgangskode",
     "change_password_conf_password_placeholder": "Bekræft adgangskode",
-    "country": "Land:",
-    "country_title": "Land",
-    "country_placeholder": "Land",
-    "bank_reg": "Bank reg nr.:",
-    "bank_reg_title": "Bank reg nr.:",
-    "bank_reg_placeholder": "Bank reg nr.",
-    "bank_account": "Bank konto nr.:",
-    "bank_account_title": "Bank konto nr.:",
-    "bank_account_placeholder": "Bank konto nr.",
+    "country": "Nationalitet:",
+    "country_title": "Nationalitet",
+    "country_placeholder": "Nationalitet",
+    "swift": "Swift/BIC kode:",
+    "swift_title": "Swift/BIC kode:",
+    "swift_placeholder": "Swift/BIC kode",
     "sign_out": "Log ud",
     "sign_out_title": "Er du sikker?",
     "error_title": "Noget gik galt",
@@ -44,7 +41,23 @@
     "error_password_only_uppercase": "Kodeordet skal indeholde små bogstaver.",
     "error_password_not_filled": "Nogle felter er tomme.",
     "error_fields_empty": "Nogle felter er tomme.",
-    "legal_privacy": "Legal & Privacy"
+    "legal_privacy": "Legal & Privacy",
+    "address": "Adresse",
+    "address_street_name": "Vejnavn:",
+    "address_street_name_title": "Vejnavn",
+    "address_street_name_placeholder": "Vejnavn",
+    "address_street_number": "Husnummer:",
+    "address_street_number_title": "Husnummer",
+    "address_street_number_placeholder": "Husnummer",
+    "address_city": "By:",
+    "address_city_title": "By",
+    "address_city_placeholder": "By",
+    "address_country": "Land:",
+    "address_country_title": "Land",
+    "address_country_placeholder": "Land",
+    "address_postal_code": "Postnummer:",
+    "address_postal_code_title": "Postnummer",
+    "address_postal_code_placeholder": "Postnummer"
   },
   "register": {
     "register": "Tilmeld",
@@ -115,5 +128,9 @@
     "request_documentation": "Du anmoder med denne dokumentation",
     "claim_refund_case_error": "Noget gik galt. Prøv igen.",
     "refund_case_already_claimed": "Refusionen er allerede blevet registreret."
+  },
+  "stores": {
+    "permission_title": "Refundeo Lokationstilladelse",
+    "permission_message": "Refundeo har brug for adgang til din lokation for at vide hvor du befinder dig."
   }
 }

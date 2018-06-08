@@ -32,13 +32,12 @@ class RegisterExtraScreen extends Component {
             firstName,
             lastName,
             country,
-            bankAccountNumber,
-            bankRegNumber,
+            swift,
             acceptedPrivacyPolicy,
             acceptedTermsOfService
         } = this.props.state.user;
 
-        if (firstName && lastName && country && bankAccountNumber && bankRegNumber && acceptedPrivacyPolicy && acceptedTermsOfService) {
+        if (firstName && lastName && country && swift && acceptedPrivacyPolicy && acceptedTermsOfService) {
             this.props.actions.navigateAndResetToMainFlow();
             this.props.actions.getRefundCases();
             return;

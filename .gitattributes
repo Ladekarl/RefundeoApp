@@ -1,1 +1,392 @@
 *.pbxproj -text
+
+CREATE TABLE dbo.Addresses
+(
+   Id            bigint identity   NOT NULL,
+   City          nvarchar(max),
+   Country       nvarchar(max),
+   StreetName    nvarchar(max),
+   StreetNumber  nvarchar(max),
+   PostalCode    nvarchar(max)
+);
+
+ALTER TABLE dbo.Addresses
+  ADD CONSTRAINT PK_Addresses
+  PRIMARY KEY CLUSTERED (Id);
+
+GRANT DELETE, REFERENCES, UPDATE, SELECT, INSERT ON dbo.Addresses TO dbo;
+
+CREATE TABLE dbo.AspNetRoleClaims
+(
+   Id          int identity    NOT NULL,
+   ClaimType   nvarchar(max),
+   ClaimValue  nvarchar(max),
+   RoleId      nvarchar(450)   NOT NULL
+);
+
+ALTER TABLE dbo.AspNetRoleClaims
+  ADD CONSTRAINT PK_AspNetRoleClaims
+  PRIMARY KEY CLUSTERED (Id);
+
+CREATE NONCLUSTERED INDEX IX_AspNetRoleClaims_RoleId
+   ON Refundeo20180331121625_db.dbo.AspNetRoleClaims (RoleId ASC);
+
+
+GRANT DELETE, REFERENCES, UPDATE, SELECT, INSERT ON dbo.AspNetRoleClaims TO dbo;
+
+CREATE TABLE dbo.AspNetRoles
+(
+   Id                nvarchar(450)   NOT NULL,
+   ConcurrencyStamp  nvarchar(max),
+   Name              nvarchar(256),
+   NormalizedName    nvarchar(256)
+);
+
+ALTER TABLE dbo.AspNetRoles
+  ADD CONSTRAINT PK_AspNetRoles
+  PRIMARY KEY CLUSTERED (Id);
+
+CREATE UNIQUE NONCLUSTERED INDEX RoleNameIndex
+   ON Refundeo20180331121625_db.dbo.AspNetRoles (NormalizedName ASC)
+   WHERE ([NormalizedName] IS NOT NULL);
+
+
+GRANT DELETE, REFERENCES, UPDATE, SELECT, INSERT ON dbo.AspNetRoles TO dbo;
+
+CREATE TABLE dbo.AspNetUserClaims
+(
+   Id          int identity    NOT NULL,
+   ClaimType   nvarchar(max),
+   ClaimValue  nvarchar(max),
+   UserId      nvarchar(450)   NOT NULL
+);
+
+ALTER TABLE dbo.AspNetUserClaims
+  ADD CONSTRAINT PK_AspNetUserClaims
+  PRIMARY KEY CLUSTERED (Id);
+
+CREATE NONCLUSTERED INDEX IX_AspNetUserClaims_UserId
+   ON Refundeo20180331121625_db.dbo.AspNetUserClaims (UserId ASC);
+
+
+GRANT DELETE, REFERENCES, UPDATE, SELECT, INSERT ON dbo.AspNetUserClaims TO dbo;
+
+CREATE TABLE dbo.AspNetUserLogins
+(
+   LoginProvider        nvarchar(450)   NOT NULL,
+   ProviderKey          nvarchar(450)   NOT NULL,
+   ProviderDisplayName  nvarchar(max),
+   UserId               nvarchar(450)   NOT NULL
+);
+
+ALTER TABLE dbo.AspNetUserLogins
+  ADD CONSTRAINT PK_AspNetUserLogins
+  PRIMARY KEY CLUSTERED (LoginProvider, ProviderKey);
+
+CREATE NONCLUSTERED INDEX IX_AspNetUserLogins_UserId
+   ON Refundeo20180331121625_db.dbo.AspNetUserLogins (UserId ASC);
+
+
+GRANT DELETE, REFERENCES, UPDATE, SELECT, INSERT ON dbo.AspNetUserLogins TO dbo;
+
+CREATE TABLE dbo.AspNetUserRoles
+(
+   UserId  nvarchar(450)   NOT NULL,
+   RoleId  nvarchar(450)   NOT NULL
+);
+
+ALTER TABLE dbo.AspNetUserRoles
+  ADD CONSTRAINT PK_AspNetUserRoles
+  PRIMARY KEY CLUSTERED (UserId, RoleId);
+
+CREATE NONCLUSTERED INDEX IX_AspNetUserRoles_RoleId
+   ON Refundeo20180331121625_db.dbo.AspNetUserRoles (RoleId ASC);
+
+
+GRANT DELETE, REFERENCES, UPDATE, SELECT, INSERT ON dbo.AspNetUserRoles TO dbo;
+
+CREATE TABLE dbo.AspNetUserTokens
+(
+   UserId         nvarchar(450)   NOT NULL,
+   LoginProvider  nvarchar(450)   NOT NULL,
+   Name           nvarchar(450)   NOT NULL,
+   Value          nvarchar(max)
+);
+
+ALTER TABLE dbo.AspNetUserTokens
+  ADD CONSTRAINT PK_AspNetUserTokens
+  PRIMARY KEY CLUSTERED (UserId, LoginProvider, Name);
+
+GRANT DELETE, REFERENCES, UPDATE, SELECT, INSERT ON dbo.AspNetUserTokens TO dbo;
+
+CREATE TABLE dbo.AspNetUsers
+(
+   Id                     nvarchar(450)    NOT NULL,
+   AccessFailedCount      int              NOT NULL,
+   ConcurrencyStamp       nvarchar(max),
+   Email                  nvarchar(256),
+   EmailConfirmed         bit              NOT NULL,
+   LockoutEnabled         bit              NOT NULL,
+   LockoutEnd             datetimeoffset,
+   MerchantInformationId  bigint,
+   NormalizedEmail        nvarchar(256),
+   NormalizedUserName     nvarchar(256),
+   PasswordHash           nvarchar(max),
+   PhoneNumber            nvarchar(max),
+   PhoneNumberConfirmed   bit              NOT NULL,
+   RefreshToken           nvarchar(max),
+   SecurityStamp          nvarchar(max),
+   TwoFactorEnabled       bit              NOT NULL,
+   UserName               nvarchar(256)
+);
+
+ALTER TABLE dbo.AspNetUsers
+  ADD CONSTRAINT PK_AspNetUsers
+  PRIMARY KEY CLUSTERED (Id);
+
+CREATE UNIQUE NONCLUSTERED INDEX IX_AspNetUsers_MerchantInformationId
+   ON Refundeo20180331121625_db.dbo.AspNetUsers (MerchantInformationId ASC)
+   WHERE ([MerchantInformationId] IS NOT NULL);
+
+CREATE NONCLUSTERED INDEX EmailIndex
+   ON Refundeo20180331121625_db.dbo.AspNetUsers (NormalizedEmail ASC);
+
+CREATE UNIQUE NONCLUSTERED INDEX UserNameIndex
+   ON Refundeo20180331121625_db.dbo.AspNetUsers (NormalizedUserName ASC)
+   WHERE ([NormalizedUserName] IS NOT NULL);
+
+
+GRANT DELETE, REFERENCES, UPDATE, SELECT, INSERT ON dbo.AspNetUsers TO dbo;
+
+CREATE TABLE dbo.CustomerInformations
+(
+   Id                      bigint identity   NOT NULL,
+   AcceptedPrivacyPolicy   bit               NOT NULL,
+   AcceptedTermsOfService  bit               NOT NULL,
+   Passport                nvarchar(max),
+   Swift                   nvarchar(max),
+   Country                 nvarchar(max),
+   CustomerId              nvarchar(450),
+   FirstName               nvarchar(max),
+   IsOauth                 bit               NOT NULL,
+   LastName                nvarchar(max),
+   PrivacyPolicy           nvarchar(max),
+   TermsOfService          nvarchar(max),
+   AddressId               bigint,
+   Email                   nvarchar(max)
+);
+
+ALTER TABLE dbo.CustomerInformations
+  ADD CONSTRAINT PK_CustomerInformations
+  PRIMARY KEY CLUSTERED (Id);
+
+CREATE NONCLUSTERED INDEX IX_CustomerInformations_AddressId
+   ON Refundeo20180331121625_db.dbo.CustomerInformations (AddressId ASC);
+
+CREATE UNIQUE NONCLUSTERED INDEX IX_CustomerInformations_CustomerId
+   ON Refundeo20180331121625_db.dbo.CustomerInformations (CustomerId ASC)
+   WHERE ([CustomerId] IS NOT NULL);
+
+
+GRANT DELETE, REFERENCES, UPDATE, SELECT, INSERT ON dbo.CustomerInformations TO dbo;
+
+CREATE TABLE dbo.Documentations
+(
+   Id     bigint identity   NOT NULL,
+   Image  nvarchar(max)
+);
+
+ALTER TABLE dbo.Documentations
+  ADD CONSTRAINT PK_Documentations
+  PRIMARY KEY CLUSTERED (Id);
+
+GRANT DELETE, REFERENCES, UPDATE, SELECT, INSERT ON dbo.Documentations TO dbo;
+
+CREATE TABLE dbo.Locations
+(
+   Id         bigint identity   NOT NULL,
+   Latitude   float             NOT NULL,
+   Longitude  float             NOT NULL
+);
+
+ALTER TABLE dbo.Locations
+  ADD CONSTRAINT PK_Locations
+  PRIMARY KEY CLUSTERED (Id);
+
+GRANT DELETE, REFERENCES, UPDATE, SELECT, INSERT ON dbo.Locations TO dbo;
+
+CREATE TABLE dbo.MerchantInformations
+(
+   Id                bigint identity   NOT NULL,
+   CVRNumber         nvarchar(max),
+   CompanyName       nvarchar(max),
+   RefundPercentage  float             NOT NULL,
+   AddressId         bigint,
+   LocationId        bigint
+);
+
+ALTER TABLE dbo.MerchantInformations
+  ADD CONSTRAINT PK_MerchantInformations
+  PRIMARY KEY CLUSTERED (Id);
+
+CREATE NONCLUSTERED INDEX IX_MerchantInformations_AddressId
+   ON Refundeo20180331121625_db.dbo.MerchantInformations (AddressId ASC);
+
+CREATE NONCLUSTERED INDEX IX_MerchantInformations_LocationId
+   ON Refundeo20180331121625_db.dbo.MerchantInformations (LocationId ASC);
+
+
+GRANT DELETE, REFERENCES, UPDATE, SELECT, INSERT ON dbo.MerchantInformations TO dbo;
+
+CREATE TABLE dbo.QRCodes
+(
+   Id     bigint identity   NOT NULL,
+   Image  varbinary(max)
+);
+
+ALTER TABLE dbo.QRCodes
+  ADD CONSTRAINT PK_QRCodes
+  PRIMARY KEY CLUSTERED (Id);
+
+GRANT DELETE, REFERENCES, UPDATE, SELECT, INSERT ON dbo.QRCodes TO dbo;
+
+CREATE TABLE dbo.RefundCases
+(
+   Id                     bigint identity   NOT NULL,
+   Amount                 float             NOT NULL,
+   CustomerInformationId  bigint,
+   DateCreated            datetime2         NOT NULL,
+   DateRequested          datetime2         NOT NULL,
+   DocumentationId        bigint,
+   IsAccepted             bit               NOT NULL,
+   IsRejected             bit               NOT NULL,
+   IsRequested            bit               NOT NULL,
+   MerchantInformationId  bigint,
+   QRCodeId               bigint,
+   RefundAmount           float             NOT NULL
+);
+
+ALTER TABLE dbo.RefundCases
+  ADD CONSTRAINT PK_RefundCases
+  PRIMARY KEY CLUSTERED (Id);
+
+CREATE NONCLUSTERED INDEX IX_RefundCases_DocumentationId
+   ON Refundeo20180331121625_db.dbo.RefundCases (DocumentationId ASC);
+
+CREATE NONCLUSTERED INDEX IX_RefundCases_QRCodeId
+   ON Refundeo20180331121625_db.dbo.RefundCases (QRCodeId ASC);
+
+CREATE NONCLUSTERED INDEX IX_RefundCases_CustomerInformationId
+   ON Refundeo20180331121625_db.dbo.RefundCases (CustomerInformationId ASC);
+
+CREATE NONCLUSTERED INDEX IX_RefundCases_MerchantInformationId
+   ON Refundeo20180331121625_db.dbo.RefundCases (MerchantInformationId ASC);
+
+
+GRANT DELETE, REFERENCES, UPDATE, SELECT, INSERT ON dbo.RefundCases TO dbo;
+
+CREATE TABLE dbo.__EFMigrationsHistory
+(
+   MigrationId     nvarchar(150)   NOT NULL,
+   ProductVersion  nvarchar(32)    NOT NULL
+);
+
+ALTER TABLE dbo.__EFMigrationsHistory
+  ADD CONSTRAINT PK___EFMigrationsHistory
+  PRIMARY KEY CLUSTERED (MigrationId);
+
+GRANT DELETE, REFERENCES, UPDATE, SELECT, INSERT ON dbo.__EFMigrationsHistory TO dbo;
+
+
+ALTER TABLE dbo.AspNetRoleClaims
+  ADD CONSTRAINT FK_AspNetRoleClaims_AspNetRoles_RoleId FOREIGN KEY (RoleId)
+  REFERENCES dbo.AspNetRoles (Id)
+  ON UPDATE NO ACTION
+  ON DELETE CASCADE;
+
+ALTER TABLE dbo.AspNetUserClaims
+  ADD CONSTRAINT FK_AspNetUserClaims_AspNetUsers_UserId FOREIGN KEY (UserId)
+  REFERENCES dbo.AspNetUsers (Id)
+  ON UPDATE NO ACTION
+  ON DELETE CASCADE;
+
+ALTER TABLE dbo.AspNetUserLogins
+  ADD CONSTRAINT FK_AspNetUserLogins_AspNetUsers_UserId FOREIGN KEY (UserId)
+  REFERENCES dbo.AspNetUsers (Id)
+  ON UPDATE NO ACTION
+  ON DELETE CASCADE;
+
+ALTER TABLE dbo.AspNetUserRoles
+  ADD CONSTRAINT FK_AspNetUserRoles_AspNetRoles_RoleId FOREIGN KEY (RoleId)
+  REFERENCES dbo.AspNetRoles (Id)
+  ON UPDATE NO ACTION
+  ON DELETE CASCADE;
+
+ALTER TABLE dbo.AspNetUserRoles
+  ADD CONSTRAINT FK_AspNetUserRoles_AspNetUsers_UserId FOREIGN KEY (UserId)
+  REFERENCES dbo.AspNetUsers (Id)
+  ON UPDATE NO ACTION
+  ON DELETE CASCADE;
+
+ALTER TABLE dbo.AspNetUserTokens
+  ADD CONSTRAINT FK_AspNetUserTokens_AspNetUsers_UserId FOREIGN KEY (UserId)
+  REFERENCES dbo.AspNetUsers (Id)
+  ON UPDATE NO ACTION
+  ON DELETE CASCADE;
+
+ALTER TABLE dbo.AspNetUsers
+  ADD CONSTRAINT FK_AspNetUsers_MerchantInformations_MerchantInformationId FOREIGN KEY (MerchantInformationId)
+  REFERENCES dbo.MerchantInformations (Id)
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION;
+
+ALTER TABLE dbo.CustomerInformations
+  ADD CONSTRAINT FK_CustomerInformations_Addresses_AddressId FOREIGN KEY (AddressId)
+  REFERENCES dbo.Addresses (Id)
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION;
+
+ALTER TABLE dbo.CustomerInformations
+  ADD CONSTRAINT FK_CustomerInformations_AspNetUsers_CustomerId FOREIGN KEY (CustomerId)
+  REFERENCES dbo.AspNetUsers (Id)
+  ON UPDATE NO ACTION
+  ON DELETE CASCADE;
+
+ALTER TABLE dbo.MerchantInformations
+  ADD CONSTRAINT FK_MerchantInformations_Addresses_AddressId FOREIGN KEY (AddressId)
+  REFERENCES dbo.Addresses (Id)
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION;
+
+ALTER TABLE dbo.MerchantInformations
+  ADD CONSTRAINT FK_MerchantInformations_Locations_LocationId FOREIGN KEY (LocationId)
+  REFERENCES dbo.Locations (Id)
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION;
+
+ALTER TABLE dbo.RefundCases
+  ADD CONSTRAINT FK_RefundCases_CustomerInformations_CustomerInformationId FOREIGN KEY (CustomerInformationId)
+  REFERENCES dbo.CustomerInformations (Id)
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION;
+
+ALTER TABLE dbo.RefundCases
+  ADD CONSTRAINT FK_RefundCases_Documentations_DocumentationId FOREIGN KEY (DocumentationId)
+  REFERENCES dbo.Documentations (Id)
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION;
+
+ALTER TABLE dbo.RefundCases
+  ADD CONSTRAINT FK_RefundCases_MerchantInformations_MerchantInformationId FOREIGN KEY (MerchantInformationId)
+  REFERENCES dbo.MerchantInformations (Id)
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION;
+
+ALTER TABLE dbo.RefundCases
+  ADD CONSTRAINT FK_RefundCases_QRCodes_QRCodeId FOREIGN KEY (QRCodeId)
+  REFERENCES dbo.QRCodes (Id)
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION;
+
+
+COMMIT;

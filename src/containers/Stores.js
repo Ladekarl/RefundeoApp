@@ -2,6 +2,7 @@ import {connect} from 'react-redux';
 import Actions from '../actions/Actions';
 import {bindActionCreators} from 'redux';
 import React, {Component} from 'react';
+// eslint-disable-next-line react-native/split-platform-components
 import {Text, View, StyleSheet, PermissionsAndroid, Platform} from 'react-native';
 import {strings} from '../shared/i18n';
 import PropTypes from 'prop-types';
@@ -74,8 +75,8 @@ class StoresScreen extends Component {
         } else {
             const granted = await PermissionsAndroid.request(
                 PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION, {
-                    'title': 'Refundeo Location Permission',
-                    'message': 'Refundeo needs to acces you location to know where you are'
+                    'title': strings('stores.permission_title'),
+                    'message': strings('stores.permission_message')
                 }
             );
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {

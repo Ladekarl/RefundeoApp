@@ -89,12 +89,28 @@ class SettingsScreen extends Component {
         this.setModalState(strings('settings.last_name_title'), this.props.state.user.lastName, true, strings('settings.last_name_placeholder'), 'lastName');
     };
 
-    showChangeBankReg = () => {
-        this.setModalState(strings('settings.bank_reg_title'), this.props.state.user.bankRegNumber, true, strings('settings.bank_reg_placeholder'), 'bankRegNumber', 'phone-pad');
+    showSwiftModal = () => {
+        this.setModalState(strings('settings.swift_title'), this.props.state.user.swift, true, strings('settings.swift_placeholder'), 'swift', 'phone-pad');
     };
 
-    showChangeBankAccount = () => {
-        this.setModalState(strings('settings.bank_account_title'), this.props.state.user.bankAccountNumber, true, strings('settings.bank_account_placeholder'), 'bankAccountNumber', 'phone-pad');
+    showStreetNameModal = () => {
+        this.setModalState(strings('settings.address_street_name_title'), this.props.state.user.addressStreetName, true, strings('settings.address_street_name_placeholder'), 'addressStreetName');
+    };
+
+    showStreetNumberModal = () => {
+        this.setModalState(strings('settings.address_street_number_title'), this.props.state.user.addressStreetNumber, true, strings('settings.address_street_number_placeholder'), 'addressStreetNumber');
+    };
+
+    showPostalCodeModal = () => {
+        this.setModalState(strings('settings.address_postal_code_title'), this.props.state.user.addressPostalCode, true, strings('settings.address_postal_code_placeholder'), 'addressPostalCode');
+    };
+
+    showCityModal = () => {
+        this.setModalState(strings('settings.address_city_title'), this.props.state.user.addressCity, true, strings('settings.address_city_placeholder'), 'addressCity');
+    };
+
+    showCountryModal = () => {
+        this.setModalState(strings('settings.address_country_title'), this.props.state.user.addressCountry, true, strings('settings.address_country_placeholder'), 'addressCountry');
     };
 
     showChangePassword = () => {
@@ -312,29 +328,53 @@ class SettingsScreen extends Component {
                         </View>
                     </CountryPicker>
                 </View>
-                <TouchableOpacity style={styles.rowContainer} onPress={this.showChangeBankReg}>
+                <TouchableOpacity style={styles.rowContainer} onPress={this.showSwiftModal}>
                     <View style={styles.rowInnerContainer}>
-                        {!state.user.bankRegNumber &&
+                        {!state.user.swift &&
                         <Icon name='exclamation-circle' style={styles.requiredIcon}/>
                         }
-                        <Text style={styles.leftText}>{strings('settings.bank_reg')}</Text>
+                        <Text style={styles.leftText}>{strings('settings.swift')}</Text>
                     </View>
-                    <Text style={styles.rightText}>{state.user.bankRegNumber}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.rowContainer} onPress={this.showChangeBankAccount}>
-                    <View style={styles.rowInnerContainer}>
-                        {!state.user.bankAccountNumber &&
-                        <Icon name='exclamation-circle' style={styles.requiredIcon}/>
-                        }
-                        <Text style={styles.leftText}>{strings('settings.bank_account')}</Text>
-                    </View>
-                    <Text style={styles.rightText}>{state.user.bankAccountNumber}</Text>
+                    <Text style={styles.rightText}>{state.user.swift}</Text>
                 </TouchableOpacity>
                 {!noPassword && !state.user.isOauth &&
                 <TouchableOpacity style={styles.rowContainer} onPress={this.showChangePassword}>
                     <Text style={styles.leftButtonText}>{strings('settings.change_password')}</Text>
                 </TouchableOpacity>
                 }
+                <View style={styles.sectionHeaderContainer}>
+                    <Text style={styles.sectionHeaderText}>{strings('settings.address')}</Text>
+                </View>
+                <TouchableOpacity style={styles.rowContainer} onPress={this.showStreetNameModal}>
+                    <View style={styles.rowInnerContainer}>
+                        <Text style={styles.leftText}>{strings('settings.address_street_name')}</Text>
+                    </View>
+                    <Text style={styles.rightText}>{state.user.addressStreetName}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.rowContainer} onPress={this.showStreetNumberModal}>
+                    <View style={styles.rowInnerContainer}>
+                        <Text style={styles.leftText}>{strings('settings.address_street_number')}</Text>
+                    </View>
+                    <Text style={styles.rightText}>{state.user.addressStreetNumber}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.rowContainer} onPress={this.showPostalCodeModal}>
+                    <View style={styles.rowInnerContainer}>
+                        <Text style={styles.leftText}>{strings('settings.address_postal_code')}</Text>
+                    </View>
+                    <Text style={styles.rightText}>{state.user.addressPostalCode}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.rowContainer} onPress={this.showCityModal}>
+                    <View style={styles.rowInnerContainer}>
+                        <Text style={styles.leftText}>{strings('settings.address_city')}</Text>
+                    </View>
+                    <Text style={styles.rightText}>{state.user.addressCity}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.rowContainer} onPress={this.showCountryModal}>
+                    <View style={styles.rowInnerContainer}>
+                        <Text style={styles.leftText}>{strings('settings.address_country')}</Text>
+                    </View>
+                    <Text style={styles.rightText}>{state.user.addressCountry}</Text>
+                </TouchableOpacity>
                 <View style={styles.sectionHeaderContainer}>
                     <Text style={styles.sectionHeaderText}>{strings('settings.legal_privacy')}</Text>
                 </View>

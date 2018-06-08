@@ -24,15 +24,12 @@
     "change_password_placeholder": "Old password",
     "change_password_new_password_placeholder": "New password",
     "change_password_conf_password_placeholder": "Confirm password",
-    "country": "Country:",
-    "country_title": "Country",
-    "country_placeholder": "Country",
-    "bank_reg": "Bank reg nr.:",
-    "bank_reg_title": "Bank reg nr.",
-    "bank_reg_placeholder": "Bank reg nr.",
-    "bank_account": "Bank account nr.:",
-    "bank_account_title": "Bank account nr.",
-    "bank_account_placeholder": "Bank account nr.",
+    "country": "Nationality:",
+    "country_title": "Nationality",
+    "country_placeholder": "Nationality",
+    "swift": "Swift/BIC code:",
+    "swift_title": "Swift/BIC code",
+    "swift_placeholder": "Swift/BIC code",
     "sign_out": "Sign out",
     "sign_out_title": "Are you sure?",
     "error_title": "Something went wrong",
@@ -44,7 +41,23 @@
     "error_password_only_uppercase": "The password must contain lower case letters.",
     "error_password_not_filled": "Some fields are empty.",
     "error_fields_empty": "Some fields are empty.",
-    "legal_privacy": "Legal & Privacy"
+    "legal_privacy": "Legal & Privacy",
+    "address": "Address",
+    "address_street_name": "Street name:",
+    "address_street_name_title": "Street name",
+    "address_street_name_placeholder": "Street name",
+    "address_street_number": "House number:",
+    "address_street_number_title": "House number",
+    "address_street_number_placeholder": "House number",
+    "address_city": "City:",
+    "address_city_title": "City",
+    "address_city_placeholder": "City",
+    "address_country": "Country:",
+    "address_country_title": "Country",
+    "address_country_placeholder": "Country",
+    "address_postal_code": "Postal code:",
+    "address_postal_code_title": "Postal code",
+    "address_postal_code_placeholder": "Postal code"
   },
   "register": {
     "register": "Sign up",
@@ -115,5 +128,9 @@
     "request_documentation": "You are requesting with this documentation",
     "claim_refund_case_error": "Something went wrong. Please try again",
     "refund_case_already_claimed": "The refund has already been claimed."
+  },
+  "stores": {
+    "permission_title": "Refundeo Location Permission",
+    "permission_message": "Refundeo needs to acces you location to know where you are."
   }
 }

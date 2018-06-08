@@ -3,6 +3,7 @@ import {Image, Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-n
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 import {strings} from '../shared/i18n';
+import Icon from 'react-native-fa-icons';
 
 export default class EmptyOverviewScreen extends Component {
     static propTypes = {
@@ -23,8 +24,7 @@ export default class EmptyOverviewScreen extends Component {
                 </View>
                 <View style={styles.middleContainer}>
                     <TouchableOpacity style={styles.logoButtonContainer} onPress={this.navigateScanner}>
-                        <Image style={styles.logoButton}
-                               source={require('../../assets/refundeo_logo.png')}/>
+                        <Icon style={styles.logoButton} name='camera'/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.bottomContainer}>
@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
         elevation: 10
     },
     logoButton: {
-        height: 100,
-        width: 100,
+        height: undefined,
+        width: undefined,
         zIndex: 9999,
         margin: 15
     },

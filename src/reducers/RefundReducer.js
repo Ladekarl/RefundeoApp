@@ -4,7 +4,14 @@ type Merchant = {
     id: string,
     companyName: string,
     cvrNumber: string,
-    refundPercentage: number
+    refundPercentage: number,
+    AddressCity: string,
+    AddressStreetNumber: string,
+    AddressStreetName: string,
+    AddressCountry: string,
+    AddressPostalCode: string,
+    Latitude: number,
+    Longitude: number
 }
 
 type Customer = {
@@ -12,7 +19,7 @@ type Customer = {
     username: string,
     firstName: string,
     lastName: string,
-    country: string
+    country: string,
 }
 
 type RefundCase = {
