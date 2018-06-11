@@ -20,6 +20,7 @@ import PropTypes from 'prop-types';
 import ModalScreen from '../components/Modal';
 import CountryPicker, {getAllCountries} from 'react-native-country-picker-modal';
 import Icon from 'react-native-fa-icons';
+import Setting from '../components/Setting';
 
 class SettingsScreen extends Component {
 
@@ -35,9 +36,8 @@ class SettingsScreen extends Component {
     static propTypes = {
         actions: PropTypes.object.isRequired,
         state: PropTypes.object.isRequired,
-        noPassword: PropTypes.bool,
-        noSignOut: PropTypes.bool,
-        editablePolicies: PropTypes.bool
+        editablePolicies: PropTypes.bool,
+        requiredOnly: PropTypes.bool
     };
 
     modalTextInput;
@@ -267,7 +267,7 @@ class SettingsScreen extends Component {
     };
 
     render() {
-        const {state, actions, noPassword, noSignOut, editablePolicies} = this.props;
+        const {state, actions, editablePolicies, requiredOnly} = this.props;
 
         return (
             <ScrollView
@@ -283,33 +283,16 @@ class SettingsScreen extends Component {
                 <View style={[styles.sectionHeaderContainer, styles.sectionTopContainer]}>
                     <Text style={styles.sectionHeaderText}>{strings('settings.profile')}</Text>
                 </View>
-                <View style={styles.rowContainer}>
-                    <View style={styles.rowInnerContainer}>
-                        {!state.user.username &&
-                        <Icon name='exclamation-circle' style={styles.requiredIcon}/>
-                        }
-                        <Text style={styles.leftText}>{strings('settings.email')}</Text>
-                    </View>
-                    <Text style={styles.rightText}>{state.user.username}</Text>
-                </View>
-                <TouchableOpacity style={styles.rowContainer} onPress={this.showChangeFirstName}>
-                    <View style={styles.rowInnerContainer}>
-                        {!state.user.firstName &&
-                        <Icon name='exclamation-circle' style={styles.requiredIcon}/>
-                        }
-                        <Text style={styles.leftText}>{strings('settings.first_name')}</Text>
-                    </View>
-                    <Text style={styles.rightText}>{state.user.firstName}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.rowContainer} onPress={this.showChangeLastName}>
-                    <View style={styles.rowInnerContainer}>
-                        {!state.user.lastName &&
-                        <Icon name='exclamation-circle' style={styles.requiredIcon}/>
-                        }
-                        <Text style={styles.leftText}>{strings('settings.last_name')}</Text>
-                    </View>
-                    <Text style={styles.rightText}>{state.user.lastName}</Text>
-                </TouchableOpacity>
+                <Setting label={strings('settings.email')} required={true} value={state.user.username}/>
+                {!requiredOnly &&
+                <Setting label={strings('settings.first_name')} onPress={this.showChangeFirstName}
+                         value={state.user.firstName}/>
+                }
+                {!requiredOnly &&
+                <Setting label={strings('settings.last_name')} onPress={this.showChangeLastName}
+                         value={state.user.lastName}/>
+                }
+                {!requiredOnly &&
                 <View style={styles.countryContainer}>
                     <CountryPicker
                         onChange={this.countryChanged}
@@ -319,62 +302,47 @@ class SettingsScreen extends Component {
                         filterable={true}>
                         <View style={styles.countryRowContainer}>
                             <View style={styles.rowInnerContainer}>
-                                {!state.user.country &&
-                                <Icon name='exclamation-circle' style={styles.requiredIcon}/>
-                                }
                                 <Text style={styles.leftText}>{strings('settings.country')}</Text>
                             </View>
                             <Text style={styles.rightText}>{state.user.country}</Text>
                         </View>
                     </CountryPicker>
                 </View>
-                <TouchableOpacity style={styles.rowContainer} onPress={this.showSwiftModal}>
-                    <View style={styles.rowInnerContainer}>
-                        {!state.user.swift &&
-                        <Icon name='exclamation-circle' style={styles.requiredIcon}/>
-                        }
-                        <Text style={styles.leftText}>{strings('settings.swift')}</Text>
-                    </View>
-                    <Text style={styles.rightText}>{state.user.swift}</Text>
-                </TouchableOpacity>
-                {!noPassword && !state.user.isOauth &&
-                <TouchableOpacity style={styles.rowContainer} onPress={this.showChangePassword}>
-                    <Text style={styles.leftButtonText}>{strings('settings.change_password')}</Text>
-                </TouchableOpacity>
                 }
+                {!requiredOnly &&
+                <Setting
+                    label={strings('settings.swift')}
+                    onPress={this.showSwiftModal}
+                    value={state.user.swift}/>
+                }
+                {!requiredOnly && !state.user.isOauth &&
+                <Setting label={strings('settings.change_password')} onPress={this.showChangePassword}/>
+                }
+                {!requiredOnly &&
                 <View style={styles.sectionHeaderContainer}>
                     <Text style={styles.sectionHeaderText}>{strings('settings.address')}</Text>
                 </View>
-                <TouchableOpacity style={styles.rowContainer} onPress={this.showStreetNameModal}>
-                    <View style={styles.rowInnerContainer}>
-                        <Text style={styles.leftText}>{strings('settings.address_street_name')}</Text>
-                    </View>
-                    <Text style={styles.rightText}>{state.user.addressStreetName}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.rowContainer} onPress={this.showStreetNumberModal}>
-                    <View style={styles.rowInnerContainer}>
-                        <Text style={styles.leftText}>{strings('settings.address_street_number')}</Text>
-                    </View>
-                    <Text style={styles.rightText}>{state.user.addressStreetNumber}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.rowContainer} onPress={this.showPostalCodeModal}>
-                    <View style={styles.rowInnerContainer}>
-                        <Text style={styles.leftText}>{strings('settings.address_postal_code')}</Text>
-                    </View>
-                    <Text style={styles.rightText}>{state.user.addressPostalCode}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.rowContainer} onPress={this.showCityModal}>
-                    <View style={styles.rowInnerContainer}>
-                        <Text style={styles.leftText}>{strings('settings.address_city')}</Text>
-                    </View>
-                    <Text style={styles.rightText}>{state.user.addressCity}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.rowContainer} onPress={this.showCountryModal}>
-                    <View style={styles.rowInnerContainer}>
-                        <Text style={styles.leftText}>{strings('settings.address_country')}</Text>
-                    </View>
-                    <Text style={styles.rightText}>{state.user.addressCountry}</Text>
-                </TouchableOpacity>
+                }
+                {!requiredOnly &&
+                <Setting label={strings('settings.address_street_name')} onPress={this.showStreetNameModal}
+                         value={state.user.addressStreetName}/>
+                }
+                {!requiredOnly &&
+                <Setting label={strings('settings.address_street_number')} onPress={this.showStreetNumberModal}
+                         value={state.user.addressStreetNumber}/>
+                }
+                {!requiredOnly &&
+                <Setting label={strings('settings.address_postal_code')} onPress={this.showPostalCodeModal}
+                         value={state.user.addressPostalCode}/>
+                }
+                {!requiredOnly &&
+                <Setting label={strings('settings.address_city')} onPress={this.showCityModal}
+                         value={state.user.addressCity}/>
+                }
+                {!requiredOnly &&
+                <Setting label={strings('settings.address_country')} onPress={this.showCountryModal}
+                         value={state.user.addressCountry}/>
+                }
                 <View style={styles.sectionHeaderContainer}>
                     <Text style={styles.sectionHeaderText}>{strings('settings.legal_privacy')}</Text>
                 </View>
@@ -413,14 +381,13 @@ class SettingsScreen extends Component {
                     />
                     }
                 </TouchableOpacity>
-                {!noSignOut &&
+                {!requiredOnly &&
                 <View style={styles.sectionHeaderContainer}>
                 </View>
                 }
-                {!noSignOut &&
-                <TouchableOpacity style={styles.rowCenterContainer} onPress={this.showSignOut}>
-                    <Text style={styles.redText}>{strings('settings.sign_out')}</Text>
-                </TouchableOpacity>
+                {!requiredOnly &&
+                <Setting label={strings('settings.sign_out')} contentContainerStyle={styles.rowCenterContainer}
+                         labelStyle={styles.redText} onPress={this.showSignOut}/>
                 }
                 <ModalScreen
                     modalTitle={this.state.modalTitle}
