@@ -13,9 +13,9 @@ export default class Setting extends Component {
         required: PropTypes.bool,
         label: PropTypes.string.isRequired,
         value: PropTypes.string,
-        containerStyle: PropTypes.shape(),
-        contentContainerStyle: PropTypes.shape(),
-        labelStyle: PropTypes.shape()
+        containerStyle: View.propTypes.style,
+        contentContainerStyle: View.propTypes.style,
+        labelStyle: Text.propTypes.style
     };
 
     // noinspection JSUnusedGlobalSymbols

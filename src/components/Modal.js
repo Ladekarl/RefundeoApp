@@ -67,7 +67,7 @@ export default class ModalScreen extends Component {
                 transparent={true}
                 onRequestClose={onBack}
                 visible={visible}>
-                <KeyboardAvoidingView style={styles.modalContainer} keyboardVerticalOffset={-100} behavior='padding'>
+                <KeyboardAvoidingView style={styles.modalContainer} keyboardVerticalOffset={Platform.OS === 'ios' ? -100 : -300} behavior='padding'>
                     <View style={[styles.modalInnerContainer, contentContainerStyle]}>
                         <View style={styles.modalTopContainer}>
                             <Text style={styles.modalTitleText}>{modalTitle}</Text>
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: Platform.OS === 'ios' ? 'rgba(0,0,0,0.3)' : 'transparent'
+        backgroundColor: 'rgba(0,0,0,0.3)'
     },
     modalInnerContainer: {
         maxHeight: '100%',

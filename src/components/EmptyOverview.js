@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
         padding: 10
     },
     logoButtonContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        alignItems: 'stretch',
         alignSelf: 'center',
         backgroundColor: colors.slightlyDarkerColor,
         borderWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0,
@@ -57,23 +57,23 @@ const styles = StyleSheet.create({
         elevation: 10
     },
     logoButton: {
-        height: undefined,
-        width: undefined,
+        fontSize: 35,
         zIndex: 9999,
-        margin: 15
+        color: colors.activeTabColor,
+        margin: 20
     },
     welcomeText: {
         textAlign: 'center',
         fontWeight: 'bold',
         fontSize: 18,
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
+        color: colors.activeTabColor
     },
     buttonText: {
         textAlign: 'center',
         fontWeight: 'bold',
         fontSize: 15,
         margin: 5,
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
+        color: colors.activeTabColor
     },
     bottomContainer: {
         flex: 1,
