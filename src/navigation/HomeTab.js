@@ -1,9 +1,10 @@
-import {StyleSheet, Platform} from 'react-native';
+import {Platform} from 'react-native';
 import {TabNavigator} from 'react-navigation';
 import OverviewScreen from '../containers/Overview';
 import colors from '../shared/colors';
 import ScannerScreen from '../containers/Scanner';
 import StoresScreen from '../containers/Stores';
+import {StyleSheet} from 'react-native';
 
 const HomeTab = TabNavigator({
     Overview: {
@@ -31,9 +32,9 @@ const HomeTab = TabNavigator({
         },
         style: {
             height: 50,
-            backgroundColor : colors.backgroundColor,
+            backgroundColor: colors.backgroundColor,
             borderTopWidth: StyleSheet.hairlineWidth,
-            borderTopColor: colors.separatorColor,
+            borderTopColor: Platform.OS === 'ios' ? colors.darkTextColor: colors.separatorColor,
             elevation: 1,
             paddingTop: Platform.OS === 'ios' ? 0 : 4
         },
