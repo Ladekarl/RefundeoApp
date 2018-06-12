@@ -55,13 +55,13 @@ export default class StoresList extends Component {
                             borderRadius={2}>
                             <View style={styles.bannerTextBarContainer}>
                                 <View style={styles.leftContainer}>
-                                    <Text style={styles.leftText}>712 km</Text>
+                                    <Text style={styles.leftText}>9 km</Text>
                                 </View>
                                 <View style={styles.iconContainer}>
                                     <Image style={styles.logoImage} source={require('../../assets/refundeo_logo.png')}/>
                                 </View>
                                 <View style={styles.rightContainer}>
-                                    <Text style={styles.rightText}>Refund: 75 %</Text>
+                                    <Text style={styles.rightText}>Refund: 78 %</Text>
                                 </View>
                             </View>
                         </ImageBackground>
@@ -87,13 +87,13 @@ export default class StoresList extends Component {
                             borderRadius={2}>
                             <View style={styles.bannerTextBarContainer}>
                                 <View style={styles.leftContainer}>
-                                    <Text style={styles.leftText}>1,2 km</Text>
+                                    <Text style={styles.leftText}>11 km</Text>
                                 </View>
                                 <View style={styles.iconContainer}>
                                     <Image style={styles.logoImage} source={require('../../assets/refundeo_logo.png')}/>
                                 </View>
                                 <View style={styles.rightContainer}>
-                                    <Text style={styles.rightText}>Refund: 75 %</Text>
+                                    <Text style={styles.rightText}>Refund: 86 %</Text>
                                 </View>
                             </View>
                         </ImageBackground>
@@ -119,7 +119,7 @@ export default class StoresList extends Component {
                             borderRadius={2}>
                             <View style={styles.bannerTextBarContainer}>
                                 <View style={styles.leftContainer}>
-                                    <Text style={styles.leftText}>5 km</Text>
+                                    <Text style={styles.leftText}>15 km</Text>
                                 </View>
                                 <View style={styles.iconContainer}>
                                     <Image style={styles.logoImage} source={require('../../assets/refundeo_logo.png')}/>

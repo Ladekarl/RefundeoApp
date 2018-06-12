@@ -36,42 +36,6 @@ class StoresScreen extends Component {
             data: [
                 {
                     location: {
-                        latitude: 55.789354,
-                        longitude: 12.525010
-                    }
-                },
-                {
-                    location: {
-                        latitude: 55.789495,
-                        longitude: 12.518121
-                    }
-                },
-                {
-                    location: {
-                        latitude: 55.785672,
-                        longitude: 12.514128
-                    }
-                },
-                {
-                    location: {
-                        latitude: 55.729795,
-                        longitude: 12.518121
-                    }
-                },
-                {
-                    location: {
-                        latitude: 55.769495,
-                        longitude: 12.568121
-                    }
-                },
-                {
-                    location: {
-                        latitude: 55.765672,
-                        longitude: 12.524128
-                    }
-                },
-                {
-                    location: {
                         latitude: 55.789795,
                         longitude: 12.518121
                     }
