@@ -98,10 +98,10 @@ export default class Helpers {
 
     static async saveUser(user) {
         if (user && user.token && user.roles && user.roles.indexOf('User') > -1) {
-            if (user.acceptedPrivacyPolicy && user.privacyPolicy != Helpers.privacyPolicy) {
+            if (user.acceptedPrivacyPolicy && user.privacyPolicy.localeCompare(Helpers.privacyPolicy) !== 0) {
                 user.acceptedPrivacyPolicy = false;
             }
-            if (user.acceptedTermsOfService && user.termsOfService != Helpers.termsOfService) {
+            if (user.acceptedTermsOfService && user.termsOfService.localeCompare(Helpers.termsOfService) !== 0) {
                 user.acceptedTermsOfService = false;
             }
             await LocalStorage.setUser(user);

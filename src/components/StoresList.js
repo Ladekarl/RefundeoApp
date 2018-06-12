@@ -23,11 +23,13 @@ export default class StoresList extends Component {
                             borderRadius={2}>
                             <View style={styles.bannerTextBarContainer}>
                                 <View style={styles.leftContainer}>
-                                    <Text style={styles.leftText}>125 m</Text>
+                                    <Text style={styles.leftText}>512 m</Text>
                                 </View>
+                                {Platform.OS === 'ios' &&
                                 <View style={styles.iconContainer}>
                                     <Image style={styles.logoImage} source={require('../../assets/refundeo_logo.png')}/>
                                 </View>
+                                }
                                 <View style={styles.rightContainer}>
                                     <Text style={styles.rightText}>Refund: 75 %</Text>
                                 </View>
@@ -55,11 +57,13 @@ export default class StoresList extends Component {
                             borderRadius={2}>
                             <View style={styles.bannerTextBarContainer}>
                                 <View style={styles.leftContainer}>
-                                    <Text style={styles.leftText}>9 km</Text>
+                                    <Text style={styles.leftText}>675 m</Text>
                                 </View>
+                                {Platform.OS === 'ios' &&
                                 <View style={styles.iconContainer}>
                                     <Image style={styles.logoImage} source={require('../../assets/refundeo_logo.png')}/>
                                 </View>
+                                }
                                 <View style={styles.rightContainer}>
                                     <Text style={styles.rightText}>Refund: 78 %</Text>
                                 </View>
@@ -87,11 +91,13 @@ export default class StoresList extends Component {
                             borderRadius={2}>
                             <View style={styles.bannerTextBarContainer}>
                                 <View style={styles.leftContainer}>
-                                    <Text style={styles.leftText}>11 km</Text>
+                                    <Text style={styles.leftText}>1,76 km</Text>
                                 </View>
+                                {Platform.OS === 'ios' &&
                                 <View style={styles.iconContainer}>
                                     <Image style={styles.logoImage} source={require('../../assets/refundeo_logo.png')}/>
                                 </View>
+                                }
                                 <View style={styles.rightContainer}>
                                     <Text style={styles.rightText}>Refund: 86 %</Text>
                                 </View>
@@ -121,9 +127,11 @@ export default class StoresList extends Component {
                                 <View style={styles.leftContainer}>
                                     <Text style={styles.leftText}>15 km</Text>
                                 </View>
+                                {Platform.OS === 'ios' &&
                                 <View style={styles.iconContainer}>
                                     <Image style={styles.logoImage} source={require('../../assets/refundeo_logo.png')}/>
                                 </View>
+                                }
                                 <View style={styles.rightContainer}>
                                     <Text style={styles.rightText}>Refund: 75 %</Text>
                                 </View>
@@ -154,7 +162,6 @@ const styles = StyleSheet.create({
         padding: 3
     },
     iconContainer: {
-        zIndex: 999,
         height: 80,
         justifyContent: 'center',
         alignItems: 'center',
@@ -189,6 +196,7 @@ const styles = StyleSheet.create({
     bannerTextBarContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        overflow: 'visible',
         alignItems: 'center',
         width: '100%',
         height: 35,
