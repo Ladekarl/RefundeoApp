@@ -22,24 +22,29 @@ export default class Setting extends Component {
     static defaultProps = {
         required: false,
         onPress: null,
-        containerStyle: null,
-        contentContainerStyle: null
+        containerStyle: {},
+        contentContainerStyle: {},
+        labelStyle: {}
     };
 
     render() {
-        const {onPress, required, label, value, containerStyle, contentContainerStyle, labelStyle} = this.props;
-
-        let mappedContainerStyle = containerStyle ? containerStyle : styles.rowContainer;
-        let mappedContentContainerStyle = contentContainerStyle ? contentContainerStyle : styles.rowInnerContainer;
-        let mappedLabelStyle = labelStyle ? labelStyle : styles.leftText;
+        const {
+            onPress,
+            required,
+            label,
+            value,
+            containerStyle,
+            contentContainerStyle,
+            labelStyle
+        } = this.props;
 
         return (
-            <TouchableOpacity disabled={!onPress} style={mappedContainerStyle} onPress={onPress}>
-                <View style={mappedContentContainerStyle}>
+            <TouchableOpacity disabled={!onPress} style={[styles.rowContainer, containerStyle]} onPress={onPress}>
+                <View style={[styles.rowInnerContainer, contentContainerStyle]}>
                     {required && !value &&
                     <Icon name='exclamation-circle' style={styles.requiredIcon}/>
                     }
-                    <Text style={mappedLabelStyle}>{label}</Text>
+                    <Text style={[styles.leftText, labelStyle]}>{label}</Text>
                 </View>
                 {value &&
                 <Text style={styles.rightText}>{value}</Text>

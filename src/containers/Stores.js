@@ -3,13 +3,14 @@ import Actions from '../actions/Actions';
 import {bindActionCreators} from 'redux';
 import React, {Component} from 'react';
 // eslint-disable-next-line react-native/split-platform-components
-import {Text, View, StyleSheet, PermissionsAndroid, Platform} from 'react-native';
+import {Text, View, StyleSheet, PermissionsAndroid, Platform, TouchableOpacity} from 'react-native';
 import {strings} from '../shared/i18n';
 import PropTypes from 'prop-types';
 import colors from '../shared/colors';
 import Icon from 'react-native-fa-icons';
-import {Marker} from 'react-native-maps';
+import {Callout, Marker} from 'react-native-maps';
 import ClusteredMapView from 'react-native-maps-super-cluster';
+import StoresList from '../components/StoresList';
 
 
 class StoresScreen extends Component {
@@ -31,22 +32,75 @@ class StoresScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [{
-                location: {
-                    latitude: 55.789354,
-                    longitude: 12.525010
+            isMap: true,
+            data: [
+                {
+                    location: {
+                        latitude: 55.789354,
+                        longitude: 12.525010
+                    }
+                },
+                {
+                    location: {
+                        latitude: 55.789495,
+                        longitude: 12.518121
+                    }
+                },
+                {
+                    location: {
+                        latitude: 55.785672,
+                        longitude: 12.514128
+                    }
+                },
+                {
+                    location: {
+                        latitude: 55.729795,
+                        longitude: 12.518121
+                    }
+                },
+                {
+                    location: {
+                        latitude: 55.769495,
+                        longitude: 12.568121
+                    }
+                },
+                {
+                    location: {
+                        latitude: 55.765672,
+                        longitude: 12.524128
+                    }
+                },
+                {
+                    location: {
+                        latitude: 55.789795,
+                        longitude: 12.518121
+                    }
+                },
+                {
+                    location: {
+                        latitude: 55.745172,
+                        longitude: 12.544128
+                    }
+                },
+                {
+                    location: {
+                        latitude: 55.676155,
+                        longitude: 12.568355
+                    }
+                },
+                {
+                    location: {
+                        latitude: 55.678155,
+                        longitude: 12.528355
+                    }
+                },
+                {
+                    location: {
+                        latitude: 55.671155,
+                        longitude: 12.561355
+                    }
                 }
-            }, {
-                location: {
-                    latitude: 55.789495,
-                    longitude: 12.518121
-                }
-            }, {
-                location: {
-                    latitude: 55.785672,
-                    longitude: 12.514128
-                }
-            }],
+            ],
             cameraPermission: false
         };
     }
@@ -96,6 +150,10 @@ class StoresScreen extends Component {
         this.setState({cameraPermission: true});
     };
 
+    onCalloutPress = () => {
+        // Do something
+    };
+
     renderCluster = (cluster, onPress) => {
         const pointCount = cluster.pointCount,
             coordinate = cluster.coordinate,
@@ -109,25 +167,32 @@ class StoresScreen extends Component {
                     </Text>
                 </View>
             </Marker>
-        )
+        );
     };
 
     renderMarker = (data) =>
         <Marker key={data.id || Math.random()}
                 coordinate={data.location}
-                style={styles.markerContainer}
-                image={require('../../assets/refundeo_logo.png')}>
+                style={styles.markerContainer}>
+            <Callout onPress={this.onCalloutPress}>
+                <View style={styles.calloutContainer}>
+                    <Text style={styles.calloutText}>Example store</Text>
+                    <Icon style={styles.calloutIcon} name='angle-right'/>
+                </View>
+            </Callout>
         </Marker>;
 
     render() {
+        const {navigation} = this.props.state;
+
         return (
             <View style={styles.container}>
-                {this.state.cameraPermission &&
+                {this.state.cameraPermission && navigation.isMap &&
                 <ClusteredMapView
                     style={styles.container}
                     data={this.state.data}
                     showsUserLocation={true}
-                    edgePadding={{top: 20, left: 20, bottom: 20, right: 20}}
+                    edgePadding={{top: 100, left: 100, bottom: 100, right: 100}}
                     initialRegion={this.initRegion}
                     clusteringEnabled={true}
                     clusterInitialFontSize={15}
@@ -138,10 +203,62 @@ class StoresScreen extends Component {
                     renderMarker={this.renderMarker}
                     renderCluster={this.renderCluster}/>
                 }
+                {!navigation.isMap &&
+                    <StoresList/>
+                }
             </View>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    tabBarIcon: {
+        fontSize: 20
+    },
+    container: {
+        flex: 1
+    },
+    clusterContainer: {
+        width: 40,
+        height: 40,
+        padding: 6,
+        borderWidth: 1,
+        borderRadius: 40,
+        alignItems: 'center',
+        borderColor: colors.activeTabColor,
+        justifyContent: 'center',
+        backgroundColor: colors.backgroundColor,
+    },
+    clusterText: {
+        fontSize: 18,
+        color: colors.activeTabColor,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    markerContainer: {
+        height: 0,
+        width: 0,
+        margin: 20,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    calloutContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: 5
+    },
+    calloutText: {
+        color: colors.activeTabColor,
+        fontSize: 15
+    },
+    calloutIcon: {
+        fontSize: 20,
+        alignSelf: 'center',
+        marginLeft: 10,
+        color: colors.activeTabColor
+    }
+});
 
 const mapStateToProps = state => {
     const navigation = state.navigationReducer;
@@ -158,39 +275,6 @@ const mapDispatchToProps = dispatch => {
         actions: bindActionCreators(Actions, dispatch)
     };
 };
-
-const styles = StyleSheet.create({
-    tabBarIcon: {
-        fontSize: 20
-    },
-    container: {
-        flex: 1
-    },
-    clusterContainer: {
-        width: 30,
-        height: 30,
-        padding: 6,
-        borderWidth: 1,
-        borderRadius: 15,
-        alignItems: 'center',
-        borderColor: colors.activeTabColor,
-        justifyContent: 'center',
-        backgroundColor: colors.backgroundColor,
-    },
-    clusterText: {
-        fontSize: 15,
-        color: colors.activeTabColor,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-    markerContainer: {
-        height: 0,
-        width: 0,
-        margin: 20,
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
-});
 
 export default connect(
     mapStateToProps,

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ActivityIndicator, Keyboard, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import colors from '../shared/colors';
 import SettingsScreen from './Settings';
 import Actions from '../actions/Actions';
@@ -29,29 +29,22 @@ class RegisterExtraScreen extends Component {
 
     onLoginPress = () => {
         const {
-            firstName,
-            lastName,
-            country,
-            swift,
-            acceptedPrivacyPolicy,
-            acceptedTermsOfService
-        } = this.props.state.user;
+            user
+        } = this.props.state;
 
-        if (firstName && lastName && country && swift && acceptedPrivacyPolicy && acceptedTermsOfService) {
+        if (user.username && user.acceptedPrivacyPolicy && user.acceptedTermsOfService) {
             this.props.actions.navigateAndResetToMainFlow();
             this.props.actions.getRefundCases();
             return;
         }
-        if (!acceptedTermsOfService) {
+        if (!user.acceptedTermsOfService) {
             this.setState({error: strings('register.accept_terms_of_service')});
         }
-        if (!acceptedPrivacyPolicy) {
+        if (!user.acceptedPrivacyPolicy) {
             this.setState({error: strings('register.accept_privacy_policy')});
         }
         this.setState({error: strings('register.required_fields')});
-
     };
-
 
     render() {
         const {state, actions} = this.props;
@@ -63,8 +56,7 @@ class RegisterExtraScreen extends Component {
                 <View style={styles.settingsContainer}>
                     <SettingsScreen
                         state={state}
-                        noPassword={true}
-                        noSignOut={true}
+                        requiredOnly={true}
                         actions={actions}
                         editablePolicies={true}
                     />

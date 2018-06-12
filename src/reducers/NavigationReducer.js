@@ -6,6 +6,7 @@ const initialState = {
     currentRoute: 'Initial',
     drawerRoute: '',
     previousRoute: '',
+    isMap: true,
     drawerOpen: false,
     modal: {},
     ...RootNavigator.router.getStateForAction(NavigationActions.navigate({routeName: 'loginFlow'}))
@@ -200,6 +201,36 @@ export default function navigationReducer(state = initialState, action = {}) {
             nextState = {
                 ...state,
                 modal
+            };
+            break;
+        }
+        case types.NAVIGATE_STORE_MAP: {
+            let navigatorState = {};
+            if(state.currentRoute !== 'Stores') {
+                const navigationAction = NavigationActions.navigate({routeName: 'Stores'});
+                navigatorState = RootNavigator.router.getStateForAction(navigationAction, state);
+            }
+            nextState = {
+                ...state,
+                ...navigatorState,
+                currentRoute: 'Stores',
+                isMap: true,
+                drawerRoute: 'Home'
+            };
+            break;
+        }
+        case types.NAVIGATE_STORE_LIST: {
+            let navigatorState = {};
+            if(state.currentRoute !== 'Stores') {
+                const navigationAction = NavigationActions.navigate({routeName: 'Stores'});
+                navigatorState = RootNavigator.router.getStateForAction(navigationAction, state);
+            }
+            nextState = {
+                ...state,
+                ...navigatorState,
+                currentRoute: 'Stores',
+                isMap: false,
+                drawerRoute: 'Home'
             };
             break;
         }

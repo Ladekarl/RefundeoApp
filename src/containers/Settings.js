@@ -386,7 +386,7 @@ class SettingsScreen extends Component {
                 </View>
                 }
                 {!requiredOnly &&
-                <Setting label={strings('settings.sign_out')} contentContainerStyle={styles.rowCenterContainer}
+                <Setting label={strings('settings.sign_out')} containerStyle={styles.rowCenterContainer}
                          labelStyle={styles.redText} onPress={this.showSignOut}/>
                 }
                 <ModalScreen
@@ -555,7 +555,7 @@ const styles = StyleSheet.create({
         color: colors.cancelButtonColor
     },
     sectionHeaderText: {
-        fontSize: 16,
+        fontSize: 18,
         marginLeft: 10,
         textAlign: 'center'
     },

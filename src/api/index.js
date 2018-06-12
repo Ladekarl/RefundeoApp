@@ -41,13 +41,14 @@ export default class Api {
         return Helpers.saveUser(user);
     }
 
-    static async register(username, password, acceptedTermsOfService, termsOfService, acceptedPrivacyPolicy, privacyPolicy) {
+    static async register(username, password, email, acceptedTermsOfService, termsOfService, acceptedPrivacyPolicy, privacyPolicy) {
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 username,
                 password,
+                email,
                 acceptedTermsOfService,
                 termsOfService,
                 acceptedPrivacyPolicy,

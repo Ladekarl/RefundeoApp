@@ -102,7 +102,7 @@ class RegisterScreen extends Component {
         Keyboard.dismiss();
         const {username, password, confirmPassword, acceptedTermsOfService, acceptedPrivacyPolicy} = this.state;
 
-        this.props.actions.register(username, password, confirmPassword, acceptedTermsOfService, this.termsOfService, acceptedPrivacyPolicy, this.privacyPolicy);
+        this.props.actions.register(username, password, username, confirmPassword, acceptedTermsOfService, this.termsOfService, acceptedPrivacyPolicy, this.privacyPolicy);
     };
 
     closeTermsOfServiceModal = () => {

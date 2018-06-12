@@ -21,6 +21,8 @@ export default {
     navigateScanner,
     navgiateOverview,
     navigateDrawerHome,
+    navigateStoreList,
+    navigateStoreMap,
     openModal,
     closeModal,
     login,
@@ -55,6 +57,18 @@ function navigateInitial() {
             dispatch(navigateAndResetToLogin());
         });
     };
+}
+
+function navigateStoreMap() {
+    return {
+        type: types.NAVIGATE_STORE_MAP
+    }
+}
+
+function navigateStoreList() {
+    return {
+        type: types.NAVIGATE_STORE_LIST
+    }
 }
 
 function navigateAndResetToLogin() {
@@ -217,7 +231,7 @@ function login(username, password) {
     };
 }
 
-function register(username, password, confPassword, acceptedTermsOfService, termsOfService, acceptedPrivacyPolicy, privacyPolicy) {
+function register(username, password, email, confPassword, acceptedTermsOfService, termsOfService, acceptedPrivacyPolicy, privacyPolicy) {
     if (!username) {
         return registerError(strings('login.missing_username'));
     }
@@ -236,7 +250,7 @@ function register(username, password, confPassword, acceptedTermsOfService, term
     }
     return dispatch => {
         dispatch({type: types.AUTH_REGISTERING});
-        Api.register(username, password, acceptedTermsOfService, termsOfService, acceptedPrivacyPolicy, privacyPolicy).then(user => {
+        Api.register(username, password, email, acceptedTermsOfService, termsOfService, acceptedPrivacyPolicy, privacyPolicy).then(user => {
             if (user && user.token) {
                 NotificationService.register();
                 dispatch(registerSuccess(user));
@@ -564,7 +578,7 @@ function changePasswordError(error = '') {
 }
 
 function missingUserInfo(user) {
-    return !user.firstName || !user.lastName || !user.country || !user.swift || !user.acceptedPrivacyPolicy || !user.acceptedTermsOfService;
+    return !user.username || !user.acceptedPrivacyPolicy || !user.acceptedTermsOfService;
 }
 
 function checkPassword(newPassword, confPassword) {

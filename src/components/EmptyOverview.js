@@ -57,10 +57,10 @@ const styles = StyleSheet.create({
         elevation: 10
     },
     logoButton: {
-        fontSize: 35,
+        fontSize: 45,
         zIndex: 9999,
         color: colors.activeTabColor,
-        margin: 20
+        margin: 30
     },
     welcomeText: {
         textAlign: 'center',
