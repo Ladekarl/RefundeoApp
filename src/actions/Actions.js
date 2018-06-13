@@ -20,6 +20,7 @@ export default {
     navigateDrawerSettings,
     navigateScanner,
     navgiateOverview,
+    navigateHelp,
     navigateDrawerHome,
     navigateStoreList,
     navigateStoreMap,
@@ -57,6 +58,12 @@ function navigateInitial() {
             dispatch(navigateAndResetToLogin());
         });
     };
+}
+
+function navigateHelp() {
+    return {
+        type: types.NAVIGATE_HELP
+    }
 }
 
 function navigateStoreMap() {

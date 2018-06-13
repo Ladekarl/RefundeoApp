@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Image, Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-fa-icons';
@@ -20,9 +20,10 @@ class HeaderScreen extends Component {
     }
 
     render() {
-        const {navigation} = this.props.state;
+        const {navigation, refundCases} = this.props.state;
 
         let displayFilter = navigation.currentRoute === 'Stores' && !navigation.isMap;
+        let displayHelp = navigation.currentRoute === 'Overview' && refundCases.length > 0;
 
         return (
             <View style={styles.container}>
@@ -63,7 +64,12 @@ class HeaderScreen extends Component {
                     <Icon name='filter' style={hasDrawer ? styles.drawerIcon : styles.noDrawerIcon}/>
                 </TouchableOpacity>
                 }
-                {!displayFilter &&
+                {displayHelp &&
+                <TouchableOpacity style={hasDrawer ? styles.headerButton : styles.noDrawerHeader} onPress={this.props.actions.navigateHelp}>
+                    <Icon name='question-circle' style={hasDrawer ? styles.drawerIcon : styles.noDrawerIcon}/>
+                </TouchableOpacity>
+                }
+                {!displayFilter && !displayHelp &&
                 <View style={styles.noDrawerHeader}>
                 </View>
                 }
@@ -105,11 +111,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    leftLogo: {
-        height: Platform.OS === 'ios' ? 20 : 25,
-        width: Platform.OS === 'ios' ? 20 : 25,
-        tintColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
-    },
     drawerIcon: {
         fontSize: Platform.OS === 'ios' ? 20 : 15,
         height: undefined,
@@ -136,7 +137,7 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 5,
         borderWidth: Platform.OS === 'ios' ? 2 : StyleSheet.hairlineWidth,
         borderColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.blackColor,
-        backgroundColor: colors.backgroundColor
+        backgroundColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor
     },
     rightOverlayButton: {
         paddingTop: 7,
@@ -147,17 +148,17 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 5,
         borderWidth: Platform.OS === 'ios' ? 2 : StyleSheet.hairlineWidth,
         borderColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.blackColor,
-        backgroundColor: colors.backgroundColor
+        backgroundColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor
     },
     activeButton: {
-        backgroundColor: colors.activeTabColor
+        backgroundColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
     },
     overlayButtonText: {
-        color: colors.activeTabColor,
+        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor,
         fontSize: 15
     },
     activeOverlayButtonText: {
-        color: colors.backgroundColor
+        color: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor
     }
 });
 
@@ -165,7 +166,8 @@ const mapStateToProps = state => {
     const navigation = state.navigationReducer;
     return {
         state: {
-            navigation
+            navigation,
+            ...state.refundReducer
         }
     };
 };

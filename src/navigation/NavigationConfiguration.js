@@ -11,6 +11,7 @@ import Icon from 'react-native-fa-icons';
 import React from 'react';
 import Header from '../containers/Header';
 import HomeTab from './HomeTab';
+import EmptyOverviewScreen from '../components/EmptyOverview';
 
 const {width, height} = Dimensions.get('screen');
 const noHeaderNavigationOptions = {headerMode: 'none'};
@@ -79,7 +80,8 @@ const MainDrawerNavigator = DrawerNavigator({
 
 const MainStackNavigator = StackNavigator({
     Home: {screen: HomeTab, navigationOptions: homeNavigatorOptions},
-    Settings: {screen: SettingsScreen, navigationOptions: headerBackNavigationOptions}
+    Settings: {screen: SettingsScreen, navigationOptions: headerBackNavigationOptions},
+    Help: {screen: EmptyOverviewScreen, navigationOptions: headerBackNavigationOptions}
 });
 
 const routeConfiguration = {

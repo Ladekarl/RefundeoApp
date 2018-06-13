@@ -234,6 +234,16 @@ export default function navigationReducer(state = initialState, action = {}) {
             };
             break;
         }
+        case types.NAVIGATE_HELP: {
+            const navigationAction = NavigationActions.navigate({routeName: 'Help'});
+            nextState = {
+                ...state,
+                ...RootNavigator.router.getStateForAction(navigationAction, state),
+                currentRoute: 'Help',
+                drawerRoute: 'Home'
+            };
+            break;
+        }
         default:
             nextState = {
                 ...state,
