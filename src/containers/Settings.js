@@ -377,8 +377,7 @@ class SettingsScreen extends Component {
                     <Switch value={state.user.acceptedPrivacyPolicy}
                             tintColor={Platform.OS === 'ios' ? colors.activeTabColor : undefined}
                             thumbTintColor={colors.activeTabColor}
-                            onValueChange={this.acceptPrivacyPolicy}
-                    />
+                            onValueChange={this.acceptPrivacyPolicy}/>
                     }
                 </TouchableOpacity>
                 {!requiredOnly &&

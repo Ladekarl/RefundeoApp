@@ -154,11 +154,11 @@ export default class StoresList extends Component {
 
 const styles = StyleSheet.create({
     scrollContainer: {
-        backgroundColor: colors.slightlyDarkerColor,
+        backgroundColor: colors.separatorColor,
     },
     container: {
         justifyContent: 'flex-start',
-        backgroundColor: colors.slightlyDarkerColor,
+        backgroundColor: colors.separatorColor,
         padding: 3
     },
     iconContainer: {
@@ -170,7 +170,8 @@ const styles = StyleSheet.create({
         borderRadius: 40,
         padding: 6,
         elevation: 1,
-        borderWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0
+        borderWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0,
+        borderColor: colors.separatorColor
     },
     logoImage: {
         height: 70,

@@ -17,7 +17,9 @@ export default class Api {
 
         const user = await response.json();
 
-        return Helpers.saveUser(user);
+        await Helpers.saveUser(user);
+
+        return await Api.getUser();
     }
 
     static async getToken(username, password) {
@@ -38,7 +40,9 @@ export default class Api {
 
         const user = await response.json();
 
-        return Helpers.saveUser(user);
+        await Helpers.saveUser(user);
+
+        return await Api.getUser();
     }
 
     static async register(username, password, email, acceptedTermsOfService, termsOfService, acceptedPrivacyPolicy, privacyPolicy) {
