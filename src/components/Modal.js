@@ -3,6 +3,7 @@ import {Modal, Picker, StyleSheet, Text, TouchableOpacity, View, Platform, Keybo
 import PropTypes from 'prop-types';
 import colors from '../shared/colors';
 import {strings} from '../shared/i18n';
+import Icon from 'react-native-fa-icons';
 
 export default class ModalScreen extends Component {
 
@@ -67,10 +68,20 @@ export default class ModalScreen extends Component {
                 transparent={true}
                 onRequestClose={onBack}
                 visible={visible}>
-                <KeyboardAvoidingView style={styles.modalContainer} keyboardVerticalOffset={Platform.OS === 'ios' ? -100 : -300} behavior='padding'>
+                <KeyboardAvoidingView style={styles.modalContainer}
+                                      keyboardVerticalOffset={Platform.OS === 'ios' ? -100 : -300} behavior='padding'>
                     <View style={[styles.modalInnerContainer, contentContainerStyle]}>
                         <View style={styles.modalTopContainer}>
+                            {!noCancelButton &&
+                            <TouchableOpacity style={styles.cancelButton} onPress={onCancel}>
+                                <Icon style={styles.cancelIcon} name='times'/>
+                            </TouchableOpacity>
+                            }
+                            {noCancelButton &&
+                            <View style={styles.emptyContainer}/>
+                            }
                             <Text style={styles.modalTitleText}>{modalTitle}</Text>
+                            <View style={styles.emptyContainer}/>
                         </View>
                         <View style={styles.modalCenterContainer}>
                             {isPicker &&
@@ -92,13 +103,6 @@ export default class ModalScreen extends Component {
                                 style={styles.modalSubmitButton}
                                 onPress={onSubmit}>
                                 <Text style={styles.modalButtonText}>{strings('modal.ok')}</Text>
-                            </TouchableOpacity>
-                            }
-                            {!noCancelButton &&
-                            <TouchableOpacity
-                                style={styles.modalCancelButton}
-                                onPress={onCancel}>
-                                <Text style={styles.modalButtonText}>{strings('modal.cancel')}</Text>
                             </TouchableOpacity>
                             }
                         </View>
@@ -135,12 +139,12 @@ const styles = StyleSheet.create({
     modalTopContainer: {
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 12
+        flexDirection: 'row',
+        padding: 12,
+        backgroundColor: colors.activeTabColor
     },
     modalCenterContainer: {
         width: '100%',
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        borderTopWidth: StyleSheet.hairlineWidth,
         paddingLeft: 12,
         paddingRight: 12,
     },
@@ -154,12 +158,6 @@ const styles = StyleSheet.create({
         padding: 10,
         margin: 5,
         borderRadius: 5
-    },
-    modalCancelButton: {
-        backgroundColor: colors.cancelButtonColor,
-        borderRadius: 2,
-        alignItems: 'center',
-        margin: 6
     },
     modalSubmitButton: {
         margin: 6,
@@ -175,8 +173,21 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     modalTitleText: {
+        flex: 3,
         fontSize: 18,
         fontWeight: 'bold',
-        textAlign: 'center'
+        textAlign: 'center',
+        color: colors.backgroundColor
+    },
+    emptyContainer: {
+        flex: 1
+    },
+    cancelButton: {
+        flex: 1,
+        marginLeft: 10
+    },
+    cancelIcon: {
+        fontSize: 20,
+        color: colors.backgroundColor
     }
 });

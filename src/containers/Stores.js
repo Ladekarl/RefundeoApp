@@ -3,7 +3,7 @@ import Actions from '../actions/Actions';
 import {bindActionCreators} from 'redux';
 import React, {Component} from 'react';
 // eslint-disable-next-line react-native/split-platform-components
-import {Text, View, StyleSheet, PermissionsAndroid, Platform, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet, PermissionsAndroid, Platform} from 'react-native';
 import {strings} from '../shared/i18n';
 import PropTypes from 'prop-types';
 import colors from '../shared/colors';
@@ -109,7 +109,7 @@ class StoresScreen extends Component {
     };
 
     onCalloutPress = () => {
-        // Do something
+        this.props.actions.navigateStoreProfile();
     };
 
     renderCluster = (cluster, onPress) => {
@@ -162,7 +162,7 @@ class StoresScreen extends Component {
                     renderCluster={this.renderCluster}/>
                 }
                 {!navigation.isMap &&
-                    <StoresList/>
+                    <StoresList actions={this.props.actions}/>
                 }
             </View>
         );

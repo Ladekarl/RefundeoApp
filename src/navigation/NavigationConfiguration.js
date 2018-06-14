@@ -12,6 +12,7 @@ import React from 'react';
 import Header from '../containers/Header';
 import HomeTab from './HomeTab';
 import EmptyOverviewScreen from '../components/EmptyOverview';
+import StoreProfile from '../components/StoreProfile';
 
 const {width, height} = Dimensions.get('screen');
 const noHeaderNavigationOptions = {headerMode: 'none'};
@@ -81,7 +82,8 @@ const MainDrawerNavigator = DrawerNavigator({
 const MainStackNavigator = StackNavigator({
     Home: {screen: HomeTab, navigationOptions: homeNavigatorOptions},
     Settings: {screen: SettingsScreen, navigationOptions: headerBackNavigationOptions},
-    Help: {screen: EmptyOverviewScreen, navigationOptions: headerBackNavigationOptions}
+    Help: {screen: EmptyOverviewScreen, navigationOptions: headerBackNavigationOptions},
+    StoreProfile: {screen: StoreProfile, navigationOptions: headerBackNavigationOptions}
 });
 
 const routeConfiguration = {

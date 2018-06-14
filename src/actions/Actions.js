@@ -21,6 +21,7 @@ export default {
     navigateScanner,
     navgiateOverview,
     navigateHelp,
+    navigateStoreProfile,
     navigateDrawerHome,
     navigateStoreList,
     navigateStoreMap,
@@ -58,6 +59,12 @@ function navigateInitial() {
             dispatch(navigateAndResetToLogin());
         });
     };
+}
+
+function navigateStoreProfile() {
+    return {
+        type: types.NAVIGATE_STORE_PROFILE
+    }
 }
 
 function navigateHelp() {
@@ -613,7 +620,7 @@ function checkPassword(newPassword, confPassword) {
 }
 
 function checkEmail(email) {
-    return /^(([^<>()\[\].,;:\s@"]+(.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})/.test(email);
+    return /^(([^<>()[\].,;:\s@"]+(.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})/.test(email);
 }
 
 function shouldLogout(response) {

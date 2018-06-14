@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Platform, StyleSheet, Text, TouchableOpacity, View, Slider} from 'react-native';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-fa-icons';
@@ -7,6 +7,9 @@ import Actions from '../actions/Actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {hasDrawer} from '../navigation/NavigationConfiguration';
+import {strings} from '../shared/i18n';
+import ModalScreen from '../components/Modal';
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
 class HeaderScreen extends Component {
 
@@ -17,13 +20,45 @@ class HeaderScreen extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            distanceSliderValue: [0, 10000],
+            refundSliderValue: [50, 100],
+        }
     }
+
+    onFilterPress = () => {
+        this.props.actions.openModal('filterModal');
+    };
+
+    closeFilterModal = () => {
+      this.props.actions.closeModal('filterModal');
+    };
+
+    distanceSliderValuesChange = (values) => {
+        this.setState({
+            distanceSliderValue: values,
+        });
+    };
+
+    refundSliderValuesChange = (values) => {
+        this.setState({
+            refundSliderValue: values,
+        });
+    };
+
 
     render() {
         const {navigation, refundCases} = this.props.state;
 
         let displayFilter = navigation.currentRoute === 'Stores' && !navigation.isMap;
         let displayHelp = navigation.currentRoute === 'Overview' && refundCases.length > 0;
+
+        let maxValue = this.state.distanceSliderValue[1];
+        if(this.state.distanceSliderValue[1] === 10000) {
+            maxValue = 'unlimited'
+        }
+
+        let distance = this.state.distanceSliderValue[0] + ' - ' + maxValue;
 
         return (
             <View style={styles.container}>
@@ -60,12 +95,14 @@ class HeaderScreen extends Component {
                 </View>
                 }
                 {displayFilter &&
-                <TouchableOpacity style={hasDrawer ? styles.headerButton : styles.noDrawerHeader}>
+                <TouchableOpacity onPress={this.onFilterPress}
+                                  style={hasDrawer ? styles.headerButton : styles.noDrawerHeader}>
                     <Icon name='filter' style={hasDrawer ? styles.drawerIcon : styles.noDrawerIcon}/>
                 </TouchableOpacity>
                 }
                 {displayHelp &&
-                <TouchableOpacity style={hasDrawer ? styles.headerButton : styles.noDrawerHeader} onPress={this.props.actions.navigateHelp}>
+                <TouchableOpacity style={hasDrawer ? styles.headerButton : styles.noDrawerHeader}
+                                  onPress={this.props.actions.navigateHelp}>
                     <Icon name='question-circle' style={hasDrawer ? styles.drawerIcon : styles.noDrawerIcon}/>
                 </TouchableOpacity>
                 }
@@ -73,6 +110,52 @@ class HeaderScreen extends Component {
                 <View style={styles.noDrawerHeader}>
                 </View>
                 }
+                <ModalScreen
+                    modalTitle={'Filter'}
+                    onSubmit={this.closeFilterModal}
+                    onBack={this.closeFilterModal}
+                    onCancel={this.closeFilterModal}
+                    visible={this.props.state.navigation.modal['filterModal'] || false}>
+                    <View style={styles.filterContainer}>
+                        <View style={styles.filterRowContainer}>
+                            <Text style={styles.filterTitle}>
+                                Distance (m)
+                            </Text>
+                            <Text style={styles.filterSliderText}>
+                                {distance}
+                            </Text>
+                            <View style={styles.filterSlider}>
+                                <MultiSlider
+                                    values={this.state.distanceSliderValue}
+                                    min={0}
+                                    max={10000}
+                                    step={100}
+                                    allowOverlap={false}
+                                    onValuesChange={this.distanceSliderValuesChange}
+                                />
+                            </View>
+
+                        </View>
+                        <View style={styles.filterRowContainer}>
+                            <Text style={styles.filterTitle}>
+                                Refund percantage
+                            </Text>
+                            <Text style={styles.filterSliderText}>
+                                {this.state.refundSliderValue[0] + ' - ' + this.state.refundSliderValue[1]}</Text>
+                            <View style={styles.filterSlider}>
+                                <MultiSlider
+                                    values={this.state.refundSliderValue}
+                                    min={0}
+                                    max={100}
+                                    step={1}
+                                    allowOverlap={false}
+                                    onValuesChange={this.refundSliderValuesChange}
+
+                                />
+                            </View>
+                        </View>
+                    </View>
+                </ModalScreen>
             </View>
         );
     }
@@ -159,6 +242,24 @@ const styles = StyleSheet.create({
     },
     activeOverlayButtonText: {
         color: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor
+    },
+    filterContainer: {
+        margin: 20
+    },
+    filterRowContainer: {},
+    filterTitle: {
+        color: colors.darkTextColor
+    },
+    filterSlider: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center'
+    },
+    filterSliderText: {
+        fontSize: 20,
+        marginBottom: 20,
+        marginTop: 10,
+        alignSelf: 'center'
     }
 });
 

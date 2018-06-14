@@ -33,6 +33,7 @@ class SettingsScreen extends Component {
         tabBarIcon: ({tintColor}) => (
             <Icon name='user-circle' style={[styles.tabBarIcon, {color: tintColor}]}/>),
     };
+
     static propTypes = {
         actions: PropTypes.object.isRequired,
         state: PropTypes.object.isRequired,

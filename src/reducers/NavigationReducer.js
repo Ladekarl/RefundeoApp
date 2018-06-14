@@ -244,6 +244,16 @@ export default function navigationReducer(state = initialState, action = {}) {
             };
             break;
         }
+        case types.NAVIGATE_STORE_PROFILE: {
+            const navigationAction = NavigationActions.navigate({routeName: 'StoreProfile'});
+            nextState = {
+                ...state,
+                ...RootNavigator.router.getStateForAction(navigationAction, state),
+                currentRoute: 'StoreProfile',
+                drawerRoute: 'Home'
+            };
+            break;
+        }
         default:
             nextState = {
                 ...state,

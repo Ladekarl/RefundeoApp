@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     centerTopText: {
         fontSize: 15,
         fontWeight: 'bold',
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
+        color: colors.activeTabColor
     },
     centerBottomText: {
         fontSize: 15,

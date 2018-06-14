@@ -9,6 +9,7 @@
     "ios": "react-native run-ios"
   },
   "dependencies": {
+    "@ptomasroos/react-native-multi-slider": "0.0.14",
     "moment": "^2.22.1",
     "prop-types": "^15.6.1",
     "react": "16.3.1",

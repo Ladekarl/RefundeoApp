@@ -1,152 +1,50 @@
 import React, {Component} from 'react';
-import {ScrollView, StyleSheet, Text, TouchableOpacity, View, ImageBackground, Platform, Image} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import colors from '../shared/colors';
+import PropTypes from 'prop-types';
+import StoreListItem from './StoreListItem';
 
 export default class StoresList extends Component {
 
-    _handlePress = () => {
-        // do something
+    static propTypes = {
+      actions: PropTypes.object.isRequired
     };
 
     render() {
         return (
             <ScrollView style={styles.scrollContainer}>
-                <TouchableOpacity
-                    activeOpacity={0.7}
-                    style={styles.container}
-                    onPress={() => {
-                    }}>
-                    <View style={styles.cardContainer}>
-                        <ImageBackground
-                            style={styles.bannerImage}
-                            source={require('../../assets/example-store.jpg')}
-                            borderRadius={2}>
-                            <View style={styles.bannerTextBarContainer}>
-                                <View style={styles.leftContainer}>
-                                    <Text style={styles.leftText}>512 m</Text>
-                                </View>
-                                {Platform.OS === 'ios' &&
-                                <View style={styles.iconContainer}>
-                                    <Image style={styles.logoImage} source={require('../../assets/refundeo_logo.png')}/>
-                                </View>
-                                }
-                                <View style={styles.rightContainer}>
-                                    <Text style={styles.rightText}>Refund: 75 %</Text>
-                                </View>
-                            </View>
-                        </ImageBackground>
-                        <View style={styles.contentContainer}>
-                            <View style={styles.temperatureContainer}>
-                                <Text
-                                    style={styles.mainText}>Example Store</Text>
-                                <Text
-                                    style={styles.subText}>08:00 - 21:00</Text>
-                            </View>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    activeOpacity={0.7}
-                    style={styles.container}
-                    onPress={() => {
-                    }}>
-                    <View style={styles.cardContainer}>
-                        <ImageBackground
-                            style={styles.bannerImage}
-                            source={require('../../assets/example-store.jpg')}
-                            borderRadius={2}>
-                            <View style={styles.bannerTextBarContainer}>
-                                <View style={styles.leftContainer}>
-                                    <Text style={styles.leftText}>675 m</Text>
-                                </View>
-                                {Platform.OS === 'ios' &&
-                                <View style={styles.iconContainer}>
-                                    <Image style={styles.logoImage} source={require('../../assets/refundeo_logo.png')}/>
-                                </View>
-                                }
-                                <View style={styles.rightContainer}>
-                                    <Text style={styles.rightText}>Refund: 78 %</Text>
-                                </View>
-                            </View>
-                        </ImageBackground>
-                        <View style={styles.contentContainer}>
-                            <View style={styles.temperatureContainer}>
-                                <Text
-                                    style={styles.mainText}>Example Store</Text>
-                                <Text
-                                    style={styles.subText}>08:00 - 21:00</Text>
-                            </View>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    activeOpacity={0.7}
-                    style={styles.container}
-                    onPress={() => {
-                    }}>
-                    <View style={styles.cardContainer}>
-                        <ImageBackground
-                            style={styles.bannerImage}
-                            source={require('../../assets/example-store.jpg')}
-                            borderRadius={2}>
-                            <View style={styles.bannerTextBarContainer}>
-                                <View style={styles.leftContainer}>
-                                    <Text style={styles.leftText}>1,76 km</Text>
-                                </View>
-                                {Platform.OS === 'ios' &&
-                                <View style={styles.iconContainer}>
-                                    <Image style={styles.logoImage} source={require('../../assets/refundeo_logo.png')}/>
-                                </View>
-                                }
-                                <View style={styles.rightContainer}>
-                                    <Text style={styles.rightText}>Refund: 86 %</Text>
-                                </View>
-                            </View>
-                        </ImageBackground>
-                        <View style={styles.contentContainer}>
-                            <View style={styles.temperatureContainer}>
-                                <Text
-                                    style={styles.mainText}>Example Store</Text>
-                                <Text
-                                    style={styles.subText}>08:00 - 21:00</Text>
-                            </View>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    activeOpacity={0.7}
-                    style={styles.container}
-                    onPress={() => {
-                    }}>
-                    <View style={styles.cardContainer}>
-                        <ImageBackground
-                            style={styles.bannerImage}
-                            source={require('../../assets/example-store.jpg')}
-                            borderRadius={2}>
-                            <View style={styles.bannerTextBarContainer}>
-                                <View style={styles.leftContainer}>
-                                    <Text style={styles.leftText}>15 km</Text>
-                                </View>
-                                {Platform.OS === 'ios' &&
-                                <View style={styles.iconContainer}>
-                                    <Image style={styles.logoImage} source={require('../../assets/refundeo_logo.png')}/>
-                                </View>
-                                }
-                                <View style={styles.rightContainer}>
-                                    <Text style={styles.rightText}>Refund: 75 %</Text>
-                                </View>
-                            </View>
-                        </ImageBackground>
-                        <View style={styles.contentContainer}>
-                            <View style={styles.temperatureContainer}>
-                                <Text
-                                    style={styles.mainText}>Example Store</Text>
-                                <Text
-                                    style={styles.subText}>08:00 - 21:00</Text>
-                            </View>
-                        </View>
-                    </View>
-                </TouchableOpacity>
+                <StoreListItem
+                 distance={712}
+                 logo={require('../../assets/refundeo_banner_small.png')}
+                 banner={require('../../assets/example-store.jpg')}
+                 name='Example Store'
+                 openingHours='09:00 - 21:30'
+                 refundPercentage={75}
+                 onPress={this.props.actions.navigateStoreProfile}/>
+                <StoreListItem
+                    distance={925}
+                    logo={require('../../assets/refundeo_banner_small.png')}
+                    banner={require('../../assets/example-store.jpg')}
+                    name='Example store'
+                    openingHours='09:00 - 21:30'
+                    refundPercentage={75}
+                    onPress={this.props.actions.navigateStoreProfile}/>
+                <StoreListItem
+                    distance={1574}
+                    logo={require('../../assets/refundeo_banner_small.png')}
+                    banner={require('../../assets/example-store.jpg')}
+                    name='Example store'
+                    openingHours='09:00 - 21:30'
+                    refundPercentage={75}
+                    onPress={this.props.actions.navigateStoreProfile}/>
+                <StoreListItem
+                    distance={14523}
+                    logo={require('../../assets/refundeo_banner_small.png')}
+                    banner={require('../../assets/example-store.jpg')}
+                    name='Example store'
+                    openingHours='09:00 - 21:30'
+                    refundPercentage={75}
+                    onPress={this.props.actions.navigateStoreProfile}/>
             </ScrollView>
         );
     }
@@ -155,92 +53,5 @@ export default class StoresList extends Component {
 const styles = StyleSheet.create({
     scrollContainer: {
         backgroundColor: colors.separatorColor,
-    },
-    container: {
-        justifyContent: 'flex-start',
-        backgroundColor: colors.separatorColor,
-        padding: 3
-    },
-    iconContainer: {
-        height: 80,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 30,
-        backgroundColor: colors.backgroundColor,
-        borderRadius: 40,
-        padding: 6,
-        elevation: 1,
-        borderWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0,
-        borderColor: colors.separatorColor
-    },
-    logoImage: {
-        height: 70,
-        width: 70,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    cardContainer: {
-        height: 180,
-        marginBottom: 3,
-        backgroundColor: colors.backgroundColor,
-        borderRadius: 2,
-        borderWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0,
-        elevation: 1,
-        borderColor: colors.separatorColor
-    },
-    bannerImage: {
-        justifyContent: 'flex-end',
-        width: '100%',
-        borderRadius: 50,
-        height: 120
-    },
-    bannerTextBarContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        overflow: 'visible',
-        alignItems: 'center',
-        width: '100%',
-        height: 35,
-        backgroundColor: 'rgba(0,0,0,0.6)',
-        paddingLeft: 10,
-        paddingRight: 10
-    },
-    leftContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    rightContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    leftText: {
-        fontSize: 15,
-        alignSelf: 'flex-start',
-        color: colors.backgroundColor,
-    },
-    rightText: {
-        fontSize: 15,
-        alignSelf: 'flex-end',
-        color: colors.backgroundColor,
-    },
-    contentContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: 5,
-    },
-    temperatureContainer: {
-        alignItems: 'center',
-        justifyContent: 'space-evenly',
-        flex: 1,
-    },
-    mainText: {
-        fontSize: 18,
-        fontWeight: 'bold'
-    },
-    subText: {
-        fontSize: 13
     }
 });
