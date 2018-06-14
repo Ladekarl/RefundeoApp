@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, TouchableOpacity, View, Slider} from 'react-native';
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-fa-icons';
@@ -7,7 +7,6 @@ import Actions from '../actions/Actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {hasDrawer} from '../navigation/NavigationConfiguration';
-import {strings} from '../shared/i18n';
 import ModalScreen from '../components/Modal';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
@@ -23,7 +22,7 @@ class HeaderScreen extends Component {
         this.state = {
             distanceSliderValue: [0, 10000],
             refundSliderValue: [50, 100],
-        }
+        };
     }
 
     onFilterPress = () => {
@@ -31,7 +30,7 @@ class HeaderScreen extends Component {
     };
 
     closeFilterModal = () => {
-      this.props.actions.closeModal('filterModal');
+        this.props.actions.closeModal('filterModal');
     };
 
     distanceSliderValuesChange = (values) => {
@@ -54,8 +53,8 @@ class HeaderScreen extends Component {
         let displayHelp = navigation.currentRoute === 'Overview' && refundCases.length > 0;
 
         let maxValue = this.state.distanceSliderValue[1];
-        if(this.state.distanceSliderValue[1] === 10000) {
-            maxValue = 'unlimited'
+        if (this.state.distanceSliderValue[1] === 10000) {
+            maxValue = 'unlimited';
         }
 
         let distance = this.state.distanceSliderValue[0] + ' - ' + maxValue;
