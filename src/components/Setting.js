@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    StyleSheet, Text, TouchableOpacity, View
+    StyleSheet, Text, TouchableOpacity, View, ViewPropTypes
 } from 'react-native';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-fa-icons';
@@ -13,8 +13,8 @@ export default class Setting extends Component {
         required: PropTypes.bool,
         label: PropTypes.string.isRequired,
         value: PropTypes.string,
-        containerStyle: View.propTypes.style,
-        contentContainerStyle: View.propTypes.style,
+        containerStyle: ViewPropTypes.style,
+        contentContainerStyle: ViewPropTypes.style,
         labelStyle: Text.propTypes.style
     };
 
