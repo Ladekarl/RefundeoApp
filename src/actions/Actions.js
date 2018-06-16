@@ -37,8 +37,52 @@ export default {
     changeUser,
     getUser,
     changePassword,
-    requestRefund
+    requestRefund,
+    getMerchants,
+    selectMerchant
 };
+
+function getMerchants() {
+    return dispatch => {
+        dispatch(gettingMerchants());
+        Api.getAllMerchants().then(merchants => {
+            dispatch(getMerchantsSuccess(merchants));
+        }).catch(error => {
+            dispatch(getMerchantsError(error));
+        });
+    };
+}
+
+function gettingMerchants() {
+    return {
+        type: types.MERCHANT_GETTING_MERCHANTS
+    };
+}
+
+function getMerchantsError(error = '') {
+    return {
+        type: types.MERCHANT_GET_MERCHANTS_ERROR,
+        error
+    };
+}
+
+function getMerchantsSuccess(merchants) {
+    return {
+        merchants,
+        type: types.MERCHANT_GET_MERCHANTS_SUCCESS
+    };
+}
+
+function selectMerchant(merchant) {
+    return dispatch => {
+        dispatch({
+            type: types.MERCHANT_SELECT_MERCHANT,
+            merchant
+        });
+        dispatch(navigateStoreProfile(merchant.companyName));
+    };
+}
+
 
 function navigateInitial() {
     return dispatch => {
@@ -61,28 +105,29 @@ function navigateInitial() {
     };
 }
 
-function navigateStoreProfile() {
+function navigateStoreProfile(companyName) {
     return {
-        type: types.NAVIGATE_STORE_PROFILE
-    }
+        type: types.NAVIGATE_STORE_PROFILE,
+        companyName
+    };
 }
 
 function navigateHelp() {
     return {
         type: types.NAVIGATE_HELP
-    }
+    };
 }
 
 function navigateStoreMap() {
     return {
         type: types.NAVIGATE_STORE_MAP
-    }
+    };
 }
 
 function navigateStoreList() {
     return {
         type: types.NAVIGATE_STORE_LIST
-    }
+    };
 }
 
 function navigateAndResetToLogin() {
@@ -106,7 +151,7 @@ function navigateScanner() {
 function navgiateOverview() {
     return {
         type: types.NAVIGATE_OVERVIEW
-    }
+    };
 }
 
 function navigateLogIn() {
@@ -317,41 +362,41 @@ function requestRefund(refundCase) {
 
 function claimRefundCase(refundCaseId) {
     return dispatch => {
-      dispatch(claimingRefundCase());
-      Api.claimRefundCase(refundCaseId).then(() => {
-          dispatch(getRefundCases());
-          dispatch(navgiateOverview());
-          dispatch(claimRefundCaseSuccess());
-      }).catch((response) => {
-         if(shouldLogout(response)) {
-             dispatch(logout());
-         } else if(response.status === 400) {
-             dispatch(claimRefundCaseError(strings('refund_case.refund_case_already_claimed')));
-         }
-         else {
-             dispatch(claimRefundCaseError(strings('refund_case.claim_refund_case_error')));
-         }
-      });
+        dispatch(claimingRefundCase());
+        Api.claimRefundCase(refundCaseId).then(() => {
+            dispatch(getRefundCases());
+            dispatch(navgiateOverview());
+            dispatch(claimRefundCaseSuccess());
+        }).catch((response) => {
+            if (shouldLogout(response)) {
+                dispatch(logout());
+            } else if (response.status === 400) {
+                dispatch(claimRefundCaseError(strings('refund_case.refund_case_already_claimed')));
+            }
+            else {
+                dispatch(claimRefundCaseError(strings('refund_case.claim_refund_case_error')));
+            }
+        });
     };
 }
 
 function claimingRefundCase() {
     return {
         type: types.REFUND_CLAIMING_REFUND_CASE
-    }
+    };
 }
 
 function claimRefundCaseSuccess() {
     return {
         type: types.REFUND_CLAIM_REFUND_CASE_SUCCESS
-    }
+    };
 }
 
 function claimRefundCaseError(claimRefundCaseError = '') {
     return {
         type: types.REFUND_CLAIM_REFUND_CASE_ERROR,
         claimRefundCaseError
-    }
+    };
 }
 
 function requestingRefund() {

@@ -1,18 +1,5 @@
 import types from '../actions/ActionTypes';
-
-type Merchant = {
-    id: string,
-    companyName: string,
-    cvrNumber: string,
-    refundPercentage: number,
-    AddressCity: string,
-    AddressStreetNumber: string,
-    AddressStreetName: string,
-    AddressCountry: string,
-    AddressPostalCode: string,
-    Latitude: number,
-    Longitude: number
-}
+import {Merchant} from './MerchantReducer';
 
 type Customer = {
     id: string,
@@ -40,7 +27,13 @@ type RefundCase = {
 type RefundReducerState = {
     refundCases: Array<RefundCase>,
     fetchingRefundCases: boolean,
-    getRefundCasesError: string
+    fetchingDocumentation: boolean,
+    fetchingRequestRefund: boolean,
+    fetchingClaimRefundCase: boolean,
+    getRefundCasesError: string,
+    documentationError: string,
+    requestRefundError: string,
+    claimRefundCaseError: string
 }
 
 const initialState: RefundReducerState = {

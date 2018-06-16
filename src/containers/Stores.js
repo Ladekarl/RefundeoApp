@@ -32,33 +32,6 @@ class StoresScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isMap: true,
-            data: [
-                {
-                    location: {
-                        latitude: 55.745172,
-                        longitude: 12.544128
-                    }
-                },
-                {
-                    location: {
-                        latitude: 55.676155,
-                        longitude: 12.568355
-                    }
-                },
-                {
-                    location: {
-                        latitude: 55.678155,
-                        longitude: 12.528355
-                    }
-                },
-                {
-                    location: {
-                        latitude: 55.671155,
-                        longitude: 12.561355
-                    }
-                }
-            ],
             cameraPermission: false
         };
     }
@@ -71,6 +44,7 @@ class StoresScreen extends Component {
     };
 
     componentDidMount() {
+        this.props.actions.getMerchants();
         if (Platform.OS === 'ios') {
             navigator.geolocation.getCurrentPosition(this.setLocation);
         } else {
@@ -108,47 +82,53 @@ class StoresScreen extends Component {
         this.setState({cameraPermission: true});
     };
 
-    onCalloutPress = () => {
-        this.props.actions.navigateStoreProfile();
+    onCalloutPress = (merchant) => {
+        this.props.actions.selectMerchant(merchant);
     };
 
-    renderCluster = (cluster, onPress) => {
-        const pointCount = cluster.pointCount,
-            coordinate = cluster.coordinate,
-            clusterId = cluster.clusterId;
+    renderCluster = (cluster, onPress) =>
+        <Marker identifier={`cluster-${cluster.clusterId}`} coordinate={cluster.coordinate} onPress={onPress}>
+            <View style={styles.clusterContainer}>
+                <Text style={styles.clusterText}>
+                    {cluster.pointCount}
+                </Text>
+            </View>
+        </Marker>;
 
-        return (
-            <Marker identifier={`cluster-${clusterId}`} coordinate={coordinate} onPress={onPress}>
-                <View style={styles.clusterContainer}>
-                    <Text style={styles.clusterText}>
-                        {pointCount}
-                    </Text>
-                </View>
-            </Marker>
-        );
-    };
-
-    renderMarker = (data) =>
-        <Marker key={data.id || Math.random()}
-                coordinate={data.location}
-                style={styles.markerContainer}>
-            <Callout onPress={this.onCalloutPress}>
+    renderMarker = (merchant) =>
+        <Marker key={merchant.id}
+                style={styles.markerContainer} coordinate={merchant.location}>
+            <Callout onPress={() => this.onCalloutPress(merchant)}>
                 <View style={styles.calloutContainer}>
-                    <Text style={styles.calloutText}>Example store</Text>
+                    <Text style={styles.calloutText}>{merchant.companyName}</Text>
                     <Icon style={styles.calloutIcon} name='angle-right'/>
                 </View>
             </Callout>
         </Marker>;
 
+    getClusteredMapData = (merchants) => {
+        return merchants.map((merchant) => {
+            return {
+                ...merchant,
+                location: {
+                    latitude: merchant.latitude,
+                    longitude: merchant.longitude
+                }
+            };
+        });
+    };
+
     render() {
-        const {navigation} = this.props.state;
+        const {navigation, merchants} = this.props.state;
+
+        let clusteredMapData = this.getClusteredMapData(merchants);
 
         return (
             <View style={styles.container}>
                 {this.state.cameraPermission && navigation.isMap &&
                 <ClusteredMapView
                     style={styles.container}
-                    data={this.state.data}
+                    data={clusteredMapData}
                     showsUserLocation={true}
                     edgePadding={{top: 100, left: 100, bottom: 100, right: 100}}
                     initialRegion={this.initRegion}
@@ -162,7 +142,7 @@ class StoresScreen extends Component {
                     renderCluster={this.renderCluster}/>
                 }
                 {!navigation.isMap &&
-                    <StoresList actions={this.props.actions}/>
+                <StoresList actions={this.props.actions} merchants={merchants}/>
                 }
             </View>
         );
@@ -223,7 +203,7 @@ const mapStateToProps = state => {
     return {
         state: {
             navigation,
-            ...state.refundReducer
+            ...state.merchantReducer
         }
     };
 };

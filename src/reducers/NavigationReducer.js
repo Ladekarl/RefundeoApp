@@ -206,7 +206,7 @@ export default function navigationReducer(state = initialState, action = {}) {
         }
         case types.NAVIGATE_STORE_MAP: {
             let navigatorState = {};
-            if(state.currentRoute !== 'Stores') {
+            if (state.currentRoute !== 'Stores') {
                 const navigationAction = NavigationActions.navigate({routeName: 'Stores'});
                 navigatorState = RootNavigator.router.getStateForAction(navigationAction, state);
             }
@@ -221,7 +221,7 @@ export default function navigationReducer(state = initialState, action = {}) {
         }
         case types.NAVIGATE_STORE_LIST: {
             let navigatorState = {};
-            if(state.currentRoute !== 'Stores') {
+            if (state.currentRoute !== 'Stores') {
                 const navigationAction = NavigationActions.navigate({routeName: 'Stores'});
                 navigatorState = RootNavigator.router.getStateForAction(navigationAction, state);
             }
@@ -245,7 +245,12 @@ export default function navigationReducer(state = initialState, action = {}) {
             break;
         }
         case types.NAVIGATE_STORE_PROFILE: {
-            const navigationAction = NavigationActions.navigate({routeName: 'StoreProfile'});
+            const navigationAction = NavigationActions.navigate({
+                routeName: 'StoreProfile',
+                params: {
+                    companyName: action.companyName
+                }
+            });
             nextState = {
                 ...state,
                 ...RootNavigator.router.getStateForAction(navigationAction, state),
@@ -272,7 +277,7 @@ const navigateAndReset = (routeName, state, isNested) => {
         actions: [NavigationActions.navigate({routeName: routeName})],
     });
     if (!isNested) {
-        action.key = null
+        action.key = null;
     }
     return RootNavigator.router.getStateForAction(action, state);
 };
@@ -293,9 +298,9 @@ const navigateDrawer = (routeName, state) => {
 const getCurrentRoute = (state) => {
     const findCurrentRoute = (navState) => {
         if (navState.index !== undefined) {
-            return findCurrentRoute(navState.routes[navState.index])
+            return findCurrentRoute(navState.routes[navState.index]);
         }
-        return navState.routeName
+        return navState.routeName;
     };
-    return findCurrentRoute(state)
+    return findCurrentRoute(state);
 };

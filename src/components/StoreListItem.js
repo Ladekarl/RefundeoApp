@@ -7,8 +7,8 @@ export default class StoresList extends Component {
 
     static propTypes = {
         distance: PropTypes.number.isRequired,
-        logo: PropTypes.number.isRequired,
-        banner: PropTypes.number.isRequired,
+        logo: PropTypes.string,
+        banner: PropTypes.string,
         refundPercentage: PropTypes.number.isRequired,
         openingHours: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
@@ -37,8 +37,10 @@ export default class StoresList extends Component {
             distSecond = 'km';
         }
 
-        let dist = distFirst + ' ' + distSecond;
+        let bannerObj = banner ? {uri: 'data:image/png;base64,' + banner} : require('../../assets/example-store.jpg');
+        let logoObj = logo ? {uri: 'data:image/png;base64,' + logo} : require('../../assets/refundeo_banner_small.png');
 
+        let dist = distFirst + ' ' + distSecond;
         return (
             <TouchableOpacity
                 activeOpacity={0.7}
@@ -47,7 +49,7 @@ export default class StoresList extends Component {
                 <View style={styles.cardContainer}>
                     <ImageBackground
                         style={styles.bannerImage}
-                        source={banner}
+                        source={bannerObj}
                         borderRadius={2}>
                         <View style={styles.bannerTextBarContainer}>
                             <View style={styles.leftContainer}>
@@ -56,7 +58,7 @@ export default class StoresList extends Component {
                             {Platform.OS === 'ios' &&
                             <View style={styles.iconContainer}>
                                 <Image style={styles.logoImage} resizeMode='contain'
-                                       source={logo}/>
+                                       source={logoObj}/>
                             </View>
                             }
                             <View style={styles.rightContainer}>
@@ -97,8 +99,9 @@ const styles = StyleSheet.create({
         borderColor: colors.separatorColor
     },
     logoImage: {
-        height: 70,
-        width: 70,
+        height: 60,
+        width: 60,
+        margin: 5,
         justifyContent: 'center',
         alignItems: 'center'
     },

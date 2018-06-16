@@ -1,20 +1,29 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, ImageBackground, Platform, Image, Text, ScrollView} from 'react-native';
 import colors from '../shared/colors';
-import {strings} from '../shared/i18n';
+import {bindActionCreators} from 'redux';
+import Actions from '../actions/Actions';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
-export default class StoresList extends Component {
+class StoreProfile extends Component {
 
-    static navigationOptions = {
-        title: 'Example store',
-        headerTitleStyle: {
-            fontSize: 18
-        },
-        tabBarIcon: ({tintColor}) => (
-            <Icon name='user-circle' style={[styles.tabBarIcon, {color: tintColor}]}/>),
+    static propTypes = {
+        state: PropTypes.object.isRequired
+    };
+
+    static navigationOptions = ({navigation}) => {
+        return {
+            title: navigation.getParam('companyName', '...'),
+            headerTitleStyle: {
+                fontSize: 18
+            }
+        };
     };
 
     render() {
+        const {selectedMerchant} = this.props.state;
+
         return (
             <ScrollView styles={styles.container}>
                 <ImageBackground
@@ -32,24 +41,20 @@ export default class StoresList extends Component {
                         <Text style={styles.leftText}>Refund Percentage</Text>
                     </View>
                     <View style={styles.bannerColumnContainer}>
-                        <Text style={styles.contentText}>09:00 - 21:30</Text>
-                        <Text style={styles.contentText}>75 %</Text>
+                        <Text style={styles.contentText}>{selectedMerchant.openingHours}</Text>
+                        <Text style={styles.contentText}>{95 - selectedMerchant.refundPercentage}</Text>
                     </View>
                 </View>
                 <View style={styles.descriptionContainer}>
                     <Text>
-                        {`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida elit eros, sit amet accumsan diam pulvinar sit amet.
-
-Aliquam tristique dolor laoreet porttitor laoreet.
-
-Nunc porttitor urna sed ante ultrices faucibus. Proin vulputate arcu sit amet sem accumsan viverra. Maecenas eu lacus vestibulum, tristique nisi at, auctor purus.
-
-Phasellus sit amet placerat purus. Mauris quis mauris sed eros finibus euismod sed placerat felis. Ut sagittis porta leo sit amet pretium.`}
+                        {selectedMerchant.description}
                     </Text>
                 </View>
                 <View style={styles.addressContainer}>
                     <Text style={styles.addressTitleText}>Address</Text>
-                    <Text style={styles.addressText}>Pilestræde 67, 1112 Copenhagen</Text>
+                    <Text style={styles.addressText}>
+                        {`${selectedMerchant.addressStreetName} ${selectedMerchant.addressStreetNumber}, ${selectedMerchant.addressPostalCode} ${selectedMerchant.addressCountry}`}
+                    </Text>
                 </View>
             </ScrollView>
         );
@@ -113,7 +118,8 @@ const styles = StyleSheet.create({
     addressContainer: {
         paddingTop: 15,
         paddingLeft: 20,
-        paddingRight: 20
+        paddingRight: 20,
+        paddingBottom: 15
     },
     addressTitleText: {
         color: colors.activeTabColor
@@ -123,3 +129,22 @@ const styles = StyleSheet.create({
         fontSize: 15
     }
 });
+
+const mapStateToProps = state => {
+    return {
+        state: {
+            ...state.merchantReducer
+        }
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        actions: bindActionCreators(Actions, dispatch)
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(StoreProfile);

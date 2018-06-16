@@ -198,4 +198,17 @@ export default class Api {
 
         return await Helpers.fetchAuthenticated(`${API_URL}/api/user/refundcase/${refundCaseId}/claim`, requestOptions);
     }
+
+    static async getAllMerchants() {
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                ...await Helpers.authHeader(),
+            }
+        };
+
+        const response = await Helpers.fetchAuthenticated(`${API_URL}/api/merchant/account`, requestOptions);
+
+        return await response.json();
+    }
 }

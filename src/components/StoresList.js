@@ -7,44 +7,26 @@ import StoreListItem from './StoreListItem';
 export default class StoresList extends Component {
 
     static propTypes = {
-      actions: PropTypes.object.isRequired
+        actions: PropTypes.object.isRequired,
+        merchants: PropTypes.array.isRequired
     };
 
     render() {
+        const {merchants} = this.props;
+
         return (
             <ScrollView style={styles.scrollContainer}>
-                <StoreListItem
-                 distance={712}
-                 logo={require('../../assets/refundeo_banner_small.png')}
-                 banner={require('../../assets/example-store.jpg')}
-                 name='Example Store'
-                 openingHours='09:00 - 21:30'
-                 refundPercentage={75}
-                 onPress={this.props.actions.navigateStoreProfile}/>
-                <StoreListItem
-                    distance={925}
-                    logo={require('../../assets/refundeo_banner_small.png')}
-                    banner={require('../../assets/example-store.jpg')}
-                    name='Example store'
-                    openingHours='09:00 - 21:30'
-                    refundPercentage={75}
-                    onPress={this.props.actions.navigateStoreProfile}/>
-                <StoreListItem
-                    distance={1574}
-                    logo={require('../../assets/refundeo_banner_small.png')}
-                    banner={require('../../assets/example-store.jpg')}
-                    name='Example store'
-                    openingHours='09:00 - 21:30'
-                    refundPercentage={75}
-                    onPress={this.props.actions.navigateStoreProfile}/>
-                <StoreListItem
-                    distance={14523}
-                    logo={require('../../assets/refundeo_banner_small.png')}
-                    banner={require('../../assets/example-store.jpg')}
-                    name='Example store'
-                    openingHours='09:00 - 21:30'
-                    refundPercentage={75}
-                    onPress={this.props.actions.navigateStoreProfile}/>
+                {merchants.map((merchant, i) => {
+                    return <StoreListItem
+                        distance={712}
+                        key={i}
+                        logo={merchant.logo}
+                        banner={merchant.banner}
+                        name={merchant.companyName}
+                        openingHours={merchant.openingHours}
+                        refundPercentage={merchant.refundPercentage}
+                        onPress={() => this.props.actions.selectMerchant(merchant)}/>;
+                })}
             </ScrollView>
         );
     }

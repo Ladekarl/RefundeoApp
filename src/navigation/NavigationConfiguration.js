@@ -12,7 +12,7 @@ import React from 'react';
 import Header from '../containers/Header';
 import HomeTab from './HomeTab';
 import EmptyOverviewScreen from '../components/EmptyOverview';
-import StoreProfile from '../components/StoreProfile';
+import StoreProfile from '../containers/StoreProfile';
 
 const {width, height} = Dimensions.get('screen');
 const noHeaderNavigationOptions = {headerMode: 'none'};
