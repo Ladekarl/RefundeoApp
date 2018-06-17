@@ -28,11 +28,11 @@ class StoreProfile extends Component {
             <ScrollView styles={styles.container}>
                 <ImageBackground
                     style={styles.bannerImage}
-                    source={require('../../assets/example-store.jpg')}
+                    source={{uri: 'data:image/png;base64,' + selectedMerchant.banner}}
                     borderRadius={2}>
                     <View style={styles.iconContainer}>
                         <Image style={styles.logoImage} resizeMode='contain'
-                               source={require('../../assets/refundeo_banner_small.png')}/>
+                               source={{uri: 'data:image/png;base64,' + selectedMerchant.logo}}/>
                     </View>
                 </ImageBackground>
                 <View style={styles.bannerTextBarContainer}>
@@ -53,7 +53,7 @@ class StoreProfile extends Component {
                 <View style={styles.addressContainer}>
                     <Text style={styles.addressTitleText}>Address</Text>
                     <Text style={styles.addressText}>
-                        {`${selectedMerchant.addressStreetName} ${selectedMerchant.addressStreetNumber}, ${selectedMerchant.addressPostalCode} ${selectedMerchant.addressCountry}`}
+                        {`${selectedMerchant.addressStreetName} ${selectedMerchant.addressStreetNumber}, ${selectedMerchant.addressPostalCode} ${selectedMerchant.addressCity}, ${selectedMerchant.addressCountry}`}
                     </Text>
                 </View>
             </ScrollView>
@@ -84,8 +84,9 @@ const styles = StyleSheet.create({
         borderColor: colors.separatorColor
     },
     logoImage: {
-        height: 70,
-        width: 70,
+        height: 60,
+        width: 60,
+        margin: 5,
         justifyContent: 'center',
         alignItems: 'center'
     },

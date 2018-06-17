@@ -3,12 +3,12 @@ import {StyleSheet, Text, TouchableOpacity, View, ImageBackground, Platform, Ima
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 
-export default class StoresList extends Component {
+export default class StoreListItem extends Component {
 
     static propTypes = {
         distance: PropTypes.number.isRequired,
-        logo: PropTypes.string,
-        banner: PropTypes.string,
+        logo: PropTypes.string.isRequired,
+        banner: PropTypes.string.isRequired,
         refundPercentage: PropTypes.number.isRequired,
         openingHours: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
@@ -37,9 +37,6 @@ export default class StoresList extends Component {
             distSecond = 'km';
         }
 
-        let bannerObj = banner ? {uri: 'data:image/png;base64,' + banner} : require('../../assets/example-store.jpg');
-        let logoObj = logo ? {uri: 'data:image/png;base64,' + logo} : require('../../assets/refundeo_banner_small.png');
-
         let dist = distFirst + ' ' + distSecond;
         return (
             <TouchableOpacity
@@ -49,7 +46,7 @@ export default class StoresList extends Component {
                 <View style={styles.cardContainer}>
                     <ImageBackground
                         style={styles.bannerImage}
-                        source={bannerObj}
+                        source={{uri: 'data:image/png;base64,' + banner}}
                         borderRadius={2}>
                         <View style={styles.bannerTextBarContainer}>
                             <View style={styles.leftContainer}>
@@ -58,7 +55,7 @@ export default class StoresList extends Component {
                             {Platform.OS === 'ios' &&
                             <View style={styles.iconContainer}>
                                 <Image style={styles.logoImage} resizeMode='contain'
-                                       source={logoObj}/>
+                                       source={{uri: 'data:image/png;base64,' + logo}}/>
                             </View>
                             }
                             <View style={styles.rightContainer}>
