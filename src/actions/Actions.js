@@ -39,8 +39,24 @@ export default {
     changePassword,
     requestRefund,
     getMerchants,
-    selectMerchant
+    selectMerchant,
+    changeFilterDistanceSliderValue,
+    changeFilterRefundSliderValue
 };
+
+function changeFilterDistanceSliderValue(sliderValue) {
+    return {
+        type: types.MERCHANT_CHANGE_FILTER_DISTANCE_SLIDER_VALUE,
+        sliderValue
+    };
+}
+
+function changeFilterRefundSliderValue(sliderValue) {
+    return {
+        type: types.MERCHANT_CHANGE_FILTER_REFUND_SLIDER_VALUE,
+        sliderValue
+    };
+}
 
 function getMerchants() {
     return dispatch => {

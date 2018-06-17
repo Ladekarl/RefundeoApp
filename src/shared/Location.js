@@ -2,16 +2,16 @@ import {PermissionsAndroid, Platform} from 'react-native';
 import {strings} from './i18n';
 
 export default class Location {
-    static async getCurrentPosition(successCallback) {
+    static async getCurrentPosition() {
         if (Platform.OS === 'ios') {
-            navigator.geolocation.getCurrentPosition(successCallback);
+            return await this.getCurrentPositionWrapper();
         } else {
             const hasPermission = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
             if (hasPermission) {
-                navigator.geolocation.getCurrentPosition(successCallback);
+                return await this.getCurrentPositionWrapper();
             } else {
-                await this.requestAndroidPermission(successCallback);
-                navigator.geolocation.getCurrentPosition(successCallback);
+                await this.requestAndroidPermission();
+                return await this.getCurrentPositionWrapper();
             }
         }
     }
@@ -26,5 +26,16 @@ export default class Location {
         if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
             throw granted;
         }
+    }
+
+
+    static getCurrentPositionWrapper(): Promise {
+        return new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition((position) => {
+                resolve(position);
+            }, (error) => {
+                reject(error);
+            });
+        });
     }
 }

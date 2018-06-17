@@ -144,4 +144,8 @@ export default class Helpers {
 
         return Helpers.saveUser(user);
     }
+
+    static async getDistance(merchant) {
+
+    }
 }

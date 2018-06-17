@@ -61,7 +61,7 @@ export default class StoreListItem extends Component {
                             </View>
                             }
                             <View style={styles.rightContainer}>
-                                <Text style={styles.rightText}>{'Refund: ' + refundPercentage + ' %'}</Text>
+                                <Text style={styles.rightText}>{'Refund: ' + (95 - refundPercentage) + ' %'}</Text>
                             </View>
                         </View>
                     </ImageBackground>

@@ -2,6 +2,8 @@ import Helpers, {API_URL} from './Helpers';
 import LocalStorage from '../storage';
 import RNFetchBlob from 'react-native-fetch-blob';
 import Guid from '../shared/Guid';
+import geolib from 'geolib';
+import Location from '../shared/Location';
 
 export default class Api {
     static async getTokenFacebook(accessToken) {
@@ -209,6 +211,17 @@ export default class Api {
 
         const response = await Helpers.fetchAuthenticated(`${API_URL}/api/merchant/account`, requestOptions);
 
-        return await response.json();
+        const merchants = await response.json();
+
+        const location = await Location.getCurrentPosition();
+
+        merchants.forEach((merchant) => {
+            merchant.distance = geolib.getDistance(location.coords, {
+                latitude: merchant.latitude,
+                longitude: merchant.longitude
+            }, 100);
+        });
+
+        return merchants;
     }
 }

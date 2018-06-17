@@ -19,10 +19,6 @@ class HeaderScreen extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            distanceSliderValue: [0, 10000],
-            refundSliderValue: [50, 100],
-        };
     }
 
     onFilterPress = () => {
@@ -34,30 +30,24 @@ class HeaderScreen extends Component {
     };
 
     distanceSliderValuesChange = (values) => {
-        this.setState({
-            distanceSliderValue: values,
-        });
+        this.props.actions.changeFilterDistanceSliderValue(values);
     };
 
     refundSliderValuesChange = (values) => {
-        this.setState({
-            refundSliderValue: values,
-        });
+        this.props.actions.changeFilterRefundSliderValue(values);
     };
 
 
     render() {
-        const {navigation, refundCases} = this.props.state;
+        const {navigation, refundCases, filterDistanceSliderValue, filterRefundSliderValue} = this.props.state;
 
         let displayFilter = navigation.currentRoute === 'Stores' && !navigation.isMap;
         let displayHelp = navigation.currentRoute === 'Overview' && refundCases.length > 0;
 
-        let maxValue = this.state.distanceSliderValue[1];
-        if (this.state.distanceSliderValue[1] === 10000) {
+        let maxValue = filterDistanceSliderValue[1];
+        if (filterDistanceSliderValue[1] === 10000) {
             maxValue = 'unlimited';
         }
-
-        let distance = this.state.distanceSliderValue[0] + ' - ' + maxValue;
 
         return (
             <View style={styles.container}>
@@ -121,11 +111,11 @@ class HeaderScreen extends Component {
                                 Distance (m)
                             </Text>
                             <Text style={styles.filterSliderText}>
-                                {distance}
+                                {filterDistanceSliderValue[0] + ' - ' + maxValue}
                             </Text>
                             <View style={styles.filterSlider}>
                                 <MultiSlider
-                                    values={this.state.distanceSliderValue}
+                                    values={filterDistanceSliderValue}
                                     min={0}
                                     max={10000}
                                     step={100}
@@ -140,10 +130,10 @@ class HeaderScreen extends Component {
                                 Refund percantage
                             </Text>
                             <Text style={styles.filterSliderText}>
-                                {this.state.refundSliderValue[0] + ' - ' + this.state.refundSliderValue[1]}</Text>
+                                {filterRefundSliderValue[0] + ' - ' + filterRefundSliderValue[1]}</Text>
                             <View style={styles.filterSlider}>
                                 <MultiSlider
-                                    values={this.state.refundSliderValue}
+                                    values={filterRefundSliderValue}
                                     min={0}
                                     max={100}
                                     step={1}
@@ -267,7 +257,8 @@ const mapStateToProps = state => {
     return {
         state: {
             navigation,
-            ...state.refundReducer
+            ...state.refundReducer,
+            ...state.merchantReducer
         }
     };
 };

@@ -13,7 +13,6 @@ import ClusteredMapView from 'react-native-maps-super-cluster';
 import StoresList from '../components/StoresList';
 import Location from '../shared/Location';
 
-
 class StoresScreen extends Component {
 
     static propTypes = {
@@ -33,7 +32,7 @@ class StoresScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            cameraPermission: false
+            locationPermission: false
         };
     }
 
@@ -46,9 +45,11 @@ class StoresScreen extends Component {
 
     componentDidMount() {
         this.props.actions.getMerchants();
-        Location.getCurrentPosition(this.setLocation).catch(() => {
-            this.setState({cameraPermission: false});
-        });
+        Location.getCurrentPosition()
+            .then((location) => this.setLocation(location))
+            .catch(() => {
+                this.setState({locationPermission: false});
+            });
     }
 
     setLocation = (location) => {
@@ -57,32 +58,39 @@ class StoresScreen extends Component {
             longitudeDelta: 0.1,
             ...location.coords
         };
-        this.setState({cameraPermission: true});
+        this.setState({locationPermission: true});
     };
+
 
     onCalloutPress = (merchant) => {
         this.props.actions.selectMerchant(merchant);
     };
 
-    renderCluster = (cluster, onPress) =>
-        <Marker identifier={`cluster-${cluster.clusterId}`} coordinate={cluster.coordinate} onPress={onPress}>
-            <View style={styles.clusterContainer}>
-                <Text style={styles.clusterText}>
-                    {cluster.pointCount}
-                </Text>
-            </View>
-        </Marker>;
-
-    renderMarker = (merchant) =>
-        <Marker key={merchant.id}
-                style={styles.markerContainer} coordinate={merchant.location}>
-            <Callout onPress={() => this.onCalloutPress(merchant)}>
-                <View style={styles.calloutContainer}>
-                    <Text style={styles.calloutText}>{merchant.companyName}</Text>
-                    <Icon style={styles.calloutIcon} name='angle-right'/>
+    renderCluster = (cluster, onPress) => {
+        return (
+            <Marker identifier={'cluster-' + cluster.clusterId} coordinate={cluster.coordinate} onPress={onPress}>
+                <View style={styles.clusterContainer}>
+                    <Text style={styles.clusterText}>
+                        {cluster.pointCount}
+                    </Text>
                 </View>
-            </Callout>
-        </Marker>;
+            </Marker>
+        );
+    };
+
+    renderMarker = (merchant) => {
+        return (
+            <Marker key={merchant.id}
+                    style={styles.markerContainer} coordinate={merchant.location}>
+                <Callout onPress={() => this.onCalloutPress(merchant)}>
+                    <View style={styles.calloutContainer}>
+                        <Text style={styles.calloutText}>{merchant.companyName}</Text>
+                        <Icon style={styles.calloutIcon} name='angle-right'/>
+                    </View>
+                </Callout>
+            </Marker>
+        );
+    };
 
     getClusteredMapData = (merchants) => {
         return merchants.map((merchant) => {
@@ -97,13 +105,13 @@ class StoresScreen extends Component {
     };
 
     render() {
-        const {navigation, merchants, fetchingMerchants} = this.props.state;
+        const {navigation, merchants, fetchingMerchants, filterDistanceSliderValue, filterRefundSliderValue} = this.props.state;
 
         let clusteredMapData = this.getClusteredMapData(merchants);
 
         return (
             <View style={styles.container}>
-                {this.state.cameraPermission && navigation.isMap &&
+                {this.state.locationPermission && navigation.isMap &&
                 <ClusteredMapView
                     style={styles.container}
                     data={clusteredMapData}
@@ -120,7 +128,15 @@ class StoresScreen extends Component {
                     renderCluster={this.renderCluster}/>
                 }
                 {!navigation.isMap && merchants && merchants.length > 0 &&
-                <StoresList actions={this.props.actions} merchants={merchants} fetching={fetchingMerchants}/>
+                <StoresList
+                    actions={this.props.actions}
+                    merchants={merchants}
+                    distanceMin={filterDistanceSliderValue[0]}
+                    distanceMax={filterDistanceSliderValue[1]}
+                    refundMin={filterRefundSliderValue[0]}
+                    refundMax={filterRefundSliderValue[1]}
+                    fetching={fetchingMerchants}
+                />
                 }
             </View>
         );
