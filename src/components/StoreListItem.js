@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View, ImageBackground, Platform, Image} from 'react-native';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
+import geolib from 'geolib';
 
 export default class StoreListItem extends Component {
 
@@ -29,11 +30,12 @@ export default class StoreListItem extends Component {
         let distFirst = `${distance}`;
         let distSecond = 'm';
 
-        if (distFirst.length === 4) {
-            distFirst = distFirst.substring(0, 1) + ',' + distFirst.substring(1, 2);
-            distSecond = 'km';
-        } else if (distFirst.length > 4) {
-            distFirst = distFirst.substring(0, 2);
+        if (distance >= 1000) {
+            if (distance >= 10000) {
+                distFirst = geolib.convertUnit('km', distance, 0);
+            } else {
+                distFirst = geolib.convertUnit('km', distance, 1);
+            }
             distSecond = 'km';
         }
 

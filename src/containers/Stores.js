@@ -3,7 +3,7 @@ import Actions from '../actions/Actions';
 import {bindActionCreators} from 'redux';
 import React, {Component} from 'react';
 // eslint-disable-next-line react-native/split-platform-components
-import {Text, View, StyleSheet, PermissionsAndroid, Platform} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 import {strings} from '../shared/i18n';
 import PropTypes from 'prop-types';
 import colors from '../shared/colors';
@@ -11,6 +11,7 @@ import Icon from 'react-native-fa-icons';
 import {Callout, Marker} from 'react-native-maps';
 import ClusteredMapView from 'react-native-maps-super-cluster';
 import StoresList from '../components/StoresList';
+import Location from '../shared/Location';
 
 
 class StoresScreen extends Component {
@@ -45,32 +46,9 @@ class StoresScreen extends Component {
 
     componentDidMount() {
         this.props.actions.getMerchants();
-        if (Platform.OS === 'ios') {
-            navigator.geolocation.getCurrentPosition(this.setLocation);
-        } else {
-            this.requestAndroidPermission().catch(() => {
-                this.setState({cameraPermission: true});
-            });
-        }
-    }
-
-    async requestAndroidPermission() {
-        const hasPermission = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-        if (hasPermission) {
-            navigator.geolocation.getCurrentPosition(this.setLocation);
-        } else {
-            const granted = await PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION, {
-                    'title': strings('stores.permission_title'),
-                    'message': strings('stores.permission_message')
-                }
-            );
-            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                navigator.geolocation.getCurrentPosition(this.setLocation);
-            } else {
-                throw granted;
-            }
-        }
+        Location.getCurrentPosition(this.setLocation).catch(() => {
+            this.setState({cameraPermission: false});
+        });
     }
 
     setLocation = (location) => {
@@ -119,7 +97,7 @@ class StoresScreen extends Component {
     };
 
     render() {
-        const {navigation, merchants} = this.props.state;
+        const {navigation, merchants, fetchingMerchants} = this.props.state;
 
         let clusteredMapData = this.getClusteredMapData(merchants);
 
@@ -141,8 +119,8 @@ class StoresScreen extends Component {
                     renderMarker={this.renderMarker}
                     renderCluster={this.renderCluster}/>
                 }
-                {!navigation.isMap &&
-                <StoresList actions={this.props.actions} merchants={merchants}/>
+                {!navigation.isMap && merchants && merchants.length > 0 &&
+                <StoresList actions={this.props.actions} merchants={merchants} fetching={fetchingMerchants}/>
                 }
             </View>
         );
