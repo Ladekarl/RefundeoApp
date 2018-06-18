@@ -3,6 +3,7 @@ import {StyleSheet, Text, TouchableOpacity, View, ImageBackground, Platform, Ima
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 import geolib from 'geolib';
+import {strings} from '../shared/i18n';
 
 export default class StoreListItem extends Component {
 
@@ -13,6 +14,7 @@ export default class StoreListItem extends Component {
         refundPercentage: PropTypes.number.isRequired,
         openingHours: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
+        city: PropTypes.string.isRequired,
         onPress: PropTypes.func.isRequired
     };
 
@@ -24,6 +26,7 @@ export default class StoreListItem extends Component {
             refundPercentage,
             openingHours,
             name,
+            city,
             onPress
         } = this.props;
 
@@ -61,14 +64,14 @@ export default class StoreListItem extends Component {
                             </View>
                             }
                             <View style={styles.rightContainer}>
-                                <Text style={styles.rightText}>{'Refund: ' + (95 - refundPercentage) + ' %'}</Text>
+                                <Text style={styles.rightText}>{strings('stores.refund') + ': ' + (95 - refundPercentage) + ' %'}</Text>
                             </View>
                         </View>
                     </ImageBackground>
                     <View style={styles.contentContainer}>
-                        <View style={styles.temperatureContainer}>
+                        <View style={styles.contentTextContainer}>
                             <Text
-                                style={styles.mainText}>{name}</Text>
+                                style={styles.mainText}>{name + ' - ' + city}</Text>
                             <Text
                                 style={styles.subText}>{openingHours}</Text>
                         </View>
@@ -82,7 +85,7 @@ export default class StoreListItem extends Component {
 const styles = StyleSheet.create({
     container: {
         justifyContent: 'flex-start',
-        backgroundColor: colors.separatorColor,
+        backgroundColor: colors.slightlyDarkerColor,
         padding: 3
     },
     iconContainer: {
@@ -105,12 +108,12 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     cardContainer: {
-        height: 180,
+        height: 170,
         marginBottom: 3,
         backgroundColor: colors.backgroundColor,
         borderRadius: 2,
         borderWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0,
-        elevation: 1,
+        elevation: 2,
         borderColor: colors.separatorColor
     },
     bannerImage: {
@@ -125,7 +128,7 @@ const styles = StyleSheet.create({
         overflow: 'visible',
         alignItems: 'center',
         width: '100%',
-        height: 35,
+        height: 30,
         backgroundColor: 'rgba(0,0,0,0.6)',
         paddingLeft: 10,
         paddingRight: 10
@@ -141,12 +144,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     leftText: {
-        fontSize: 15,
+        fontSize: 13,
         alignSelf: 'flex-start',
         color: colors.backgroundColor,
     },
     rightText: {
-        fontSize: 15,
+        fontSize: 13,
         alignSelf: 'flex-end',
         color: colors.backgroundColor,
     },
@@ -154,15 +157,15 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        margin: 5,
     },
-    temperatureContainer: {
+    contentTextContainer: {
         alignItems: 'center',
-        justifyContent: 'space-evenly',
+        justifyContent: 'center',
         flex: 1,
     },
     mainText: {
-        fontSize: 18,
+        color: colors.darkTextColor,
+        fontSize: 16,
         fontWeight: 'bold'
     },
     subText: {

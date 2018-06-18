@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {RefreshControl, ScrollView, StyleSheet} from 'react-native';
+import {RefreshControl, FlatList, StyleSheet, View} from 'react-native';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 import StoreListItem from './StoreListItem';
+import EmptyStoreList from './EmptyStoreList';
 
 export default class StoresList extends Component {
 
@@ -33,40 +34,59 @@ export default class StoresList extends Component {
         return filteredMerchants;
     };
 
+    renderStoreListItem = ({item}) => {
+        return (<StoreListItem
+            distance={item.distance}
+            key={item.id}
+            logo={item.logo}
+            banner={item.banner}
+            name={item.companyName}
+            openingHours={item.openingHours}
+            refundPercentage={item.refundPercentage}
+            onPress={() => this.props.actions.selectMerchant(item)}
+            city={item.addressCity}
+        />);
+    };
+
+    keyExtractor = (merchant) => merchant.id.toString();
+
     render() {
         const {fetching, actions} = this.props;
 
         let filterMerchants = this.filterMerchants();
 
         return (
-            <ScrollView
-                style={styles.scrollContainer}
-                refreshControl={
-                    <RefreshControl
-                        tintColor={colors.activeTabColor}
-                        refreshing={fetching}
-                        onRefresh={actions.getMerchants}
-                    />
-                }>
-                {filterMerchants.map((merchant, i) => {
-
-                    return <StoreListItem
-                        distance={merchant.distance ? merchant.distance : 0}
-                        key={i}
-                        logo={merchant.logo}
-                        banner={merchant.banner}
-                        name={merchant.companyName}
-                        openingHours={merchant.openingHours}
-                        refundPercentage={merchant.refundPercentage}
-                        onPress={() => this.props.actions.selectMerchant(merchant)}/>;
-                })}
-            </ScrollView>
+            <View style={styles.container}>
+                <FlatList
+                    style={styles.flatListContainer}
+                    contentContainerStyle={filterMerchants.length === 0 ? styles.emptyContainer : {}}
+                    refreshControl={
+                        <RefreshControl
+                            tintColor={colors.activeTabColor}
+                            refreshing={fetching}
+                            onRefresh={actions.getMerchants}
+                        />
+                    }
+                    data={filterMerchants}
+                    keyExtractor={this.keyExtractor}
+                    renderItem={this.renderStoreListItem}
+                    ListEmptyComponent={!fetching ? EmptyStoreList : undefined}
+                />
+            </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    scrollContainer: {
-        backgroundColor: colors.separatorColor,
+    container: {
+        flex: 1
+    },
+    flatListContainer: {
+        backgroundColor: colors.slightlyDarkerColor,
+    },
+    emptyContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1
     }
 });

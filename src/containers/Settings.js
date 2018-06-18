@@ -466,10 +466,10 @@ class SettingsScreen extends Component {
                     noCancelButton={true}
                     onSubmit={this.closeTermsOfServiceModal}
                     onBack={this.closeTermsOfServiceModal}
-                    contentContainerStyle={styles.eulaModalContainer}
                     onCancel={this.closeTermsOfServiceModal}
+                    fullScreen={true}
                     visible={this.props.state.navigation.modal['termsOfServiceModal'] || false}>
-                    <ScrollView style={styles.eulaScrollContainer}>
+                    <ScrollView>
                         <Text>{strings('register.terms_of_service')}</Text>
                     </ScrollView>
                 </ModalScreen>
@@ -478,10 +478,10 @@ class SettingsScreen extends Component {
                     noCancelButton={true}
                     onSubmit={this.closePrivacyPolicyModal}
                     onBack={this.closePrivacyPolicyModal}
-                    contentContainerStyle={styles.eulaModalContainer}
                     onCancel={this.closePrivacyPolicyModal}
+                    fullScreen={true}
                     visible={this.props.state.navigation.modal['privacyPolicyModal'] || false}>
-                    <ScrollView style={styles.eulaScrollContainer}>
+                    <ScrollView>
                         <Text>{strings('register.privacy_policy')}</Text>
                     </ScrollView>
                 </ModalScreen>
@@ -578,13 +578,6 @@ const styles = StyleSheet.create({
     modalInputErrorText: {
         textAlign: 'center',
         color: colors.cancelButtonColor
-    },
-    eulaModalContainer: {
-        height: '100%',
-        width: '100%'
-    },
-    eulaScrollContainer: {
-        height: '80%'
     },
     requiredIcon: {
         fontSize: 15,

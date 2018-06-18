@@ -2,7 +2,6 @@ import {connect} from 'react-redux';
 import Actions from '../actions/Actions';
 import {bindActionCreators} from 'redux';
 import React, {Component} from 'react';
-// eslint-disable-next-line react-native/split-platform-components
 import {Text, View, StyleSheet} from 'react-native';
 import {strings} from '../shared/i18n';
 import PropTypes from 'prop-types';

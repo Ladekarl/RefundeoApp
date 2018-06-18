@@ -130,7 +130,13 @@
     "refund_case_already_claimed": "The refund has already been claimed."
   },
   "stores": {
-    "permission_title": "Refundeo Location Permission",
-    "permission_message": "Refundeo needs to acces you location to know where you are."
+    "opening_hours": "Opening hours",
+    "refund_percentage": "Refund percentage",
+    "address": "Address",
+    "distance": "Distance",
+    "distance_all": "all",
+    "filter": "Filter",
+    "refund": "Refund",
+    "empty": "No stores available.\n\nPlease adjust filter settings."
   }
 }

@@ -130,7 +130,13 @@
     "refund_case_already_claimed": "Refusionen er allerede blevet registreret."
   },
   "stores": {
-    "permission_title": "Refundeo Lokationstilladelse",
-    "permission_message": "Refundeo har brug for adgang til din lokation for at vide hvor du befinder dig."
+    "opening_hours": "Åbningstider",
+    "refund_percentage": "Refusion (%)",
+    "address": "Adresse",
+    "distance": "Afstand",
+    "distance_all": "alle",
+    "filter": "Filter",
+    "refund": "Refusion",
+    "empty": "Ingen butikker tilgængelige.\n\nJustér filterindstillingerne."
   }
 }

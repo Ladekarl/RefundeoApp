@@ -9,6 +9,8 @@ import {bindActionCreators} from 'redux';
 import {hasDrawer} from '../navigation/NavigationConfiguration';
 import ModalScreen from '../components/Modal';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import geolib from 'geolib';
+import {strings} from '../shared/i18n';
 
 class HeaderScreen extends Component {
 
@@ -19,6 +21,10 @@ class HeaderScreen extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            filterRefundSliderValue: [props.state.filterRefundSliderValue[0], props.state.filterRefundSliderValue[1]],
+            filterDistanceSliderValue: [props.state.filterDistanceSliderValue[0], props.state.filterDistanceSliderValue[1]]
+        };
     }
 
     onFilterPress = () => {
@@ -29,25 +35,45 @@ class HeaderScreen extends Component {
         this.props.actions.closeModal('filterModal');
     };
 
+    changeSliderValues = () => {
+        this.closeFilterModal();
+        this.props.actions.changeFilterRefundSliderValue(this.state.filterRefundSliderValue);
+        this.props.actions.changeFilterDistanceSliderValue(this.state.filterDistanceSliderValue);
+    };
+
     distanceSliderValuesChange = (values) => {
-        this.props.actions.changeFilterDistanceSliderValue(values);
+        this.setState({
+            filterDistanceSliderValue: values
+        });
     };
 
     refundSliderValuesChange = (values) => {
-        this.props.actions.changeFilterRefundSliderValue(values);
+        this.setState({
+            filterRefundSliderValue: values
+        });
+    };
+
+    getDistanceSliderValue = (sliderValue) => {
+        if (sliderValue >= 1000) {
+            if (sliderValue >= 10000) {
+                return strings('stores.distance_all');
+            } else {
+                return geolib.convertUnit('km', sliderValue, 1) + ' km';
+            }
+        } else {
+            return sliderValue + ' m';
+        }
     };
 
 
     render() {
-        const {navigation, refundCases, filterDistanceSliderValue, filterRefundSliderValue} = this.props.state;
+        const {navigation, refundCases} = this.props.state;
 
         let displayFilter = navigation.currentRoute === 'Stores' && !navigation.isMap;
         let displayHelp = navigation.currentRoute === 'Overview' && refundCases.length > 0;
 
-        let maxValue = filterDistanceSliderValue[1];
-        if (filterDistanceSliderValue[1] === 10000) {
-            maxValue = 'unlimited';
-        }
+        let minFilterDistanceValue = this.getDistanceSliderValue(this.state.filterDistanceSliderValue[0]);
+        let maxFilterDistanceValue = this.getDistanceSliderValue(this.state.filterDistanceSliderValue[1]);
 
         return (
             <View style={styles.container}>
@@ -100,25 +126,27 @@ class HeaderScreen extends Component {
                 </View>
                 }
                 <ModalScreen
-                    modalTitle={'Filter'}
-                    onSubmit={this.closeFilterModal}
+                    modalTitle={strings('stores.filter')}
+                    onSubmit={this.changeSliderValues}
                     onBack={this.closeFilterModal}
                     onCancel={this.closeFilterModal}
                     visible={this.props.state.navigation.modal['filterModal'] || false}>
                     <View style={styles.filterContainer}>
                         <View style={styles.filterRowContainer}>
                             <Text style={styles.filterTitle}>
-                                Distance (m)
+                                {strings('stores.distance')}
                             </Text>
                             <Text style={styles.filterSliderText}>
-                                {filterDistanceSliderValue[0] + ' - ' + maxValue}
+                                {minFilterDistanceValue + ' - ' + maxFilterDistanceValue}
                             </Text>
                             <View style={styles.filterSlider}>
                                 <MultiSlider
-                                    values={filterDistanceSliderValue}
+                                    values={this.state.filterDistanceSliderValue}
                                     min={0}
                                     max={10000}
                                     step={100}
+                                    markerStyle={styles.filterMarkerStyle}
+                                    selectedStyle={styles.filterTrackStyle}
                                     allowOverlap={false}
                                     onValuesChange={this.distanceSliderValuesChange}
                                 />
@@ -127,19 +155,20 @@ class HeaderScreen extends Component {
                         </View>
                         <View style={styles.filterRowContainer}>
                             <Text style={styles.filterTitle}>
-                                Refund percantage
+                                {strings('stores.refund_percentage')}
                             </Text>
                             <Text style={styles.filterSliderText}>
-                                {filterRefundSliderValue[0] + ' - ' + filterRefundSliderValue[1]}</Text>
+                                {this.state.filterRefundSliderValue[0] + ' - ' + this.state.filterRefundSliderValue[1]}</Text>
                             <View style={styles.filterSlider}>
                                 <MultiSlider
-                                    values={filterRefundSliderValue}
+                                    values={this.state.filterRefundSliderValue}
                                     min={0}
                                     max={100}
                                     step={1}
+                                    markerStyle={styles.filterMarkerStyle}
+                                    selectedStyle={styles.filterTrackStyle}
                                     allowOverlap={false}
                                     onValuesChange={this.refundSliderValuesChange}
-
                                 />
                             </View>
                         </View>
@@ -249,6 +278,12 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         marginTop: 10,
         alignSelf: 'center'
+    },
+    filterMarkerStyle: {
+        backgroundColor: colors.activeTabColor
+    },
+    filterTrackStyle: {
+        backgroundColor: colors.activeTabColor,
     }
 });
 

@@ -1,35 +1,25 @@
-import {PermissionsAndroid, Platform} from 'react-native';
-import {strings} from './i18n';
+import Permissions from 'react-native-permissions';
 
 export default class Location {
     static async getCurrentPosition() {
-        if (Platform.OS === 'ios') {
-            return await this.getCurrentPositionWrapper();
+        const response = await Permissions.check('location');
+        if (response === 'authorized') {
+            return await this._getCurrentPositionWrapper();
         } else {
-            const hasPermission = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-            if (hasPermission) {
-                return await this.getCurrentPositionWrapper();
-            } else {
-                await this.requestAndroidPermission();
-                return await this.getCurrentPositionWrapper();
-            }
+            await this.requestPermission();
+            return await this._getCurrentPositionWrapper();
         }
     }
 
-    static async requestAndroidPermission() {
-        const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION, {
-                'title': strings('stores.permission_title'),
-                'message': strings('stores.permission_message')
-            }
-        );
-        if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
-            throw granted;
+    static async requestPermission() {
+        const response = await Permissions.request('location');
+        if (response !== 'authorized') {
+            throw response;
         }
     }
 
 
-    static getCurrentPositionWrapper(): Promise {
+    static _getCurrentPositionWrapper(): Promise {
         return new Promise((resolve, reject) => {
             navigator.geolocation.getCurrentPosition((position) => {
                 resolve(position);

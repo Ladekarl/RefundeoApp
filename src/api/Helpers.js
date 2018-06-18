@@ -1,5 +1,7 @@
 import {strings} from '../shared/i18n';
 import LocalStorage from '../storage';
+import Location from '../shared/Location';
+import geolib from 'geolib';
 
 export const API_URL = 'https://refundeo20180331121625.azurewebsites.net';
 
@@ -145,7 +147,21 @@ export default class Helpers {
         return Helpers.saveUser(user);
     }
 
-    static async getDistance(merchant) {
-
+    static async setMerchantDistances(merchants) {
+        const location = await Location.getCurrentPosition();
+        let merchantsWithDistance = [];
+        merchants.forEach((merchant) => {
+            merchant.distance = geolib.getDistance(location.coords, {
+                latitude: merchant.latitude,
+                longitude: merchant.longitude
+            }, 100);
+            if (merchant.distance) {
+                merchantsWithDistance.push(merchant);
+            }
+        });
+        merchantsWithDistance.sort((a, b) => {
+            return a.distance - b.distance;
+        });
+        return merchantsWithDistance;
     }
 }

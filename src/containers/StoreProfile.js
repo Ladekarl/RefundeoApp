@@ -5,6 +5,7 @@ import {bindActionCreators} from 'redux';
 import Actions from '../actions/Actions';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import {strings} from '../shared/i18n';
 
 class StoreProfile extends Component {
 
@@ -37,8 +38,8 @@ class StoreProfile extends Component {
                 </ImageBackground>
                 <View style={styles.bannerTextBarContainer}>
                     <View style={styles.bannerColumnContainer}>
-                        <Text style={styles.leftText}>Opening hours</Text>
-                        <Text style={styles.leftText}>Refund Percentage</Text>
+                        <Text style={styles.leftText}>{strings('stores.opening_hours')}</Text>
+                        <Text style={styles.leftText}>{strings('stores.refund_percentage')}</Text>
                     </View>
                     <View style={styles.bannerColumnContainer}>
                         <Text style={styles.contentText}>{selectedMerchant.openingHours}</Text>
@@ -51,7 +52,7 @@ class StoreProfile extends Component {
                     </Text>
                 </View>
                 <View style={styles.addressContainer}>
-                    <Text style={styles.addressTitleText}>Address</Text>
+                    <Text style={styles.addressTitleText}>{strings('stores.address')}</Text>
                     <Text style={styles.addressText}>
                         {`${selectedMerchant.addressStreetName} ${selectedMerchant.addressStreetNumber}, ${selectedMerchant.addressPostalCode} ${selectedMerchant.addressCity}, ${selectedMerchant.addressCountry}`}
                     </Text>
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
     },
     leftText: {
         margin: 5,
-        color: colors.inactiveTabColor
+        color: colors.separatorColor
     },
     contentText: {
         margin: 5,
@@ -114,18 +115,22 @@ const styles = StyleSheet.create({
     descriptionContainer: {
         paddingTop: 20,
         paddingLeft: 20,
-        paddingRight: 20
+        paddingRight: 20,
+        backgroundColor: colors.backgroundColor
     },
     addressContainer: {
         paddingTop: 15,
         paddingLeft: 20,
         paddingRight: 20,
-        paddingBottom: 15
+        paddingBottom: 15,
+        backgroundColor: colors.backgroundColor
     },
     addressTitleText: {
-        color: colors.activeTabColor
+        color: colors.activeTabColor,
+        fontSize: 15
     },
     addressText: {
+        color: colors.darkTextColor,
         marginTop: 10,
         fontSize: 15
     }

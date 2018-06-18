@@ -213,15 +213,6 @@ export default class Api {
 
         const merchants = await response.json();
 
-        const location = await Location.getCurrentPosition();
-
-        merchants.forEach((merchant) => {
-            merchant.distance = geolib.getDistance(location.coords, {
-                latitude: merchant.latitude,
-                longitude: merchant.longitude
-            }, 100);
-        });
-
-        return merchants;
+        return await Helpers.setMerchantDistances(merchants);
     }
 }

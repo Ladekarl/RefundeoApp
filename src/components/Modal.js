@@ -1,5 +1,15 @@
 import React, {Component} from 'react';
-import {Modal, Picker, StyleSheet, Text, TouchableOpacity, View, Platform, KeyboardAvoidingView} from 'react-native';
+import {
+    Modal,
+    Picker,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+    Platform,
+    KeyboardAvoidingView,
+    ViewPropTypes
+} from 'react-native';
 import PropTypes from 'prop-types';
 import colors from '../shared/colors';
 import {strings} from '../shared/i18n';
@@ -20,10 +30,9 @@ export default class ModalScreen extends Component {
         onBack: PropTypes.func,
         noCancelButton: PropTypes.bool,
         noSubmitButton: PropTypes.bool,
-        contentContainerStyle: PropTypes.oneOfType([
-            PropTypes.number,
-            PropTypes.object
-        ]),
+        contentContainerStyle: ViewPropTypes.style,
+        topContainerStyle: ViewPropTypes.style,
+        fullScreen: PropTypes.bool,
         children: PropTypes.element
     };
 
@@ -37,7 +46,8 @@ export default class ModalScreen extends Component {
         },
         onBack: () => {
         },
-        contentContainerStyle: {}
+        contentContainerStyle: {},
+        topContainerStyle: {}
     };
 
     constructor(props) {
@@ -59,7 +69,9 @@ export default class ModalScreen extends Component {
             noSubmitButton,
             children,
             noChildren,
-            contentContainerStyle
+            contentContainerStyle,
+            topContainerStyle,
+            fullScreen
         } = this.props;
 
         return (
@@ -70,8 +82,10 @@ export default class ModalScreen extends Component {
                 visible={visible}>
                 <KeyboardAvoidingView style={styles.modalContainer}
                                       keyboardVerticalOffset={Platform.OS === 'ios' ? -100 : -300} behavior='padding'>
-                    <View style={[styles.modalInnerContainer, contentContainerStyle]}>
-                        <View style={styles.modalTopContainer}>
+                    <View
+                        style={[styles.modalInnerContainer, contentContainerStyle, fullScreen ? styles.fullInnerContainer : {}]}>
+                        <View
+                            style={[styles.modalTopContainer, topContainerStyle, fullScreen ? styles.fullTopContainer : {}]}>
                             {!noCancelButton &&
                             <TouchableOpacity style={styles.cancelButton} onPress={onCancel}>
                                 <Icon style={styles.cancelIcon} name='times'/>
@@ -83,7 +97,7 @@ export default class ModalScreen extends Component {
                             <Text style={styles.modalTitleText}>{modalTitle}</Text>
                             <View style={styles.emptyContainer}/>
                         </View>
-                        <View style={styles.modalCenterContainer}>
+                        <View style={[styles.modalCenterContainer, fullScreen ? styles.fullCenterContainer : {}]}>
                             {isPicker &&
                             <View style={styles.modalPickerContainer}>
                                 <Picker
@@ -189,5 +203,16 @@ const styles = StyleSheet.create({
     cancelIcon: {
         fontSize: 20,
         color: colors.backgroundColor
+    },
+    fullCenterContainer: {
+        flex: 1,
+    },
+    fullInnerContainer: {
+        height: '100%',
+        width: '100%'
+    },
+    fullTopContainer: {
+        height: Platform.OS === 'ios' ? 70 : 60,
+        paddingTop: Platform.OS === 'ios' ? 25 : 15
     }
 });
