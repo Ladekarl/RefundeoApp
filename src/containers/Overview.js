@@ -34,10 +34,6 @@ class OverviewScreen extends Component {
         super(props);
     }
 
-    navigateScanner = () => {
-        this.props.actions.navigateScanner();
-    };
-
     handleIconPressed = (refundCase) => {
         this.pressedRefundCase = refundCase;
         this._showImagePicker();

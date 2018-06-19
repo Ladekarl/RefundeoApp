@@ -11,7 +11,7 @@ export default {
     navigateAndResetToMainFlow,
     toggleDrawer,
     openDrawer,
-    claimRefundCase,
+    createRefundCase,
     uploadDocumentation,
     navigateLogIn,
     navigateRegister,
@@ -19,6 +19,7 @@ export default {
     navigateSettings,
     navigateDrawerSettings,
     navigateScanner,
+    navigateQrCode,
     navgiateOverview,
     navigateHelp,
     navigateStoreProfile,
@@ -36,12 +37,13 @@ export default {
     getRefundCases,
     changeUser,
     getUser,
+    getScannedUser,
     changePassword,
     requestRefund,
     getMerchants,
     selectMerchant,
     changeFilterDistanceSliderValue,
-    changeFilterRefundSliderValue
+    changeFilterRefundSliderValue,
 };
 
 function changeFilterDistanceSliderValue(sliderValue) {
@@ -106,7 +108,10 @@ function navigateInitial() {
             if (user && user.token) {
                 NotificationService.register();
                 dispatch(loginSuccess(user));
-                if (missingUserInfo(user)) {
+                if (user.isMerchant) {
+                    dispatch(navigateScanner());
+                }
+                else if (missingUserInfo(user)) {
                     dispatch(navigateRegisterExtraReset());
                 } else {
                     dispatch(navigateAndResetToMainFlow());
@@ -161,6 +166,12 @@ function navigateLogOut() {
 function navigateScanner() {
     return {
         type: types.NAVIGATE_SCANNER
+    };
+}
+
+function navigateQrCode() {
+    return {
+        type: types.NAVIGATE_QR_CODE
     };
 }
 
@@ -263,7 +274,10 @@ function loginFacebook(accessToken) {
             if (user && user.token) {
                 dispatch(loginSuccess(user));
                 NotificationService.register();
-                if (missingUserInfo(user)) {
+                if (user.isMerchant) {
+                    dispatch(navigateScanner());
+                }
+                else if (missingUserInfo(user)) {
                     dispatch(navigateRegisterExtra());
                 } else {
                     dispatch(navigateAndResetToMainFlow());
@@ -291,7 +305,10 @@ function login(username, password) {
             if (user && user.token) {
                 NotificationService.register();
                 dispatch(loginSuccess(user));
-                if (missingUserInfo(user)) {
+                if (user.isMerchant) {
+                    dispatch(navigateScanner());
+                }
+                else if (missingUserInfo(user)) {
                     dispatch(navigateRegisterExtra());
                 } else {
                     dispatch(navigateAndResetToMainFlow());
@@ -329,9 +346,13 @@ function register(username, password, email, confPassword, acceptedTermsOfServic
             if (user && user.token) {
                 NotificationService.register();
                 dispatch(registerSuccess(user));
-                if (missingUserInfo(user)) {
+                if (user.isMerchant) {
+                    dispatch(navigateScanner());
+                }
+                else if (missingUserInfo(user)) {
                     dispatch(navigateRegisterExtra());
-                } else {
+                }
+                else {
                     dispatch(navigateAndResetToMainFlow());
                     dispatch(getRefundCases());
                 }
@@ -376,42 +397,41 @@ function requestRefund(refundCase) {
     };
 }
 
-function claimRefundCase(refundCaseId) {
+function createRefundCase(customerId, receiptNumber, amount, successModal) {
     return dispatch => {
-        dispatch(claimingRefundCase());
-        Api.claimRefundCase(refundCaseId).then(() => {
-            dispatch(getRefundCases());
-            dispatch(navgiateOverview());
-            dispatch(claimRefundCaseSuccess());
+        dispatch(creatingRefundCase());
+        Api.postRefundCase(customerId, receiptNumber, amount).then(() => {
+            dispatch(createRefundCaseSuccess());
+            dispatch(openModal(successModal));
         }).catch((response) => {
             if (shouldLogout(response)) {
                 dispatch(logout());
             } else if (response.status === 400) {
-                dispatch(claimRefundCaseError(strings('refund_case.refund_case_already_claimed')));
+                dispatch(createRefundCaseError(strings('refund_case.refund_case_already_claimed')));
             }
             else {
-                dispatch(claimRefundCaseError(strings('refund_case.claim_refund_case_error')));
+                dispatch(createRefundCaseError(strings('refund_case.claim_refund_case_error')));
             }
         });
     };
 }
 
-function claimingRefundCase() {
+function creatingRefundCase() {
     return {
-        type: types.REFUND_CLAIMING_REFUND_CASE
+        type: types.REFUND_CREATING_REFUND_CASE
     };
 }
 
-function claimRefundCaseSuccess() {
+function createRefundCaseSuccess() {
     return {
-        type: types.REFUND_CLAIM_REFUND_CASE_SUCCESS
+        type: types.REFUND_CREATE_REFUND_CASE_SUCCESS
     };
 }
 
-function claimRefundCaseError(claimRefundCaseError = '') {
+function createRefundCaseError(createRefundCaseError = '') {
     return {
-        type: types.REFUND_CLAIM_REFUND_CASE_ERROR,
-        claimRefundCaseError
+        type: types.REFUND_CREATE_REFUND_CASE_ERROR,
+        createRefundCaseError
     };
 }
 
@@ -593,6 +613,22 @@ function getUser() {
     };
 }
 
+function getScannedUser(id, modalName) {
+    return dispatch => {
+        dispatch(gettingUser());
+        Api.getUserById(id).then((user) => {
+            dispatch(getOtherUserSuccess(user));
+            dispatch(openModal(modalName));
+        }).catch((response) => {
+            if (shouldLogout(response)) {
+                dispatch(logout());
+            } else {
+                dispatch(getOtherUserError('Could not get user'));
+            }
+        });
+    };
+}
+
 function gettingUser() {
     return {
         type: types.AUTH_GETTING_USER
@@ -606,9 +642,23 @@ function getUserSuccess(user) {
     };
 }
 
-function getUserError(error) {
+function getOtherUserSuccess(user) {
+    return {
+        type: types.AUTH_GET_OTHER_USER_SUCCESS,
+        user
+    };
+}
+
+function getUserError(error = '') {
     return {
         type: types.AUTH_GET_USER_ERROR,
+        error
+    };
+}
+
+function getOtherUserError(error = '') {
+    return {
+        type: types.AUTH_GET_OTHER_USER_ERROR,
         error
     };
 }
@@ -685,7 +735,7 @@ function checkEmail(email) {
 }
 
 function shouldLogout(response) {
-    return response.status === 401 || response.status === 404 || response.status === 403;
+    return response.status === 401 || response.status === 403;
 }
 
 

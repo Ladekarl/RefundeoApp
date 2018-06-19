@@ -139,11 +139,20 @@ export default function navigationReducer(state = initialState, action = {}) {
             break;
         }
         case types.NAVIGATE_SCANNER: {
-            const navigationAction = NavigationActions.navigate({routeName: 'Scanner'});
+            nextState = {
+                ...state,
+                ...navigateAndReset('merchantFlow', state, false),
+                currentRoute: 'Scanner',
+                drawerRoute: ''
+            };
+            break;
+        }
+        case types.NAVIGATE_QR_CODE: {
+            const navigationAction = NavigationActions.navigate({routeName: 'QRCode'});
             nextState = {
                 ...state,
                 ...RootNavigator.router.getStateForAction(navigationAction, state),
-                currentRoute: 'Scanner',
+                currentRoute: 'QRCode',
                 drawerRoute: 'Home'
             };
             break;

@@ -99,11 +99,10 @@
     "missing_username": "Indtast email",
     "missing_password": "Indtast password",
     "user_does_not_exist": "Brugeren eksisterer ikke",
-    "wrong_password": "Forkert password",
-    "user_not_customer": "Venligst log ind gennem administrationssiden"
+    "wrong_password": "Forkert password"
   },
   "scanner": {
-    "top_text": "Scan QR koden på din kvittering"
+    "top_text": "Scan kundens QR kode"
   },
   "overview": {
     "welcome_text": "Velkommen til Refundeo",

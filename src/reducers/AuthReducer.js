@@ -18,7 +18,7 @@ const initialState = {
         lastName: '',
         country: '',
         email: '',
-        swift : '',
+        swift: '',
         passport: '',
         AddressCity: '',
         AddressStreetNumber: '',
@@ -30,7 +30,15 @@ const initialState = {
         acceptedTermsOfService: false,
         privacyPolicy: '',
         termsOfService: '',
-        refreshToken: ''
+        refreshToken: '',
+        isMerchant: false,
+    },
+    otherUser: {
+        id: '',
+        firstName: '',
+        lastName: '',
+        country: '',
+        email: ''
     }
 };
 
@@ -49,6 +57,7 @@ export default function authReducer(state = initialState, action = {}) {
     switch (action.type) {
         case types.AUTH_REGISTERING:
         case types.AUTH_GETTING_USER:
+        case types.AUTH_GETTING_OTHER_USER:
         case types.AUTH_CHANGING_USER:
         case types.AUTH_CHANGING_PASSWORD:
         case types.AUTH_LOGGING_IN: {
@@ -94,6 +103,15 @@ export default function authReducer(state = initialState, action = {}) {
             };
             break;
         }
+        case types.AUTH_GET_OTHER_USER_SUCCESS: {
+            nextState = {
+                ...state,
+                otherUser: action.user,
+                fetching: false,
+                ...resetErrors
+            };
+            break;
+        }
         case types.AUTH_LOGOUT_SUCCESS: {
             nextState = {
                 ...state,
@@ -120,6 +138,7 @@ export default function authReducer(state = initialState, action = {}) {
             };
             break;
         }
+        case types.AUTH_GET_OTHER_USER_ERROR:
         case types.AUTH_GET_USER_ERROR: {
             nextState = {
                 ...state,

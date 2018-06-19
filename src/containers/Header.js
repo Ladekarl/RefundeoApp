@@ -22,12 +22,21 @@ class HeaderScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            filterRefundSliderValue: [props.state.filterRefundSliderValue[0], props.state.filterRefundSliderValue[1]],
-            filterDistanceSliderValue: [props.state.filterDistanceSliderValue[0], props.state.filterDistanceSliderValue[1]]
+            ...this.getInitialFilterState()
         };
     }
 
+    getInitialFilterState = () => {
+        return {
+            filterRefundSliderValue: [this.props.state.filterRefundSliderValue[0], this.props.state.filterRefundSliderValue[1]],
+            filterDistanceSliderValue: [this.props.state.filterDistanceSliderValue[0], this.props.state.filterDistanceSliderValue[1]]
+        };
+    };
+
     onFilterPress = () => {
+        this.setState({
+            ...this.getInitialFilterState()
+        });
         this.props.actions.openModal('filterModal');
     };
 
@@ -67,22 +76,27 @@ class HeaderScreen extends Component {
 
 
     render() {
-        const {navigation, refundCases} = this.props.state;
+        const {navigation, refundCases, user} = this.props.state;
+        const isMerchant = user.isMerchant;
 
         let displayFilter = navigation.currentRoute === 'Stores' && !navigation.isMap;
-        let displayHelp = navigation.currentRoute === 'Overview' && refundCases.length > 0;
+        let displayHelp = !displayFilter && refundCases.length > 0;
 
         let minFilterDistanceValue = this.getDistanceSliderValue(this.state.filterDistanceSliderValue[0]);
         let maxFilterDistanceValue = this.getDistanceSliderValue(this.state.filterDistanceSliderValue[1]);
 
         return (
             <View style={styles.container}>
-                {hasDrawer &&
+                {isMerchant &&
+                <View style={styles.noDrawerHeader}>
+                </View>
+                }
+                {hasDrawer && !isMerchant &&
                 <TouchableOpacity style={styles.headerButton} onPress={this.props.actions.toggleDrawer}>
                     <Icon name='bars' style={styles.drawerIcon}/>
                 </TouchableOpacity>
                 }
-                {!hasDrawer &&
+                {!hasDrawer && !isMerchant &&
                 <TouchableOpacity style={styles.noDrawerHeader}
                                   onPress={this.props.actions.navigateSettings}>
                     <Icon name='user-circle' style={hasDrawer ? styles.drawerIcon : styles.noDrawerIcon}/>
@@ -121,9 +135,15 @@ class HeaderScreen extends Component {
                     <Icon name='question-circle' style={hasDrawer ? styles.drawerIcon : styles.noDrawerIcon}/>
                 </TouchableOpacity>
                 }
-                {!displayFilter && !displayHelp &&
+                {!displayFilter && !displayHelp && !isMerchant &&
                 <View style={styles.noDrawerHeader}>
                 </View>
+                }
+                {isMerchant &&
+                <TouchableOpacity style={styles.noDrawerHeader}
+                                  onPress={this.props.actions.logout}>
+                    <Icon name='sign-out' style={styles.noDrawerIcon}/>
+                </TouchableOpacity>
                 }
                 <ModalScreen
                     modalTitle={strings('stores.filter')}
@@ -293,7 +313,8 @@ const mapStateToProps = state => {
         state: {
             navigation,
             ...state.refundReducer,
-            ...state.merchantReducer
+            ...state.merchantReducer,
+            ...state.authReducer
         }
     };
 };

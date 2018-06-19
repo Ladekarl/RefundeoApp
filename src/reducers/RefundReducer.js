@@ -29,11 +29,11 @@ type RefundReducerState = {
     fetchingRefundCases: boolean,
     fetchingDocumentation: boolean,
     fetchingRequestRefund: boolean,
-    fetchingClaimRefundCase: boolean,
+    fetchingCreateRefundCase: boolean,
     getRefundCasesError: string,
     documentationError: string,
     requestRefundError: string,
-    claimRefundCaseError: string
+    createRefundCaseError: string
 }
 
 const initialState: RefundReducerState = {
@@ -41,11 +41,11 @@ const initialState: RefundReducerState = {
     fetchingRefundCases: false,
     fetchingDocumentation: false,
     fetchingRequestRefund: false,
-    fetchingClaimRefundCase: false,
+    fetchingCreateRefundCase: false,
     getRefundCasesError: '',
     documentationError: '',
     requestRefundError: '',
-    claimRefundCaseError: ''
+    createRefundCaseError: ''
 };
 
 export default function refundReducer(state = initialState, action = {}) {
@@ -115,25 +115,25 @@ export default function refundReducer(state = initialState, action = {}) {
                 requestRefundError: action.requestRefundError
             };
             break;
-        case types.REFUND_CLAIMING_REFUND_CASE:
+        case types.REFUND_CREATING_REFUND_CASE:
             nextState = {
                 ...state,
-                fetchingClaimRefundCase: true,
+                fetchingCreateRefundCase: true,
                 claimRefundCaseError: ''
             };
             break;
-        case types.REFUND_CLAIM_REFUND_CASE_SUCCESS:
+        case types.REFUND_CREATE_REFUND_CASE_SUCCESS:
             nextState = {
                 ...state,
-                fetchingClaimRefundCase: false,
+                fetchingCreateRefundCase: false,
                 claimRefundCaseError: ''
             };
             break;
-        case types.REFUND_CLAIM_REFUND_CASE_ERROR:
+        case types.REFUND_CREATE_REFUND_CASE_ERROR:
             nextState = {
                 ...state,
-                fetchingClaimRefundCase: false,
-                claimRefundCaseError: action.claimRefundCaseError
+                fetchingCreateRefundCase: false,
+                createRefundCaseError: action.createRefundCaseError
             };
             break;
     }

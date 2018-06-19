@@ -5,8 +5,17 @@ import Icon from 'react-native-fa-icons';
 
 import Swiper from 'react-native-swiper';
 import TutorialPage from './TutorialPage';
+import {strings} from '../shared/i18n';
 
 export default class EmptyOverviewScreen extends Component {
+
+    static navigationOptions = {
+        title: 'Help',
+        headerTitleStyle: {
+            fontSize: 18
+        }
+    };
+
     render() {
         return (
             <Swiper

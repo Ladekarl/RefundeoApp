@@ -99,11 +99,10 @@
     "missing_username": "Please enter email",
     "missing_password": "Please enter password",
     "user_does_not_exist": "The user does not exist",
-    "wrong_password": "Wrong password",
-    "user_not_customer": "Please login through administration site"
+    "wrong_password": "Wrong password"
   },
   "scanner": {
-    "top_text": "Scan the QR code on your receipt"
+    "top_text": "Scan the customers QR Code"
   },
   "overview": {
     "welcome_text": "Welcome to Refundeo",

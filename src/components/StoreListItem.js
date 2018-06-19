@@ -51,7 +51,7 @@ export default class StoreListItem extends Component {
                 <View style={styles.cardContainer}>
                     <ImageBackground
                         style={styles.bannerImage}
-                        source={{uri: 'data:image/png;base64,' + banner}}
+                            source={{uri: 'data:image/png;base64,' + banner}}
                         borderRadius={2}>
                         <View style={styles.bannerTextBarContainer}>
                             <View style={styles.leftContainer}>

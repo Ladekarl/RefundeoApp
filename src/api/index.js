@@ -2,8 +2,6 @@ import Helpers, {API_URL} from './Helpers';
 import LocalStorage from '../storage';
 import RNFetchBlob from 'react-native-fetch-blob';
 import Guid from '../shared/Guid';
-import geolib from 'geolib';
-import Location from '../shared/Location';
 
 export default class Api {
     static async getTokenFacebook(accessToken) {
@@ -21,7 +19,7 @@ export default class Api {
 
         await Helpers.saveUser(user);
 
-        return await Api.getUser();
+        return user;
     }
 
     static async getToken(username, password) {
@@ -44,7 +42,7 @@ export default class Api {
 
         await Helpers.saveUser(user);
 
-        return await Api.getUser();
+        return user;
     }
 
     static async register(username, password, email, acceptedTermsOfService, termsOfService, acceptedPrivacyPolicy, privacyPolicy) {
@@ -85,6 +83,17 @@ export default class Api {
         const user = await response.json();
 
         return await Helpers.updateUser(user);
+    }
+
+    static async getUserById(id) {
+        const requestOptions = {
+            method: 'GET',
+            headers: await Helpers.authHeader(),
+        };
+
+        const response = await Helpers.fetchAuthenticated(`${API_URL}/api/user/account/${encodeURIComponent(id)}`, requestOptions);
+
+        return await response.json();
     }
 
     static async updateUser(user) {
@@ -190,15 +199,24 @@ export default class Api {
         return await Helpers.fetchAuthenticated(`${API_URL}/api/user/refundcase/${refundCase.id}/request`, requestOptions);
     }
 
-    static async claimRefundCase(refundCaseId) {
+    static async postRefundCase(customerId, receiptNumber, amount) {
         const requestOptions = {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 ...await Helpers.authHeader(),
-            }
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                amount,
+                qrCodeHeight: 200,
+                qrCodeWidth: 200,
+                qrCodeMargin: 5,
+                receiptNumber,
+                customerId
+            })
         };
 
-        return await Helpers.fetchAuthenticated(`${API_URL}/api/user/refundcase/${refundCaseId}/claim`, requestOptions);
+        return await Helpers.fetchAuthenticated(`${API_URL}/api/merchant/refundcase`, requestOptions);
     }
 
     static async getAllMerchants() {

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {ActivityIndicator, Platform, StyleSheet, Text, View} from 'react-native';
-import Icon from 'react-native-fa-icons';
+import {ActivityIndicator, Keyboard, Platform, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import colors from '../shared/colors';
 import {strings} from '../shared/i18n';
@@ -8,25 +7,13 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import Actions from '../actions/Actions';
 import PropTypes from 'prop-types';
+import ModalScreen from '../components/Modal';
 
 class ScannerScreen extends Component {
 
     // noinspection JSUnusedGlobalSymbols
     static navigationOptions = {
-        tabBarIcon: ({tintColor}) => {
-            let newTintColor = tintColor === colors.activeTabColor ? colors.inactiveTabColor : colors.backgroundColor;
-            if(Platform.OS === 'ios') {
-                return (
-                    <View style={styles.tabBarContainerIOs}>
-                        <Icon name='camera' style={[styles.tabBarIconIOs, {color: newTintColor}]}/>
-                    </View>
-                );
-            } else {
-                return (
-                    <Icon name='camera' style={[styles.tabBarIconAndroid, {color: tintColor}]}/>
-                )
-            }
-        }
+        title: 'Scanner'
     };
 
     static propTypes = {
@@ -35,26 +22,96 @@ class ScannerScreen extends Component {
     };
 
     qrCodeScanner;
+    modalTextInput;
+    secondTextInput;
+
+    initialState = {
+        customerId: '',
+        amount: null,
+        receiptNumber: '',
+        modalInputError: ''
+    };
 
     constructor(props) {
         super(props);
+        this.state = this.initialState;
     }
 
     componentWillUpdate() {
-        if (!this.props.state.fetchingClaimRefundCase && this.qrCodeScanner) {
+        this.reactivateQrCodeScanner();
+    }
+
+    reactivateQrCodeScanner() {
+        if (this.qrCodeScanner && !this.props.state.fetchingCreateRefundCase && !this.props.state.fetching && !this.props.state.navigation.modal['createRefundModal']) {
             this.qrCodeScanner.reactivate();
         }
     }
 
     onSuccess = (e) => {
-        const refundCaseId = e.data;
-        this.props.actions.claimRefundCase(refundCaseId);
+        const customerId = JSON.parse(e.data);
+        this.setState({
+            customerId
+        });
+
+        this.props.actions.getScannedUser(customerId, 'createRefundModal');
+    };
+
+    closeModal = () => {
+        this.props.actions.closeModal('createRefundModal');
+        this.setState({
+            ...this.initialState
+        });
+    };
+
+    onModalSubmit = () => {
+        let customerId = this.state.customerId;
+        let receiptNumber = this.state.receiptNumber;
+        let amount = this.state.amount;
+        this.setState({
+            modalInputError: 'Please fill all fields'
+        });
+        if (customerId && receiptNumber && amount) {
+            this.props.actions.createRefundCase(customerId, receiptNumber, amount, 'createRefundSuccessModal');
+            this.closeModal();
+        } else if (customerId) {
+            this.setState({
+                modalInputError: 'Please fill all fields'
+            });
+        } else {
+            this.setState({
+                modalInputError: 'Could not find customer'
+            });
+        }
+    };
+
+    focusSecondTextInput = () => {
+        if (this.secondTextInput) {
+            this.secondTextInput.focus();
+        } else {
+            Keyboard.dismiss();
+        }
+    };
+
+    changeAmount = (amount) => {
+        this.setState({
+            amount
+        });
+    };
+
+    changeReceiptNumber = (receiptNumber) => {
+        this.setState({
+            receiptNumber
+        });
+    };
+
+    closeSuccessModal = () => {
+        this.props.actions.closeModal('createRefundSuccessModal');
     };
 
     render() {
         const {state} = this.props;
-        const fetching = state.fetchingClaimRefundCase;
-        const error = state.claimRefundCaseError;
+        const fetching = state.fetchingCreateRefundCase || state.fetching;
+        const error = state.createRefundCaseError ? state.createRefundCaseError : state.getUserError;
         const navigation = state.navigation;
 
         return (
@@ -71,7 +128,6 @@ class ScannerScreen extends Component {
                             <View style={styles.rectangle}/>
                         </View>
                     }
-                    reactivateTimeout={2}
                     topContent={
                         <View style={styles.cameraContentContainer}>
                             <Text style={styles.centerTopText}>
@@ -94,6 +150,67 @@ class ScannerScreen extends Component {
                     <ActivityIndicator size='large' color={colors.activeTabColor} style={styles.activityIndicator}/>
                 </View>
                 }
+                <ModalScreen
+                    modalTitle={'Success'}
+                    onBack={this.closeSuccessModal}
+                    onCancel={this.closeSuccessModal}
+                    onSubmit={this.closeSuccessModal}
+                    visible={this.props.state.navigation.modal['createRefundSuccessModal']}>
+                    <View>
+                        <Text style={styles.headlineText}>Successfully created refund. Ask the customer to refresh the list of refunds</Text>
+                    </View>
+                </ModalScreen>
+                <ModalScreen
+                    modalTitle={'Fill all fields'}
+                    visible={this.props.state.navigation.modal['createRefundModal'] && !fetching || false}
+                    onSubmit={this.onModalSubmit}
+                    onBack={this.closeModal}
+                    fullScreen={true}
+                    onCancel={this.closeModal}>
+                    <ScrollView contentContainerStyle={styles.modalContainer}>
+                        <Text style={styles.headlineText}>Customer</Text>
+                        <Text style={styles.modalInput}>{state.user.firstName + ' ' + state.user.lastName}</Text>
+                        <Text style={styles.modalInput}>{state.user.email}</Text>
+                        <Text style={styles.headlineText}>Amount</Text>
+                        <TextInput
+                            ref={(input) => this.modalTextInput = input}
+                            style={styles.modalInput}
+                            value={this.state.amount}
+                            onChangeText={this.changeAmount}
+                            autoFocus={true}
+                            maxLength={64}
+                            placeholder={'Amount'}
+                            selectionColor={colors.inactiveTabColor}
+                            underlineColorAndroid={colors.activeTabColor}
+                            tintColor={colors.activeTabColor}
+                            numberOfLines={1}
+                            keyboardType={'numeric'}
+                            editable={true}
+                            returnKeyType={'next'}
+                            onSubmitEditing={this.focusSecondTextInput}
+                            blurOnSubmit={false}
+                        />
+                        <Text style={styles.headlineText}>Receipt number</Text>
+                        <TextInput
+                            ref={(input) => this.secondTextInput = input}
+                            style={styles.modalInput}
+                            value={this.state.receiptNumber}
+                            maxLength={64}
+                            onChangeText={this.changeReceiptNumber}
+                            placeholder={'Receipt number'}
+                            selectionColor={colors.inactiveTabColor}
+                            autoCapitalize={'none'}
+                            underlineColorAndroid={colors.activeTabColor}
+                            tintColor={colors.activeTabColor}
+                            numberOfLines={1}
+                            keyboardType={'default'}
+                            autoCorrect={false}
+                            editable={true}
+                            returnKeyType={'done'}
+                        />
+                        <Text style={styles.modalInputErrorText}>{this.state.modalInputError}</Text>
+                    </ScrollView>
+                </ModalScreen>
             </View>
         );
     }
@@ -117,7 +234,7 @@ const styles = StyleSheet.create({
         color: colors.activeTabColor
     },
     centerBottomText: {
-        fontSize: 15,
+        fontSize: 17,
         fontWeight: 'bold',
         color: colors.cancelButtonColor
     },
@@ -129,22 +246,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center'
-    },
-    tabBarContainerIOs: {
-        height: 60,
-        width: 60,
-        borderRadius: 100,
-        backgroundColor: colors.activeTabColor,
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingTop: 10,
-        paddingBottom: 10
-    },
-    tabBarIconIOs: {
-        fontSize: 25
-    },
-    tabBarIconAndroid: {
-        fontSize: 20
     },
     rectangleContainer: {
         flex: 1,
@@ -172,6 +273,31 @@ const styles = StyleSheet.create({
     activityIndicator: {
         elevation: 10,
         backgroundColor: 'transparent'
+    },
+    modalInput: {
+        textAlign: 'center',
+        minWidth: '80%',
+        fontSize: 16,
+        marginTop: Platform.OS === 'ios' ? 10 : 0
+    },
+    headlineText: {
+        textAlign: 'center',
+        marginLeft: 10,
+        marginTop: 20,
+        fontWeight: 'bold',
+        fontSize: 17
+    },
+    modalInputErrorText: {
+        textAlign: 'center',
+        fontSize: 17,
+        margin: 5,
+        color: colors.cancelButtonColor
+    },
+    modalContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 15,
+        marginBottom: 15
     }
 });
 
@@ -180,7 +306,8 @@ const mapStateToProps = state => {
     return {
         state: {
             navigation,
-            ...state.refundReducer
+            ...state.refundReducer,
+            ...state.authReducer
         }
     };
 };

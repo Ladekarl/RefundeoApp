@@ -106,10 +106,13 @@ export default class Helpers {
             if (user.acceptedTermsOfService && user.termsOfService.localeCompare(Helpers.termsOfService) !== 0) {
                 user.acceptedTermsOfService = false;
             }
-            await LocalStorage.setUser(user);
-        } else if (!user.roles || user.roles.indexOf('User') < 0) {
-            throw strings('login.user_not_customer');
+            user.isMerchant = false;
+        } else if (user.roles.indexOf('Merchant') > -1) {
+            user.isMerchant = true;
+        } else {
+            throw user;
         }
+        await LocalStorage.setUser(user);
         return user;
     }
 

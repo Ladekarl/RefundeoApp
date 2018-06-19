@@ -33,7 +33,8 @@ export default class ModalScreen extends Component {
         contentContainerStyle: ViewPropTypes.style,
         topContainerStyle: ViewPropTypes.style,
         fullScreen: PropTypes.bool,
-        children: PropTypes.element
+        children: PropTypes.element,
+        keyboardVerticalOffset: PropTypes.number
     };
 
     // noinspection JSUnusedGlobalSymbols
@@ -47,7 +48,8 @@ export default class ModalScreen extends Component {
         onBack: () => {
         },
         contentContainerStyle: {},
-        topContainerStyle: {}
+        topContainerStyle: {},
+        keyboardVerticalOffset: 0
     };
 
     constructor(props) {
@@ -71,7 +73,8 @@ export default class ModalScreen extends Component {
             noChildren,
             contentContainerStyle,
             topContainerStyle,
-            fullScreen
+            fullScreen,
+            keyboardVerticalOffset
         } = this.props;
 
         return (
@@ -81,7 +84,8 @@ export default class ModalScreen extends Component {
                 onRequestClose={onBack}
                 visible={visible}>
                 <KeyboardAvoidingView style={styles.modalContainer}
-                                      keyboardVerticalOffset={Platform.OS === 'ios' ? -100 : -300} behavior='padding'>
+                                      keyboardVerticalOffset={Platform.OS === 'ios' ? -100 + keyboardVerticalOffset : -300 + keyboardVerticalOffset}
+                                      behavior='padding'>
                     <View
                         style={[styles.modalInnerContainer, contentContainerStyle, fullScreen ? styles.fullInnerContainer : {}]}>
                         <View
@@ -144,7 +148,7 @@ const styles = StyleSheet.create({
     modalInnerContainer: {
         maxHeight: '100%',
         width: '90%',
-        borderRadius: 5,
+        borderRadius: 2,
         alignItems: 'center',
         justifyContent: 'center',
         elevation: 5,
@@ -154,6 +158,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
+        borderTopRightRadius: 2,
+        borderTopLeftRadius: 2,
         padding: 12,
         backgroundColor: colors.activeTabColor
     },

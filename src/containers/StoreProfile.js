@@ -26,38 +26,40 @@ class StoreProfile extends Component {
         const {selectedMerchant} = this.props.state;
 
         return (
-            <ScrollView styles={styles.container}>
-                <ImageBackground
-                    style={styles.bannerImage}
-                    source={{uri: 'data:image/png;base64,' + selectedMerchant.banner}}
-                    borderRadius={2}>
-                    <View style={styles.iconContainer}>
-                        <Image style={styles.logoImage} resizeMode='contain'
-                               source={{uri: 'data:image/png;base64,' + selectedMerchant.logo}}/>
+            <View style={styles.container}>
+                <ScrollView styles={styles.scrollContainer}>
+                    <ImageBackground
+                        style={styles.bannerImage}
+                        source={{uri: 'data:image/png;base64,' + selectedMerchant.banner}}
+                        borderRadius={2}>
+                        <View style={styles.iconContainer}>
+                            <Image style={styles.logoImage} resizeMode='contain'
+                                   source={{uri: 'data:image/png;base64,' + selectedMerchant.logo}}/>
+                        </View>
+                    </ImageBackground>
+                    <View style={styles.bannerTextBarContainer}>
+                        <View style={styles.bannerColumnContainer}>
+                            <Text style={styles.leftText}>{strings('stores.opening_hours')}</Text>
+                            <Text style={styles.leftText}>{strings('stores.refund_percentage')}</Text>
+                        </View>
+                        <View style={styles.bannerColumnContainer}>
+                            <Text style={styles.contentText}>{selectedMerchant.openingHours}</Text>
+                            <Text style={styles.contentText}>{95 - selectedMerchant.refundPercentage}</Text>
+                        </View>
                     </View>
-                </ImageBackground>
-                <View style={styles.bannerTextBarContainer}>
-                    <View style={styles.bannerColumnContainer}>
-                        <Text style={styles.leftText}>{strings('stores.opening_hours')}</Text>
-                        <Text style={styles.leftText}>{strings('stores.refund_percentage')}</Text>
+                    <View style={styles.descriptionContainer}>
+                        <Text>
+                            {selectedMerchant.description}
+                        </Text>
                     </View>
-                    <View style={styles.bannerColumnContainer}>
-                        <Text style={styles.contentText}>{selectedMerchant.openingHours}</Text>
-                        <Text style={styles.contentText}>{95 - selectedMerchant.refundPercentage}</Text>
+                    <View style={styles.addressContainer}>
+                        <Text style={styles.addressTitleText}>{strings('stores.address')}</Text>
+                        <Text style={styles.addressText}>
+                            {`${selectedMerchant.addressStreetName} ${selectedMerchant.addressStreetNumber}, ${selectedMerchant.addressPostalCode} ${selectedMerchant.addressCity}, ${selectedMerchant.addressCountry}`}
+                        </Text>
                     </View>
-                </View>
-                <View style={styles.descriptionContainer}>
-                    <Text>
-                        {selectedMerchant.description}
-                    </Text>
-                </View>
-                <View style={styles.addressContainer}>
-                    <Text style={styles.addressTitleText}>{strings('stores.address')}</Text>
-                    <Text style={styles.addressText}>
-                        {`${selectedMerchant.addressStreetName} ${selectedMerchant.addressStreetNumber}, ${selectedMerchant.addressPostalCode} ${selectedMerchant.addressCity}, ${selectedMerchant.addressCountry}`}
-                    </Text>
-                </View>
-            </ScrollView>
+                </ScrollView>
+            </View>
         );
     }
 }
@@ -65,6 +67,9 @@ class StoreProfile extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: colors.backgroundColor,
+    },
+    scrollContainer: {
         backgroundColor: colors.backgroundColor,
     },
     bannerImage: {
@@ -80,7 +85,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.backgroundColor,
         borderRadius: 40,
         padding: 6,
-        elevation: 1,
+        elevation: 2,
         borderWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0,
         borderColor: colors.separatorColor
     },

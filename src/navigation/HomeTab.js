@@ -2,16 +2,16 @@ import {Platform} from 'react-native';
 import {TabNavigator} from 'react-navigation';
 import OverviewScreen from '../containers/Overview';
 import colors from '../shared/colors';
-import ScannerScreen from '../containers/Scanner';
 import StoresScreen from '../containers/Stores';
 import {StyleSheet} from 'react-native';
+import QRCode from '../containers/QRCode';
 
 const HomeTab = TabNavigator({
     Overview: {
         screen: OverviewScreen
     },
-    Scanner: {
-        screen: ScannerScreen
+    QRCode: {
+        screen: QRCode
     },
     Stores: {
         screen: StoresScreen

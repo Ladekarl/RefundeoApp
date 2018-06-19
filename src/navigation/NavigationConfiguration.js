@@ -13,9 +13,10 @@ import Header from '../containers/Header';
 import HomeTab from './HomeTab';
 import EmptyOverviewScreen from '../components/EmptyOverview';
 import StoreProfile from '../containers/StoreProfile';
+import Scanner from '../containers/Scanner';
 
 const {width, height} = Dimensions.get('screen');
-const noHeaderNavigationOptions = {headerMode: 'none'};
+const noHeaderNavigationOptions = {headerMode: 'none', gesturesEnabled: false};
 const hasDrawer = false;
 
 const headerBackNavigationOptions = ({navigation}) => ({
@@ -28,6 +29,7 @@ const headerBackNavigationOptions = ({navigation}) => ({
         fontSize: 18,
         color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
     },
+    gesturesEnabled: false,
     headerStyle: styles.defaultHeaderStyle,
     headerTintColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
 });
@@ -97,6 +99,11 @@ const routeConfiguration = {
     },
     mainFlow: {
         screen: hasDrawer ? MainDrawerNavigator : MainStackNavigator
+    },
+    merchantFlow: {
+     screen: StackNavigator({
+         Scanner: {screen: Scanner, navigationOptions: homeNavigatorOptions}
+     }, {initialRouteName: 'Scanner'})
     }
 };
 

@@ -126,7 +126,7 @@ class StoresScreen extends Component {
                     renderMarker={this.renderMarker}
                     renderCluster={this.renderCluster}/>
                 }
-                {!navigation.isMap && merchants && merchants.length > 0 &&
+                {!navigation.isMap && merchants &&
                 <StoresList
                     actions={this.props.actions}
                     merchants={merchants}
