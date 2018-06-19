@@ -5,6 +5,7 @@ import Api from '../api';
 import {LoginManager} from 'react-native-fbsdk';
 import {Alert} from 'react-native';
 import NotificationService from '../shared/NotificationService';
+import Validation from '../shared/Validation';
 
 export default {
     navigateInitial,
@@ -23,6 +24,7 @@ export default {
     navgiateOverview,
     navigateHelp,
     navigateStoreProfile,
+    navigateRefundCase,
     navigateDrawerHome,
     navigateStoreList,
     navigateStoreMap,
@@ -42,6 +44,7 @@ export default {
     requestRefund,
     getMerchants,
     selectMerchant,
+    selectRefundCase,
     changeFilterDistanceSliderValue,
     changeFilterRefundSliderValue,
 };
@@ -101,6 +104,15 @@ function selectMerchant(merchant) {
     };
 }
 
+function selectRefundCase(refundCase) {
+    return dispatch => {
+        dispatch({
+            type: types.REFUND_SELECT_REFUND_CASE,
+            refundCase
+        });
+        dispatch(navigateRefundCase(refundCase.receiptNumber));
+    };
+}
 
 function navigateInitial() {
     return dispatch => {
@@ -111,7 +123,7 @@ function navigateInitial() {
                 if (user.isMerchant) {
                     dispatch(navigateScanner());
                 }
-                else if (missingUserInfo(user)) {
+                else if (Validation.missingUserInfo(user)) {
                     dispatch(navigateRegisterExtraReset());
                 } else {
                     dispatch(navigateAndResetToMainFlow());
@@ -131,6 +143,13 @@ function navigateStoreProfile(companyName) {
         type: types.NAVIGATE_STORE_PROFILE,
         companyName
     };
+}
+
+function navigateRefundCase(receiptNumber) {
+    return {
+        type: types.NAVIGATE_REFUND_CASE,
+        receiptNumber
+    }
 }
 
 function navigateHelp() {
@@ -277,7 +296,7 @@ function loginFacebook(accessToken) {
                 if (user.isMerchant) {
                     dispatch(navigateScanner());
                 }
-                else if (missingUserInfo(user)) {
+                else if (Validation.missingUserInfo(user)) {
                     dispatch(navigateRegisterExtra());
                 } else {
                     dispatch(navigateAndResetToMainFlow());
@@ -308,7 +327,7 @@ function login(username, password) {
                 if (user.isMerchant) {
                     dispatch(navigateScanner());
                 }
-                else if (missingUserInfo(user)) {
+                else if (Validation.missingUserInfo(user)) {
                     dispatch(navigateRegisterExtra());
                 } else {
                     dispatch(navigateAndResetToMainFlow());
@@ -331,7 +350,10 @@ function register(username, password, email, confPassword, acceptedTermsOfServic
     if (passError) {
         return registerError(passError);
     }
-    if (!checkEmail(username)) {
+    if (!Validation.validateEmail(username)) {
+        return registerError(username + strings('register.not_email'));
+    }
+    if (!Validation.validateEmail(email)) {
         return registerError(username + strings('register.not_email'));
     }
     if (!acceptedTermsOfService) {
@@ -349,7 +371,7 @@ function register(username, password, email, confPassword, acceptedTermsOfServic
                 if (user.isMerchant) {
                     dispatch(navigateScanner());
                 }
-                else if (missingUserInfo(user)) {
+                else if (Validation.missingUserInfo(user)) {
                     dispatch(navigateRegisterExtra());
                 }
                 else {
@@ -702,10 +724,6 @@ function changePasswordError(error = '') {
     };
 }
 
-function missingUserInfo(user) {
-    return !user.username || !user.acceptedPrivacyPolicy || !user.acceptedTermsOfService;
-}
-
 function checkPassword(newPassword, confPassword) {
     if (newPassword && confPassword && newPassword === confPassword) {
         // noinspection EqualityComparisonWithCoercionJS
@@ -728,10 +746,6 @@ function checkPassword(newPassword, confPassword) {
     } else {
         return strings('settings.error_password_not_same');
     }
-}
-
-function checkEmail(email) {
-    return /^(([^<>()[\].,;:\s@"]+(.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})/.test(email);
 }
 
 function shouldLogout(response) {

@@ -21,6 +21,7 @@ import ModalScreen from '../components/Modal';
 import CountryPicker, {getAllCountries} from 'react-native-country-picker-modal';
 import Icon from 'react-native-fa-icons';
 import Setting from '../components/Setting';
+import Validation from '../shared/Validation';
 
 class SettingsScreen extends Component {
 
@@ -37,7 +38,6 @@ class SettingsScreen extends Component {
     static propTypes = {
         actions: PropTypes.object.isRequired,
         state: PropTypes.object.isRequired,
-        editablePolicies: PropTypes.bool,
         requiredOnly: PropTypes.bool
     };
 
@@ -81,6 +81,18 @@ class SettingsScreen extends Component {
     componentWillUnmount() {
         this.closeModal();
     }
+
+    showChangeEmail = () => {
+        this.setModalState(strings('settings.email_title'), this.props.state.user.email, true, strings('settings.email_placeholder'), 'email');
+        this.submitFunction = () => {
+            let email = this.state.modalValue;
+            if (email && !Validation.validateEmail(email)) {
+                this.setState({modalInputError: strings('settings.error_not_email')});
+            } else {
+                this.defaultSubmitFunction();
+            }
+        };
+    };
 
     showChangeFirstName = () => {
         this.setModalState(strings('settings.first_name_title'), this.props.state.user.firstName, true, strings('settings.first_name_placeholder'), 'firstName');
@@ -210,7 +222,7 @@ class SettingsScreen extends Component {
     defaultSubmitFunction = () => {
         const modalValue = this.state.modalValue;
         if (!modalValue) {
-            this.setState({modalInputError: strings('settings.error_password_not_filled')});
+            this.setState({modalInputError: strings('settings.error_fields_empty')});
             return;
         }
         let user = this.props.state.user;
@@ -268,7 +280,7 @@ class SettingsScreen extends Component {
     };
 
     render() {
-        const {state, actions, editablePolicies, requiredOnly} = this.props;
+        const {state, actions, requiredOnly} = this.props;
 
         return (
             <ScrollView
@@ -284,16 +296,15 @@ class SettingsScreen extends Component {
                 <View style={[styles.sectionHeaderContainer, styles.sectionTopContainer]}>
                     <Text style={styles.sectionHeaderText}>{strings('settings.profile')}</Text>
                 </View>
-                <Setting label={strings('settings.email')} required={true} value={state.user.username}/>
-                {!requiredOnly &&
-                <Setting label={strings('settings.first_name')} onPress={this.showChangeFirstName}
+                {!state.user.isOauth &&
+                <Setting label={strings('settings.username')} required={true} value={state.user.username}/>
+                }
+                <Setting label={strings('settings.email')} required={true} value={state.user.email}
+                         onPress={this.showChangeEmail}/>
+                <Setting label={strings('settings.first_name')} required={true} onPress={this.showChangeFirstName}
                          value={state.user.firstName}/>
-                }
-                {!requiredOnly &&
-                <Setting label={strings('settings.last_name')} onPress={this.showChangeLastName}
+                <Setting label={strings('settings.last_name')} required={true} onPress={this.showChangeLastName}
                          value={state.user.lastName}/>
-                }
-                {!requiredOnly &&
                 <View style={styles.countryContainer}>
                     <CountryPicker
                         onChange={this.countryChanged}
@@ -303,47 +314,36 @@ class SettingsScreen extends Component {
                         filterable={true}>
                         <View style={styles.countryRowContainer}>
                             <View style={styles.rowInnerContainer}>
+                                {!state.user.country &&
+                                <Icon name='exclamation-circle' style={styles.requiredIcon}/>
+                                }
                                 <Text style={styles.leftText}>{strings('settings.country')}</Text>
                             </View>
                             <Text style={styles.rightText}>{state.user.country}</Text>
                         </View>
                     </CountryPicker>
                 </View>
-                }
                 {!requiredOnly &&
                 <Setting
-                    label={strings('settings.swift')}
-                    onPress={this.showSwiftModal}
+                    label={strings('settings.swift')} onPress={this.showSwiftModal}
                     value={state.user.swift}/>
                 }
                 {!requiredOnly && !state.user.isOauth &&
                 <Setting label={strings('settings.change_password')} onPress={this.showChangePassword}/>
                 }
-                {!requiredOnly &&
                 <View style={styles.sectionHeaderContainer}>
                     <Text style={styles.sectionHeaderText}>{strings('settings.address')}</Text>
                 </View>
-                }
-                {!requiredOnly &&
                 <Setting label={strings('settings.address_street_name')} onPress={this.showStreetNameModal}
-                         value={state.user.addressStreetName}/>
-                }
-                {!requiredOnly &&
+                         value={state.user.addressStreetName} required={true}/>
                 <Setting label={strings('settings.address_street_number')} onPress={this.showStreetNumberModal}
-                         value={state.user.addressStreetNumber}/>
-                }
-                {!requiredOnly &&
+                         value={state.user.addressStreetNumber} required={true}/>
                 <Setting label={strings('settings.address_postal_code')} onPress={this.showPostalCodeModal}
-                         value={state.user.addressPostalCode}/>
-                }
-                {!requiredOnly &&
+                         value={state.user.addressPostalCode} required={true}/>
                 <Setting label={strings('settings.address_city')} onPress={this.showCityModal}
-                         value={state.user.addressCity}/>
-                }
-                {!requiredOnly &&
+                         value={state.user.addressCity} required={true}/>
                 <Setting label={strings('settings.address_country')} onPress={this.showCountryModal}
-                         value={state.user.addressCountry}/>
-                }
+                         value={state.user.addressCountry} required={true}/>
                 <View style={styles.sectionHeaderContainer}>
                     <Text style={styles.sectionHeaderText}>{strings('settings.legal_privacy')}</Text>
                 </View>
@@ -352,34 +352,26 @@ class SettingsScreen extends Component {
                         {!state.user.acceptedTermsOfService &&
                         <Icon name='exclamation-circle' style={styles.requiredIcon}/>
                         }
-                        {editablePolicies &&
                         <Text style={styles.leftText}>{strings('register.terms_of_service_1')}</Text>
-                        }
                         <Text style={styles.leftButtonText}>{strings('register.terms_of_service_2')}</Text>
                     </View>
-                    {editablePolicies &&
                     <Switch value={state.user.acceptedTermsOfService}
                             tintColor={Platform.OS === 'ios' ? colors.activeTabColor : undefined}
                             thumbTintColor={colors.activeTabColor}
                             onValueChange={this.acceptTermsOfService}/>
-                    }
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.rowContainer} onPress={this.openPrivacyPolicyModal}>
                     <View style={styles.rowInnerContainer}>
                         {!state.user.acceptedPrivacyPolicy &&
                         <Icon name='exclamation-circle' style={styles.requiredIcon}/>
                         }
-                        {editablePolicies &&
                         <Text style={styles.leftText}>{strings('register.privacy_policy_1')}</Text>
-                        }
                         <Text style={styles.leftButtonText}>{strings('register.privacy_policy_2')}</Text>
                     </View>
-                    {editablePolicies &&
                     <Switch value={state.user.acceptedPrivacyPolicy}
                             tintColor={Platform.OS === 'ios' ? colors.activeTabColor : undefined}
                             thumbTintColor={colors.activeTabColor}
                             onValueChange={this.acceptPrivacyPolicy}/>
-                    }
                 </TouchableOpacity>
                 {!requiredOnly &&
                 <View style={styles.sectionHeaderContainer}>
@@ -458,7 +450,9 @@ class SettingsScreen extends Component {
                             editable={true}
                         />
                         }
+                        {this.state.modalInputError &&
                         <Text style={styles.modalInputErrorText}>{this.state.modalInputError}</Text>
+                        }
                     </View>
                 </ModalScreen>
                 <ModalScreen
@@ -576,6 +570,7 @@ const styles = StyleSheet.create({
         marginTop: Platform.OS === 'ios' ? 10 : 0
     },
     modalInputErrorText: {
+        marginTop: 10,
         textAlign: 'center',
         color: colors.cancelButtonColor
     },

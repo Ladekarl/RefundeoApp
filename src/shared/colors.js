@@ -6,6 +6,7 @@ export default new ThemeManager({
         slightlyDarkerColor: '#f0eded',
         inactiveTabColor: '#b5b5b5',
         activeTabColor: '#303880',
+        activeTabColorOpaque: 'rgba(48,56,128, 0.8)',
         gradientColor: '#587cd6',
         logoutIconColor: '#dd1d00',
         logoutTextColor: '#dd513d',

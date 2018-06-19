@@ -7,6 +7,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {strings} from '../shared/i18n';
+import Validation from '../shared/Validation';
 
 class RegisterExtraScreen extends Component {
 
@@ -32,7 +33,7 @@ class RegisterExtraScreen extends Component {
             user
         } = this.props.state;
 
-        if (user.username && user.acceptedPrivacyPolicy && user.acceptedTermsOfService) {
+        if (!Validation.missingUserInfo(user)) {
             this.props.actions.navigateAndResetToMainFlow();
             this.props.actions.getRefundCases();
             return;
@@ -58,7 +59,6 @@ class RegisterExtraScreen extends Component {
                         state={state}
                         requiredOnly={true}
                         actions={actions}
-                        editablePolicies={true}
                     />
                 </View>
                 <Text style={styles.errorText}>{this.state.error}</Text>

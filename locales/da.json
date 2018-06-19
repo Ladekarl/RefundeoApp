@@ -19,6 +19,9 @@
     "last_name_title": "Efternavn",
     "last_name_placeholder": "Efternavn",
     "email": "Email:",
+    "email_title": "Email",
+    "email_placeholder": "Email",
+    "username": "Brugernavn:",
     "change_password": "Skift adgangskode",
     "change_password_title": "Skift adgangskode",
     "change_password_placeholder": "Nuværende adganskode",
@@ -41,6 +44,7 @@
     "error_password_only_uppercase": "Kodeordet skal indeholde små bogstaver.",
     "error_password_not_filled": "Nogle felter er tomme.",
     "error_fields_empty": "Nogle felter er tomme.",
+    "error_not_email": "Ikke en gyldig email.",
     "legal_privacy": "Legal & Privacy",
     "address": "Adresse",
     "address_street_name": "Vejnavn:",
@@ -126,7 +130,8 @@
     "request_refund_error": "Kunne ikke anmode om refusion. Prøv venligst igen.",
     "request_documentation": "Du anmoder med denne dokumentation",
     "claim_refund_case_error": "Noget gik galt. Prøv igen.",
-    "refund_case_already_claimed": "Refusionen er allerede blevet registreret."
+    "refund_case_already_claimed": "Refusionen er allerede blevet registreret.",
+    "receipt_number": "Kvitteringsnummer:"
   },
   "stores": {
     "opening_hours": "Åbningstider",
@@ -136,6 +141,7 @@
     "distance_all": "alle",
     "filter": "Filter",
     "refund": "Refusion",
-    "empty": "Ingen butikker tilgængelige.\n\nJustér filterindstillingerne."
+    "empty": "Ingen butikker tilgængelige.\n\nJustér filterindstillingerne.",
+    "vat_number": "Vat no."
   }
 }

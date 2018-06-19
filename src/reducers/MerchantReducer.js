@@ -16,7 +16,8 @@ export type Merchant = {
     openingHours: string,
     latitude: number,
     longitude: number,
-    distance: number
+    distance: number,
+    vatNumber: string
 }
 
 type MerchantReducer = {

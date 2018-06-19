@@ -27,7 +27,7 @@ class StoreProfile extends Component {
 
         return (
             <View style={styles.container}>
-                <ScrollView styles={styles.scrollContainer}>
+                <ScrollView styles={styles.scrollContainer} contentContainerStyle={styles.scrollContent}>
                     <ImageBackground
                         style={styles.bannerImage}
                         source={{uri: 'data:image/png;base64,' + selectedMerchant.banner}}
@@ -52,10 +52,16 @@ class StoreProfile extends Component {
                             {selectedMerchant.description}
                         </Text>
                     </View>
-                    <View style={styles.addressContainer}>
-                        <Text style={styles.addressTitleText}>{strings('stores.address')}</Text>
-                        <Text style={styles.addressText}>
+                    <View style={styles.bottomContainer}>
+                        <Text style={styles.bottomTitleText}>{strings('stores.address')}</Text>
+                        <Text style={styles.bottomText}>
                             {`${selectedMerchant.addressStreetName} ${selectedMerchant.addressStreetNumber}, ${selectedMerchant.addressPostalCode} ${selectedMerchant.addressCity}, ${selectedMerchant.addressCountry}`}
+                        </Text>
+                    </View>
+                    <View style={styles.bottomContainer}>
+                        <Text style={styles.bottomTitleText}>{strings('stores.vat_number')}</Text>
+                        <Text style={styles.bottomText}>
+                            {selectedMerchant.vatNumber}
                         </Text>
                     </View>
                 </ScrollView>
@@ -71,6 +77,9 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         backgroundColor: colors.backgroundColor,
+    },
+    scrollContent: {
+        paddingBottom: 15
     },
     bannerImage: {
         width: '100%',
@@ -123,18 +132,17 @@ const styles = StyleSheet.create({
         paddingRight: 20,
         backgroundColor: colors.backgroundColor
     },
-    addressContainer: {
+    bottomContainer: {
         paddingTop: 15,
         paddingLeft: 20,
         paddingRight: 20,
-        paddingBottom: 15,
         backgroundColor: colors.backgroundColor
     },
-    addressTitleText: {
+    bottomTitleText: {
         color: colors.activeTabColor,
         fontSize: 15
     },
-    addressText: {
+    bottomText: {
         color: colors.darkTextColor,
         marginTop: 10,
         fontSize: 15

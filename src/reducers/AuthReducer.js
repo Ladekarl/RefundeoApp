@@ -124,9 +124,9 @@ export default function authReducer(state = initialState, action = {}) {
         case types.AUTH_CHANGE_USER_SUCCESS: {
             nextState = {
                 ...state,
-                fetching: false,
+                ...resetErrors,
                 user: action.user,
-                ...resetErrors
+                fetching: false,
             };
             break;
         }

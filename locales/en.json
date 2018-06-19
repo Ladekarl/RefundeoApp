@@ -19,6 +19,9 @@
     "last_name_title": "Last name",
     "last_name_placeholder": "Last name",
     "email": "Email:",
+    "email_title": "Email",
+    "email_placeholder": "Email",
+    "username": "Username:",
     "change_password": "Change password",
     "change_password_title": "Change password",
     "change_password_placeholder": "Old password",
@@ -41,6 +44,7 @@
     "error_password_only_uppercase": "The password must contain lower case letters.",
     "error_password_not_filled": "Some fields are empty.",
     "error_fields_empty": "Some fields are empty.",
+    "error_not_email": "Not a valid email.",
     "legal_privacy": "Legal & Privacy",
     "address": "Address",
     "address_street_name": "Street name:",
@@ -126,7 +130,8 @@
     "request_refund_error": "Failed to request refund. Please try again.",
     "request_documentation": "You are requesting with this documentation",
     "claim_refund_case_error": "Something went wrong. Please try again",
-    "refund_case_already_claimed": "The refund has already been claimed."
+    "refund_case_already_claimed": "The refund has already been claimed.",
+    "receipt_number": "Receipt number:"
   },
   "stores": {
     "opening_hours": "Opening hours",
@@ -136,6 +141,7 @@
     "distance_all": "all",
     "filter": "Filter",
     "refund": "Refund",
-    "empty": "No stores available.\n\nPlease adjust filter settings."
+    "empty": "No stores available.\n\nPlease adjust filter settings.",
+    "vat_number": "Vat no."
   }
 }

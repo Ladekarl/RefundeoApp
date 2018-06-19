@@ -14,6 +14,7 @@ import HomeTab from './HomeTab';
 import EmptyOverviewScreen from '../components/EmptyOverview';
 import StoreProfile from '../containers/StoreProfile';
 import Scanner from '../containers/Scanner';
+import RefundCase from '../containers/RefundCase';
 
 const {width, height} = Dimensions.get('screen');
 const noHeaderNavigationOptions = {headerMode: 'none', gesturesEnabled: false};
@@ -85,7 +86,8 @@ const MainStackNavigator = StackNavigator({
     Home: {screen: HomeTab, navigationOptions: homeNavigatorOptions},
     Settings: {screen: SettingsScreen, navigationOptions: headerBackNavigationOptions},
     Help: {screen: EmptyOverviewScreen, navigationOptions: headerBackNavigationOptions},
-    StoreProfile: {screen: StoreProfile, navigationOptions: headerBackNavigationOptions}
+    StoreProfile: {screen: StoreProfile, navigationOptions: headerBackNavigationOptions},
+    RefundCase: {screen: RefundCase, navigationOptions: headerBackNavigationOptions}
 });
 
 const routeConfiguration = {
@@ -101,9 +103,9 @@ const routeConfiguration = {
         screen: hasDrawer ? MainDrawerNavigator : MainStackNavigator
     },
     merchantFlow: {
-     screen: StackNavigator({
-         Scanner: {screen: Scanner, navigationOptions: homeNavigatorOptions}
-     }, {initialRouteName: 'Scanner'})
+        screen: StackNavigator({
+            Scanner: {screen: Scanner, navigationOptions: homeNavigatorOptions}
+        }, {initialRouteName: 'Scanner'})
     }
 };
 

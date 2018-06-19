@@ -253,6 +253,21 @@ export default function navigationReducer(state = initialState, action = {}) {
             };
             break;
         }
+        case types.NAVIGATE_REFUND_CASE: {
+            const navigationAction = NavigationActions.navigate({
+                routeName: 'RefundCase',
+                params: {
+                    receiptNumber: action.receiptNumber
+                }
+            });
+            nextState = {
+                ...state,
+                ...RootNavigator.router.getStateForAction(navigationAction, state),
+                currentRoute: 'RefundCase',
+                drawerRoute: 'Home'
+            };
+            break;
+        }
         case types.NAVIGATE_STORE_PROFILE: {
             const navigationAction = NavigationActions.navigate({
                 routeName: 'StoreProfile',

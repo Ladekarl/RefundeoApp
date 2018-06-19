@@ -3,7 +3,6 @@ import {
     Text,
     StyleSheet,
     View,
-    Platform,
     TouchableOpacity,
     Image
 } from 'react-native';
@@ -15,7 +14,7 @@ import PropTypes from 'prop-types';
 import Icon from 'react-native-fa-icons';
 import {strings} from '../shared/i18n';
 
-export default class RefundCaseScreen extends Component {
+export default class RefundCaseListItem extends Component {
 
     static supportedLocales = ['da', 'en'];
 
@@ -27,9 +26,7 @@ export default class RefundCaseScreen extends Component {
 
     refundCaseIcon;
     refundCaseText;
-    isHandled;
     refundCase;
-    base64Icon;
 
     constructor(props) {
         super(props);
@@ -47,40 +44,17 @@ export default class RefundCaseScreen extends Component {
 
         this.refundCaseIcon = this._getRefundCaseIcon(this.refundCase);
         this.refundCaseText = this._getRefundCaseText(this.refundCase);
-        this.isHandled = this.refundCase.isAccepted || this.refundCase.isRequested || this.refundCase.isRejected;
     };
 
     _formatDate(date) {
         const locale = I18n.currentLocale();
-        const localeFormatted = locale.indexOf("-") === -1 ? locale : locale.substr(0, locale.indexOf('-'));
-        return moment(date).locale(RefundCaseScreen.supportedLocales.indexOf(localeFormatted) > -1 ? localeFormatted : 'en').format('LL');
+        const localeFormatted = locale.indexOf('-') === -1 ? locale : locale.substr(0, locale.indexOf('-'));
+        return moment(date).locale(RefundCaseListItem.supportedLocales.indexOf(localeFormatted) > -1 ? localeFormatted : 'en').format('LL');
     }
 
     _getRefundCaseIcon = (refundCase) => {
-        const isAccepted = refundCase.isAccepted;
-        const isRequested = refundCase.isRequested;
-        const isRejected = refundCase.isRejected;
-        const documentation = refundCase.documentation;
-
-        if (isAccepted) {
-            return <Icon style={[styles.refundCaseIcon, styles.doneIcon]} name='check'/>;
-        }
-        else if (isRejected) {
-            return <Icon style={[styles.refundCaseIcon, styles.rejectedIcon]} name='times'/>;
-        }
-        else if (isRequested) {
-            return <Icon style={[styles.refundCaseIcon, styles.pendingIcon]} name='spinner'/>;
-        }
-        else if (documentation) {
-            this.base64Icon = 'data:image/jpg;base64,' + this.refundCase.documentation;
-            return (
-                <TouchableOpacity onPress={this._handleIconPressed} style={styles.documentationButton}>
-                    <Image style={styles.documentationIcon} source={{uri: this.base64Icon}}/>
-                </TouchableOpacity>);
-        }
-        else {
-            return <Icon style={[styles.refundCaseIcon, styles.uploadIcon]} name='camera'/>;
-        }
+        return <Image style={styles.documentationIcon} resizeMode='contain'
+                      source={{uri: 'data:image/png;base64,' + refundCase.merchant.logo}}/>;
     };
 
     _getRefundCaseText = (refundCase) => {
@@ -110,21 +84,17 @@ export default class RefundCaseScreen extends Component {
         this.props.onPress(this.refundCase);
     };
 
-    _handleIconPressed = () => {
-        this.props.onIconPress(this.refundCase);
-    };
-
     render() {
         const {refundCase} = this.props;
         this._initProps();
         return (
             <TouchableOpacity
-                disabled={this.isHandled}
                 style={styles.container}
                 onPress={this._handlePress}>
                 <View style={styles.bannerTextContainer}>
                     <View style={styles.bannerTextBarContainer}>
-                        <Text style={styles.headlineText}>{refundCase.merchant.companyName}</Text>
+                        <Text
+                            style={styles.headlineText}>{refundCase.merchant.companyName + ' - ' + refundCase.merchant.addressCity}</Text>
                         <Text style={styles.headlineText}>{this.state.dateCreatedFormatted}</Text>
                     </View>
                 </View>
@@ -133,6 +103,10 @@ export default class RefundCaseScreen extends Component {
                         {this.refundCaseIcon}
                     </View>
                     <View style={styles.detailsContainer}>
+                        <View style={styles.detailContainer}>
+                            <Text style={styles.detailTitle}>{strings('refund_case.receipt_number')}</Text>
+                            <Text style={styles.detailText}>{refundCase.receiptNumber}</Text>
+                        </View>
                         <View style={styles.detailContainer}>
                             <Text style={styles.detailTitle}>{strings('refund_case.amount')}</Text>
                             <Text style={styles.detailText}>{refundCase.amount}</Text>
@@ -145,11 +119,9 @@ export default class RefundCaseScreen extends Component {
                     <View style={styles.endContentContainer}>
                         {this.refundCaseText}
                     </View>
-                    {!this.isHandled &&
                     <View style={styles.detailsContainer}>
                         <Icon style={styles.angleRightIcon} name='angle-right'/>
                     </View>
-                    }
                 </View>
             </TouchableOpacity>
         );
@@ -175,7 +147,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         width: '100%',
         padding: 3,
-        opacity: 0.8,
         backgroundColor: colors.activeTabColor,
         borderTopLeftRadius: 30,
         borderBottomLeftRadius: 30,
@@ -184,6 +155,7 @@ const styles = StyleSheet.create({
     },
     headlineText: {
         fontSize: 15,
+        maxWidth: '70%',
         color: colors.backgroundColor,
     },
     contentContainer: {
@@ -226,7 +198,7 @@ const styles = StyleSheet.create({
         marginBottom: 5
     },
     detailTitle: {
-        fontSize: 12,
+        fontSize: 11,
         marginRight: 5,
         fontWeight: 'bold',
         color: colors.darkTextColor
@@ -235,33 +207,17 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: colors.darkTextColor
     },
-    refundCaseIcon: {
-        height: undefined,
-        width: undefined,
-        fontSize: 25,
-        marginRight: 10
-    },
     doneIcon: {
         color: colors.greenButtonColor
     },
     rejectedIcon: {
         color: colors.cancelButtonColor
     },
-    pendingIcon: {
-        color: colors.activeTabColor
-    },
     documentationIcon: {
         height: 40,
         width: 40,
         marginRight: 10,
         borderRadius: 20
-    },
-    documentationButton: {
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    uploadIcon: {
-        color: colors.activeTabColor
     },
     angleRightIcon: {
         height: undefined,

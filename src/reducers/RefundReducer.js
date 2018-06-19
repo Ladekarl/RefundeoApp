@@ -17,7 +17,8 @@ type RefundCase = {
     isAccepted: boolean,
     isRejected: boolean,
     qrCode: string,
-    documentation: string,
+    vatFormImage: string,
+    receiptImage: string,
     dateCreated: string,
     dateRequested: string,
     merchant: Merchant,
@@ -33,7 +34,8 @@ type RefundReducerState = {
     getRefundCasesError: string,
     documentationError: string,
     requestRefundError: string,
-    createRefundCaseError: string
+    createRefundCaseError: string,
+    selectedRefundCase: RefundCase
 }
 
 const initialState: RefundReducerState = {
@@ -45,7 +47,8 @@ const initialState: RefundReducerState = {
     getRefundCasesError: '',
     documentationError: '',
     requestRefundError: '',
-    createRefundCaseError: ''
+    createRefundCaseError: '',
+    selectedRefundCase: {}
 };
 
 export default function refundReducer(state = initialState, action = {}) {
@@ -136,6 +139,11 @@ export default function refundReducer(state = initialState, action = {}) {
                 createRefundCaseError: action.createRefundCaseError
             };
             break;
+        case types.REFUND_SELECT_REFUND_CASE:
+            nextState = {
+                ...state,
+                selectedRefundCase: action.refundCase
+            };
     }
     return nextState || state;
 }

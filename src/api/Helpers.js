@@ -75,7 +75,7 @@ export default class Helpers {
 
     static async fetchAuthenticated(request, requestOptions) {
         const response = await fetch(request, requestOptions);
-        return Helpers.handleAuthenticatedResponse(request, requestOptions, response);
+        return await Helpers.handleAuthenticatedResponse(request, requestOptions, response);
     }
 
     static async handleAuthenticatedResponse(request, requestOptions, response) {
