@@ -74,6 +74,19 @@ class HeaderScreen extends Component {
         }
     };
 
+    openSignOutModal = () => {
+        this.props.actions.openModal('signOutModal');
+    };
+
+    closeSignOutModal = () => {
+      this.props.actions.closeModal('signOutModal');
+    };
+
+    onSignOut = () => {
+        this.props.actions.closeModal('signOutModal');
+        this.props.actions.logout();
+    };
+
 
     render() {
         const {navigation, refundCases, user} = this.props.state;
@@ -141,10 +154,16 @@ class HeaderScreen extends Component {
                 }
                 {isMerchant &&
                 <TouchableOpacity style={styles.noDrawerHeader}
-                                  onPress={this.props.actions.logout}>
+                                  onPress={this.openSignOutModal}>
                     <Icon name='sign-out' style={styles.noDrawerIcon}/>
                 </TouchableOpacity>
                 }
+                <ModalScreen
+                    modalTitle={strings('settings.sign_out_title')}
+                    onSubmit={this.onSignOut}
+                    onBack={this.closeSignOutModal}
+                    onCancel={this.closeSignOutModal}
+                    visible={this.props.state.navigation.modal['signOutModal'] || false}/>
                 <ModalScreen
                     modalTitle={strings('stores.filter')}
                     onSubmit={this.changeSliderValues}

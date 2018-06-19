@@ -48,12 +48,13 @@ class ScannerScreen extends Component {
     }
 
     onSuccess = (e) => {
-        const customerId = JSON.parse(e.data);
-        this.setState({
-            customerId
-        });
-
-        this.props.actions.getScannedUser(customerId, 'createRefundModal');
+        if (e.data) {
+            const customerId = JSON.parse(e.data);
+            this.setState({
+                customerId
+            });
+            this.props.actions.getScannedUser(customerId, 'createRefundModal');
+        }
     };
 
     closeModal = () => {
@@ -112,11 +113,12 @@ class ScannerScreen extends Component {
         const {state} = this.props;
         const fetching = state.fetchingCreateRefundCase || state.fetching;
         const error = state.createRefundCaseError ? state.createRefundCaseError : state.getUserError;
+        const modalOpen = state.navigation.modal['createRefundSuccessModal'] || state.navigation.modal['createRefundModal'];
         const navigation = state.navigation;
 
         return (
             <View style={styles.container}>
-                {navigation.currentRoute === 'Scanner' &&
+                {navigation.currentRoute === 'Scanner' && !modalOpen &&
                 <QRCodeScanner
                     onRead={this.onSuccess}
                     ref={ref => this.qrCodeScanner = ref}
@@ -155,14 +157,15 @@ class ScannerScreen extends Component {
                     onBack={this.closeSuccessModal}
                     onCancel={this.closeSuccessModal}
                     onSubmit={this.closeSuccessModal}
-                    visible={this.props.state.navigation.modal['createRefundSuccessModal']}>
+                    visible={state.navigation.modal['createRefundSuccessModal'] || false}>
                     <View>
-                        <Text style={styles.headlineText}>Successfully created refund. Ask the customer to refresh the list of refunds</Text>
+                        <Text
+                            style={styles.headlineText}>{'Successfully created refund.\n\nAsk the customer to refresh the list of refunds'}</Text>
                     </View>
                 </ModalScreen>
                 <ModalScreen
                     modalTitle={'Fill all fields'}
-                    visible={this.props.state.navigation.modal['createRefundModal'] && !fetching || false}
+                    visible={state.navigation.modal['createRefundModal'] && !fetching || false}
                     onSubmit={this.onModalSubmit}
                     onBack={this.closeModal}
                     fullScreen={true}
@@ -229,7 +232,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent'
     },
     centerTopText: {
-        fontSize: 15,
+        fontSize: 17,
         fontWeight: 'bold',
         color: colors.activeTabColor
     },
