@@ -60,7 +60,7 @@ function uploadTempVatFormImage(refundCaseId, tempVatFormImage, goBack) {
                 type: types.REFUND_UPLOAD_TEMP_VAT_FORM_IMAGE,
                 tempVatFormImage
             });
-            if(goBack) {
+            if (goBack) {
                 dispatch(navigateBack());
             }
         });
@@ -74,7 +74,7 @@ function uploadTempReceiptImage(refundCaseId, tempReceiptImage, goBack) {
                 type: types.REFUND_UPLOAD_TEMP_RECEIPT_IMAGE,
                 tempReceiptImage
             });
-            if(goBack) {
+            if (goBack) {
                 dispatch(navigateBack());
             }
         });
@@ -439,8 +439,8 @@ function uploadDocumentation(refundCase, vatForm, receipt) {
     return dispatch => {
         dispatch(uploadingDocumentation());
         Api.uploadDocumentation(refundCase, vatForm, receipt).then(() => {
-            dispatch(getRefundCases());
             dispatch(uploadDocumentationSuccess());
+            dispatch(requestRefund());
         }).catch((response) => {
             if (shouldLogout(response)) {
                 dispatch(logout());

@@ -266,33 +266,37 @@ export default function navigationReducer(state = initialState, action = {}) {
             break;
         }
         case types.NAVIGATE_REFUND_CASE: {
-            const navigationAction = NavigationActions.navigate({
-                routeName: 'RefundCase',
-                params: {
-                    receiptNumber: action.receiptNumber
-                }
-            });
-            nextState = {
-                ...state,
-                ...RootNavigator.router.getStateForAction(navigationAction, state),
-                currentRoute: 'RefundCase',
-                drawerRoute: 'Home'
-            };
+            if (state.currentRoute !== 'RefundCase') {
+                const navigationAction = NavigationActions.navigate({
+                    routeName: 'RefundCase',
+                    params: {
+                        receiptNumber: action.receiptNumber
+                    }
+                });
+                nextState = {
+                    ...state,
+                    ...RootNavigator.router.getStateForAction(navigationAction, state),
+                    currentRoute: 'RefundCase',
+                    drawerRoute: 'Home'
+                };
+            }
             break;
         }
         case types.NAVIGATE_STORE_PROFILE: {
-            const navigationAction = NavigationActions.navigate({
-                routeName: 'StoreProfile',
-                params: {
-                    companyName: action.companyName
-                }
-            });
-            nextState = {
-                ...state,
-                ...RootNavigator.router.getStateForAction(navigationAction, state),
-                currentRoute: 'StoreProfile',
-                drawerRoute: 'Home'
-            };
+            if (state.currentRoute !== 'StoreProfile') {
+                const navigationAction = NavigationActions.navigate({
+                    routeName: 'StoreProfile',
+                    params: {
+                        companyName: action.companyName
+                    }
+                });
+                nextState = {
+                    ...state,
+                    ...RootNavigator.router.getStateForAction(navigationAction, state),
+                    currentRoute: 'StoreProfile',
+                    drawerRoute: 'Home'
+                };
+            }
             break;
         }
         default:

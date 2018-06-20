@@ -51,10 +51,12 @@ class RefundCase extends Component {
 
     onRequestRefundPress = () => {
         const refundCase = this.props.state.selectedRefundCase;
-        if ((!refundCase.tempReceiptImage || !refundCase.tempVatFormImage) && !refundCase.vatFormImage && !refundCase.receiptImage) {
+        if ((!refundCase.tempReceiptImage || !refundCase.tempVatFormImage) && (!refundCase.receiptImage || !refundCase.vatFormImage) && !refundCase.isRequested) {
             this.openRefundCaseModal();
-        } else if (refundCase.tempReceiptImage && refundCase.tempVatFormImage && !refundCase.vatFormImage && !refundCase.receiptImage) {
+        } else if (refundCase.tempReceiptImage && refundCase.tempVatFormImage && !refundCase.isRequested) {
             this.props.actions.uploadDocumentation(refundCase, refundCase.tempVatFormImage, refundCase.tempReceiptImage);
+        } else if (refundCase.receiptImage && refundCase.vatFormImage && !refundCase.isRequested) {
+            this.props.actions.uploadDocumentation(refundCase, refundCase.vatFormImage, refundCase.receiptImage);
         }
     };
 
