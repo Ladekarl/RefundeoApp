@@ -47,7 +47,55 @@ export default {
     selectRefundCase,
     changeFilterDistanceSliderValue,
     changeFilterRefundSliderValue,
+    navigateUploadDocumentation,
+    selectUploadDocumentation,
+    uploadTempVatFormImage,
+    uploadTempReceiptImage
 };
+
+function uploadTempVatFormImage(refundCaseId, tempVatFormImage, goBack) {
+    return dispatch => {
+        LocalStorage.saveVatFormImage(refundCaseId, tempVatFormImage).then(() => {
+            dispatch({
+                type: types.REFUND_UPLOAD_TEMP_VAT_FORM_IMAGE,
+                tempVatFormImage
+            });
+            if(goBack) {
+                dispatch(navigateBack());
+            }
+        });
+    };
+}
+
+function uploadTempReceiptImage(refundCaseId, tempReceiptImage, goBack) {
+    return dispatch => {
+        LocalStorage.saveReceiptImage(refundCaseId, tempReceiptImage).then(() => {
+            dispatch({
+                type: types.REFUND_UPLOAD_TEMP_RECEIPT_IMAGE,
+                tempReceiptImage
+            });
+            if(goBack) {
+                dispatch(navigateBack());
+            }
+        });
+    };
+}
+
+function selectUploadDocumentation(documentation) {
+    return dispatch => {
+        dispatch({
+            type: types.REFUND_SELECT_UPLOAD_DOCUMENTATION,
+            documentation
+        });
+        dispatch(navigateUploadDocumentation());
+    };
+}
+
+function navigateUploadDocumentation() {
+    return {
+        type: types.NAVIGATE_UPLOAD_DOCUMENTATION
+    };
+}
 
 function changeFilterDistanceSliderValue(sliderValue) {
     return {
@@ -149,7 +197,7 @@ function navigateRefundCase(receiptNumber) {
     return {
         type: types.NAVIGATE_REFUND_CASE,
         receiptNumber
-    }
+    };
 }
 
 function navigateHelp() {
@@ -387,10 +435,10 @@ function register(username, password, email, confPassword, acceptedTermsOfServic
     };
 }
 
-function uploadDocumentation(refundCase, documentation) {
+function uploadDocumentation(refundCase, vatForm, receipt) {
     return dispatch => {
         dispatch(uploadingDocumentation());
-        Api.uploadDocumentation(refundCase, documentation).then(() => {
+        Api.uploadDocumentation(refundCase, vatForm, receipt).then(() => {
             dispatch(getRefundCases());
             dispatch(uploadDocumentationSuccess());
         }).catch((response) => {

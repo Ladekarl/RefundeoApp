@@ -8,9 +8,6 @@ import Actions from '../actions/Actions';
 import PropTypes from 'prop-types';
 import EmptyOverviewScreen from '../components/EmptyOverview';
 import RefundCaseListItem from '../components/RefundCaseListItem';
-import {strings} from '../shared/i18n';
-import ImagePicker from 'react-native-image-picker';
-import ModalScreen from '../components/Modal';
 
 const {height} = Dimensions.get('window');
 
@@ -27,22 +24,13 @@ class OverviewScreen extends Component {
         state: PropTypes.object.isRequired
     };
 
-    refundCaseImage = '';
-
     constructor(props) {
         super(props);
     }
 
-    closeModal = () => {
-        this.props.actions.closeModal('refundCaseModal');
-    };
-
-    openModal = () => {
-        this.props.actions.openModal('refundCaseModal');
-    };
-
     _renderRefundCase = ({item}) => (
-        <RefundCaseListItem refundCase={item} onPress={this.props.actions.selectRefundCase} onIconPress={this.handleIconPressed}/>
+        <RefundCaseListItem refundCase={item} onPress={this.props.actions.selectRefundCase}
+                            onIconPress={this.handleIconPressed}/>
     );
 
     _keyExtractor = (refundCase) => refundCase.id.toString();
@@ -57,7 +45,7 @@ class OverviewScreen extends Component {
 
     render() {
         const {actions, state} = this.props;
-        const {refundCases, fetchingRefundCases, fetchingDocumentation, fetchingRequestRefund, navigation} = state;
+        const {refundCases, fetchingRefundCases, fetchingDocumentation, fetchingRequestRefund} = state;
 
         return (
             <View style={styles.container}>
@@ -77,18 +65,6 @@ class OverviewScreen extends Component {
                     renderItem={this._renderRefundCase}
                     ListEmptyComponent={!fetchingRefundCases ? <EmptyOverviewScreen actions={actions}/> : undefined}
                 />
-                <ModalScreen
-                    modalTitle={strings('refund_case.request_documentation')}
-                    onSubmit={this.handleRefundCasePress}
-                    onBack={this.closeModal}
-                    onCancel={this.closeModal}
-                    contentContainerStyle={styles.modalContentContainer}
-                    visible={navigation.modal['refundCaseModal'] || false}>
-                    <TouchableOpacity style={styles.modalContainer} onPress={this.handleModalImagePress}>
-                        <Image resizeMode='contain' style={styles.modalImage}
-                               source={{uri: this.refundCaseImage}}/>
-                    </TouchableOpacity>
-                </ModalScreen>
             </View>
         );
     }

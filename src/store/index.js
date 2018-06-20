@@ -11,7 +11,7 @@ export let addListener;
 const persistConfig = {
     key: 'root',
     storage,
-    blacklist: ['navigationReducer', 'authReducer', 'refundReducer', 'merchantReducer']
+    //blacklist: ['navigationReducer', 'authReducer', 'refundReducer', 'merchantReducer']
 };
 
 export function configureStore() {

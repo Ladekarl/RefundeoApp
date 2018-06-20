@@ -253,6 +253,18 @@ export default function navigationReducer(state = initialState, action = {}) {
             };
             break;
         }
+        case types.NAVIGATE_UPLOAD_DOCUMENTATION: {
+            if (state.currentRoute !== 'UploadDocumentation') {
+                const navigationAction = NavigationActions.navigate({routeName: 'UploadDocumentation'});
+                nextState = {
+                    ...state,
+                    ...RootNavigator.router.getStateForAction(navigationAction, state),
+                    currentRoute: 'UploadDocumentation',
+                    drawerRoute: 'Home'
+                };
+            }
+            break;
+        }
         case types.NAVIGATE_REFUND_CASE: {
             const navigationAction = NavigationActions.navigate({
                 routeName: 'RefundCase',

@@ -7,11 +7,13 @@ import {connect} from 'react-redux';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-fa-icons';
+import ModalScreen from '../components/Modal';
 
 class RefundCase extends Component {
 
     static propTypes = {
-        state: PropTypes.object
+        state: PropTypes.object.isRequired,
+        actions: PropTypes.object.isRequired
     };
 
     static navigationOptions = ({navigation}) => {
@@ -24,14 +26,62 @@ class RefundCase extends Component {
     };
 
     getVatImage = (refundCase) => {
-        if(refundCase.vat)
-        <Image style={styles.uploadImage} resizeMode='contain'
-               source={require('../../assets/refundeo_logo.png')}/>
-    }
+        if (refundCase.vatFormImage) {
+            return {uri: 'data:image/png;base64,' + refundCase.vatFormImage};
+        }
+        if (refundCase.tempVatFormImage) {
+            return {uri: 'data:image/png;base64,' + refundCase.tempVatFormImage};
+        }
+        return this.getRefundeoLogo();
+    };
+
+    getReceiptImage = (refundCase) => {
+        if (refundCase.receiptImage) {
+            return {uri: 'data:image/png;base64,' + refundCase.receiptImage};
+        }
+        if (refundCase.tempReceiptImage) {
+            return {uri: 'data:image/png;base64,' + refundCase.tempReceiptImage};
+        }
+        return this.getRefundeoLogo();
+    };
+
+    getRefundeoLogo = () => {
+        return require('../../assets/refundeo_logo.png');
+    };
+
+    onRequestRefundPress = () => {
+        const refundCase = this.props.state.selectedRefundCase;
+        if ((!refundCase.tempReceiptImage || !refundCase.tempVatFormImage) && !refundCase.vatFormImage && !refundCase.receiptImage) {
+            this.openRefundCaseModal();
+        } else if (refundCase.tempReceiptImage && refundCase.tempVatFormImage && !refundCase.vatFormImage && !refundCase.receiptImage) {
+            this.props.actions.uploadDocumentation(refundCase, refundCase.tempVatFormImage, refundCase.tempReceiptImage);
+        }
+    };
+
+    openRefundCaseModal = () => {
+        this.props.actions.openModal('refundCaseModal');
+    };
+
+    closeRefundCaseModal = () => {
+        this.props.actions.closeModal('refundCaseModal');
+    };
+
+    onUploadVatPress = () => {
+        this.props.actions.selectUploadDocumentation('vatFormImage');
+    };
+
+    onUploadReceiptPress = () => {
+        this.props.actions.selectUploadDocumentation('receiptImage');
+    };
 
     render() {
-        const refundCase = this.props.state.selectedRefundCase;
+        const {state} = this.props;
+        const {navigation, selectedRefundCase} = state;
+        const refundCase = selectedRefundCase;
         const {merchant} = refundCase;
+
+        const receiptImage = this.getReceiptImage(refundCase);
+        const vatImage = this.getVatImage(refundCase);
 
         return (
             <View style={styles.container}>
@@ -55,22 +105,37 @@ class RefundCase extends Component {
                             <Text style={styles.contentText}>{refundCase.refundAmount}</Text>
                         </View>
                     </View>
-                    <TouchableOpacity style={styles.descriptionContainer}>
-                        <Image style={styles.uploadImage} resizeMode='contain'
-                               source={require('../../assets/refundeo_logo.png')}/>
+                    <TouchableOpacity style={styles.descriptionContainer} onPress={this.onUploadVatPress}>
+                        <View style={styles.uploadImageContainer}>
+                            <Image style={styles.uploadImage} resizeMode='contain'
+                                   source={vatImage}/>
+                        </View>
                         <Text style={styles.buttonText}>Upload VAT form</Text>
                         <Icon style={styles.angleRightIcon} name='angle-right'/>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.descriptionContainer}>
-                        <Image style={styles.uploadImage} resizeMode='contain'
-                               source={require('../../assets/refundeo_logo.png')}/>
+                    <TouchableOpacity style={styles.descriptionContainer} onPress={this.onUploadReceiptPress}>
+                        <View style={styles.uploadImageContainer}>
+                            <Image style={styles.uploadImage} resizeMode='contain'
+                                   source={receiptImage}/>
+                        </View>
                         <Text style={styles.buttonText}>Upload receipt</Text>
                         <Icon style={styles.angleRightIcon} name='angle-right'/>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.submitButton}>
+                    <TouchableOpacity style={styles.submitButton} onPress={this.onRequestRefundPress}>
                         <Text style={styles.submitButtonText}>Request Refund</Text>
                     </TouchableOpacity>
                 </ScrollView>
+                <ModalScreen
+                    modalTitle={'Not yet'}
+                    onBack={this.closeRefundCaseModal}
+                    onCancel={this.closeRefundCaseModal}
+                    onSubmit={this.closeRefundCaseModal}
+                    visible={navigation.modal['refundCaseModal'] || false}>
+                    <View style={styles.modalContainer}>
+                        <Text style={styles.modalText}>Please upload stamped VAT form and receipt before requesting
+                            refund.</Text>
+                    </View>
+                </ModalScreen>
             </View>
         );
     }
@@ -79,10 +144,10 @@ class RefundCase extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.backgroundColor,
+        backgroundColor: colors.slightlyDarkerColor,
     },
     scrollContainer: {
-        backgroundColor: colors.backgroundColor,
+        backgroundColor: colors.slightlyDarkerColor,
     },
     bannerImage: {
         width: '100%',
@@ -143,16 +208,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between'
     },
+    uploadImageContainer: {
+      borderRadius: 5
+    },
     uploadImage: {
         height: 100,
-        width: 100
+        width: 100,
     },
     submitButton: {
         margin: 20,
         alignItems: 'center',
         backgroundColor: colors.submitButtonColor,
         borderRadius: 4,
-        elevation: 2
+        elevation: 1
     },
     submitButtonText: {
         fontSize: 15,
@@ -173,6 +241,18 @@ const styles = StyleSheet.create({
         fontSize: 30,
         marginLeft: 5,
         color: colors.activeTabColor
+    },
+    modalContainer: {
+        paddingTop: 20,
+        paddingBottom: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    modalText: {
+        fontSize: 18,
+        color: colors.darkTextcolor,
+        textAlign: 'center',
+        margin: 5
     }
 });
 

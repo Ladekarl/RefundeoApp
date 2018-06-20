@@ -159,13 +159,19 @@ export default class Api {
             return new Date(b.dateCreated) - new Date(a.dateCreated);
         });
 
+        await refundCases.forEach(async r => {
+            r.tempVatFormImage = await LocalStorage.getVatFormImage(r.id);
+            r.tempReceiptImage = await LocalStorage.getReceiptImage(r.id);
+        });
+
         return refundCases;
     }
 
-    static async uploadDocumentation(refundCase, documentation) {
-        RNFetchBlob.config({fileCache: true, appendExt: 'jpg'});
-        const fs = RNFetchBlob.fs;
-        const base64 = await fs.readFile(documentation, 'base64');
+    static async uploadDocumentation(refundCase, vatForm, receipt) {
+        // RNFetchBlob.config({fileCache: true, appendExt: 'jpg'});
+        // const fs = RNFetchBlob.fs;
+        // const base64Vat = await fs.readFile(vatForm, 'base64');
+        // const base64Receipt = await fs.readFile(receipt, 'base64');
 
         const requestOptions = {
             method: 'POST',
@@ -174,14 +180,17 @@ export default class Api {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                ImageName: Guid(),
-                Image: base64,
-                ImageType: 'image/jpg'
+                receiptImage: receipt,
+                receiptImageType: 'image/png',
+                vatFormImage: vatForm,
+                vatFormImageType: 'image/png'
             })
         };
 
         const requestUrl = `${API_URL}/api/user/refundcase/${refundCase.id}/doc`;
-        return await fetch(requestUrl, requestOptions);
+        await Helpers.fetchAuthenticated(requestUrl, requestOptions);
+        await LocalStorage.removeVatFormImage(refundCase.id);
+        await LocalStorage.removeReceiptImage(refundCase.id);
     }
 
     static async requestRefund(refundCase) {

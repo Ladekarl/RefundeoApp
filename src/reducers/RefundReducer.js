@@ -19,6 +19,8 @@ type RefundCase = {
     qrCode: string,
     vatFormImage: string,
     receiptImage: string,
+    tempVatFormImage: string,
+    tempReceiptImage: string,
     dateCreated: string,
     dateRequested: string,
     merchant: Merchant,
@@ -35,7 +37,8 @@ type RefundReducerState = {
     documentationError: string,
     requestRefundError: string,
     createRefundCaseError: string,
-    selectedRefundCase: RefundCase
+    selectedRefundCase: RefundCase,
+    selectedDocumentation: string
 }
 
 const initialState: RefundReducerState = {
@@ -48,7 +51,8 @@ const initialState: RefundReducerState = {
     documentationError: '',
     requestRefundError: '',
     createRefundCaseError: '',
-    selectedRefundCase: {}
+    selectedRefundCase: {},
+    selectedDocumentation: ''
 };
 
 export default function refundReducer(state = initialState, action = {}) {
@@ -144,6 +148,31 @@ export default function refundReducer(state = initialState, action = {}) {
                 ...state,
                 selectedRefundCase: action.refundCase
             };
+            break;
+        case types.REFUND_SELECT_UPLOAD_DOCUMENTATION:
+            nextState = {
+                ...state,
+                selectedDocumentation: action.documentation
+            };
+            break;
+        case types.REFUND_UPLOAD_TEMP_VAT_FORM_IMAGE: {
+            nextState = {
+                ...state,
+            };
+            const refundCase = nextState.refundCases.find(r => r.id === state.selectedRefundCase.id);
+            refundCase.tempVatFormImage = action.tempVatFormImage;
+            nextState.selectedRefundCase.tempVatFormImage = action.tempVatFormImage;
+            break;
+        }
+        case types.REFUND_UPLOAD_TEMP_RECEIPT_IMAGE: {
+            nextState = {
+                ...state,
+            };
+            const refundCase = nextState.refundCases.find(r => r.id === state.selectedRefundCase.id);
+            refundCase.tempReceiptImage = action.tempReceiptImage;
+            nextState.selectedRefundCase.tempReceiptImage = action.tempReceiptImage;
+            break;
+        }
     }
     return nextState || state;
 }

@@ -124,7 +124,7 @@
     "choose_photo": "Vælg billede",
     "permission_try_again": "Prøv venligst igen",
     "permission_ok": "OK",
-    "permission_title": "Tilladelse afvist",
+    "permission_title": "Tilladelse til kamera",
     "permission_text": "For at uploade dokumentation skal vi bruge adgang til dig kamera og kunne vælge billeder fra dit bibliotek.",
     "upload_documentation_error": "Kunne ikke uploade dokumentation. Prøv venligst igen.",
     "request_refund_error": "Kunne ikke anmode om refusion. Prøv venligst igen.",
