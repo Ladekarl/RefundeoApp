@@ -396,7 +396,7 @@ function register(username, password, email, confPassword, acceptedTermsOfServic
     if (!username) {
         return registerError(strings('login.missing_username'));
     }
-    const passError = checkPassword(password, confPassword);
+    const passError = Validation.checkPassword(password, confPassword);
     if (passError) {
         return registerError(passError);
     }
@@ -759,7 +759,7 @@ function getOtherUserError(error = '') {
 }
 
 function changePassword(oldPassword, newPassword, confPassword) {
-    const passError = checkPassword(newPassword, confPassword);
+    const passError = Validation.checkPassword(newPassword, confPassword);
     if (passError) {
         return changePasswordError(passError);
     }
@@ -795,30 +795,6 @@ function changePasswordError(error = '') {
         type: types.AUTH_CHANGE_PASSWORD_ERROR,
         error
     };
-}
-
-function checkPassword(newPassword, confPassword) {
-    if (newPassword && confPassword && newPassword === confPassword) {
-        // noinspection EqualityComparisonWithCoercionJS
-        const hasLowerCase = newPassword.toUpperCase() != newPassword;
-        const uniqueChars = String.prototype.concat(...new Set(newPassword)).length;
-        if (hasLowerCase && newPassword.length >= 8 && uniqueChars >= 4) {
-            return null;
-        }
-        else if (newPassword.length < 8) {
-            return strings('settings.error_password_too_short');
-        }
-        else if (uniqueChars < 4) {
-            return strings('settings.error_password_not_unique');
-        }
-        else if (!hasLowerCase) {
-            return strings('settings.error_password_only_uppercase');
-        }
-    } else if (!newPassword || !confPassword) {
-        return strings('settings.error_password_not_filled');
-    } else {
-        return strings('settings.error_password_not_same');
-    }
 }
 
 function shouldLogout(response) {

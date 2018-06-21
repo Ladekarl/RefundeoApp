@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {RefreshControl, Dimensions, StyleSheet, Platform, View, FlatList, TouchableOpacity, Image} from 'react-native';
+import {RefreshControl, StyleSheet, View, FlatList} from 'react-native';
 import Icon from 'react-native-fa-icons';
 import colors from '../shared/colors';
 import {connect} from 'react-redux';
@@ -8,8 +8,6 @@ import Actions from '../actions/Actions';
 import PropTypes from 'prop-types';
 import EmptyOverviewScreen from '../components/EmptyOverview';
 import RefundCaseListItem from '../components/RefundCaseListItem';
-
-const {height} = Dimensions.get('window');
 
 class OverviewScreen extends Component {
 
@@ -93,21 +91,6 @@ const styles = StyleSheet.create({
         backgroundColor: colors.separatorColor,
         marginLeft: 65,
         marginBottom: 5
-    },
-    modalContentContainer: {
-        height: '100%',
-        width: '100%'
-    },
-    modalContainer: {
-        height: height * 0.7,
-        justifyContent: 'space-between',
-    },
-    modalImage: {
-        flex: 1,
-        height: undefined,
-        borderRadius: 5,
-        resizeMode: 'contain',
-        width: undefined
     }
 });
 

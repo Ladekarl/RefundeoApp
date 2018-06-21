@@ -121,8 +121,6 @@ class StoresScreen extends Component {
                     clusterInitialFontSize={15}
                     showsMyLocationButton={true}
                     animateClusters={true}
-                    getMapRef={(r) => this.map = r}
-                    ref={(r) => this.clusterMap = r}
                     renderMarker={this.renderMarker}
                     renderCluster={this.renderCluster}/>
                 }

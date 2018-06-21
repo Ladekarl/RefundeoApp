@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Text, View, StyleSheet, Platform, Image} from 'react-native';
+import {View, StyleSheet, Platform, Image} from 'react-native';
 import {bindActionCreators} from 'redux';
 import Actions from '../actions/Actions';
 import Icon from 'react-native-fa-icons';
