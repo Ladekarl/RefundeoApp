@@ -39,30 +39,30 @@ export default class EmptyOverviewScreen extends Component {
                     contentColor={colors.activeTabColor}
                     headlineColor={colors.backgroundColor}
                     textColor={colors.separatorColor}
-                    icon={<Icon style={styles.logoButton} name='file-text-o'/>}
-                    headline={'Tax free receipt'}
-                    text={'When you purchase an item in one of our partner stores remember to ask them for a tax free receipt.'}/>
+                    icon={<Icon style={styles.logoButton} name='play'/>}
+                    headline={'Initiate refund'}
+                    text={'When you purchase an item in one of our partner stores show the cashier your personal QR Code.\n\nThe cashier will initiate the refund for you.'}/>
                 <TutorialPage
                     contentColor={colors.activeTabColor}
                     headlineColor={colors.backgroundColor}
                     textColor={colors.separatorColor}
-                    icon={<Icon style={styles.logoButton} name='camera'/>}
-                    headline={'Scan the QR Code'}
-                    text={'The tax free receipt has a QR code.\nScan it with the app.\n\nYou can now see the amount you will be refunded.'}/>
+                    icon={<Icon style={styles.logoButton} name='print'/>}
+                    headline={'Print the form'}
+                    text={'When the refund has been created, you will receive an email with a tax free form.\nIf not - you can always send a new form within the app.\n\nPrint this form.'}/>
                 <TutorialPage
                     contentColor={colors.activeTabColor}
                     headlineColor={colors.backgroundColor}
                     textColor={colors.separatorColor}
                     icon={<Icon style={styles.logoButton} name='thumbs-o-up'/>}
                     headline={'Receive approval'}
-                    text={'Fill in the form on the receipt and get it approved at one of the local tax offices.'}/>
+                    text={'Fill in the tax free form and get it approved and stamped at one of the local tax offices.\n\nRemember to bring the original receipt.'}/>
                 <TutorialPage
                     contentColor={colors.activeTabColor}
                     headlineColor={colors.backgroundColor}
                     textColor={colors.separatorColor}
-                    icon={<Icon style={styles.logoButton} name='upload'/>}
-                    headline={'Upload the approved receipt'}
-                    text={'Use the app to take a picture of your approved receipt and upload it.\n\nWhen you are satisfied with the picture, request a refund.'}/>
+                    icon={<Icon style={styles.logoButton} name='camera'/>}
+                    headline={'Upload documentation'}
+                    text={'Use the app to take pictures of the approved tax free form and receipt.\n\nWhen you are satisfied with the pictures, request a refund.'}/>
                 <TutorialPage
                     contentColor={colors.activeTabColor}
                     headlineColor={colors.backgroundColor}

@@ -19,12 +19,12 @@ class QRCode extends Component {
             if (Platform.OS === 'ios') {
                 return (
                     <View style={styles.tabBarContainerIOs}>
-                        <Icon name='barcode' style={[styles.tabBarIconIOs, {color: newTintColor}]}/>
+                        <Icon name='user' style={[styles.tabBarIconIOs, {color: newTintColor}]}/>
                     </View>
                 );
             } else {
                 return (
-                    <Icon name='barcode' style={[styles.tabBarIconAndroid, {color: tintColor}]}/>
+                    <Icon name='octagon' style={[styles.tabBarIconAndroid, {color: tintColor}]}/>
                 );
             }
         }
@@ -56,14 +56,15 @@ const styles = StyleSheet.create({
         backgroundColor: colors.activeTabColor,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingTop: 10,
-        paddingBottom: 10
     },
     tabBarIconIOs: {
-        fontSize: 25
+        fontSize: 30,
+        alignSelf: 'center',
+        textAlign: 'center',
+        marginLeft: 1,
     },
     tabBarIconAndroid: {
-        fontSize: 20
+        fontSize: 35
     },
     imageContainer: {
         elevation: 5,
