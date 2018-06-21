@@ -61,7 +61,8 @@ export default class RefundCaseListItem extends Component {
         const isAccepted = refundCase.isAccepted;
         const isRequested = refundCase.isRequested;
         const isRejected = refundCase.isRejected;
-        const documentation = refundCase.documentation;
+        const hasTempImages = refundCase.tempReceiptImage && refundCase.tempVatFormImage;
+        const hasImages = refundCase.receiptImage && refundCase.vatFormImage;
 
         if (isAccepted) {
             return <Text style={[styles.bigText, styles.doneIcon]}>{strings('refund_case.approved')}</Text>;
@@ -72,7 +73,7 @@ export default class RefundCaseListItem extends Component {
         else if (isRequested) {
             return <Text style={styles.bigText}>{strings('refund_case.pending_approval')}</Text>;
         }
-        else if (documentation) {
+        else if (hasTempImages || hasImages) {
             return <Text style={styles.bigText}>{strings('refund_case.send_documentation')}</Text>;
         }
         else {
@@ -84,15 +85,25 @@ export default class RefundCaseListItem extends Component {
         this.props.onPress(this.refundCase);
     };
 
+    getBannerColor = (refundCase) => {
+        const isAccepted = refundCase.isAccepted;
+        const isRejected = refundCase.isRejected;
+
+        if (isAccepted) return colors.greenButtonColor;
+        if (isRejected) return colors.cancelButtonColor;
+        return colors.activeTabColor;
+    };
+
     render() {
         const {refundCase} = this.props;
         this._initProps();
+        const bannerColor = this.getBannerColor(refundCase);
         return (
             <TouchableOpacity
                 style={styles.container}
                 onPress={this._handlePress}>
                 <View style={styles.bannerTextContainer}>
-                    <View style={styles.bannerTextBarContainer}>
+                    <View style={[styles.bannerTextBarContainer, {backgroundColor: bannerColor}]}>
                         <Text
                             style={styles.headlineText}>{refundCase.merchant.companyName + ' - ' + refundCase.merchant.addressCity}</Text>
                         <Text style={styles.headlineText}>{this.state.dateCreatedFormatted}</Text>
@@ -175,7 +186,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     bigText: {
-        fontSize: 15,
+        fontSize: 13,
         fontWeight: 'bold',
         textAlign: 'right',
         color: colors.activeTabColor
@@ -188,7 +199,7 @@ const styles = StyleSheet.create({
     detailsContainer: {
         justifyContent: 'center',
         alignItems: 'stretch',
-        marginRight: 10
+        marginRight: 5
     },
     detailContainer: {
         flexDirection: 'row',

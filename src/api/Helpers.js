@@ -83,7 +83,7 @@ export default class Helpers {
         if (response.status === 401 || response.status === 403) {
             const user = await LocalStorage.getUser();
             if (user.refreshToken) {
-                await Helpers.getTokenFromRefreshToken(user.refreshToken);
+                await Helpers.getTokenFromRefreshToken(user.refreshToken, response);
                 // Perform request again with new token
                 requestOptions.headers = {
                     ...requestOptions.headers,
@@ -130,7 +130,7 @@ export default class Helpers {
         return this.saveUser(updatedUser);
     }
 
-    static async getTokenFromRefreshToken(refreshToken) {
+    static async getTokenFromRefreshToken(refreshToken, originalResponse) {
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -143,7 +143,9 @@ export default class Helpers {
 
         const response = await fetch(`${API_URL}/Token`, requestOptions);
 
-        Helpers.handleResponse(response);
+        if (!response.ok) {
+            throw originalResponse;
+        }
 
         const user = await response.json();
 

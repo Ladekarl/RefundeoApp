@@ -83,9 +83,10 @@ export default class ModalScreen extends Component {
                 transparent={true}
                 onRequestClose={onBack}
                 visible={visible}>
-                <KeyboardAvoidingView style={styles.modalContainer}
-                                      keyboardVerticalOffset={Platform.OS === 'ios' ? -100 + keyboardVerticalOffset : -300 + keyboardVerticalOffset}
-                                      behavior='padding'>
+                <KeyboardAvoidingView
+                    style={styles.modalContainer}
+                    keyboardVerticalOffset={Platform.OS === 'ios' ? -100 + keyboardVerticalOffset : -300 + keyboardVerticalOffset}
+                    behavior='padding'>
                     <View
                         style={[styles.modalInnerContainer, contentContainerStyle, fullScreen ? styles.fullInnerContainer : {}]}>
                         <View
@@ -93,11 +94,9 @@ export default class ModalScreen extends Component {
                             {!noCancelButton &&
                             <TouchableOpacity style={styles.cancelButton} onPress={onCancel}>
                                 <Icon style={styles.cancelIcon} name='times'/>
-                            </TouchableOpacity>
-                            }
+                            </TouchableOpacity>}
                             {noCancelButton &&
-                            <View style={styles.emptyContainer}/>
-                            }
+                            <View style={styles.emptyContainer}/>}
                             <Text style={styles.modalTitleText}>{modalTitle}</Text>
                             <View style={styles.emptyContainer}/>
                         </View>
@@ -110,8 +109,7 @@ export default class ModalScreen extends Component {
                                     selectedValue={selectedPickerValue}>
                                     {pickerItems}
                                 </Picker>
-                            </View>
-                            }
+                            </View>}
                             {!noChildren && children}
                         </View>
                         {(!noCancelButton || !noSubmitButton) &&
@@ -121,8 +119,7 @@ export default class ModalScreen extends Component {
                                 style={styles.modalSubmitButton}
                                 onPress={onSubmit}>
                                 <Text style={styles.modalButtonText}>{strings('modal.ok')}</Text>
-                            </TouchableOpacity>
-                            }
+                            </TouchableOpacity>}
                         </View>
                         }
                     </View>
@@ -193,14 +190,15 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     modalTitleText: {
-        flex: 3,
+        flex: 5,
         fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center',
         color: colors.backgroundColor
     },
     emptyContainer: {
-        flex: 1
+        flex: 1,
+        marginRight: 10
     },
     cancelButton: {
         flex: 1,
@@ -215,10 +213,13 @@ const styles = StyleSheet.create({
     },
     fullInnerContainer: {
         height: '100%',
-        width: '100%'
+        width: '100%',
+        borderRadius: 0
     },
     fullTopContainer: {
         height: Platform.OS === 'ios' ? 70 : 60,
-        paddingTop: Platform.OS === 'ios' ? 25 : 15
+        paddingTop: Platform.OS === 'ios' ? 25 : 15,
+        borderTopRightRadius: 0,
+        borderTopLeftRadius: 0
     }
 });

@@ -166,11 +166,19 @@ export default function refundReducer(state = initialState, action = {}) {
         }
         case types.REFUND_UPLOAD_TEMP_RECEIPT_IMAGE: {
             nextState = {
-                ...state,
+                ...state
             };
             const refundCase = nextState.refundCases.find(r => r.id === state.selectedRefundCase.id);
             refundCase.tempReceiptImage = action.tempReceiptImage;
             nextState.selectedRefundCase.tempReceiptImage = action.tempReceiptImage;
+            break;
+        }
+        case types.REFUND_GET_SELECTED_REFUND_CASE: {
+            nextState = {
+                ...state,
+                selectedRefundCase: action.refundCase,
+                fetchingRefundCases: false
+            };
             break;
         }
     }

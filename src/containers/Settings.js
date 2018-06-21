@@ -25,7 +25,6 @@ import Validation from '../shared/Validation';
 
 class SettingsScreen extends Component {
 
-    // noinspection JSUnusedGlobalSymbols
     static navigationOptions = {
         title: strings('settings.settings'),
         headerTitleStyle: {
@@ -103,7 +102,11 @@ class SettingsScreen extends Component {
     };
 
     showSwiftModal = () => {
-        this.setModalState(strings('settings.swift_title'), this.props.state.user.swift, true, strings('settings.swift_placeholder'), 'swift', 'phone-pad');
+        this.setModalState(strings('settings.swift_title'), this.props.state.user.swift, true, strings('settings.swift_placeholder'), 'swift');
+    };
+
+    showAccountNumberModal = () => {
+        this.setModalState(strings('settings.account_number_title'), this.props.state.user.accountNumber, true, strings('settings.account_number_placeholder'), 'accountNumber', 'phone-pad');
     };
 
     showStreetNameModal = () => {
@@ -133,7 +136,6 @@ class SettingsScreen extends Component {
             let newPassword = this.state.newPasswordValue;
             let confPassword = this.state.confPasswordValue;
             if (oldPassword && newPassword && confPassword && newPassword === confPassword) {
-                // noinspection EqualityComparisonWithCoercionJS
                 const hasLowerCase = newPassword.toUpperCase() != newPassword;
                 const uniqueChars = String.prototype.concat(...new Set(newPassword)).length;
                 if (hasLowerCase && newPassword.length >= 8 && uniqueChars >= 4) {
@@ -323,13 +325,23 @@ class SettingsScreen extends Component {
                         </View>
                     </CountryPicker>
                 </View>
+                {!requiredOnly && !state.user.isOauth &&
+                <Setting label={strings('settings.change_password')} onPress={this.showChangePassword}/>
+                }
+                {!requiredOnly &&
+                <View style={styles.sectionHeaderContainer}>
+                    <Text style={styles.sectionHeaderText}>{strings('settings.payment')}</Text>
+                </View>
+                }
                 {!requiredOnly &&
                 <Setting
                     label={strings('settings.swift')} onPress={this.showSwiftModal}
                     value={state.user.swift}/>
                 }
-                {!requiredOnly && !state.user.isOauth &&
-                <Setting label={strings('settings.change_password')} onPress={this.showChangePassword}/>
+                {!requiredOnly &&
+                <Setting
+                    label={strings('settings.account_number')} onPress={this.showAccountNumberModal}
+                    value={state.user.accountNumber}/>
                 }
                 <View style={styles.sectionHeaderContainer}>
                     <Text style={styles.sectionHeaderText}>{strings('settings.address')}</Text>
@@ -427,10 +439,9 @@ class SettingsScreen extends Component {
                             keyboardType={this.state.modalInputType}
                             autoCorrect={false}
                             editable={true}
-                            returnKeyType={'next'}
+                            returnKeyType='next'
                             onSubmitEditing={this.focusThirdTextInput}
-                        />
-                        }
+                        />}
                         {this.state.isChangePassword &&
                         <TextInput
                             ref={(input) => this.thirdTextInput = input}
@@ -442,17 +453,15 @@ class SettingsScreen extends Component {
                             selectionColor={colors.inactiveTabColor}
                             secureTextEntry={true}
                             keyboardType={this.state.modalInputType}
-                            autoCapitalize={'none'}
+                            autoCapitalize='none'
                             autoCorrect={false}
                             underlineColorAndroid={colors.activeTabColor}
                             tintColor={colors.activeTabColor}
                             numberOfLines={1}
                             editable={true}
-                        />
-                        }
-                        {this.state.modalInputError &&
-                        <Text style={styles.modalInputErrorText}>{this.state.modalInputError}</Text>
-                        }
+                        />}
+                        <Text
+                            style={this.state.modalInputError ? styles.modalInputErrorText : styles.hidden}>{this.state.modalInputError}</Text>
                     </View>
                 </ModalScreen>
                 <ModalScreen
@@ -485,6 +494,9 @@ class SettingsScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+    hidden: {
+        display: 'none'
+    },
     container: {
         flex: 1,
         backgroundColor: colors.backgroundColor,

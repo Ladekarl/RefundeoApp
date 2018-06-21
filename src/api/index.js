@@ -1,7 +1,5 @@
 import Helpers, {API_URL} from './Helpers';
 import LocalStorage from '../storage';
-import RNFetchBlob from 'react-native-fetch-blob';
-import Guid from '../shared/Guid';
 
 export default class Api {
     static async getTokenFacebook(accessToken) {
@@ -104,22 +102,7 @@ export default class Api {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                username: user.username,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                country: user.country,
-                email: user.email,
-                swift: user.swift,
-                passport: user.passport,
-                addressCountry: user.addressCountry,
-                addressStreetName: user.addressStreetName,
-                addressPostalCode: user.addressPostalCode,
-                addressCity: user.addressCity,
-                addressStreetNumber: user.addressStreetNumber,
-                acceptedPrivacyPolicy: user.acceptedPrivacyPolicy,
-                privacyPolicy: user.privacyPolicy,
-                acceptedTermsOfService: user.acceptedTermsOfService,
-                termsOfService: user.termsOfService
+                ...user
             })
         };
 
@@ -165,6 +148,22 @@ export default class Api {
         });
 
         return refundCases;
+    }
+
+    static async getRefundCaseById(refundCaseId) {
+        const requestOptions = {
+            method: 'GET',
+            headers: await Helpers.authHeader()
+        };
+
+        const response = await Helpers.fetchAuthenticated(`${API_URL}/api/user/refundcase/${refundCaseId}`, requestOptions);
+
+        const refundCase = await response.json();
+
+        refundCase.tempVatFormImage = await LocalStorage.getVatFormImage(refundCase.id);
+        refundCase.tempReceiptImage = await LocalStorage.getReceiptImage(refundCase.id);
+
+        return refundCase;
     }
 
     static async uploadDocumentation(refundCase, vatForm, receipt) {

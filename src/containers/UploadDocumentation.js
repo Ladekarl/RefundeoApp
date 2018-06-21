@@ -16,6 +16,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {RNCamera} from 'react-native-camera';
 import {strings} from '../shared/i18n';
+import ModalScreen from '../components/Modal';
 
 class UploadDocumentation extends Component {
 
@@ -34,7 +35,12 @@ class UploadDocumentation extends Component {
 
     takePicture = async () => {
         if (this.camera) {
-            const options = {quality: 0.5, base64: true};
+            const options = {
+                forceUpOrientation: true,
+                fixOrientation: true,
+                quality: 0.5,
+                base64: true
+            };
             this.setState({
                 takingPicture: true
             });
@@ -82,10 +88,10 @@ class UploadDocumentation extends Component {
             const refundCaseId = JSON.parse(e.data);
             if (this.props.state.selectedRefundCase.id === refundCaseId) {
                 this.setState({page: 1});
-            } else {
-                // wrong qr code
+                return;
             }
         }
+        this.props.actions.openModal('uploadDocumentationModal');
     };
 
     getTopText = (page, selectedDocumentation) => {
@@ -112,6 +118,10 @@ class UploadDocumentation extends Component {
 
     skipPressed = () => {
         this.props.actions.navigateBack();
+    };
+
+    closeUploadDocumentationModal = () => {
+        this.props.actions.closeModal('uploadDocumentationModal');
     };
 
     render() {
@@ -166,6 +176,16 @@ class UploadDocumentation extends Component {
                     <ActivityIndicator size='large' color={colors.activeTabColor} style={styles.activityIndicator}/>
                 </View>
                 }
+                <ModalScreen
+                    modalTitle={'Wrong code'}
+                    onBack={this.closeUploadDocumentationModal}
+                    onCancel={this.closeUploadDocumentationModal}
+                    onSubmit={this.closeUploadDocumentationModal}
+                    visible={this.props.state.navigation.modal['uploadDocumentationModal'] || false}>
+                    <View style={styles.modalContainer}>
+                        <Text style={styles.modalText}>{'Incorrect QR Code. Please try again.'}</Text>
+                    </View>
+                </ModalScreen>
             </View>
         );
     }
@@ -277,6 +297,18 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: colors.activeTabColor,
         textAlign: 'center'
+    },
+    modalContainer: {
+        paddingTop: 20,
+        paddingBottom: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    modalText: {
+        fontSize: 18,
+        color: colors.darkTextcolor,
+        textAlign: 'center',
+        margin: 5
     }
 });
 

@@ -67,7 +67,7 @@ export default class StoresList extends Component {
                             onRefresh={actions.getMerchants}
                         />
                     }
-                    data={filterMerchants}
+                    data={filterMerchants && filterMerchants.length > 0 ? filterMerchants : null}
                     keyExtractor={this.keyExtractor}
                     renderItem={this.renderStoreListItem}
                     ListEmptyComponent={!fetching ? EmptyStoreList : undefined}

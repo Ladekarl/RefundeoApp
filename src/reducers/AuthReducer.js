@@ -19,6 +19,7 @@ const initialState = {
         country: '',
         email: '',
         swift: '',
+        accountNumber: '',
         passport: '',
         AddressCity: '',
         AddressStreetNumber: '',
@@ -106,7 +107,7 @@ export default function authReducer(state = initialState, action = {}) {
         case types.AUTH_GET_OTHER_USER_SUCCESS: {
             nextState = {
                 ...state,
-                otherUser: action.user,
+                otherUser: action.otherUser,
                 fetching: false,
                 ...resetErrors
             };

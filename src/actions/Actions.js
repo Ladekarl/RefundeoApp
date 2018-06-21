@@ -28,6 +28,7 @@ export default {
     navigateDrawerHome,
     navigateStoreList,
     navigateStoreMap,
+    navigateRegisterExtra,
     openModal,
     closeModal,
     login,
@@ -37,6 +38,7 @@ export default {
     navigateBack,
     facebookLoginError,
     getRefundCases,
+    getSelectedRefundCase,
     changeUser,
     getUser,
     getScannedUser,
@@ -455,8 +457,9 @@ function requestRefund(refundCase) {
     return dispatch => {
         dispatch(requestingRefund());
         Api.requestRefund(refundCase).then(() => {
-            dispatch(getRefundCases());
             dispatch(requestingRefundSuccess());
+            dispatch(getSelectedRefundCase(refundCase.id));
+            dispatch(getRefundCases());
         }).catch((response) => {
             if (shouldLogout(response)) {
                 dispatch(logout());
@@ -555,6 +558,28 @@ function getRefundCases() {
                 dispatch(getRefundCasesError('Some error text'));
             }
         });
+    };
+}
+
+function getSelectedRefundCase(refundCaseId) {
+    return dispatch => {
+        dispatch(gettingRefundCases());
+        Api.getRefundCaseById(refundCaseId).then((refundCases) => {
+            dispatch(getSelectedRefundCaseSuccess(refundCases));
+        }).catch((response) => {
+            if (shouldLogout(response)) {
+                dispatch(logout());
+            } else {
+                dispatch(getRefundCasesError('Some error text'));
+            }
+        });
+    };
+}
+
+function getSelectedRefundCaseSuccess(refundCase) {
+    return {
+        type: types.REFUND_GET_SELECTED_REFUND_CASE,
+        refundCase
     };
 }
 
@@ -712,10 +737,10 @@ function getUserSuccess(user) {
     };
 }
 
-function getOtherUserSuccess(user) {
+function getOtherUserSuccess(otherUser) {
     return {
         type: types.AUTH_GET_OTHER_USER_SUCCESS,
-        user
+        otherUser
     };
 }
 

@@ -21,4 +21,12 @@ export default class {
         ];
         return requiredAttributes.some(val => !val);
     }
+
+    static missingRequestRefundUserInfo(user) {
+        let requiredAttributes = [
+            user.swift,
+            user.accountNumber
+        ];
+        return requiredAttributes.some(val => !val);
+    }
 }

@@ -61,7 +61,11 @@
     "address_country_placeholder": "Country",
     "address_postal_code": "Postal code:",
     "address_postal_code_title": "Postal code",
-    "address_postal_code_placeholder": "Postal code"
+    "address_postal_code_placeholder": "Postal code",
+    "payment": "Bank information",
+    "account_number": "Account number:",
+    "account_number_title": "Account number",
+    "account_number_placeholder": "Account number"
   },
   "register": {
     "register": "Sign up",
@@ -131,7 +135,7 @@
     "request_documentation": "You are requesting with this documentation",
     "claim_refund_case_error": "Something went wrong. Please try again",
     "refund_case_already_claimed": "The refund has already been claimed.",
-    "receipt_number": "Receipt number:"
+    "receipt_number": "Receipt:"
   },
   "stores": {
     "opening_hours": "Opening hours",

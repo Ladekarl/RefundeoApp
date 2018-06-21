@@ -60,7 +60,7 @@ class OverviewScreen extends Component {
                         />
                     }
                     ItemSeparatorComponent={this._renderSeparator}
-                    data={refundCases}
+                    data={refundCases && refundCases.length > 0 ? refundCases : null}
                     keyExtractor={this._keyExtractor}
                     renderItem={this._renderRefundCase}
                     ListEmptyComponent={!fetchingRefundCases ? <EmptyOverviewScreen actions={actions}/> : undefined}

@@ -61,7 +61,11 @@
     "address_country_placeholder": "Land",
     "address_postal_code": "Postnummer:",
     "address_postal_code_title": "Postnummer",
-    "address_postal_code_placeholder": "Postnummer"
+    "address_postal_code_placeholder": "Postnummer",
+    "payment": "Bankinformationer",
+    "account_number": "Kontonummer:",
+    "account_number_title": "Kontonummer",
+    "account_number_placeholder": "Kontonummer"
   },
   "register": {
     "register": "Tilmeld",
@@ -131,7 +135,7 @@
     "request_documentation": "Du anmoder med denne dokumentation",
     "claim_refund_case_error": "Noget gik galt. Prøv igen.",
     "refund_case_already_claimed": "Refusionen er allerede blevet registreret.",
-    "receipt_number": "Kvitteringsnummer:"
+    "receipt_number": "Kvittering:"
   },
   "stores": {
     "opening_hours": "Åbningstider",
