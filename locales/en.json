@@ -138,7 +138,19 @@
     "request_documentation": "You are requesting with this documentation",
     "claim_refund_case_error": "Something went wrong. Please try again",
     "refund_case_already_claimed": "The refund has already been claimed.",
-    "receipt_number": "Receipt:"
+    "receipt_number": "Receipt:",
+    "missing_documentation_title": "Missing documentation",
+    "missing_documentation_text": "Please upload stamped tax free form and receipt before requesting refund.",
+    "missing_information_title": "Missing information",
+    "missing_information_swift_text": "Before requesting the refund we need your banks Swift/BIC code and your account number.",
+    "missing_information_other_text": "Before requesting the refund we need a bit more information.",
+    "request_title": "Are you sure?",
+    "request_text": "You cannot change the images after requesting the refund",
+    "purchase_amount_vat": "Purchase amount incl. VAT",
+    "refund_amount2": "Refund amount",
+    "invalid_email": "Please provide a valid email address.",
+    "upload_tax_free_form": "Upload tax free form",
+    "upload_receipt": "Upload receipt"
   },
   "stores": {
     "opening_hours": "Opening hours",

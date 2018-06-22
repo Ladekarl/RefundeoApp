@@ -138,7 +138,19 @@
     "request_documentation": "Du anmoder med denne dokumentation",
     "claim_refund_case_error": "Noget gik galt. Prøv igen.",
     "refund_case_already_claimed": "Refusionen er allerede blevet registreret.",
-    "receipt_number": "Kvittering:"
+    "receipt_number": "Kvittering:",
+    "missing_documentation_title": "Mangler dokumentation",
+    "missing_documentation_text": "Før du anmoder om en refusion, skal du uploade den stemplede tax free form og kvittering.",
+    "missing_information_title": "Manger information",
+    "missing_information_swift_text": "Før du anmoder om en refusion, skal vi bruge din banks SWIFT/BIC kode og dit kontonummer.",
+    "missing_information_other_text": "Før du anmoder om en refusion skal vi bruge lidt flere information om dig.",
+    "request_title": "Er du sikker?",
+    "request_text": "Du kan ikke ændre billederne efter du har anmodet om en refusion.",
+    "purchase_amount_vat": "Købsbeløb inkl. VAT",
+    "refund_amount2": "Refusionsbeløb",
+    "invalid_email": "Angiv venligst en gyldig emailadresse.",
+    "upload_tax_free_form": "Upload tax free form",
+    "upload_receipt": "Upload kvittering"
   },
   "stores": {
     "opening_hours": "Åbningstider",

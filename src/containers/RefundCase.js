@@ -83,15 +83,15 @@ class RefundCase extends Component {
         const missingInfo = Validation.missingUserInfo(user);
         const missingSwift = Validation.missingRequestRefundUserInfo(user);
         if (!hasTempImages && !hasImages && !refundCase.isRequested) {
-            this.openRefundCaseModal('Missing documentation', 'Please upload stamped tax free form and receipt before requesting refund.');
+            this.openRefundCaseModal(strings('refund_case.missing_documentation_title'), strings('refund_case.missing_documentation_text'));
         } else if (hasTempImages && !refundCase.isRequested && !missingSwift && !missingInfo) {
             this.requestRefund(() => {
                 this.closeRefundCaseModal();
                 this.props.actions.uploadDocumentation(refundCase, refundCase.tempVatFormImage, refundCase.tempReceiptImage);
             });
         } else if (missingInfo || missingSwift) {
-            const modalText = missingSwift ? 'Before requesting the refund we need your Swift/BIC code and account number.' : ' Before requesting the refund we need a bit more information.';
-            this.openRefundCaseModal('Missing information', modalText, () => {
+            const modalText = missingSwift ? strings('refund_case.missing_information_swift_text') : strings('refund_case.missing_information_other_text');
+            this.openRefundCaseModal(strings('refund_case.missing_information_title'), modalText, () => {
                 this.closeRefundCaseModal();
                 const missingInfo = Validation.missingUserInfo(user);
                 const missingSwift = Validation.missingRequestRefundUserInfo(user);
@@ -110,7 +110,7 @@ class RefundCase extends Component {
     };
 
     requestRefund = (submitFunction) => {
-        this.openRefundCaseModal('Are you sure?', 'You cannot change the images after requesting the refund', () => {
+        this.openRefundCaseModal(strings('refund_case.request_title'), strings('refund_case.request_text'), () => {
             submitFunction();
         });
     };
@@ -234,8 +234,8 @@ class RefundCase extends Component {
                 <View style={styles.bannerTextBarContainer}>
                     <View style={styles.bannerContentContainer}>
                         <View style={styles.bannerColumnContainer}>
-                            <Text style={styles.leftText}>{'Purchase amount incl. VAT'}</Text>
-                            <Text style={styles.leftText}>{'Refund amount'}</Text>
+                            <Text style={styles.leftText}>{strings('refund_case.purchase_amount_vat')}</Text>
+                            <Text style={styles.leftText}>{strings('refund_case.refund_amount2')}</Text>
                         </View>
                         <View style={styles.bannerColumnContainer}>
                             <Text style={styles.contentText}>{refundCase.amount}</Text>
@@ -255,7 +255,7 @@ class RefundCase extends Component {
                     <View style={styles.uploadImageContainer}>
                         {vatImage}
                     </View>
-                    <Text style={styles.buttonText}>Upload tax free form</Text>
+                    <Text style={styles.buttonText}>{strings('refund_case.upload_tax_free_form')}</Text>
                     <Icon style={styles.angleRightIcon} name='angle-right'/>
                 </TouchableOpacity>
                 }
@@ -264,13 +264,13 @@ class RefundCase extends Component {
                     <View style={styles.uploadImageContainer}>
                         {receiptImage}
                     </View>
-                    <Text style={styles.buttonText}>Upload receipt</Text>
+                    <Text style={styles.buttonText}>{strings('refund_case.upload_receipt')}</Text>
                     <Icon style={styles.angleRightIcon} name='angle-right'/>
                 </TouchableOpacity>
                 }
                 {!refundCase.isRequested &&
                 <TouchableOpacity style={styles.submitButton} onPress={this.onRequestRefundPress}>
-                    <Text style={styles.submitButtonText}>Request Refund</Text>
+                    <Text style={styles.submitButtonText}>{strings('refund_case.send_documentation')}</Text>
                 </TouchableOpacity>
                 }
                 {refundCase.isRequested &&
@@ -315,7 +315,7 @@ class RefundCase extends Component {
                             blurOnSubmit={false}
                         />
                         <Text
-                            style={!this.state.email || !this.state.isValidEmail ? styles.modalInputErrorText : styles.hidden}>{'Please provide a valid email address.'}</Text>
+                            style={!this.state.email || !this.state.isValidEmail ? styles.modalInputErrorText : styles.hidden}>{strings('refund_case.invalid_email')}</Text>
                     </View>
                 </ModalScreen>
             </ScrollView>
