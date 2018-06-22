@@ -150,5 +150,19 @@
     "refund": "Refund",
     "empty": "No stores available.\n\nPlease adjust filter settings.",
     "vat_number": "Vat no."
+  },
+  "tutorial": {
+    "welcome_title": "Welcome to Refundeo",
+    "welcome_text": "Our mission is to offer you an improved experience when shopping tax free.\n\nSwipe right to learn how to claim your tax refund.",
+    "initiate_title": "Initiate refund",
+    "initiate_text": "When you purchase an item in one of our partner stores show the cashier your personal QR Code.\n\nThe cashier will initiate the refund for you.",
+    "print_title": "Print the form",
+    "print_text": "When the refund has been initiated, you will receive an email with a tax free form.\nIf not - you can always send a new form within the app.\n\nPrint this form.",
+    "approval_title": "Receive approval",
+    "approval_text": "Fill in the tax free form and get it approved and stamped at one of the local tax offices.\n\nRemember to bring the original receipt too.",
+    "upload_title": "Upload documentation",
+    "upload_text": "Use the app to take pictures of the approved tax free form and receipt.\n\nWhen you are satisfied with the pictures, request a refund.",
+    "done_title": "Done",
+    "done_text": "Now you can relax and wait for your refund as we will handle the rest for you."
   }
 }

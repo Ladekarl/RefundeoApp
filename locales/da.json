@@ -150,5 +150,19 @@
     "refund": "Refusion",
     "empty": "Ingen butikker tilgængelige.\n\nJustér filterindstillingerne.",
     "vat_number": "Vat no."
+  },
+  "tutorial": {
+    "welcome_title": "Velkommen til Refundeo",
+    "welcome_text": "Vores mission er at tilbyde dig en forbedret oplevelse, når du shopper tax free.\n\nSwipe til højre for at lære hvordan du modtager din refusion.",
+    "initiate_title": "Påbegynd refusion",
+    "initiate_text": "Når du køber noget i en af vores partner butikker, skal du vise din personlige QR kode til butiksassistenten, som vil påbegunde refusionen for dig.",
+    "print_title": "Udskriv formen",
+    "print_text": "Når din refusion er blevet påbegyndt, modtager du en mail med en tax free form.\nHvis ikke, kan du altid sende en ny fra app'en.\n\nUdskriv denne form.",
+    "approval_title": "Modtag godkendelse",
+    "approval_text": "Udfyld den tilsendte tax free form og få den godkendt og stemplet ved en af de lokale skattekontorer.\n\nHusk også at medbringe den originale kvittering.",
+    "upload_title": "Indsend dokumentation",
+    "upload_text": "Brug app'en til at tage billeder af den godkendte tax free form og kvittering.\n\nNår du er tilfreds med billederne, anmod om refusion.",
+    "done_title": "Færdig",
+    "done_text": "Nu kan du slappe af og vente på din refusion, da vi håndterer resten for dig."
   }
 }

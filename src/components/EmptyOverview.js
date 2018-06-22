@@ -30,46 +30,46 @@ export default class EmptyOverviewScreen extends PureComponent {
                 prevButton={<Icon style={styles.arrowButton} name='angle-left'/>}>
                 <TutorialPage
                     contentColor={colors.activeTabColor}
-                    headline={'Welcome to Refundeo'}
+                    headline={strings('tutorial.welcome_title')}
                     headlineColor={colors.backgroundColor}
                     textColor={colors.separatorColor}
                     icon={<Image style={styles.logoImage} source={require('../../assets/refundeo_logo.png')}/>}
-                    text={'Our mission is to offer you an improved experience when shopping tax free.\n\nSwipe right to learn how to claim your tax refund.'}/>
+                    text={strings('tutorial.welcome_text')}/>
                 <TutorialPage
                     contentColor={colors.activeTabColor}
                     headlineColor={colors.backgroundColor}
                     textColor={colors.separatorColor}
                     icon={<Icon style={styles.logoButton} name='play'/>}
-                    headline={'Initiate refund'}
-                    text={'When you purchase an item in one of our partner stores show the cashier your personal QR Code.\n\nThe cashier will initiate the refund for you.'}/>
+                    headline={strings('tutorial.initiate_title')}
+                    text={strings('tutorial.initiate_text')}/>
                 <TutorialPage
                     contentColor={colors.activeTabColor}
                     headlineColor={colors.backgroundColor}
                     textColor={colors.separatorColor}
                     icon={<Icon style={styles.logoButton} name='print'/>}
-                    headline={'Print the form'}
-                    text={'When the refund has been created, you will receive an email with a tax free form.\nIf not - you can always send a new form within the app.\n\nPrint this form.'}/>
+                    headline={strings('tutorial.print_title')}
+                    text={strings('tutorial.print_text')}/>
                 <TutorialPage
                     contentColor={colors.activeTabColor}
                     headlineColor={colors.backgroundColor}
                     textColor={colors.separatorColor}
                     icon={<Icon style={styles.logoButton} name='thumbs-o-up'/>}
-                    headline={'Receive approval'}
-                    text={'Fill in the tax free form and get it approved and stamped at one of the local tax offices.\n\nRemember to bring the original receipt.'}/>
+                    headline={strings('tutorial.approval_title')}
+                    text={strings('tutorial.approval_text')}/>
                 <TutorialPage
                     contentColor={colors.activeTabColor}
                     headlineColor={colors.backgroundColor}
                     textColor={colors.separatorColor}
                     icon={<Icon style={styles.logoButton} name='camera'/>}
-                    headline={'Upload documentation'}
-                    text={'Use the app to take pictures of the approved tax free form and receipt.\n\nWhen you are satisfied with the pictures, request a refund.'}/>
+                    headline={strings('tutorial.upload_title')}
+                    text={strings('tutorial.upload_text')}/>
                 <TutorialPage
                     contentColor={colors.activeTabColor}
                     headlineColor={colors.backgroundColor}
                     textColor={colors.separatorColor}
                     icon={<Icon style={styles.logoButton} name='check'/>}
-                    headline={'Done'}
-                    text={'Now you can relax and wait for your refund as we will handle the rest for you.'}/>
+                    headline={strings('tutorial.done_title')}
+                    text={strings('tutorial.done_text')}/>
             </Swiper>
         );
     }
