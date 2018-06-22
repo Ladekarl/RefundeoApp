@@ -124,7 +124,7 @@ export default class RefundCaseListItem extends Component {
                         </View>
                         <View style={styles.detailContainer}>
                             <Text style={styles.detailTitle}>{strings('refund_case.refund_amount')}</Text>
-                            <Text style={styles.detailText}>{refundCase.refundAmount}</Text>
+                            <Text style={styles.detailText}>{refundCase.refundAmount.toFixed(2)}</Text>
                         </View>
                     </View>
                     <View style={styles.endContentContainer}>

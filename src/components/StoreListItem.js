@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View, ImageBackground, Platform, Image} from 'react-native';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 import geolib from 'geolib';
 import {strings} from '../shared/i18n';
 
-export default class StoreListItem extends Component {
+export default class StoreListItem extends PureComponent {
 
     static propTypes = {
         distance: PropTypes.number.isRequired,

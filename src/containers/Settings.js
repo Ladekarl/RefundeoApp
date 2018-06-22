@@ -82,7 +82,7 @@ class SettingsScreen extends Component {
     }
 
     showChangeEmail = () => {
-        this.setModalState(strings('settings.email_title'), this.props.state.user.email, true, strings('settings.email_placeholder'), 'email');
+        this.setModalState(strings('settings.email_title'), this.props.state.user.email, true, strings('settings.email_placeholder'), 'email', 'email-address');
         this.submitFunction = () => {
             let email = this.state.modalValue;
             if (email && !Validation.validateEmail(email)) {
@@ -127,6 +127,10 @@ class SettingsScreen extends Component {
 
     showCountryModal = () => {
         this.setModalState(strings('settings.address_country_title'), this.props.state.user.addressCountry, true, strings('settings.address_country_placeholder'), 'addressCountry');
+    };
+
+    showPassportModal = () => {
+        this.setModalState(strings('settings.passport_title'), this.props.state.user.passport, true, strings('settings.passport_placeholder'), 'passport');
     };
 
     showChangePassword = () => {
@@ -325,6 +329,10 @@ class SettingsScreen extends Component {
                         </View>
                     </CountryPicker>
                 </View>
+                {!requiredOnly &&
+                <Setting label={strings('settings.passport')} onPress={this.showPassportModal}
+                         value={state.user.passport}/>
+                }
                 {!requiredOnly && !state.user.isOauth &&
                 <Setting label={strings('settings.change_password')} onPress={this.showChangePassword}/>
                 }

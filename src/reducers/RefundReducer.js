@@ -33,6 +33,7 @@ type RefundReducerState = {
     fetchingDocumentation: boolean,
     fetchingRequestRefund: boolean,
     fetchingCreateRefundCase: boolean,
+    fetchingSendEmail: boolean,
     getRefundCasesError: string,
     documentationError: string,
     requestRefundError: string,
@@ -47,6 +48,7 @@ const initialState: RefundReducerState = {
     fetchingDocumentation: false,
     fetchingRequestRefund: false,
     fetchingCreateRefundCase: false,
+    fetchingSendEmail: false,
     getRefundCasesError: '',
     documentationError: '',
     requestRefundError: '',
@@ -178,6 +180,28 @@ export default function refundReducer(state = initialState, action = {}) {
                 ...state,
                 selectedRefundCase: action.refundCase,
                 fetchingRefundCases: false
+            };
+            break;
+        }
+        case types.REFUND_SENDING_EMAIL: {
+            nextState = {
+                ...state,
+                fetchingSendEmail: true
+            };
+            break;
+        }
+        case types.REFUND_SEND_EMAIL_SUCCESS: {
+            nextState = {
+                ...state,
+                fetchingSendEmail: false
+            };
+            break;
+        }
+        case types.REFUND_SEND_EMAIL_ERROR: {
+            nextState = {
+                ...state,
+                error: action.error,
+                fetchingSendEmail: false
             };
             break;
         }

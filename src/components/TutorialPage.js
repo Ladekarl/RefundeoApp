@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View, Platform} from 'react-native';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 
-export default class TutorialPage extends Component {
+export default class TutorialPage extends PureComponent {
 
     static propTypes = {
         onIconPress: PropTypes.func,

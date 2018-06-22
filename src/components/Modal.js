@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {
     Modal,
     Picker,
@@ -15,7 +15,7 @@ import colors from '../shared/colors';
 import {strings} from '../shared/i18n';
 import Icon from 'react-native-fa-icons';
 
-export default class ModalScreen extends Component {
+export default class ModalScreen extends PureComponent {
 
     static propTypes = {
         onPickerValueChange: PropTypes.func,

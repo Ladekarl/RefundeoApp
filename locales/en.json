@@ -10,7 +10,7 @@
   },
   "settings": {
     "settings": "Profile",
-    "profile": "Profile",
+    "profile": "Personal Information",
     "name": "Name:",
     "first_name": "First name:",
     "first_name_title": "First name",
@@ -62,10 +62,13 @@
     "address_postal_code": "Postal code:",
     "address_postal_code_title": "Postal code",
     "address_postal_code_placeholder": "Postal code",
-    "payment": "Bank information",
+    "payment": "Bank Information",
     "account_number": "Account number:",
     "account_number_title": "Account number",
-    "account_number_placeholder": "Account number"
+    "account_number_placeholder": "Account number",
+    "passport": "Passport number:",
+    "passport_title": "Passport number",
+    "passport_placeholder": "Passport number"
   },
   "register": {
     "register": "Sign up",
@@ -140,7 +143,7 @@
   "stores": {
     "opening_hours": "Opening hours",
     "refund_percentage": "Refund percentage",
-    "address": "Address",
+    "address": "Permanent Address",
     "distance": "Distance",
     "distance_all": "all",
     "filter": "Filter",

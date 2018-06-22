@@ -231,7 +231,7 @@ export default class Api {
         const requestOptions = {
             method: 'GET',
             headers: {
-                ...await Helpers.authHeader(),
+                ...await Helpers.authHeader()
             }
         };
 
@@ -240,5 +240,20 @@ export default class Api {
         const merchants = await response.json();
 
         return await Helpers.setMerchantDistances(merchants);
+    }
+
+    static async postEmail(refundCase, email) {
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                ...await Helpers.authHeader(),
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email
+            })
+        };
+
+        return await Helpers.fetchAuthenticated(`${API_URL}/api/user/refundcase/${refundCase.id}/email`, requestOptions);
     }
 }

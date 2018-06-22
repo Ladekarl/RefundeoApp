@@ -8,7 +8,7 @@ import {
     Image,
     Platform,
     TouchableOpacity,
-    RefreshControl
+    RefreshControl, TextInput
 } from 'react-native';
 import {strings} from '../shared/i18n';
 import Actions from '../actions/Actions';
@@ -40,32 +40,39 @@ class RefundCase extends Component {
         super(props);
         this.state = {
             modalTitle: '',
-            modalText: ''
+            modalText: '',
+            email: this.props.state.user.email,
+            isValidEmail: Validation.validateEmail(this.props.state.user.email)
         };
     }
 
     getVatImage = (refundCase) => {
         if (refundCase.vatFormImage) {
-            return {uri: 'data:image/png;base64,' + refundCase.vatFormImage};
+            return <Image style={styles.uploadImage} resizeMode='cover'
+                          source={{uri: 'data:image/png;base64,' + refundCase.vatFormImage}}/>;
         }
         if (refundCase.tempVatFormImage) {
-            return {uri: 'data:image/png;base64,' + refundCase.tempVatFormImage};
+            return <Image style={styles.uploadImage} resizeMode='cover'
+                          source={{uri: 'data:image/png;base64,' + refundCase.tempVatFormImage}}/>;
         }
         return this.getRefundeoLogo();
     };
 
     getReceiptImage = (refundCase) => {
         if (refundCase.receiptImage) {
-            return {uri: 'data:image/png;base64,' + refundCase.receiptImage};
+            return <Image style={styles.uploadImage} resizeMode='cover'
+                          source={{uri: 'data:image/png;base64,' + refundCase.receiptImage}}/>;
         }
         if (refundCase.tempReceiptImage) {
-            return {uri: 'data:image/png;base64,' + refundCase.tempReceiptImage};
+            return <Image style={styles.uploadImage} resizeMode='cover'
+                          source={{uri: 'data:image/png;base64,' + refundCase.tempReceiptImage}}/>;
         }
         return this.getRefundeoLogo();
     };
 
     getRefundeoLogo = () => {
-        return require('../../assets/refundeo_logo.png');
+        return <Image style={styles.uploadImage} resizeMode='contain'
+                      source={require('../../assets/refundeo_logo.png')}/>;
     };
 
     onRequestRefundPress = () => {
@@ -117,11 +124,28 @@ class RefundCase extends Component {
         this.onModalSubmit = onSubmit;
     };
 
+    openEmailModal = () => {
+        this.props.actions.openModal('emailModal');
+    };
+
     closeRefundCaseModal = () => {
         this.props.actions.closeModal('refundCaseModal');
     };
 
+    closeEmailModal = () => {
+        this.props.actions.closeModal('emailModal');
+    };
+
     onModalSubmit = this.closeRefundCaseModal;
+
+    onEmailModalSubmit = () => {
+        const email = this.state.email;
+        const isValid = Validation.validateEmail(email);
+        if (email && isValid) {
+            this.props.actions.sendVatFormEmail(this.props.state.selectedRefundCase, email);
+            this.closeEmailModal();
+        }
+    };
 
     onUploadVatPress = () => {
         this.props.actions.selectUploadDocumentation('vatFormImage');
@@ -164,9 +188,21 @@ class RefundCase extends Component {
         }
     };
 
+    onEmailPress = () => {
+        this.openEmailModal();
+    };
+
+    changeEmail = (email) => {
+        const isValidEmail = Validation.validateEmail(email);
+        this.setState({
+            email: email,
+            isValidEmail
+        });
+    };
+
     render() {
         const {state, actions} = this.props;
-        const {navigation, selectedRefundCase, fetchingRefundCases} = state;
+        const {navigation, selectedRefundCase, fetchingRefundCases, fetchingSendEmail} = state;
         const refundCase = selectedRefundCase;
         const {merchant} = refundCase;
 
@@ -182,7 +218,7 @@ class RefundCase extends Component {
                 refreshControl={
                     <RefreshControl
                         tintColor={colors.activeTabColor}
-                        refreshing={fetchingRefundCases}
+                        refreshing={fetchingRefundCases || fetchingSendEmail}
                         onRefresh={() => actions.getSelectedRefundCase(refundCase.id)}
                     />
                 }>
@@ -202,14 +238,20 @@ class RefundCase extends Component {
                     </View>
                     <View style={styles.bannerColumnContainer}>
                         <Text style={styles.contentText}>{refundCase.amount}</Text>
-                        <Text style={styles.contentText}>{refundCase.refundAmount}</Text>
+                        <Text style={styles.contentText}>{refundCase.refundAmount.toFixed(2)}</Text>
                     </View>
+                    {!refundCase.isRequested &&
+                    <View style={styles.emailContainer}>
+                        <TouchableOpacity style={styles.emailButtonContainer} onPress={this.onEmailPress}>
+                            <Icon style={styles.emailIcon} name='envelope'/>
+                        </TouchableOpacity>
+                    </View>
+                    }
                 </View>
                 {!refundCase.isRequested &&
                 <TouchableOpacity style={styles.descriptionContainer} onPress={this.onUploadVatPress}>
                     <View style={styles.uploadImageContainer}>
-                        <Image style={styles.uploadImage} resizeMode='cover'
-                               source={vatImage}/>
+                        {vatImage}
                     </View>
                     <Text style={styles.buttonText}>Upload tax free form</Text>
                     <Icon style={styles.angleRightIcon} name='angle-right'/>
@@ -218,19 +260,16 @@ class RefundCase extends Component {
                 {!refundCase.isRequested &&
                 <TouchableOpacity style={styles.descriptionContainer} onPress={this.onUploadReceiptPress}>
                     <View style={styles.uploadImageContainer}>
-                        <Image style={styles.uploadImage} rresizeMode='cover'
-                               source={receiptImage}/>
+                        {receiptImage}
                     </View>
                     <Text style={styles.buttonText}>Upload receipt</Text>
                     <Icon style={styles.angleRightIcon} name='angle-right'/>
                 </TouchableOpacity>
                 }
                 {!refundCase.isRequested &&
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.submitButton} onPress={this.onRequestRefundPress}>
-                        <Text style={styles.submitButtonText}>Request Refund</Text>
-                    </TouchableOpacity>
-                </View>
+                <TouchableOpacity style={styles.submitButton} onPress={this.onRequestRefundPress}>
+                    <Text style={styles.submitButtonText}>Request Refund</Text>
+                </TouchableOpacity>
                 }
                 {refundCase.isRequested &&
                 <View style={styles.requestedContainer}>
@@ -248,12 +287,44 @@ class RefundCase extends Component {
                         <Text style={styles.modalText}>{this.state.modalText}</Text>
                     </View>
                 </ModalScreen>
+                <ModalScreen
+                    modalTitle={'Send tax free form'}
+                    onBack={this.closeEmailModal}
+                    onCancel={this.closeEmailModal}
+                    onSubmit={this.onEmailModalSubmit}
+                    visible={navigation.modal['emailModal'] || false}>
+                    <View style={styles.modalContainer}>
+                        <TextInput
+                            style={styles.modalInput}
+                            value={this.state.email}
+                            onChangeText={this.changeEmail}
+                            autoFocus={true}
+                            maxLength={64}
+                            placeholder={strings('settings.email_placeholder')}
+                            selectionColor={colors.inactiveTabColor}
+                            underlineColorAndroid={colors.activeTabColor}
+                            tintColor={colors.activeTabColor}
+                            numberOfLines={1}
+                            keyboardType='email-address'
+                            editable={true}
+                            returnKeyType='done'
+                            autoCapitalize='none'
+                            autoCorrect={false}
+                            blurOnSubmit={false}
+                        />
+                        <Text
+                            style={!this.state.email || !this.state.isValidEmail ? styles.modalInputErrorText : styles.hidden}>{'Please provide a valid email address.'}</Text>
+                    </View>
+                </ModalScreen>
             </ScrollView>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    hidden: {
+        display: 'none'
+    },
     container: {
         flex: 1,
         backgroundColor: colors.slightlyDarkerColor,
@@ -284,7 +355,7 @@ const styles = StyleSheet.create({
     },
     bannerTextBarContainer: {
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-between',
         alignItems: 'center',
         width: '100%',
         backgroundColor: colors.activeTabColor,
@@ -318,32 +389,61 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between'
     },
+    emailContainer: {
+        backgroundColor: colors.activeTabColor,
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'flex-end'
+    },
+    emailButtonContainer: {
+        flexDirection: 'row',
+        margin: 10,
+        padding: 10,
+        borderColor: colors.backgroundColor,
+        borderRadius: 4,
+        borderWidth: 2,
+        backgroundColor: colors.activeTabColor,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
     uploadImageContainer: {
-        borderRadius: 5
-    },
-    uploadImage: {
-        height: 100,
-        width: 100,
-        borderRadius: 5
-    },
-    buttonContainer: {
+        borderRadius: 5,
         flex: 1
     },
+    emailIcon: {
+        textAlign: 'center',
+        fontSize: 15,
+        marginLeft: 5,
+        marginRight: 5,
+        color: colors.backgroundColor
+    },
+    uploadImage: {
+        flex: 1,
+        height: undefined,
+        width: undefined,
+        borderRadius: 5
+    },
     submitButton: {
+        padding: 15,
         margin: 20,
+        justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: colors.submitButtonColor,
         borderRadius: 4,
-        elevation: 1
+        elevation: 1,
+        height: 50,
     },
     submitButtonText: {
+        flex: 1,
         fontSize: 15,
-        marginTop: 10,
-        marginBottom: 10,
+        alignSelf: 'center',
+        textAlign: 'center',
         color: colors.backgroundColor,
         fontWeight: 'bold'
     },
     buttonText: {
+        flex: 3,
+        marginLeft: 10,
         textAlign: 'center',
         fontSize: 18,
         fontWeight: 'bold',
@@ -401,6 +501,16 @@ const styles = StyleSheet.create({
         color: colors.activeTabColor,
         fontSize: 45,
         marginBottom: 10
+    },
+    modalInput: {
+        textAlign: 'center',
+        minWidth: '80%',
+        fontSize: 15
+    },
+    modalInputErrorText: {
+        marginTop: 10,
+        textAlign: 'center',
+        color: colors.cancelButtonColor
     }
 });
 

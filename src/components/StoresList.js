@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {RefreshControl, FlatList, StyleSheet, View} from 'react-native';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 import StoreListItem from './StoreListItem';
 import EmptyStoreList from './EmptyStoreList';
 
-export default class StoresList extends Component {
+export default class StoresList extends PureComponent {
 
     static propTypes = {
         actions: PropTypes.object.isRequired,

@@ -52,8 +52,43 @@ export default {
     navigateUploadDocumentation,
     selectUploadDocumentation,
     uploadTempVatFormImage,
-    uploadTempReceiptImage
+    uploadTempReceiptImage,
+    sendVatFormEmail
 };
+
+function sendVatFormEmail(refundCase, email) {
+    return dispatch => {
+        dispatch(sendingEmail());
+        Api.postEmail(refundCase, email).then(() => {
+            dispatch(sendEmailSuccess());
+        }).catch((response) => {
+            if (shouldLogout(response)) {
+                dispatch(logout());
+            } else {
+                dispatch(sendEmailError());
+            }
+        });
+    };
+}
+
+function sendingEmail() {
+    return {
+        type: types.REFUND_SENDING_EMAIL
+    };
+}
+
+function sendEmailSuccess() {
+    return {
+        type: types.REFUND_SEND_EMAIL_SUCCESS
+    };
+}
+
+function sendEmailError(error = '') {
+    return {
+        type: types.REFUND_SEND_EMAIL_ERROR,
+        error
+    };
+}
 
 function uploadTempVatFormImage(refundCaseId, tempVatFormImage, goBack) {
     return dispatch => {
@@ -118,8 +153,12 @@ function getMerchants() {
         dispatch(gettingMerchants());
         Api.getAllMerchants().then(merchants => {
             dispatch(getMerchantsSuccess(merchants));
-        }).catch(error => {
-            dispatch(getMerchantsError(error));
+        }).catch((error) => {
+            if (shouldLogout(response)) {
+                dispatch(logout());
+            } else {
+                dispatch(getMerchantsError(error));
+            }
         });
     };
 }

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {
     StyleSheet, Text, TouchableOpacity, View, ViewPropTypes
 } from 'react-native';
@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Icon from 'react-native-fa-icons';
 import colors from '../shared/colors';
 
-export default class Setting extends Component {
+export default class Setting extends PureComponent {
 
     static propTypes = {
         onPress: PropTypes.func,

@@ -10,7 +10,7 @@
   },
   "settings": {
     "settings": "Profil",
-    "profile": "Profil",
+    "profile": "Personlige oplysninger",
     "name": "Navn:",
     "first_name": "Fornavn:",
     "first_name_title": "Fornavn",
@@ -46,7 +46,7 @@
     "error_fields_empty": "Nogle felter er tomme.",
     "error_not_email": "Ikke en gyldig email.",
     "legal_privacy": "Legal & Privacy",
-    "address": "Adresse",
+    "address": "Permanent adresse",
     "address_street_name": "Vejnavn:",
     "address_street_name_title": "Vejnavn",
     "address_street_name_placeholder": "Vejnavn",
@@ -62,10 +62,13 @@
     "address_postal_code": "Postnummer:",
     "address_postal_code_title": "Postnummer",
     "address_postal_code_placeholder": "Postnummer",
-    "payment": "Bankinformationer",
+    "payment": "Bankoplysninger",
     "account_number": "Kontonummer:",
     "account_number_title": "Kontonummer",
-    "account_number_placeholder": "Kontonummer"
+    "account_number_placeholder": "Kontonummer",
+    "passport": "Pasnummer:",
+    "passport_title": "Pasnummer",
+    "passport_placeholder": "Pasnummer"
   },
   "register": {
     "register": "Tilmeld",
