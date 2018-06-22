@@ -232,13 +232,15 @@ class RefundCase extends Component {
                     </View>
                 </ImageBackground>
                 <View style={styles.bannerTextBarContainer}>
-                    <View style={styles.bannerColumnContainer}>
-                        <Text style={styles.leftText}>{'Purchase amount incl. VAT'}</Text>
-                        <Text style={styles.leftText}>{'Refund amount'}</Text>
-                    </View>
-                    <View style={styles.bannerColumnContainer}>
-                        <Text style={styles.contentText}>{refundCase.amount}</Text>
-                        <Text style={styles.contentText}>{refundCase.refundAmount.toFixed(2)}</Text>
+                    <View style={styles.bannerContentContainer}>
+                        <View style={styles.bannerColumnContainer}>
+                            <Text style={styles.leftText}>{'Purchase amount incl. VAT'}</Text>
+                            <Text style={styles.leftText}>{'Refund amount'}</Text>
+                        </View>
+                        <View style={styles.bannerColumnContainer}>
+                            <Text style={styles.contentText}>{refundCase.amount}</Text>
+                            <Text style={styles.contentText}>{refundCase.refundAmount.toFixed(2)}</Text>
+                        </View>
                     </View>
                     {!refundCase.isRequested &&
                     <View style={styles.emailContainer}>
@@ -355,15 +357,21 @@ const styles = StyleSheet.create({
     },
     bannerTextBarContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         width: '100%',
         backgroundColor: colors.activeTabColor,
         padding: 10
     },
+    bannerContentContainer: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        backgroundColor: colors.activeTabColor,
+    },
     bannerColumnContainer: {
         flexDirection: 'column',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
         alignItems: 'flex-start'
     },
     leftText: {
@@ -390,10 +398,10 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     emailContainer: {
+        flex: 1,
         backgroundColor: colors.activeTabColor,
         alignItems: 'center',
         justifyContent: 'center',
-        alignSelf: 'flex-end'
     },
     emailButtonContainer: {
         flexDirection: 'row',
