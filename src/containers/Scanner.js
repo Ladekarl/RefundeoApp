@@ -1,5 +1,17 @@
 import React, {Component} from 'react';
-import {ActivityIndicator, Keyboard, Platform, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+    ActivityIndicator,
+    Keyboard,
+    Modal,
+    Platform,
+    ScrollView,
+    StyleSheet,
+    Text,
+    Dimensions,
+    TextInput,
+    TouchableOpacity,
+    View
+} from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import colors from '../shared/colors';
 import {strings} from '../shared/i18n';
@@ -8,6 +20,11 @@ import {bindActionCreators} from 'redux';
 import Actions from '../actions/Actions';
 import PropTypes from 'prop-types';
 import ModalScreen from '../components/Modal';
+import SignatureCapture from 'react-native-signature-capture';
+import Orientation from 'react-native-orientation';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 class ScannerScreen extends Component {
 
@@ -29,7 +46,9 @@ class ScannerScreen extends Component {
         customerId: '',
         amount: null,
         receiptNumber: '',
-        modalInputError: ''
+        modalInputError: '',
+        customerSignature: '',
+        merchantSignature: ''
     };
 
     constructor(props) {
@@ -59,6 +78,10 @@ class ScannerScreen extends Component {
 
     closeModal = () => {
         this.props.actions.closeModal('createRefundModal');
+    };
+
+    backModal = () => {
+        this.closeModal();
         this.setState({
             ...this.initialState
         });
@@ -72,8 +95,9 @@ class ScannerScreen extends Component {
             modalInputError: 'Please fill all fields'
         });
         if (customerId && receiptNumber && amount) {
-            this.props.actions.createRefundCase(customerId, receiptNumber, amount, 'createRefundSuccessModal');
+            this.props.actions.openModal('signatureModal');
             this.closeModal();
+            Orientation.lockToLandscapeLeft();
         } else if (customerId) {
             this.setState({
                 modalInputError: 'Please fill all fields'
@@ -109,12 +133,54 @@ class ScannerScreen extends Component {
         this.props.actions.closeModal('createRefundSuccessModal');
     };
 
+    sign;
+
+    saveSign() {
+        this.sign.saveImage();
+    }
+
+    resetSign() {
+        this.sign.resetImage();
+    }
+
+    _onSaveEvent = (result) => {
+        if (!this.state.customerSignature) {
+            let customerSignature = result.encoded;
+            this.sign.resetImage();
+            this.setState({
+                customerSignature
+            });
+            Orientation.lockToLandscapeRight();
+        } else {
+            let merchantSignature = result.encoded;
+            this.setState({
+                merchantSignature
+            });
+            let customerId = this.state.customerId;
+            let receiptNumber = this.state.receiptNumber;
+            let amount = this.state.amount;
+            let customerSignature = this.state.customerSignature;
+            this.props.actions.createRefundCase(customerId, receiptNumber, amount, customerSignature, merchantSignature, 'createRefundSuccessModal');
+            this.closeSignatureModal();
+        }
+    };
+
+    closeSignatureModal = () => {
+        this.props.actions.closeModal('signatureModal');
+        this.setState({
+            ...this.initialState
+        });
+        Orientation.lockToPortrait();
+    };
+
     render() {
         const {state} = this.props;
         const fetching = state.fetchingCreateRefundCase || state.fetching;
         const error = state.createRefundCaseError ? state.createRefundCaseError : state.getUserError;
-        const modalOpen = state.navigation.modal['createRefundSuccessModal'] || state.navigation.modal['createRefundModal'];
+        const signatureModalOpen = state.navigation.modal['signatureModal'] || false;
+        const modalOpen = state.navigation.modal['createRefundSuccessModal'] || state.navigation.modal['createRefundModal'] || signatureModalOpen;
         const navigation = state.navigation;
+        const customerSignature = this.state.customerSignature;
 
         return (
             <View style={styles.container}>
@@ -163,17 +229,53 @@ class ScannerScreen extends Component {
                             style={styles.headlineText}>{'Successfully created refund.\n\nAsk the customer to refresh the list of refunds'}</Text>
                     </View>
                 </ModalScreen>
+                <Modal
+                    animationType='fade'
+                    transparent={true}
+                    onRequestClose={this.closeSignatureModal}
+                    supportedOrientations={['portrait', 'landscape']}
+                    visible={signatureModalOpen || false}>
+                    <View style={styles.signRotate}>
+                        <Text
+                            style={styles.signatureText}>{customerSignature ? 'Merchant Signature' : 'Customer Signature'}</Text>
+                        <SignatureCapture
+                            style={styles.signature}
+                            ref={ref => this.sign = ref}
+                            onSaveEvent={this._onSaveEvent}
+                            saveImageFileInExtStorage={false}
+                            showNativeButtons={false}
+                            showTitleLabel={false}
+                            viewMode={'landscape'}/>
+                        <View style={styles.buttonContainer}>
+                            <TouchableOpacity
+                                style={styles.buttonStyle}
+                                onPress={() => {
+                                    this.saveSign();
+                                }}>
+                                <Text style={styles.buttonText}>Save</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.buttonStyle}
+                                onPress={() => {
+                                    this.resetSign();
+                                }}>
+                                <Text style={styles.buttonText}>Reset</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
                 <ModalScreen
                     modalTitle={'Fill all fields'}
                     visible={state.navigation.modal['createRefundModal'] && !fetching || false}
                     onSubmit={this.onModalSubmit}
-                    onBack={this.closeModal}
+                    onBack={this.backModal}
                     fullScreen={true}
-                    onCancel={this.closeModal}>
+                    onCancel={this.backModal}>
                     <ScrollView contentContainerStyle={styles.modalContainer}>
                         <Text style={styles.headlineText}>Customer</Text>
-                        <Text style={styles.modalInput}>{state.user.firstName + ' ' + state.user.lastName}</Text>
-                        <Text style={styles.modalInput}>{state.user.email}</Text>
+                        <Text
+                            style={styles.modalInput}>{state.otherUser.firstName + ' ' + state.otherUser.lastName}</Text>
+                        <Text style={styles.modalInput}>{state.otherUser.email}</Text>
                         <Text style={styles.headlineText}>Amount</Text>
                         <TextInput
                             ref={(input) => this.modalTextInput = input}
@@ -301,6 +403,45 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 15,
         marginBottom: 15
+    },
+    signature: {
+        flex: 1,
+        borderColor: colors.blackColor,
+        borderWidth: 1,
+    },
+    signatureText: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        color: colors.activeTabColor,
+        fontSize: 20,
+        margin: 10,
+        backgroundColor: colors.whiteColor
+    },
+    buttonContainer: {
+        flexDirection: 'row'
+    },
+    buttonStyle: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 50,
+        backgroundColor: colors.activeTabColor,
+        margin: 10,
+        marginBottom: Platform.OS === 'ios' ? 10 : 30
+    },
+    buttonText: {
+        color: colors.backgroundColor
+    },
+    signRotate: {
+        position: 'absolute',
+        height: windowWidth,
+        width: windowHeight,
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: colors.whiteColor
     }
 });
 

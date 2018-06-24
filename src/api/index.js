@@ -207,7 +207,7 @@ export default class Api {
         return await Helpers.fetchAuthenticated(`${API_URL}/api/user/refundcase/${refundCase.id}/request`, requestOptions);
     }
 
-    static async postRefundCase(customerId, receiptNumber, amount) {
+    static async postRefundCase(customerId, receiptNumber, amount, customerSignature, merchantSignature) {
         const requestOptions = {
             method: 'POST',
             headers: {
@@ -220,7 +220,9 @@ export default class Api {
                 qrCodeWidth: 200,
                 qrCodeMargin: 5,
                 receiptNumber,
-                customerId
+                customerId,
+                customerSignature,
+                merchantSignature
             })
         };
 

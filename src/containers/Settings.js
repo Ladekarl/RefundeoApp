@@ -9,7 +9,7 @@ import {
     View,
     Switch,
     Keyboard,
-    RefreshControl
+    RefreshControl, WebView
 } from 'react-native';
 import colors from '../shared/colors';
 import {strings} from '../shared/i18n';
@@ -43,7 +43,6 @@ class SettingsScreen extends Component {
     modalTextInput;
     secondTextInput;
     thirdTextInput;
-
 
     termsOfService = strings('register.terms_of_service');
     privacyPolicy = strings('register.privacy_policy');
@@ -119,6 +118,10 @@ class SettingsScreen extends Component {
 
     showPostalCodeModal = () => {
         this.setModalState(strings('settings.address_postal_code_title'), this.props.state.user.addressPostalCode, true, strings('settings.address_postal_code_placeholder'), 'addressPostalCode');
+    };
+
+    showPhoneModal = () => {
+        this.setModalState(strings('settings.phone_title'), this.props.state.user.phone, true, strings('settings.phone_placeholder'), 'phone');
     };
 
     showCityModal = () => {
@@ -333,6 +336,8 @@ class SettingsScreen extends Component {
                 <Setting label={strings('settings.passport')} onPress={this.showPassportModal}
                          value={state.user.passport}/>
                 }
+                <Setting label={strings('settings.phone')} onPress={this.showPhoneModal}
+                         value={state.user.phone} required={true}/>
                 {!requiredOnly && !state.user.isOauth &&
                 <Setting label={strings('settings.change_password')} onPress={this.showChangePassword}/>
                 }
@@ -479,10 +484,11 @@ class SettingsScreen extends Component {
                     onBack={this.closeTermsOfServiceModal}
                     onCancel={this.closeTermsOfServiceModal}
                     fullScreen={true}
+                    contentContainerStyle={styles.policyContainer}
                     visible={this.props.state.navigation.modal['termsOfServiceModal'] || false}>
-                    <ScrollView>
-                        <Text>{strings('register.terms_of_service')}</Text>
-                    </ScrollView>
+                    <View style={styles.policyContainer}>
+                        <WebView style={styles.policyContainer} source={{html: strings('register.terms_of_service')}}/>
+                    </View>
                 </ModalScreen>
                 <ModalScreen
                     modalTitle={strings('register.privacy_policy_title')}
@@ -490,11 +496,12 @@ class SettingsScreen extends Component {
                     onSubmit={this.closePrivacyPolicyModal}
                     onBack={this.closePrivacyPolicyModal}
                     onCancel={this.closePrivacyPolicyModal}
+                    contentContainerStyle={styles.policyContainer}
                     fullScreen={true}
                     visible={this.props.state.navigation.modal['privacyPolicyModal'] || false}>
-                    <ScrollView>
-                        <Text>{strings('register.privacy_policy')}</Text>
-                    </ScrollView>
+                    <View style={styles.policyContainer}>
+                        <WebView style={styles.policyContainer} source={{html: strings('register.privacy_policy')}}/>
+                    </View>
                 </ModalScreen>
             </ScrollView>
         );
@@ -508,6 +515,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.backgroundColor,
+    },
+    policyContainer: {
+        flex: 1,
+        backgroundColor: colors.whiteColor,
     },
     tabBarIcon: {
         fontSize: 20

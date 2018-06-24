@@ -20,6 +20,8 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.airbnb.android.react.maps.MapsPackage;
+import com.rssignaturecapture.RSSignatureCapturePackage;
+import com.github.yamill.orientation.OrientationPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -51,7 +53,9 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFetchBlobPackage(),
             new ReactNativeDocumentPicker(),
             new RNCameraPackage(),
-            new FBSDKPackage(mCallbackManager)
+            new FBSDKPackage(mCallbackManager),
+            new RSSignatureCapturePackage(),
+            new OrientationPackage()
       );
     }
 
@@ -72,5 +76,9 @@ public class MainApplication extends Application implements ReactApplication {
     FacebookSdk.sdkInitialize(getApplicationContext());
     AppEventsLogger.activateApp(this);
     SoLoader.init(this, /* native exopackage */ false);
+
+    // Increase the maximum size of AsyncStorage
+    long size = 50L * 1024L * 1024L; // 50 MB
+    com.facebook.react.modules.storage.ReactDatabaseSupplier.getInstance(getApplicationContext()).setMaximumSize(size);
   }
 }

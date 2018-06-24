@@ -4,6 +4,7 @@ import Location from '../shared/Location';
 import geolib from 'geolib';
 
 export const API_URL = 'https://refundeo20180331121625.azurewebsites.net';
+//export const API_URL = 'http://localhost:4200';
 
 export default class Helpers {
     static termsOfService = strings('register.terms_of_service');
@@ -100,10 +101,10 @@ export default class Helpers {
 
     static async saveUser(user) {
         if (user && user.token && user.roles && user.roles.indexOf('User') > -1) {
-            if (user.acceptedPrivacyPolicy && user.privacyPolicy.localeCompare(Helpers.privacyPolicy) !== 0) {
+            if (!user.privacyPolicy || user.acceptedPrivacyPolicy && user.privacyPolicy && user.privacyPolicy.localeCompare(Helpers.privacyPolicy) !== 0) {
                 user.acceptedPrivacyPolicy = false;
             }
-            if (user.acceptedTermsOfService && user.termsOfService.localeCompare(Helpers.termsOfService) !== 0) {
+            if (!user.termsOfService || user.acceptedTermsOfService && user.termsOfService && user.termsOfService.localeCompare(Helpers.termsOfService) !== 0) {
                 user.acceptedTermsOfService = false;
             }
             user.isMerchant = false;

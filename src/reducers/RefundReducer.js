@@ -128,14 +128,14 @@ export default function refundReducer(state = initialState, action = {}) {
             nextState = {
                 ...state,
                 fetchingCreateRefundCase: true,
-                claimRefundCaseError: ''
+                createRefundCaseError: ''
             };
             break;
         case types.REFUND_CREATE_REFUND_CASE_SUCCESS:
             nextState = {
                 ...state,
                 fetchingCreateRefundCase: false,
-                claimRefundCaseError: ''
+                createRefundCaseError: ''
             };
             break;
         case types.REFUND_CREATE_REFUND_CASE_ERROR:

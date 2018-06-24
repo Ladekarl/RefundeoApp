@@ -8,7 +8,7 @@ import {
     Image,
     Platform,
     TouchableOpacity,
-    RefreshControl, TextInput
+    RefreshControl, TextInput, ActivityIndicator
 } from 'react-native';
 import {strings} from '../shared/i18n';
 import Actions from '../actions/Actions';
@@ -83,7 +83,7 @@ class RefundCase extends Component {
         const missingInfo = Validation.missingUserInfo(user);
         const missingSwift = Validation.missingRequestRefundUserInfo(user);
         if (!hasTempImages && !hasImages && !refundCase.isRequested) {
-            this.openRefundCaseModal(strings('refund_case.missing_documentation_title'), strings('refund_case.missing_documentation_text'));
+            this.openRefundCaseModal(strings('refund_case.missing_documentation_title'), strings('refund_case.missing_documentation_text'), this.closeRefundCaseModal);
         } else if (hasTempImages && !refundCase.isRequested && !missingSwift && !missingInfo) {
             this.requestRefund(() => {
                 this.closeRefundCaseModal();
@@ -115,7 +115,7 @@ class RefundCase extends Component {
         });
     };
 
-    openRefundCaseModal = (modalTitle, modalText, onSubmit = this.closeRefundCaseModal) => {
+    openRefundCaseModal = (modalTitle, modalText, onSubmit) => {
         this.setState({
             modalTitle,
             modalText
@@ -202,7 +202,7 @@ class RefundCase extends Component {
 
     render() {
         const {state, actions} = this.props;
-        const {navigation, selectedRefundCase, fetchingRefundCases, fetchingSendEmail} = state;
+        const {navigation, selectedRefundCase, fetchingRefundCases, fetchingSendEmail, fetchingRequestRefund} = state;
         const refundCase = selectedRefundCase;
         const {merchant} = refundCase;
 
@@ -218,7 +218,7 @@ class RefundCase extends Component {
                 refreshControl={
                     <RefreshControl
                         tintColor={colors.activeTabColor}
-                        refreshing={fetchingRefundCases || fetchingSendEmail}
+                        refreshing={fetchingRefundCases || fetchingSendEmail || fetchingRequestRefund}
                         onRefresh={() => actions.getSelectedRefundCase(refundCase.id)}
                     />
                 }>
@@ -269,7 +269,7 @@ class RefundCase extends Component {
                 </TouchableOpacity>
                 }
                 {!refundCase.isRequested &&
-                <TouchableOpacity style={styles.submitButton} onPress={this.onRequestRefundPress}>
+                <TouchableOpacity disabled={fetchingRequestRefund} style={styles.submitButton} onPress={this.onRequestRefundPress}>
                     <Text style={styles.submitButtonText}>{strings('refund_case.send_documentation')}</Text>
                 </TouchableOpacity>
                 }
@@ -318,6 +318,11 @@ class RefundCase extends Component {
                             style={!this.state.email || !this.state.isValidEmail ? styles.modalInputErrorText : styles.hidden}>{strings('refund_case.invalid_email')}</Text>
                     </View>
                 </ModalScreen>
+                {this.props.state.fetchingRequestRefund &&
+                <View style={styles.loadingContainer}>
+                    <ActivityIndicator size='large' color={colors.activeTabColor} style={styles.activityIndicator}/>
+                </View>
+                }
             </ScrollView>
         );
     }
@@ -519,6 +524,20 @@ const styles = StyleSheet.create({
         marginTop: 10,
         textAlign: 'center',
         color: colors.cancelButtonColor
+    },
+    loadingContainer: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'transparent'
+    },
+    activityIndicator: {
+        elevation: 10,
+        backgroundColor: 'transparent'
     }
 });
 

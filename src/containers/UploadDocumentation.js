@@ -64,11 +64,19 @@ class UploadDocumentation extends Component {
         const selectedDocumentation = this.props.state.selectedDocumentation;
         const refundCase = this.props.state.selectedRefundCase;
         if (page === 1) {
+            const vatFormImage = !!refundCase.tempVatFormImage || !!refundCase.vatFormImage;
+            const receiptImage = !!refundCase.receiptImage || !!refundCase.receiptImage;
             if (selectedDocumentation === 'vatFormImage') {
-                this.props.actions.uploadTempVatFormImage(refundCase.id, picture);
+                this.props.actions.uploadTempVatFormImage(refundCase.id, picture, false);
+                if (receiptImage) {
+                    this.props.actions.navigateBack();
+                }
             }
             if (selectedDocumentation === 'receiptImage') {
-                this.props.actions.uploadTempReceiptImage(refundCase.id, picture);
+                this.props.actions.uploadTempReceiptImage(refundCase.id, picture, false);
+                if (vatFormImage) {
+                    this.props.actions.navigateBack();
+                }
             }
             this.setState({page: 2});
         }

@@ -6,13 +6,12 @@ import {
     Keyboard,
     KeyboardAvoidingView,
     Platform,
-    ScrollView,
     StyleSheet,
     Switch,
     Text,
     TextInput,
     TouchableOpacity,
-    View
+    View, WebView
 } from 'react-native';
 import colors from '../shared/colors';
 import Icon from 'react-native-fa-icons';
@@ -47,8 +46,6 @@ class RegisterScreen extends Component {
     firstInput;
     secondInput;
     thirdInput;
-    termsOfService = strings('register.terms_of_service');
-    privacyPolicy = strings('register.privacy_policy');
 
     constructor(props) {
         super(props);
@@ -242,11 +239,13 @@ class RegisterScreen extends Component {
                         onSubmit={this.closeTermsOfServiceModal}
                         onBack={this.closeTermsOfServiceModal}
                         onCancel={this.closeTermsOfServiceModal}
+                        contentContainerStyle={styles.policyContainer}
                         fullScreen={true}
                         visible={this.props.state.navigation.modal['termsOfServiceModal'] || false}>
-                        <ScrollView>
-                            <Text>{strings('register.terms_of_service')}</Text>
-                        </ScrollView>
+                        <View style={styles.policyContainer}>
+                            <WebView style={styles.policyContainer}
+                                     source={{html: strings('register.terms_of_service')}}/>
+                        </View>
                     </ModalScreen>
                     <ModalScreen
                         modalTitle={strings('register.privacy_policy_title')}
@@ -254,11 +253,13 @@ class RegisterScreen extends Component {
                         onSubmit={this.closePrivacyPolicyModal}
                         onBack={this.closePrivacyPolicyModal}
                         onCancel={this.closePrivacyPolicyModal}
+                        contentContainerStyle={styles.policyContainer}
                         fullScreen={true}
                         visible={this.props.state.navigation.modal['privacyPolicyModal'] || false}>
-                        <ScrollView>
-                            <Text>{strings('register.privacy_policy')}</Text>
-                        </ScrollView>
+                        <View style={styles.policyContainer}>
+                            <WebView style={styles.policyContainer}
+                                     source={{html: strings('register.privacy_policy')}}/>
+                        </View>
                     </ModalScreen>
                 </View>
             </KeyboardAvoidingView>
@@ -270,6 +271,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.backgroundColor,
+    },
+    policyContainer: {
+        flex: 1,
+        backgroundColor: colors.whiteColor,
     },
     innerContainer: {
         flex: 1,

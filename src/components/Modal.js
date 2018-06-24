@@ -81,6 +81,7 @@ export default class ModalScreen extends PureComponent {
             <Modal
                 animationType='fade'
                 transparent={true}
+                supportedOrientations={['portrait', 'landscape']}
                 onRequestClose={onBack}
                 visible={visible}>
                 <KeyboardAvoidingView
@@ -88,7 +89,7 @@ export default class ModalScreen extends PureComponent {
                     keyboardVerticalOffset={Platform.OS === 'ios' ? -100 + keyboardVerticalOffset : -300 + keyboardVerticalOffset}
                     behavior='padding'>
                     <View
-                        style={[styles.modalInnerContainer, contentContainerStyle, fullScreen ? styles.fullInnerContainer : {}]}>
+                        style={[styles.modalInnerContainer, fullScreen ? styles.fullInnerContainer : {}]}>
                         <View
                             style={[styles.modalTopContainer, topContainerStyle, fullScreen ? styles.fullTopContainer : {}]}>
                             {!noCancelButton &&
@@ -100,7 +101,7 @@ export default class ModalScreen extends PureComponent {
                             <Text style={styles.modalTitleText}>{modalTitle}</Text>
                             <View style={styles.emptyContainer}/>
                         </View>
-                        <View style={[styles.modalCenterContainer, fullScreen ? styles.fullCenterContainer : {}]}>
+                        <View style={[styles.modalCenterContainer, contentContainerStyle, fullScreen ? styles.fullCenterContainer : {}]}>
                             {isPicker &&
                             <View style={styles.modalPickerContainer}>
                                 <Picker

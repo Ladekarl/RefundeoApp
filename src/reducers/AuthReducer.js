@@ -18,6 +18,7 @@ const initialState = {
         lastName: '',
         country: '',
         email: '',
+        phone: '',
         swift: '',
         accountNumber: '',
         passport: '',

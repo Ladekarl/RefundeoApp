@@ -30,6 +30,8 @@
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		B3358F815B54451390B8BE01 /* refundeo_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = CCCAB3D084E348138CA63940 /* refundeo_logo.png */; };
 		CB273B9720B7388200FCCD2B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB273B9620B7388200FCCD2B /* Images.xcassets */; };
+		CB6CE4A820E0303E000B7C22 /* libRSSignatureCapture.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB6CE4A720E03021000B7C22 /* libRSSignatureCapture.a */; };
+		CB6CE4B620E035D4000B7C22 /* libRCTOrientation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB6CE4B520E035CA000B7C22 /* libRCTOrientation.a */; };
 		CBA4A7D720B6277900A32902 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBA4A7D620B6277900A32902 /* GoogleService-Info.plist */; };
 		CBA4A7D820B6277900A32902 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBA4A7D620B6277900A32902 /* GoogleService-Info.plist */; };
 		CBA4A81720B62EB800A32902 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CBA4A80D20B62EB800A32902 /* Lato-LightItalic.ttf */; };
@@ -329,6 +331,20 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNFirebase;
 		};
+		CB6CE4A620E03021000B7C22 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CB6CE47C20E03021000B7C22 /* RSSignatureCapture.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0C53A99E1B56113D004F2642;
+			remoteInfo = RSSignatureCapture;
+		};
+		CB6CE4B420E035CA000B7C22 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CB6CE4B020E035CA000B7C22 /* RCTOrientation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTOrientation;
+		};
 		CBE6D5062094ECEE00A5466A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -376,6 +392,8 @@
 		C9DF66F9C7E34C79B25DFA0B /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
 		CB273B9520B734AF00FCCD2B /* da-DK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "da-DK"; path = "Refundeo/da-DK.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		CB273B9620B7388200FCCD2B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		CB6CE47C20E03021000B7C22 /* RSSignatureCapture.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RSSignatureCapture.xcodeproj; path = "../node_modules/react-native-signature-capture/ios/RSSignatureCapture.xcodeproj"; sourceTree = "<group>"; };
+		CB6CE4B020E035CA000B7C22 /* RCTOrientation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTOrientation.xcodeproj; path = "../node_modules/react-native-orientation/iOS/RCTOrientation.xcodeproj"; sourceTree = "<group>"; };
 		CB77E4AB20B0269100CE401A /* Refundeo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Refundeo.entitlements; path = Refundeo/Refundeo.entitlements; sourceTree = "<group>"; };
 		CBA4A7D620B6277900A32902 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CBA4A80D20B62EB800A32902 /* Lato-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-LightItalic.ttf"; path = "../fonts/Lato-LightItalic.ttf"; sourceTree = "<group>"; };
@@ -407,6 +425,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB6CE4B620E035D4000B7C22 /* libRCTOrientation.a in Frameworks */,
+				CB6CE4A820E0303E000B7C22 /* libRSSignatureCapture.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -585,6 +605,8 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				CB6CE4B020E035CA000B7C22 /* RCTOrientation.xcodeproj */,
+				CB6CE47C20E03021000B7C22 /* RSSignatureCapture.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -673,6 +695,22 @@
 				CCCAB3D084E348138CA63940 /* refundeo_logo.png */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		CB6CE47D20E03021000B7C22 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CB6CE4A720E03021000B7C22 /* libRSSignatureCapture.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CB6CE4B120E035CA000B7C22 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CB6CE4B520E035CA000B7C22 /* libRCTOrientation.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		CB6F70CF2094DC900000BE7C /* Recovered References */ = {
@@ -805,6 +843,10 @@
 					ProjectRef = 00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */;
 				},
 				{
+					ProductGroup = CB6CE4B120E035CA000B7C22 /* Products */;
+					ProjectRef = CB6CE4B020E035CA000B7C22 /* RCTOrientation.xcodeproj */;
+				},
+				{
 					ProductGroup = 139105B71AF99BAD00B5F7CC /* Products */;
 					ProjectRef = 139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */;
 				},
@@ -827,6 +869,10 @@
 				{
 					ProductGroup = CB11AD3320BEABC300B348E7 /* Products */;
 					ProjectRef = C9DF66F9C7E34C79B25DFA0B /* RNFirebase.xcodeproj */;
+				},
+				{
+					ProductGroup = CB6CE47D20E03021000B7C22 /* Products */;
+					ProjectRef = CB6CE47C20E03021000B7C22 /* RSSignatureCapture.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1104,6 +1150,20 @@
 			remoteRef = CB11AD3620BEABC300B348E7 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		CB6CE4A720E03021000B7C22 /* libRSSignatureCapture.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRSSignatureCapture.a;
+			remoteRef = CB6CE4A620E03021000B7C22 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CB6CE4B520E035CA000B7C22 /* libRCTOrientation.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTOrientation.a;
+			remoteRef = CB6CE4B420E035CA000B7C22 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		CBF4A7EB2098BE15009E51A3 /* libRCTFBSDK.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1331,9 +1391,9 @@
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 2AFEAX4TBH;
 				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-fcm/ios",
-					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
+					"<Multiple",
+					"values>",
+					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
 				);
 				"HEADER_SEARCH_PATHS[arch=*]" = "$(inherited)";
 				INFOPLIST_FILE = Refundeo/Info.plist;
@@ -1380,8 +1440,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2AFEAX4TBH;
 				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
+					"<Multiple",
+					"values>",
+					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
 				);
 				"HEADER_SEARCH_PATHS[arch=*]" = "$(inherited)";
 				INFOPLIST_FILE = Refundeo/Info.plist;

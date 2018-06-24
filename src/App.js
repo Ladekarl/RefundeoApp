@@ -4,6 +4,7 @@ import {Provider} from 'react-redux';
 import {configureStore} from './store';
 import AppNavigator from './navigation/AppNavigator';
 import {PersistGate} from 'redux-persist/integration/react';
+import Orientation from 'react-native-orientation';
 
 const {store, persistor} = configureStore();
 
@@ -12,6 +13,10 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         this._setDefaultFontFamily();
+    }
+
+    componentDidMount() {
+        Orientation.lockToPortrait();
     }
 
     _setDefaultFontFamily = () => {

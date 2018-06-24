@@ -153,11 +153,11 @@ function getMerchants() {
         dispatch(gettingMerchants());
         Api.getAllMerchants().then(merchants => {
             dispatch(getMerchantsSuccess(merchants));
-        }).catch((error) => {
+        }).catch((response) => {
             if (shouldLogout(response)) {
                 dispatch(logout());
             } else {
-                dispatch(getMerchantsError(error));
+                dispatch(getMerchantsError());
             }
         });
     };
@@ -394,7 +394,8 @@ function loginFacebook(accessToken) {
             } else {
                 dispatch(facebookLoginError(strings('login.error_user_does_not_exist_in_database')));
             }
-        }).catch(() => {
+        }).catch((error) => {
+            console.log(error);
             dispatch(facebookLoginError(strings('login.unknown_error')));
         });
     };
@@ -509,10 +510,10 @@ function requestRefund(refundCase) {
     };
 }
 
-function createRefundCase(customerId, receiptNumber, amount, successModal) {
+function createRefundCase(customerId, receiptNumber, amount, customerSignature, merchantSignature, successModal) {
     return dispatch => {
         dispatch(creatingRefundCase());
-        Api.postRefundCase(customerId, receiptNumber, amount).then(() => {
+        Api.postRefundCase(customerId, receiptNumber, amount, customerSignature, merchantSignature).then(() => {
             dispatch(createRefundCaseSuccess());
             dispatch(openModal(successModal));
         }).catch((response) => {
@@ -837,7 +838,7 @@ function changePasswordError(error = '') {
 }
 
 function shouldLogout(response) {
-    return response.status === 401 || response.status === 403;
+    return response && response.status === 401 || response.status === 403;
 }
 
 
