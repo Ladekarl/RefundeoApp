@@ -86,18 +86,18 @@ const styles = StyleSheet.create({
         backgroundColor: colors.slightlyDarkerColor
     },
     iconContainer: {
-        height: 80,
+        height: 70,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: colors.backgroundColor,
         borderRadius: 40,
-        padding: 6,
+        padding: 10,
         borderWidth: StyleSheet.hairlineWidth,
         borderColor: colors.separatorColor
     },
     logoImage: {
-        height: 60,
-        width: 60,
+        height: 40,
+        width: 40,
         margin: 5,
         justifyContent: 'center',
         alignItems: 'center'

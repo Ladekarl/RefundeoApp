@@ -150,6 +150,7 @@
     "approved": "Approved",
     "amount": "Purchase amount:",
     "refund_amount": "Refund amount:",
+    "date_created": "Date created:",
     "choose_photo": "Choose photo",
     "permission_try_again": "Please try again",
     "permission_ok": "OK",

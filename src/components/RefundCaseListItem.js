@@ -84,29 +84,20 @@ export default class RefundCaseListItem extends Component {
     _handlePress = () => {
         this.props.onPress(this.refundCase);
     };
-
-    getBannerColor = (refundCase) => {
-        const isAccepted = refundCase.isAccepted;
-        const isRejected = refundCase.isRejected;
-
-        if (isAccepted) return colors.greenButtonColor;
-        if (isRejected) return colors.cancelButtonColor;
-        return colors.activeTabColor;
-    };
-
     render() {
         const {refundCase} = this.props;
         this._initProps();
-        const bannerColor = this.getBannerColor(refundCase);
         return (
             <TouchableOpacity
+                activeOpacity={0.7}
                 style={styles.container}
                 onPress={this._handlePress}>
                 <View style={styles.bannerTextContainer}>
-                    <View style={[styles.bannerTextBarContainer, {backgroundColor: bannerColor}]}>
+                    <View style={styles.bannerTextBarContainer}>
                         <Text
-                            style={styles.headlineText}>{refundCase.merchant.companyName + ' - ' + refundCase.merchant.addressCity}</Text>
-                        <Text style={styles.headlineText}>{this.state.dateCreatedFormatted}</Text>
+                            style={styles.headlineText}>{refundCase.merchant.companyName}</Text>
+                        <Text
+                            style={styles.headlineRightText}>{strings('refund_case.refund_amount') + ' ' + refundCase.amount.toFixed(2).replace(/[.,]00$/, '')}</Text>
                     </View>
                 </View>
                 <View style={styles.contentContainer}>
@@ -120,11 +111,11 @@ export default class RefundCaseListItem extends Component {
                         </View>
                         <View style={styles.detailContainer}>
                             <Text style={styles.detailTitle}>{strings('refund_case.amount')}</Text>
-                            <Text style={styles.detailText}>{refundCase.amount}</Text>
+                            <Text style={styles.detailText}>{refundCase.amount.toFixed(2).replace(/[.,]00$/, '')}</Text>
                         </View>
                         <View style={styles.detailContainer}>
-                            <Text style={styles.detailTitle}>{strings('refund_case.refund_amount')}</Text>
-                            <Text style={styles.detailText}>{refundCase.refundAmount.toFixed(2)}</Text>
+                            <Text style={styles.detailTitle}>{strings('refund_case.date_created')}</Text>
+                            <Text style={styles.detailText}>{this.state.dateCreatedFormatted}</Text>
                         </View>
                     </View>
                     <View style={styles.endContentContainer}>
@@ -141,37 +132,35 @@ export default class RefundCaseListItem extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        height: 100,
         backgroundColor: 'transparent',
-        marginLeft: 10,
-        marginRight: 10,
-        marginTop: 5,
+        marginTop: 1,
         alignSelf: 'center',
     },
     bannerTextContainer: {
         flexDirection: 'row',
         alignItems: 'flex-start',
-        marginBottom: 10
+        backgroundColor: colors.activeTabColor,
+        marginBottom: 10,
     },
     bannerTextBarContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
-        backgroundColor: colors.activeTabColor,
         padding: 10
     },
     headlineText: {
         fontSize: 18,
-        maxWidth: '70%',
+        color: colors.backgroundColor,
+    },
+    headlineRightText: {
+        fontSize: 15,
         color: colors.backgroundColor,
     },
     contentContainer: {
-        flex: 1,
         justifyContent: 'space-between',
-        alignItems: 'stretch',
         flexDirection: 'row',
-        marginLeft: 10,
-        marginRight: 10,
+        paddingLeft: 10,
+        paddingRight: 10,
         width: '100%'
     },
     endContentContainer: {
@@ -224,7 +213,8 @@ const styles = StyleSheet.create({
         height: 40,
         width: 40,
         marginRight: 10,
-        borderRadius: 20
+        borderRadius: 20,
+        backgroundColor: colors.backgroundColor
     },
     angleRightIcon: {
         height: undefined,

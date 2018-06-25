@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     },
     headerButtonText: {
         fontSize: 11,
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor,
+        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.darkTextColor,
         fontWeight: 'bold'
     },
     activeButtonText: {
@@ -226,8 +226,8 @@ const styles = StyleSheet.create({
     separatorStyle: {
         height: 1,
         backgroundColor: colors.separatorColor,
-        marginBottom: 5,
-        marginTop: 15
+        marginBottom: 10,
+        marginTop: 10
     }
 });
 

@@ -150,6 +150,7 @@
     "approved": "Godkendt",
     "amount": "Købsbeløb:",
     "refund_amount": "Refusionsbeløb:",
+    "date_created": "Dato oprettet:",
     "choose_photo": "Vælg billede",
     "permission_try_again": "Prøv venligst igen",
     "permission_ok": "OK",

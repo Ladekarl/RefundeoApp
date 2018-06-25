@@ -239,7 +239,7 @@ class RefundCase extends Component {
                         </View>
                         <View style={styles.bannerColumnContainer}>
                             <Text style={styles.contentText}>{refundCase.amount}</Text>
-                            <Text style={styles.contentText}>{refundCase.refundAmount.toFixed(2)}</Text>
+                            <Text style={styles.contentText}>{refundCase.refundAmount.toFixed(2).replace(/[.,]00$/, "")}</Text>
                         </View>
                     </View>
                     {!refundCase.isRequested &&
