@@ -167,11 +167,6 @@ export default class Api {
     }
 
     static async uploadDocumentation(refundCase, vatForm, receipt) {
-        // RNFetchBlob.config({fileCache: true, appendExt: 'jpg'});
-        // const fs = RNFetchBlob.fs;
-        // const base64Vat = await fs.readFile(vatForm, 'base64');
-        // const base64Receipt = await fs.readFile(receipt, 'base64');
-
         const requestOptions = {
             method: 'POST',
             headers: {

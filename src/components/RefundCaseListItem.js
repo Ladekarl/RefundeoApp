@@ -151,21 +151,17 @@ const styles = StyleSheet.create({
     bannerTextContainer: {
         flexDirection: 'row',
         alignItems: 'flex-start',
-        marginLeft: 45,
+        marginBottom: 10
     },
     bannerTextBarContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
-        padding: 3,
         backgroundColor: colors.activeTabColor,
-        borderTopLeftRadius: 30,
-        borderBottomLeftRadius: 30,
-        paddingLeft: 10,
-        paddingRight: 10
+        padding: 10
     },
     headlineText: {
-        fontSize: 15,
+        fontSize: 18,
         maxWidth: '70%',
         color: colors.backgroundColor,
     },

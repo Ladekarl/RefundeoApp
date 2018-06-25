@@ -51,29 +51,27 @@ export default class StoreListItem extends PureComponent {
                 <View style={styles.cardContainer}>
                     <ImageBackground
                         style={styles.bannerImage}
-                            source={{uri: 'data:image/png;base64,' + banner}}
-                        borderRadius={2}>
+                        source={{uri: 'data:image/png;base64,' + banner}}>
                         <View style={styles.bannerTextBarContainer}>
-                            <View style={styles.leftContainer}>
-                                <Text style={styles.leftText}>{dist}</Text>
-                            </View>
-                            {Platform.OS === 'ios' &&
                             <View style={styles.iconContainer}>
                                 <Image style={styles.logoImage} resizeMode='contain'
                                        source={{uri: 'data:image/png;base64,' + logo}}/>
                             </View>
-                            }
-                            <View style={styles.rightContainer}>
-                                <Text style={styles.rightText}>{strings('stores.refund') + ': ' + (95 - refundPercentage) + ' %'}</Text>
-                            </View>
                         </View>
                     </ImageBackground>
                     <View style={styles.contentContainer}>
+                        <View style={styles.leftContainer}>
+                            <Text style={styles.leftText}>{dist}</Text>
+                        </View>
                         <View style={styles.contentTextContainer}>
                             <Text
-                                style={styles.mainText}>{name + ' - ' + city}</Text>
+                                style={styles.mainText}>{name}</Text>
                             <Text
                                 style={styles.subText}>{openingHours}</Text>
+                        </View>
+                        <View style={styles.rightContainer}>
+                            <Text
+                                style={styles.rightText}>{strings('stores.refund') + '\n' + (95 - refundPercentage) + ' %'}</Text>
                         </View>
                     </View>
                 </View>
@@ -85,19 +83,16 @@ export default class StoreListItem extends PureComponent {
 const styles = StyleSheet.create({
     container: {
         justifyContent: 'flex-start',
-        backgroundColor: colors.slightlyDarkerColor,
-        padding: 3
+        backgroundColor: colors.slightlyDarkerColor
     },
     iconContainer: {
         height: 80,
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 30,
         backgroundColor: colors.backgroundColor,
         borderRadius: 40,
         padding: 6,
-        elevation: 1,
-        borderWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0,
+        borderWidth: StyleSheet.hairlineWidth,
         borderColor: colors.separatorColor
     },
     logoImage: {
@@ -109,59 +104,48 @@ const styles = StyleSheet.create({
     },
     cardContainer: {
         height: 170,
-        marginBottom: 3,
         backgroundColor: colors.backgroundColor,
-        borderRadius: 2,
-        borderWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0,
-        elevation: 2,
+        borderWidth: StyleSheet.hairlineWidth,
         borderColor: colors.separatorColor
     },
     bannerImage: {
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
         width: '100%',
-        borderRadius: 50,
         height: 120
     },
     bannerTextBarContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        overflow: 'visible',
+        justifyContent: 'center',
         alignItems: 'center',
-        width: '100%',
-        height: 30,
-        backgroundColor: 'rgba(0,0,0,0.6)',
-        paddingLeft: 10,
-        paddingRight: 10
     },
     leftContainer: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        marginLeft: 20,
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
     },
     rightContainer: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        marginRight: 20,
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end',
     },
     leftText: {
-        fontSize: 13,
-        alignSelf: 'flex-start',
-        color: colors.backgroundColor,
+        fontSize: 12,
+        textAlign: 'left'
     },
     rightText: {
-        fontSize: 13,
-        alignSelf: 'flex-end',
-        color: colors.backgroundColor,
+        fontSize: 12,
+        textAlign: 'right'
     },
     contentContainer: {
-        flex: 1,
-        justifyContent: 'center',
+        flex: 2,
+        justifyContent: 'space-between',
         alignItems: 'center',
+        flexDirection: 'row',
     },
     contentTextContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-        flex: 1,
     },
     mainText: {
         color: colors.darkTextColor,

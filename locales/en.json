@@ -46,7 +46,7 @@
     "error_fields_empty": "Some fields are empty.",
     "error_not_email": "Not a valid email.",
     "legal_privacy": "Legal & Privacy",
-    "address": "Address",
+    "address": "Permanent Address",
     "address_street_name": "Street name:",
     "address_street_name_title": "Street name",
     "address_street_name_placeholder": "Street name",
@@ -116,12 +116,31 @@
     "wrong_password": "Wrong password"
   },
   "scanner": {
-    "top_text": "Scan the customers QR Code"
+    "top_text": "Scan the customers QR Code",
+    "fill_all_fields": "Please fill all fields.",
+    "customer_not_found": "Could not find customer",
+    "create_refund_success": "Successfully created refund.\n\nThe customer should receive an email with a tax free form.",
+    "merchant_signature": "Retailer Signature",
+    "customer_signature": "Customer Signature",
+    "save": "Save",
+    "reset": "Reset",
+    "create_refund_modal_title": "Fill all fields",
+    "customer": "Customer",
+    "amount": "Amount",
+    "receipt_number": "Receipt number"
   },
   "overview": {
     "welcome_text": "Welcome to Refundeo",
     "no_refunds_text": "You don't have any refunds.",
-    "get_started_text": "Push the button to scan the QR code on your receipt."
+    "get_started_text": "Push the button to scan the QR code on your receipt.",
+    "new": "NEW",
+    "pending": "PENDING",
+    "approved": "APPROVED",
+    "rejected": "REJECTED",
+    "no_new": "No new refunds.",
+    "no_pending": "No pending refunds.",
+    "no_approved": "No approved refunds.",
+    "no_rejected": "No rejected refunds."
   },
   "refund_case": {
     "upload_documentation": "Upload documentation",
@@ -158,7 +177,7 @@
   "stores": {
     "opening_hours": "Opening hours",
     "refund_percentage": "Refund percentage",
-    "address": "Permanent Address",
+    "address": "Address",
     "distance": "Distance",
     "distance_all": "all",
     "filter": "Filter",
@@ -179,5 +198,11 @@
     "upload_text": "Use the app to take pictures of the approved tax free form and receipt.\n\nWhen you are satisfied with the pictures, request a refund.",
     "done_title": "Done",
     "done_text": "Now you can relax and wait for your refund as we will handle the rest for you."
+  },
+  "upload_documentation": {
+    "scan_qrcode": "Scan the QR Code on the tax free form",
+    "picture_tff": "Take picture of tax free form",
+    "picture_receipt": "Take picture of receipt",
+    "incorrect_qrcode": "Incorrect QR Code. Please try again."
   }
 }

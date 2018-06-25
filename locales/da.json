@@ -116,12 +116,31 @@
     "wrong_password": "Forkert password"
   },
   "scanner": {
-    "top_text": "Scan kundens QR kode"
+    "top_text": "Scan kundens QR kode",
+    "fill_all_fields": "Udfyld alle felter.",
+    "customer_not_found": "Kunne ikke finde kunden",
+    "create_refund_success": "Oprettede refusion.\n\nKunden vil modtage en mail med en tax free form.",
+    "merchant_signature": "Butikkens underskrift",
+    "customer_signature": "Kundens underskrift",
+    "save": "Gem",
+    "reset": "Slet",
+    "create_refund_modal_title": "Udfyld alle felter",
+    "customer": "Kunde",
+    "amount": "Beløb",
+    "receipt_number": "Kvitteringsnummer"
   },
   "overview": {
     "welcome_text": "Velkommen til Refundeo",
     "no_refunds_text": "Du har endnu ingen refunderinger.",
-    "get_started_text": "Tryk på knappen og scan QR koden på din kvittering."
+    "get_started_text": "Tryk på knappen og scan QR koden på din kvittering.",
+    "new": "NYE",
+    "pending": "AFVENTER",
+    "approved": "GODKENDT",
+    "rejected": "AFVIST",
+    "no_new": "Ingen nye refusioner.",
+    "no_pending": "Ingen afventende refusioner.",
+    "no_approved": "Ingen godkendte refusioner.",
+    "no_rejected": "Ingen afviste refusioner."
   },
   "refund_case": {
     "upload_documentation": "Upload dokumentation",
@@ -179,5 +198,11 @@
     "upload_text": "Brug app'en til at tage billeder af den godkendte tax free form og kvittering.\n\nNår du er tilfreds med billederne, anmod om refusion.",
     "done_title": "Færdig",
     "done_text": "Nu kan du slappe af og vente på din refusion, da vi håndterer resten for dig."
+  },
+  "upload_documentation": {
+    "scan_qrcode": "Scan QR koden på din tax free form",
+    "picture_tff": "Tag et billede af din tax free form",
+    "picture_receipt": "Tag et billede af kvitteringen",
+    "incorrect_qrcode": "Forkert QR kode. Prøv igen."
   }
 }

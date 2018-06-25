@@ -104,22 +104,22 @@ class UploadDocumentation extends Component {
 
     getTopText = (page, selectedDocumentation) => {
         if (page === 0) {
-            return 'Scan the QR Code on the tax free form';
+            return strings('upload_documentation.scan_qrcode');
         }
         if (page === 1) {
             if (selectedDocumentation === 'vatFormImage') {
-                return 'Take picture of tax free form';
+                return strings('upload_documentation.picture_tff');
             }
             if (selectedDocumentation === 'receiptImage') {
-                return 'Take picture of receipt';
+                return strings('upload_documentation.picture_receipt');
             }
         }
         if (page === 2) {
             if (selectedDocumentation !== 'vatFormImage') {
-                return 'Take picture of tax free form';
+                return strings('upload_documentation.picture_tff');
             }
             if (selectedDocumentation !== 'receiptImage') {
-                return 'Take picture of receipt';
+                return strings('upload_documentation.picture_receipt');
             }
         }
     };
@@ -191,7 +191,7 @@ class UploadDocumentation extends Component {
                     onSubmit={this.closeUploadDocumentationModal}
                     visible={this.props.state.navigation.modal['uploadDocumentationModal'] || false}>
                     <View style={styles.modalContainer}>
-                        <Text style={styles.modalText}>{'Incorrect QR Code. Please try again.'}</Text>
+                        <Text style={styles.modalText}>{strings('upload_documentation.incorrect_qrcode')}</Text>
                     </View>
                 </ModalScreen>
             </View>

@@ -50,6 +50,12 @@ export default class StoresList extends PureComponent {
 
     keyExtractor = (merchant) => merchant.id.toString();
 
+    _renderSeparator = () => {
+        return <View
+            style={styles.separatorStyle}
+        />;
+    };
+
     render() {
         const {fetching, actions} = this.props;
 
@@ -67,6 +73,7 @@ export default class StoresList extends PureComponent {
                             onRefresh={actions.getMerchants}
                         />
                     }
+                    ItemSeparatorComponent={this._renderSeparator}
                     data={filterMerchants && filterMerchants.length > 0 ? filterMerchants : null}
                     keyExtractor={this.keyExtractor}
                     renderItem={this.renderStoreListItem}
@@ -88,5 +95,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flex: 1
+    },
+    separatorStyle: {
+        margin: 5
     }
 });

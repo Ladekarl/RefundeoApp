@@ -24,7 +24,7 @@ class QRCode extends Component {
                 );
             } else {
                 return (
-                    <Icon name='octagon' style={[styles.tabBarIconAndroid, {color: tintColor}]}/>
+                    <Icon name='user' style={[styles.tabBarIconAndroid, {color: tintColor}]}/>
                 );
             }
         }
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         marginLeft: 1,
     },
     tabBarIconAndroid: {
-        fontSize: 35
+        fontSize: 25
     },
     imageContainer: {
         elevation: 5,

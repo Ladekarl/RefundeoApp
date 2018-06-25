@@ -93,13 +93,14 @@ class HeaderScreen extends Component {
         const isMerchant = user.isMerchant;
 
         let displayFilter = navigation.currentRoute === 'Stores' && !navigation.isMap;
+        let isOverview = navigation.currentRoute === 'Overview';
         let displayHelp = !displayFilter && refundCases.length > 0;
 
         let minFilterDistanceValue = this.getDistanceSliderValue(this.state.filterDistanceSliderValue[0]);
         let maxFilterDistanceValue = this.getDistanceSliderValue(this.state.filterDistanceSliderValue[1]);
 
         return (
-            <View style={styles.container}>
+            <View style={[styles.container, isOverview ? styles.noElevation : {}]}>
                 {isMerchant &&
                 <View style={styles.noDrawerHeader}>
                 </View>
@@ -267,6 +268,9 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
+    },
+    noElevation: {
+      elevation: 0
     },
     leftOverlayButton: {
         paddingTop: 7,

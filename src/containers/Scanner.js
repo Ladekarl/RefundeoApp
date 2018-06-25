@@ -92,7 +92,7 @@ class ScannerScreen extends Component {
         let receiptNumber = this.state.receiptNumber;
         let amount = this.state.amount;
         this.setState({
-            modalInputError: 'Please fill all fields'
+            modalInputError: strings('scanner.fill_all_fields')
         });
         if (customerId && receiptNumber && amount) {
             this.props.actions.openModal('signatureModal');
@@ -100,11 +100,11 @@ class ScannerScreen extends Component {
             Orientation.lockToLandscapeLeft();
         } else if (customerId) {
             this.setState({
-                modalInputError: 'Please fill all fields'
+                modalInputError: strings('scanner.fill_all_fields')
             });
         } else {
             this.setState({
-                modalInputError: 'Could not find customer'
+                modalInputError: strings('scanner.customer_not_found')
             });
         }
     };
@@ -226,7 +226,7 @@ class ScannerScreen extends Component {
                     visible={state.navigation.modal['createRefundSuccessModal'] || false}>
                     <View>
                         <Text
-                            style={styles.headlineText}>{'Successfully created refund.\n\nAsk the customer to refresh the list of refunds'}</Text>
+                            style={styles.headlineText}>{strings('scanner.create_refund_success')}</Text>
                     </View>
                 </ModalScreen>
                 <Modal
@@ -237,7 +237,7 @@ class ScannerScreen extends Component {
                     visible={signatureModalOpen || false}>
                     <View style={styles.signRotate}>
                         <Text
-                            style={styles.signatureText}>{customerSignature ? 'Merchant Signature' : 'Customer Signature'}</Text>
+                            style={styles.signatureText}>{customerSignature ? strings('scanner.merchant_signature') : strings('scanner.customer_signature')}</Text>
                         <SignatureCapture
                             style={styles.signature}
                             ref={ref => this.sign = ref}
@@ -252,31 +252,31 @@ class ScannerScreen extends Component {
                                 onPress={() => {
                                     this.saveSign();
                                 }}>
-                                <Text style={styles.buttonText}>Save</Text>
+                                <Text style={styles.buttonText}>{strings('scanner.save')}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={styles.buttonStyle}
                                 onPress={() => {
                                     this.resetSign();
                                 }}>
-                                <Text style={styles.buttonText}>Reset</Text>
+                                <Text style={styles.buttonText}>{strings('scanner.reset')}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                 </Modal>
                 <ModalScreen
-                    modalTitle={'Fill all fields'}
+                    modalTitle={strings('scanner.create_refund_modal_title')}
                     visible={state.navigation.modal['createRefundModal'] && !fetching || false}
                     onSubmit={this.onModalSubmit}
                     onBack={this.backModal}
                     fullScreen={true}
                     onCancel={this.backModal}>
                     <ScrollView contentContainerStyle={styles.modalContainer}>
-                        <Text style={styles.headlineText}>Customer</Text>
+                        <Text style={styles.headlineText}>{strings('scanner.customer')}</Text>
                         <Text
                             style={styles.modalInput}>{state.otherUser.firstName + ' ' + state.otherUser.lastName}</Text>
                         <Text style={styles.modalInput}>{state.otherUser.email}</Text>
-                        <Text style={styles.headlineText}>Amount</Text>
+                        <Text style={styles.headlineText}>{strings('scanner.amount')}</Text>
                         <TextInput
                             ref={(input) => this.modalTextInput = input}
                             style={styles.modalInput}
@@ -295,14 +295,14 @@ class ScannerScreen extends Component {
                             onSubmitEditing={this.focusSecondTextInput}
                             blurOnSubmit={false}
                         />
-                        <Text style={styles.headlineText}>Receipt number</Text>
+                        <Text style={styles.headlineText}>{strings('scanner.receipt_number')}</Text>
                         <TextInput
                             ref={(input) => this.secondTextInput = input}
                             style={styles.modalInput}
                             value={this.state.receiptNumber}
                             maxLength={64}
                             onChangeText={this.changeReceiptNumber}
-                            placeholder={'Receipt number'}
+                            placeholder={strings('scanner.receipt_number')}
                             selectionColor={colors.inactiveTabColor}
                             autoCapitalize={'none'}
                             underlineColorAndroid={colors.activeTabColor}
