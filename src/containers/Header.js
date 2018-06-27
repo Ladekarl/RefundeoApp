@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Platform, Slider, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-fa-icons';
@@ -8,7 +8,6 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {hasDrawer} from '../navigation/NavigationConfiguration';
 import ModalScreen from '../components/Modal';
-import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import geolib from 'geolib';
 import {strings} from '../shared/i18n';
 
@@ -28,8 +27,8 @@ class HeaderScreen extends Component {
 
     getInitialFilterState = () => {
         return {
-            filterRefundSliderValue: [this.props.state.filterRefundSliderValue[0], this.props.state.filterRefundSliderValue[1]],
-            filterDistanceSliderValue: [this.props.state.filterDistanceSliderValue[0], this.props.state.filterDistanceSliderValue[1]]
+            filterRefundSliderValue: this.props.state.filterRefundSliderValue,
+            filterDistanceSliderValue: this.props.state.filterDistanceSliderValue
         };
     };
 
@@ -79,14 +78,13 @@ class HeaderScreen extends Component {
     };
 
     closeSignOutModal = () => {
-      this.props.actions.closeModal('signOutModal');
+        this.props.actions.closeModal('signOutModal');
     };
 
     onSignOut = () => {
         this.props.actions.closeModal('signOutModal');
         this.props.actions.logout();
     };
-
 
     render() {
         const {navigation, refundCases, user} = this.props.state;
@@ -96,8 +94,7 @@ class HeaderScreen extends Component {
         let isOverview = navigation.currentRoute === 'Overview';
         let displayHelp = !displayFilter && refundCases.length > 0;
 
-        let minFilterDistanceValue = this.getDistanceSliderValue(this.state.filterDistanceSliderValue[0]);
-        let maxFilterDistanceValue = this.getDistanceSliderValue(this.state.filterDistanceSliderValue[1]);
+        let distanceValue = this.getDistanceSliderValue(this.state.filterDistanceSliderValue);
 
         return (
             <View style={[styles.container, isOverview ? styles.noElevation : {}]}>
@@ -177,38 +174,39 @@ class HeaderScreen extends Component {
                                 {strings('stores.distance')}
                             </Text>
                             <Text style={styles.filterSliderText}>
-                                {minFilterDistanceValue + ' - ' + maxFilterDistanceValue}
+                                {distanceValue}
                             </Text>
-                            <View style={styles.filterSlider}>
-                                <MultiSlider
-                                    values={this.state.filterDistanceSliderValue}
-                                    min={0}
-                                    max={10000}
+                            <View style={styles.filterSliderContainer}>
+                                <Slider
+                                    value={this.state.filterDistanceSliderValue}
+                                    minimumValue={0}
+                                    maximumValue={10000}
                                     step={100}
-                                    markerStyle={styles.filterMarkerStyle}
+                                    thumbTintColor={colors.activeTabColor}
+                                    minimumTrackTintColor={colors.activeTabColor}
+                                    style={styles.filterSlider}
                                     selectedStyle={styles.filterTrackStyle}
-                                    allowOverlap={false}
-                                    onValuesChange={this.distanceSliderValuesChange}
+                                    onValueChange={this.distanceSliderValuesChange}
                                 />
                             </View>
-
                         </View>
                         <View style={styles.filterRowContainer}>
                             <Text style={styles.filterTitle}>
-                                {strings('stores.refund_percentage')}
+                                {strings('stores.refund_percentage_filter')}
                             </Text>
                             <Text style={styles.filterSliderText}>
-                                {this.state.filterRefundSliderValue[0] + ' - ' + this.state.filterRefundSliderValue[1]}</Text>
-                            <View style={styles.filterSlider}>
-                                <MultiSlider
-                                    values={this.state.filterRefundSliderValue}
-                                    min={0}
-                                    max={100}
+                                {this.state.filterRefundSliderValue + ' %'}</Text>
+                            <View style={styles.filterSliderContainer}>
+                                <Slider
+                                    value={this.state.filterRefundSliderValue}
+                                    minimumValue={0}
+                                    maximumValue={100}
                                     step={1}
-                                    markerStyle={styles.filterMarkerStyle}
+                                    thumbTintColor={colors.activeTabColor}
+                                    minimumTrackTintColor={colors.activeTabColor}
+                                    style={styles.filterSlider}
                                     selectedStyle={styles.filterTrackStyle}
-                                    allowOverlap={false}
-                                    onValuesChange={this.refundSliderValuesChange}
+                                    onValueChange={this.refundSliderValuesChange}
                                 />
                             </View>
                         </View>
@@ -270,7 +268,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     noElevation: {
-      elevation: 0
+        elevation: 0
     },
     leftOverlayButton: {
         paddingTop: 7,
@@ -311,10 +309,14 @@ const styles = StyleSheet.create({
     filterTitle: {
         color: colors.darkTextColor
     },
-    filterSlider: {
+    filterSliderContainer: {
         justifyContent: 'center',
         alignItems: 'center',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        width: '100%'
+    },
+    filterSlider: {
+        width: '100%'
     },
     filterSliderText: {
         fontSize: 20,

@@ -177,6 +177,7 @@
   "stores": {
     "opening_hours": "Opening hours",
     "refund_percentage": "Refund percentage",
+    "refund_percentage_filter": "Minimum refund",
     "address": "Address",
     "distance": "Distance",
     "distance_all": "all",
@@ -204,5 +205,10 @@
     "picture_tff": "Take picture of tax free form",
     "picture_receipt": "Take picture of receipt",
     "incorrect_qrcode": "Incorrect QR Code. Please try again."
+  },
+  "qr_code": {
+    "id": "ID",
+    "my_id": "My ID",
+    "show_this": "Show this QR code in one of our partner stores when shopping tax free."
   }
 }

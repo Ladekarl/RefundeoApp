@@ -127,10 +127,8 @@ class StoresScreen extends Component {
                 <StoresList
                     actions={this.props.actions}
                     merchants={merchants}
-                    distanceMin={filterDistanceSliderValue[0]}
-                    distanceMax={filterDistanceSliderValue[1]}
-                    refundMin={filterRefundSliderValue[0]}
-                    refundMax={filterRefundSliderValue[1]}
+                    distance={filterDistanceSliderValue}
+                    refund={filterRefundSliderValue}
                     fetching={fetchingMerchants}
                 />
                 }

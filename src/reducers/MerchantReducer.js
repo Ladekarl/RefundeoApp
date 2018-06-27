@@ -25,8 +25,8 @@ type MerchantReducer = {
     selectedMerchant: Merchant,
     fetchingMerchants: boolean,
     getMerchantsError: string,
-    filterDistanceSliderValue: Array<number>,
-    filterRefundSliderValue: Array<number>
+    filterDistanceSliderValue: number,
+    filterRefundSliderValue: number
 }
 
 const initialState: MerchantReducer = {
@@ -34,8 +34,8 @@ const initialState: MerchantReducer = {
     selectedMerchant: {},
     fetchingMerchants: false,
     getMerchantsError: '',
-    filterDistanceSliderValue: [0, 10000],
-    filterRefundSliderValue: [0, 100],
+    filterDistanceSliderValue: 10000,
+    filterRefundSliderValue: 0,
 };
 
 export default function merchantReducer(state = initialState, action = {}) {

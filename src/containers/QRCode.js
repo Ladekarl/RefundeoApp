@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {View, StyleSheet, Platform, Image} from 'react-native';
+import {View, StyleSheet, Platform, Image, Text} from 'react-native';
 import {bindActionCreators} from 'redux';
 import Actions from '../actions/Actions';
 import Icon from 'react-native-fa-icons';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
+import {strings} from '../shared/i18n';
 
 class QRCode extends Component {
 
@@ -19,12 +20,12 @@ class QRCode extends Component {
             if (Platform.OS === 'ios') {
                 return (
                     <View style={styles.tabBarContainerIOs}>
-                        <Icon name='user' style={[styles.tabBarIconIOs, {color: newTintColor}]}/>
+                        <Text style={[styles.tabBarIconIOs, {color: newTintColor}]}>{strings('qr_code.id')}</Text>
                     </View>
                 );
             } else {
                 return (
-                    <Icon name='user' style={[styles.tabBarIconAndroid, {color: tintColor}]}/>
+                    <Text style={[styles.tabBarIconAndroid, {color: tintColor}]}>{strings('qr_code.id')}</Text>
                 );
             }
         }
@@ -34,8 +35,14 @@ class QRCode extends Component {
         const {user} = this.props.state;
         return (
             <View style={styles.container}>
+                <View style={styles.topContainer}>
+                    <Text style={styles.topText}>{strings('qr_code.my_id')}</Text>
+                </View>
                 <View style={styles.imageContainer}>
                     <Image style={styles.qrCode} source={{uri: 'data:image/png;base64,' + user.qrCode}}/>
+                </View>
+                <View style={styles.bottomContainer}>
+                    <Text style={styles.bottomText}>{strings('qr_code.show_this')}</Text>
                 </View>
             </View>
         );
@@ -45,9 +52,31 @@ class QRCode extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.backgroundColor,
+        backgroundColor: colors.slightlyDarkerColor,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    topContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    bottomContainer: {
+        width: '70%',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    topText: {
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 35,
+        color: colors.darkTextColor
+    },
+    bottomText: {
+        textAlign: 'center',
+        fontSize: 20,
+        color: colors.darkTextColor
     },
     tabBarContainerIOs: {
         height: 60,
@@ -62,15 +91,17 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         textAlign: 'center',
         marginLeft: 1,
+        fontWeight: 'bold'
     },
     tabBarIconAndroid: {
-        fontSize: 25
+        fontSize: 25,
+        fontWeight: 'bold'
     },
     imageContainer: {
         elevation: 5,
         borderRadius: 40,
         borderColor: colors.separatorColor,
-        borderWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0
+        borderWidth: Platform.OS === 'ios' ? 1 : 0
     },
     qrCode: {
         height: 200,

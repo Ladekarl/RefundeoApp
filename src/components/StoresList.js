@@ -11,10 +11,8 @@ export default class StoresList extends PureComponent {
         actions: PropTypes.object.isRequired,
         merchants: PropTypes.array.isRequired,
         fetching: PropTypes.bool.isRequired,
-        refundMin: PropTypes.number.isRequired,
-        refundMax: PropTypes.number.isRequired,
-        distanceMin: PropTypes.number.isRequired,
-        distanceMax: PropTypes.number.isRequired
+        refund: PropTypes.number.isRequired,
+        distance: PropTypes.number.isRequired,
     };
 
     constructor(props) {
@@ -22,12 +20,12 @@ export default class StoresList extends PureComponent {
     }
 
     filterMerchants = () => {
-        const {merchants, distanceMax, distanceMin, refundMax, refundMin} = this.props;
+        const {merchants, distance, refund} = this.props;
         let filteredMerchants = [];
         merchants.forEach((merchant) => {
             const dist = merchant.distance;
             const ref = 95 - merchant.refundPercentage;
-            if (dist >= distanceMin && (dist <= distanceMax || distanceMax === 10000) && ref >= refundMin && ref <= refundMax) {
+            if ((dist <= distance || distance === 10000) && ref <= refund) {
                 filteredMerchants.push(merchant);
             }
         });

@@ -153,7 +153,6 @@ class OverviewScreen extends Component {
                             onRefresh={actions.getRefundCases}
                         />
                     }
-                    ItemSeparatorComponent={this._renderSeparator}
                     data={refundCases && refundCases.length > 0 ? filteredRefundCases : null}
                     keyExtractor={this._keyExtractor}
                     renderItem={this._renderRefundCase}
@@ -166,6 +165,10 @@ class OverviewScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: colors.backgroundColor
+    },
     headerContainer: {
         height: 50,
         flexDirection: 'row',
@@ -196,7 +199,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     flatListContainer: {
-        backgroundColor: colors.backgroundColor,
+        backgroundColor: colors.slightlyDarkerColor,
     },
     scrollContainer: {
         backgroundColor: colors.backgroundColor,
@@ -208,15 +211,11 @@ const styles = StyleSheet.create({
         backgroundColor: colors.backgroundColor
     },
     nonEmptyContainer: {
-        paddingTop: 10,
-        backgroundColor: colors.backgroundColor
+        paddingTop: 4,
+        backgroundColor: colors.slightlyDarkerColor
     },
     tabBarIcon: {
         fontSize: 20
-    },
-    container: {
-        flex: 1,
-        backgroundColor: colors.backgroundColor
     },
     emptyContentContainer: {
         flex: 1,
@@ -228,12 +227,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         color: colors.activeTabColor,
         fontSize: 20
-    },
-    separatorStyle: {
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        borderColor: colors.separatorColor,
-        marginBottom: 10,
-        marginTop: 10
     }
 });
 

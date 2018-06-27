@@ -177,6 +177,7 @@
   "stores": {
     "opening_hours": "Åbningstider",
     "refund_percentage": "Refusion (%)",
+    "refund_percentage_filter": "Minimum refusion",
     "address": "Adresse",
     "distance": "Afstand",
     "distance_all": "alle",
@@ -204,5 +205,10 @@
     "picture_tff": "Tag et billede af din tax free form",
     "picture_receipt": "Tag et billede af kvitteringen",
     "incorrect_qrcode": "Forkert QR kode. Prøv igen."
+  },
+  "qr_code": {
+    "id": "ID",
+    "my_id": "Mit ID",
+    "show_this": "Vis denne QR kode i en af vores partnerbutikker når du shopper tax free."
   }
 }

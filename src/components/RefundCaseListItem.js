@@ -4,12 +4,11 @@ import {
     StyleSheet,
     View,
     TouchableOpacity,
-    Image
+    Image,
+    Platform
 } from 'react-native';
 import colors from '../shared/colors';
-import moment from 'moment';
 import 'moment/locale/da';
-import I18n from 'react-native-i18n';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-fa-icons';
 import {formatDate, strings} from '../shared/i18n';
@@ -83,16 +82,23 @@ export default class RefundCaseListItem extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'transparent',
+        backgroundColor: colors.backgroundColor,
         alignSelf: 'center',
-        marginTop: 5,
-        marginBottom: 5
+        paddingBottom: 10,
+        paddingTop: 10,
+        marginLeft: 4,
+        marginRight: 4,
+        marginTop: 2,
+        marginBottom: 2,
+        elevation: 1,
+        borderWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0,
+        borderColor: Platform.OS === 'ios' ? colors.separatorColor : 0,
+        borderRadius: 2
     },
     contentContainer: {
         justifyContent: 'space-between',
         flexDirection: 'row',
-        paddingLeft: 10,
-        paddingRight: 10,
+        padding: 5,
         width: '100%'
     },
     detailContentContainer: {
@@ -111,7 +117,8 @@ const styles = StyleSheet.create({
         padding: 5,
         marginRight: 15,
         borderRadius: 40,
-        marginLeft: 15
+        marginLeft: 10,
+        marginBottom: 1
     },
     firstDetailsContainer: {
         justifyContent: 'center',
@@ -126,7 +133,7 @@ const styles = StyleSheet.create({
     },
     detailBigTitle: {
         fontSize: 18,
-        margin: 10,
+        marginRight: 10,
         fontWeight: 'bold',
         alignSelf: 'center',
         textAlign: 'center',
@@ -155,9 +162,6 @@ const styles = StyleSheet.create({
         fontSize: 25,
         color: colors.activeTabColor,
         alignSelf: 'flex-end',
-        margin: 10
-    },
-    rowContainer: {
-        flex: 1
-    },
+        marginRight: 15
+    }
 });
