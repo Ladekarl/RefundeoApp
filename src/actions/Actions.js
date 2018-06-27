@@ -215,14 +215,30 @@ function navigateInitial() {
                 else if (Validation.missingUserInfo(user)) {
                     dispatch(navigateRegisterExtraReset());
                 } else {
-                    dispatch(navigateAndResetToMainFlow());
-                    dispatch(getRefundCases());
+                    dispatch(getInitialDataThenNavigate());
                 }
             } else {
                 dispatch(navigateAndResetToLogin());
             }
         }).catch(() => {
             dispatch(navigateAndResetToLogin());
+        });
+    };
+}
+
+function getInitialDataThenNavigate() {
+    return dispatch => {
+        Promise.all([
+            Api.getRefundCases(),
+            Api.getAllMerchants()]
+        ).then(([refundCases, merchants]) => {
+            dispatch(getRefundCasesSuccess(refundCases));
+            dispatch(getMerchantsSuccess(merchants));
+            dispatch(navigateAndResetToMainFlow());
+        }).catch(response => {
+            if (shouldLogout(response)) {
+                dispatch(logout());
+            }
         });
     };
 }

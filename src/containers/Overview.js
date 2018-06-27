@@ -145,7 +145,7 @@ class OverviewScreen extends Component {
                 }
                 <FlatList
                     style={styles.flatListContainer}
-                    contentContainerStyle={[styles.scrollContainer, filteredRefundCases.length === 0 ? styles.emptyContainer : {}]}
+                    contentContainerStyle={[styles.scrollContainer, filteredRefundCases.length === 0 ? styles.emptyContainer : styles.nonEmptyContainer]}
                     refreshControl={
                         <RefreshControl
                             tintColor={colors.activeTabColor}
@@ -199,12 +199,17 @@ const styles = StyleSheet.create({
         backgroundColor: colors.backgroundColor,
     },
     scrollContainer: {
-        backgroundColor: 'transparent',
+        backgroundColor: colors.backgroundColor,
         justifyContent: 'flex-start',
         alignItems: 'center',
     },
     emptyContainer: {
-        flex: 1
+        flex: 1,
+        backgroundColor: colors.backgroundColor
+    },
+    nonEmptyContainer: {
+        paddingTop: 10,
+        backgroundColor: colors.backgroundColor
     },
     tabBarIcon: {
         fontSize: 20
@@ -216,7 +221,8 @@ const styles = StyleSheet.create({
     emptyContentContainer: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: colors.backgroundColor
     },
     emptyText: {
         alignSelf: 'center',
@@ -224,8 +230,8 @@ const styles = StyleSheet.create({
         fontSize: 20
     },
     separatorStyle: {
-        height: 1,
-        backgroundColor: colors.separatorColor,
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        borderColor: colors.separatorColor,
         marginBottom: 10,
         marginTop: 10
     }

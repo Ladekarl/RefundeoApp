@@ -43,7 +43,6 @@ class StoresScreen extends Component {
     };
 
     componentDidMount() {
-        this.props.actions.getMerchants();
         Location.getCurrentPosition()
             .then((location) => this.setLocation(location))
             .catch(() => {

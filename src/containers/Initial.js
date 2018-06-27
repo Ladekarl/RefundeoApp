@@ -8,12 +8,13 @@ import PropTypes from 'prop-types';
 import LocalStorage from '../storage';
 import {strings} from '../shared/i18n';
 import {AccessToken, LoginManager} from 'react-native-fbsdk';
+import Pulse from '../components/Pulse';
 
 const window = Dimensions.get('window');
-const IMAGE_HEIGHT = window.width / 3;
+const IMAGE_HEIGHT = 100;
 const CONTAINER_HEIGHT = window.height / 2;
 const CONTAINER_HEIGHT_SMALL = window.height / 6;
-const IMAGE_HEIGHT_SMALL = window.width / 3;
+const IMAGE_HEIGHT_SMALL = 100;
 
 class InitialScreen extends Component {
 
@@ -34,13 +35,15 @@ class InitialScreen extends Component {
             containerHeight: new Animated.Value(CONTAINER_HEIGHT),
             bottomContainerHeight: new Animated.Value(CONTAINER_HEIGHT_SMALL),
             shouldShowLogin: false,
-            offsetY: new Animated.Value(CONTAINER_HEIGHT)
+            offsetY: new Animated.Value(CONTAINER_HEIGHT),
+            isLoading: false
         };
     }
 
     componentDidMount() {
         this._shouldNavigate().then(shouldNavigate => {
             if (shouldNavigate) {
+                this.setState({isLoading: true});
                 this.props.actions.navigateInitial();
             } else {
                 this.setState({shouldShowLogin: true});
@@ -103,12 +106,21 @@ class InitialScreen extends Component {
         const {fetching, facebookLoginError} = this.props.state;
         return (
             <View style={styles.container}>
+                {!this.state.shouldShowLogin && this.state.isLoading &&
+                <Pulse backgroundColor={colors.activeTabColorOpaque}
+                       interval={1}
+                       pulseMaxSize={CONTAINER_HEIGHT}
+                       size={IMAGE_HEIGHT}
+                />
+                }
+                {this.state.shouldShowLogin &&
                 <Animated.View style={[styles.topContainer, {height: this.state.containerHeight}]}>
                     <Animated.Image
                         style={[styles.image, {height: this.state.imageHeight}]}
                         source={require('../../assets/refundeo_logo.png')}
                     />
                 </Animated.View>
+                }
                 {this.state.shouldShowLogin &&
                 <Animated.View style={[styles.bottomContainer, {
                     height: this.state.bottomContainerHeight,
@@ -275,13 +287,13 @@ const mapStateToProps = state => {
             navigation,
             ...state.authReducer
         }
-    }
+    };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         actions: bindActionCreators(Actions, dispatch)
-    }
+    };
 };
 
 export default connect(

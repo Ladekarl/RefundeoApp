@@ -21,10 +21,10 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
 const window = Dimensions.get('window');
-const IMAGE_HEIGHT = window.width / 3;
+const IMAGE_HEIGHT = 100;
 const CONTAINER_HEIGHT = window.height / 2;
-const CONTAINER_HEIGHT_SMALL = window.height / 8;
-const IMAGE_HEIGHT_SMALL = 0;
+const CONTAINER_HEIGHT_SMALL = 150;
+const IMAGE_HEIGHT_SMALL = 100;
 
 class LoginScreen extends Component {
 
@@ -101,7 +101,8 @@ class LoginScreen extends Component {
     render() {
         const {fetching, loginError} = this.props.state;
         return (
-            <KeyboardAvoidingView style={styles.container} behavior='padding'>
+            <KeyboardAvoidingView style={styles.container} keyboardVerticalOffset={Platform.OS === 'ios' ? 50 : 0}
+                                  behavior='padding'>
                 <View style={styles.innerContainer}>
                     <View style={styles.loginFormContainer}>
                         <Animated.View style={[styles.topContainer, {height: this.state.containerHeight}]}>

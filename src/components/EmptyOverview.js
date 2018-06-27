@@ -19,6 +19,7 @@ export default class EmptyOverviewScreen extends PureComponent {
     render() {
         return (
             <Swiper
+                style={styles.container}
                 showsButtons={true}
                 showsPagination={true}
                 loop={false}
@@ -76,6 +77,9 @@ export default class EmptyOverviewScreen extends PureComponent {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: colors.backgroundColor
+    },
     arrowButton: {
         fontSize: 35,
         color: colors.backgroundColor

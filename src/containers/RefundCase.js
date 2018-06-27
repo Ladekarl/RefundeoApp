@@ -10,7 +10,7 @@ import {
     TouchableOpacity,
     RefreshControl, TextInput, ActivityIndicator
 } from 'react-native';
-import {strings} from '../shared/i18n';
+import {formatDate, strings} from '../shared/i18n';
 import Actions from '../actions/Actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -55,7 +55,8 @@ class RefundCase extends Component {
             return <Image style={styles.uploadImage} resizeMode='cover'
                           source={{uri: 'data:image/png;base64,' + refundCase.tempVatFormImage}}/>;
         }
-        return this.getRefundeoLogo();
+        return <Image style={styles.uploadImage} resizeMode='cover'
+                      source={require('../../assets/tax_form.png')}/>;
     };
 
     getReceiptImage = (refundCase) => {
@@ -67,12 +68,8 @@ class RefundCase extends Component {
             return <Image style={styles.uploadImage} resizeMode='cover'
                           source={{uri: 'data:image/png;base64,' + refundCase.tempReceiptImage}}/>;
         }
-        return this.getRefundeoLogo();
-    };
-
-    getRefundeoLogo = () => {
         return <Image style={styles.uploadImage} resizeMode='contain'
-                      source={require('../../assets/refundeo_logo.png')}/>;
+                      source={require('../../assets/receipt.png')}/>;
     };
 
     onRequestRefundPress = () => {
@@ -210,7 +207,7 @@ class RefundCase extends Component {
         const vatImage = this.getVatImage(refundCase);
         const refundCaseText = this.getRefundCaseText(refundCase);
         const refundCaseIcon = this.getRefundCaseIcon(refundCase);
-
+        const refundDate = formatDate(new Date(refundCase.dateCreated));
         return (
             <ScrollView
                 style={styles.container}
@@ -235,17 +232,23 @@ class RefundCase extends Component {
                     <View style={styles.bannerContentContainer}>
                         <View style={styles.bannerColumnContainer}>
                             <Text style={styles.leftText}>{strings('refund_case.purchase_amount_vat')}</Text>
-                            <Text style={styles.leftText}>{strings('refund_case.refund_amount2')}</Text>
+                            <Text style={styles.leftText}>{strings('refund_case.amount')}</Text>
+                            <Text style={styles.leftText}>{strings('refund_case.refund_amount')}</Text>
+                            <Text style={styles.leftText}>{strings('refund_case.date_created')}</Text>
                         </View>
                         <View style={styles.bannerColumnContainer}>
                             <Text style={styles.contentText}>{refundCase.amount}</Text>
-                            <Text style={styles.contentText}>{refundCase.refundAmount.toFixed(2).replace(/[.,]00$/, "")}</Text>
+                            <Text
+                                style={styles.contentText}>{refundCase.amount.toFixed(2).replace(/[.,]00$/, '')}</Text>
+                            <Text
+                                style={styles.contentText}>{refundCase.refundAmount.toFixed(2).replace(/[.,]00$/, '')}</Text>
+                            <Text style={styles.contentText}>{refundDate}</Text>
                         </View>
                     </View>
                     {!refundCase.isRequested &&
                     <View style={styles.emailContainer}>
                         <TouchableOpacity style={styles.emailButtonContainer} onPress={this.onEmailPress}>
-                            <Icon style={styles.emailIcon} name='envelope'/>
+                            <Icon style={styles.emailIcon} name='share-square'/>
                         </TouchableOpacity>
                     </View>
                     }
@@ -269,7 +272,8 @@ class RefundCase extends Component {
                 </TouchableOpacity>
                 }
                 {!refundCase.isRequested &&
-                <TouchableOpacity disabled={fetchingRequestRefund} style={styles.submitButton} onPress={this.onRequestRefundPress}>
+                <TouchableOpacity disabled={fetchingRequestRefund} style={styles.submitButton}
+                                  onPress={this.onRequestRefundPress}>
                     <Text style={styles.submitButtonText}>{strings('refund_case.send_documentation')}</Text>
                 </TouchableOpacity>
                 }
@@ -409,12 +413,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     emailButtonContainer: {
-        flexDirection: 'row',
-        margin: 10,
-        padding: 10,
-        borderColor: colors.backgroundColor,
-        borderRadius: 4,
-        borderWidth: 2,
         backgroundColor: colors.activeTabColor,
         alignItems: 'center',
         justifyContent: 'center'
@@ -425,7 +423,7 @@ const styles = StyleSheet.create({
     },
     emailIcon: {
         textAlign: 'center',
-        fontSize: 15,
+        fontSize: 30,
         marginLeft: 5,
         marginRight: 5,
         color: colors.backgroundColor

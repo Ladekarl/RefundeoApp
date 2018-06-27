@@ -5,13 +5,14 @@ import {
     Dimensions,
     Keyboard,
     KeyboardAvoidingView,
-    Platform,
+    Platform, ScrollView,
     StyleSheet,
     Switch,
     Text,
     TextInput,
     TouchableOpacity,
-    View, WebView
+    View,
+    WebView
 } from 'react-native';
 import colors from '../shared/colors';
 import Icon from 'react-native-fa-icons';
@@ -121,8 +122,8 @@ class RegisterScreen extends Component {
     render() {
         const {fetching, registerError} = this.props.state;
         return (
-            <KeyboardAvoidingView style={styles.container} keyboardVerticalOffset={-50} behavior='padding'>
-                <View style={styles.innerContainer}>
+            <ScrollView style={styles.innerContainer} contentContainerStyle={styles.innerContentContainer}>
+                <KeyboardAvoidingView style={styles.container} behavior='padding'>
                     <View style={styles.loginFormContainer}>
                         <Animated.View style={[styles.topContainer, {height: this.state.containerHeight}]}>
                             <Animated.Image
@@ -261,25 +262,26 @@ class RegisterScreen extends Component {
                                      source={{html: strings('register.privacy_policy')}}/>
                         </View>
                     </ModalScreen>
-                </View>
-            </KeyboardAvoidingView>
+                </KeyboardAvoidingView>
+            </ScrollView>
         );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: colors.backgroundColor,
     },
     policyContainer: {
         flex: 1,
-        backgroundColor: colors.whiteColor,
+        backgroundColor: colors.backgroundColor,
     },
     innerContainer: {
-        flex: 1,
-        justifyContent: 'space-between',
-        alignItems: 'center'
+        backgroundColor: colors.backgroundColor,
+    },
+    innerContentContainer: {
+        alignItems: 'center',
+        backgroundColor: colors.backgroundColor,
     },
     topContainer: {
         minHeight: IMAGE_HEIGHT_SMALL,

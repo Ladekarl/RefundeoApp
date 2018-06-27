@@ -518,7 +518,7 @@ const styles = StyleSheet.create({
     },
     policyContainer: {
         flex: 1,
-        backgroundColor: colors.whiteColor,
+        backgroundColor: colors.backgroundColor,
     },
     tabBarIcon: {
         fontSize: 20

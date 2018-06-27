@@ -184,7 +184,7 @@ class ScannerScreen extends Component {
 
         return (
             <View style={styles.container}>
-                {navigation.currentRoute === 'Scanner' && !modalOpen &&
+                {navigation.currentRoute === 'Scanner' && !modalOpen && !fetching &&
                 <QRCodeScanner
                     onRead={this.onSuccess}
                     ref={ref => this.qrCodeScanner = ref}
