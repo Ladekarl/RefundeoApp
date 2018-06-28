@@ -202,13 +202,13 @@ const styles = StyleSheet.create({
         backgroundColor: colors.slightlyDarkerColor,
     },
     scrollContainer: {
-        backgroundColor: colors.backgroundColor,
+        backgroundColor: colors.slightlyDarkerColor,
         justifyContent: 'flex-start',
         alignItems: 'center',
     },
     emptyContainer: {
         flex: 1,
-        backgroundColor: colors.backgroundColor
+        backgroundColor: colors.slightlyDarkerColor,
     },
     nonEmptyContainer: {
         paddingTop: 4,

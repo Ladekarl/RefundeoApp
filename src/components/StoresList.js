@@ -11,8 +11,9 @@ export default class StoresList extends PureComponent {
         actions: PropTypes.object.isRequired,
         merchants: PropTypes.array.isRequired,
         fetching: PropTypes.bool.isRequired,
-        refund: PropTypes.number.isRequired,
+        minRefund: PropTypes.number.isRequired,
         distance: PropTypes.number.isRequired,
+        onlyOpen: PropTypes.bool.isRequired
     };
 
     constructor(props) {
@@ -20,13 +21,34 @@ export default class StoresList extends PureComponent {
     }
 
     filterMerchants = () => {
-        const {merchants, distance, refund} = this.props;
+        const {merchants, distance, minRefund, onlyOpen} = this.props;
         let filteredMerchants = [];
+        const currentDate = new Date();
+        const currentHours = currentDate.getHours();
+        const currentMinutes = currentDate.getMinutes();
+        const currentDay = currentDate.getDay();
         merchants.forEach((merchant) => {
             const dist = merchant.distance;
             const ref = 95 - merchant.refundPercentage;
-            if ((dist <= distance || distance === 10000) && ref <= refund) {
-                filteredMerchants.push(merchant);
+            if ((dist <= distance || distance === 10000) && ref >= minRefund) {
+                if (onlyOpen) {
+                    const openingHours = merchant.openingHours.find(o => o.day === currentDay);
+                    const openStrSplit = openingHours.open.split(':');
+                    const closeStrSplit = openingHours.close.split(':');
+                    const openHours = parseInt(openStrSplit[0]);
+                    const openMinutes = parseInt(openStrSplit[1]);
+                    const closeHours = parseInt(closeStrSplit[0]);
+                    const closeMinutes = parseInt(closeStrSplit[1]);
+
+                    const isOpenHours = currentHours > openHours || (currentHours === openHours && currentMinutes >= openMinutes);
+                    const isCloseHours = currentHours < closeHours || (currentHours === closeHours && currentMinutes <= closeMinutes);
+
+                    if (isOpenHours && isCloseHours) {
+                        filteredMerchants.push(merchant);
+                    }
+                } else {
+                    filteredMerchants.push(merchant);
+                }
             }
         });
         return filteredMerchants;

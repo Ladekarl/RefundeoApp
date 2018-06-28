@@ -6,6 +6,7 @@ import {LoginManager} from 'react-native-fbsdk';
 import {Alert} from 'react-native';
 import NotificationService from '../shared/NotificationService';
 import Validation from '../shared/Validation';
+import Helpers from '../api/Helpers';
 
 export default {
     navigateInitial,
@@ -53,8 +54,15 @@ export default {
     selectUploadDocumentation,
     uploadTempVatFormImage,
     uploadTempReceiptImage,
-    sendVatFormEmail
+    sendVatFormEmail,
+    changeFilterOnlyOpen
 };
+
+function navigateGuide() {
+    return {
+        type: types.NAVIGATE_GUIDE
+    };
+}
 
 function sendVatFormEmail(refundCase, email) {
     return dispatch => {
@@ -148,6 +156,13 @@ function changeFilterRefundSliderValue(sliderValue) {
     };
 }
 
+function changeFilterOnlyOpen(value) {
+    return {
+        type: types.MERCHANT_CHANGE_FILTER_ONLY_OPEN,
+        value
+    };
+}
+
 function getMerchants() {
     return dispatch => {
         dispatch(gettingMerchants());
@@ -234,11 +249,16 @@ function getInitialDataThenNavigate() {
         ).then(([refundCases, merchants]) => {
             dispatch(getRefundCasesSuccess(refundCases));
             dispatch(getMerchantsSuccess(merchants));
-            dispatch(navigateAndResetToMainFlow());
         }).catch(response => {
             if (shouldLogout(response)) {
                 dispatch(logout());
+            } else {
+                Helpers.handleRefundCasesResponse().then(refundCases => {
+                    dispatch(getRefundCasesSuccess(refundCases));
+                });
             }
+        }).finally(() => {
+            dispatch(navigateAndResetToMainFlow());
         });
     };
 }

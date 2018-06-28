@@ -103,7 +103,7 @@ class StoresScreen extends Component {
     };
 
     render() {
-        const {navigation, merchants, fetchingMerchants, filterDistanceSliderValue, filterRefundSliderValue} = this.props.state;
+        const {navigation, merchants, fetchingMerchants, filterDistanceSliderValue, filterRefundSliderValue, filterOnlyOpenValue} = this.props.state;
 
         let clusteredMapData = this.getClusteredMapData(merchants);
 
@@ -128,7 +128,8 @@ class StoresScreen extends Component {
                     actions={this.props.actions}
                     merchants={merchants}
                     distance={filterDistanceSliderValue}
-                    refund={filterRefundSliderValue}
+                    minRefund={filterRefundSliderValue}
+                    onlyOpen={filterOnlyOpenValue}
                     fetching={fetchingMerchants}
                 />
                 }

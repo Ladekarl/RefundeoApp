@@ -1,11 +1,10 @@
 import React from 'react';
 import {View, StyleSheet, Animated, Easing, Dimensions, Image} from 'react-native';
 import PropTypes from 'prop-types';
-import colors from '../shared/colors';
 
 const {height, width} = Dimensions.get('window');
 
-export default class Pulse extends React.Component {
+export default class Pulse extends React.PureComponent {
 
     static propTypes = {
         size: PropTypes.number.isRequired,

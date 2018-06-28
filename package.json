@@ -9,7 +9,6 @@
     "ios": "react-native run-ios"
   },
   "dependencies": {
-    "@ptomasroos/react-native-multi-slider": "0.0.14",
     "geolib": "^2.0.24",
     "moment": "^2.22.1",
     "prop-types": "^15.6.1",
@@ -50,7 +49,8 @@
     "eslint-plugin-react-native": "^3.2.1",
     "jest": "22.4.3",
     "react-native-dotenv": "^0.1.1",
-    "react-test-renderer": "16.3.1"
+    "react-test-renderer": "16.3.1",
+    "reactotron-react-native": "^1.14.0"
   },
   "jest": {
     "preset": "react-native"

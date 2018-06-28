@@ -54,26 +54,26 @@ export default class LocalStorage {
         }
     }
 
-    static async saveReceiptImage(refundCaseId, image) {
+    static async saveRefundCases(refundCases) {
         try {
-            return await AsyncStorage.setItem('com.refundeo.receiptImage.' + refundCaseId, JSON.stringify(image));
+            return await AsyncStorage.setItem('com.refundeo.storage.refundCases' + refundCaseId, JSON.stringify(refundCases));
         } catch (error) {
             return error;
         }
     }
 
-    static async getReceiptImage(refundCaseId) {
+    static async getRefundCases() {
         try {
-            let vatFormImageJson = await AsyncStorage.getItem('com.refundeo.receiptImage.' + refundCaseId);
-            return await JSON.parse(vatFormImageJson) || null;
+            let refundCase = await AsyncStorage.getItem('com.refundeo.storage.refundCases');
+            return await JSON.parse(refundCase) || null;
         } catch (error) {
             return error;
         }
     }
 
-    static async removeReceiptImage(refundCaseId) {
+    static async removeRefundCases() {
         try {
-            return await AsyncStorage.removeItem('com.refundeo.receiptImage.' + refundCaseId);
+            return await AsyncStorage.removeItem('com.refundeo.storage.refundCases');
         } catch (error) {
             return error;
         }

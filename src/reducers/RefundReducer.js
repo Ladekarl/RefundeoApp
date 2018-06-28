@@ -205,6 +205,15 @@ export default function refundReducer(state = initialState, action = {}) {
             };
             break;
         }
+        case types.AUTH_LOGOUT_SUCCESS: {
+            nextState = {
+                ...initialState
+            };
+            break;
+        }
+        default: {
+            nextState = state;
+        }
     }
     return nextState || state;
 }

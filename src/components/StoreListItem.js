@@ -12,7 +12,7 @@ export default class StoreListItem extends PureComponent {
         logo: PropTypes.string.isRequired,
         banner: PropTypes.string.isRequired,
         refundPercentage: PropTypes.number.isRequired,
-        openingHours: PropTypes.string.isRequired,
+        openingHours: PropTypes.array.isRequired,
         name: PropTypes.string.isRequired,
         city: PropTypes.string.isRequired,
         onPress: PropTypes.func.isRequired
@@ -26,7 +26,6 @@ export default class StoreListItem extends PureComponent {
             refundPercentage,
             openingHours,
             name,
-            city,
             onPress
         } = this.props;
 
@@ -43,6 +42,9 @@ export default class StoreListItem extends PureComponent {
         }
 
         let dist = distFirst + ' ' + distSecond;
+
+        const oHours = openingHours.find(o => o.day === (new Date).getDay());
+
         return (
             <TouchableOpacity
                 activeOpacity={0.7}
@@ -67,7 +69,7 @@ export default class StoreListItem extends PureComponent {
                             <Text
                                 style={styles.mainText}>{name}</Text>
                             <Text
-                                style={styles.subText}>{openingHours}</Text>
+                                style={styles.subText}>{oHours.open + ' - ' + oHours.close}</Text>
                         </View>
                         <View style={styles.rightContainer}>
                             <Text

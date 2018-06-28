@@ -46,7 +46,7 @@ export default class TutorialPage extends PureComponent {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     logoButtonContainer: {
         justifyContent: 'center',
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
         zIndex: 9999,
         alignItems: 'center',
         alignSelf: 'center',
-        backgroundColor: colors.slightlyDarkerColor,
+        backgroundColor: colors.backgroundColor,
         borderColor: colors.inactiveTabColor,
         borderWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0,
         borderRadius: 200,

@@ -10,7 +10,7 @@ import {strings} from '../shared/i18n';
 export default class EmptyOverviewScreen extends PureComponent {
 
     static navigationOptions = {
-        title: 'Help',
+        title: 'Guide',
         headerTitleStyle: {
             fontSize: 18
         }
@@ -78,7 +78,7 @@ export default class EmptyOverviewScreen extends PureComponent {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: colors.backgroundColor
+        backgroundColor: colors.slightlyDarkerColor
     },
     arrowButton: {
         fontSize: 35,

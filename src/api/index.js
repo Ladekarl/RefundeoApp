@@ -9,7 +9,7 @@ export default class Api {
             body: JSON.stringify({accessToken, scopes: ['offline_access']})
         };
 
-        const response = await fetch(`${API_URL}/Token/Facebook`, requestOptions);
+        const response = await Helpers.fetch(`${API_URL}/Token/Facebook`, requestOptions);
 
         Helpers.handleResponse(response);
 
@@ -32,7 +32,7 @@ export default class Api {
             })
         };
 
-        const response = await fetch(`${API_URL}/Token`, requestOptions);
+        const response = await Helpers.fetch(`${API_URL}/Token`, requestOptions);
 
         await Helpers.handleLoginResponse(response);
 
@@ -59,7 +59,7 @@ export default class Api {
             })
         };
 
-        const response = await fetch(`${API_URL}/api/user/account`, requestOptions);
+        const response = await Helpers.fetch(`${API_URL}/api/user/account`, requestOptions);
 
         await Helpers.handleRegisterResponse(response);
 
@@ -138,16 +138,7 @@ export default class Api {
 
         const refundCases = await response.json();
 
-        refundCases.sort((a, b) => {
-            return new Date(b.dateCreated) - new Date(a.dateCreated);
-        });
-
-        await refundCases.forEach(async r => {
-            r.tempVatFormImage = await LocalStorage.getVatFormImage(r.id);
-            r.tempReceiptImage = await LocalStorage.getReceiptImage(r.id);
-        });
-
-        return refundCases;
+        return await Helpers.handleRefundCasesResponse(refundCases);
     }
 
     static async getRefundCaseById(refundCaseId) {

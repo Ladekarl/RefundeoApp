@@ -2,6 +2,7 @@ import {strings} from '../shared/i18n';
 import LocalStorage from '../storage';
 import Location from '../shared/Location';
 import geolib from 'geolib';
+import NetworkConnection from '../shared/NetworkConnection';
 
 export const API_URL = 'https://refundeo20180331121625.azurewebsites.net';
 //export const API_URL = 'http://localhost:4200';
@@ -74,9 +75,36 @@ export default class Helpers {
         Helpers.handleResponse(response);
     }
 
+    static async fetch(request, requestOptions) {
+        const isConnected = await NetworkConnection.getConnection();
+        if (isConnected) {
+            return await fetch(request, requestOptions);
+        } else {
+            throw 'No internet connection';
+        }
+    }
+
     static async fetchAuthenticated(request, requestOptions) {
-        const response = await fetch(request, requestOptions);
+        const response = await Helpers.fetch(request, requestOptions);
         return await Helpers.handleAuthenticatedResponse(request, requestOptions, response);
+    }
+
+    static async handleRefundCasesResponse(refundCases) {
+
+        if (refundCases) {
+            refundCases.sort((a, b) => {
+                return new Date(b.dateCreated) - new Date(a.dateCreated);
+            });
+            await LocalStorage.saveRefundCases(refundCases);
+        } else {
+            refundCases = await LocalStorage.getRefundCases();
+        }
+
+        await refundCases.forEach(async r => {
+            r.tempVatFormImage = await LocalStorage.getVatFormImage(r.id);
+            r.tempReceiptImage = await LocalStorage.getReceiptImage(r.id);
+        });
+        return refundCases;
     }
 
     static async handleAuthenticatedResponse(request, requestOptions, response) {
@@ -90,7 +118,7 @@ export default class Helpers {
                     ...requestOptions.headers,
                     ...await Helpers.authHeader()
                 };
-                response = await fetch(request, requestOptions);
+                response = await Helpers.fetch(request, requestOptions);
             } else {
                 throw response;
             }
@@ -142,7 +170,7 @@ export default class Helpers {
             })
         };
 
-        const response = await fetch(`${API_URL}/Token`, requestOptions);
+        const response = await Helpers.fetch(`${API_URL}/Token`, requestOptions);
 
         if (!response.ok) {
             throw originalResponse;

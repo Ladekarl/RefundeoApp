@@ -253,6 +253,16 @@ export default function navigationReducer(state = initialState, action = {}) {
             };
             break;
         }
+        case types.NAVIGATE_GUIDE: {
+            const navigationAction = NavigationActions.navigate({routeName: 'Guide'});
+            nextState = {
+                ...state,
+                ...RootNavigator.router.getStateForAction(navigationAction, state),
+                currentRoute: 'Guide',
+                drawerRoute: 'Home'
+            };
+            break;
+        }
         case types.NAVIGATE_UPLOAD_DOCUMENTATION: {
             if (state.currentRoute !== 'UploadDocumentation') {
                 const navigationAction = NavigationActions.navigate({routeName: 'UploadDocumentation'});
@@ -299,15 +309,20 @@ export default function navigationReducer(state = initialState, action = {}) {
             }
             break;
         }
-        default:
+        case types.AUTH_LOGOUT_SUCCESS: {
             nextState = {
-                ...state,
-                ...RootNavigator.router.getStateForAction(action, state)
+                ...initialState
             };
+            break;
+        }
+        default:
+            nextState = state;
             break;
     }
     nextState = nextState || state;
-    nextState.previousRoute = previousRoute;
+    if (previousRoute !== nextState.currentRoute) {
+        nextState.previousRoute = previousRoute;
+    }
     return nextState;
 }
 

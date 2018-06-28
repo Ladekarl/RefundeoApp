@@ -17,7 +17,16 @@ export type Merchant = {
     latitude: number,
     longitude: number,
     distance: number,
-    vatNumber: string
+    currency: string,
+    vatNumber: string,
+    tags: Array<string>,
+    openingHours: Array<OpeningHours>
+}
+
+type OpeningHours = {
+    day: number,
+    close: string,
+    open: string
 }
 
 type MerchantReducer = {
@@ -26,7 +35,8 @@ type MerchantReducer = {
     fetchingMerchants: boolean,
     getMerchantsError: string,
     filterDistanceSliderValue: number,
-    filterRefundSliderValue: number
+    filterRefundSliderValue: number,
+    filterOnlyOpenValue: boolean
 }
 
 const initialState: MerchantReducer = {
@@ -36,6 +46,7 @@ const initialState: MerchantReducer = {
     getMerchantsError: '',
     filterDistanceSliderValue: 10000,
     filterRefundSliderValue: 0,
+    filterOnlyOpenValue: false
 };
 
 export default function merchantReducer(state = initialState, action = {}) {
@@ -86,6 +97,22 @@ export default function merchantReducer(state = initialState, action = {}) {
                 filterDistanceSliderValue: action.sliderValue
             };
             break;
+        }
+        case types.MERCHANT_CHANGE_FILTER_ONLY_OPEN: {
+            nextState = {
+                ...state,
+                filterOnlyOpenValue: action.value
+            };
+            break;
+        }
+        case types.AUTH_LOGOUT_SUCCESS: {
+            nextState = {
+                ...initialState
+            };
+            break;
+        }
+        default: {
+            nextState = state;
         }
     }
     return nextState || state;

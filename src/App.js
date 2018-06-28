@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import {Platform, StatusBar, Text, TextInput} from 'react-native';
 import {Provider} from 'react-redux';
 import {configureStore} from './store';
-import AppNavigator from './navigation/AppNavigator';
 import {PersistGate} from 'redux-persist/integration/react';
 import Orientation from 'react-native-orientation';
+import Root from './Root';
 
 const {store, persistor} = configureStore();
 
@@ -48,6 +48,8 @@ export default class App extends Component {
         }
     };
 
+    function
+
     render() {
         if (Platform.OS === 'ios') {
             StatusBar.setBarStyle('light-content', true);
@@ -55,7 +57,7 @@ export default class App extends Component {
         return (
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
-                    <AppNavigator/>
+                    <Root/>
                 </PersistGate>
             </Provider>
         );

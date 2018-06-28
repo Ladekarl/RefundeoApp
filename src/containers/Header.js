@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, Slider, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-fa-icons';
@@ -10,6 +10,7 @@ import {hasDrawer} from '../navigation/NavigationConfiguration';
 import ModalScreen from '../components/Modal';
 import geolib from 'geolib';
 import {strings} from '../shared/i18n';
+import StoreFilter from '../components/StoreFilter';
 
 class HeaderScreen extends Component {
 
@@ -18,24 +19,7 @@ class HeaderScreen extends Component {
         state: PropTypes.object.isRequired
     };
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            ...this.getInitialFilterState()
-        };
-    }
-
-    getInitialFilterState = () => {
-        return {
-            filterRefundSliderValue: this.props.state.filterRefundSliderValue,
-            filterDistanceSliderValue: this.props.state.filterDistanceSliderValue
-        };
-    };
-
     onFilterPress = () => {
-        this.setState({
-            ...this.getInitialFilterState()
-        });
         this.props.actions.openModal('filterModal');
     };
 
@@ -43,34 +27,14 @@ class HeaderScreen extends Component {
         this.props.actions.closeModal('filterModal');
     };
 
-    changeSliderValues = () => {
+    changeFilterValues = () => {
         this.closeFilterModal();
-        this.props.actions.changeFilterRefundSliderValue(this.state.filterRefundSliderValue);
-        this.props.actions.changeFilterDistanceSliderValue(this.state.filterDistanceSliderValue);
-    };
-
-    distanceSliderValuesChange = (values) => {
-        this.setState({
-            filterDistanceSliderValue: values
-        });
-    };
-
-    refundSliderValuesChange = (values) => {
-        this.setState({
-            filterRefundSliderValue: values
-        });
-    };
-
-    getDistanceSliderValue = (sliderValue) => {
-        if (sliderValue >= 1000) {
-            if (sliderValue >= 10000) {
-                return strings('stores.distance_all');
-            } else {
-                return geolib.convertUnit('km', sliderValue, 1) + ' km';
-            }
-        } else {
-            return sliderValue + ' m';
-        }
+        const distanceValue = this.storeFilter.getDistanceValue();
+        const refundValue = this.storeFilter.getRefundSliderValue();
+        const onlyOpenValue = this.storeFilter.getOnlyOpenValue();
+        this.props.actions.changeFilterRefundSliderValue(refundValue);
+        this.props.actions.changeFilterDistanceSliderValue(distanceValue);
+        this.props.actions.changeFilterOnlyOpen(onlyOpenValue);
     };
 
     openSignOutModal = () => {
@@ -93,8 +57,6 @@ class HeaderScreen extends Component {
         let displayFilter = navigation.currentRoute === 'Stores' && !navigation.isMap;
         let isOverview = navigation.currentRoute === 'Overview';
         let displayHelp = !displayFilter && refundCases.length > 0;
-
-        let distanceValue = this.getDistanceSliderValue(this.state.filterDistanceSliderValue);
 
         return (
             <View style={[styles.container, isOverview ? styles.noElevation : {}]}>
@@ -164,53 +126,16 @@ class HeaderScreen extends Component {
                     visible={this.props.state.navigation.modal['signOutModal'] || false}/>
                 <ModalScreen
                     modalTitle={strings('stores.filter')}
-                    onSubmit={this.changeSliderValues}
+                    onSubmit={this.changeFilterValues}
                     onBack={this.closeFilterModal}
                     onCancel={this.closeFilterModal}
                     visible={this.props.state.navigation.modal['filterModal'] || false}>
-                    <View style={styles.filterContainer}>
-                        <View style={styles.filterRowContainer}>
-                            <Text style={styles.filterTitle}>
-                                {strings('stores.distance')}
-                            </Text>
-                            <Text style={styles.filterSliderText}>
-                                {distanceValue}
-                            </Text>
-                            <View style={styles.filterSliderContainer}>
-                                <Slider
-                                    value={this.state.filterDistanceSliderValue}
-                                    minimumValue={0}
-                                    maximumValue={10000}
-                                    step={100}
-                                    thumbTintColor={colors.activeTabColor}
-                                    minimumTrackTintColor={colors.activeTabColor}
-                                    style={styles.filterSlider}
-                                    selectedStyle={styles.filterTrackStyle}
-                                    onValueChange={this.distanceSliderValuesChange}
-                                />
-                            </View>
-                        </View>
-                        <View style={styles.filterRowContainer}>
-                            <Text style={styles.filterTitle}>
-                                {strings('stores.refund_percentage_filter')}
-                            </Text>
-                            <Text style={styles.filterSliderText}>
-                                {this.state.filterRefundSliderValue + ' %'}</Text>
-                            <View style={styles.filterSliderContainer}>
-                                <Slider
-                                    value={this.state.filterRefundSliderValue}
-                                    minimumValue={0}
-                                    maximumValue={100}
-                                    step={1}
-                                    thumbTintColor={colors.activeTabColor}
-                                    minimumTrackTintColor={colors.activeTabColor}
-                                    style={styles.filterSlider}
-                                    selectedStyle={styles.filterTrackStyle}
-                                    onValueChange={this.refundSliderValuesChange}
-                                />
-                            </View>
-                        </View>
-                    </View>
+                    <StoreFilter
+                        filterDistanceSliderValue={this.props.state.filterDistanceSliderValue}
+                        filterRefundSliderValue={this.props.state.filterRefundSliderValue}
+                        ref={(ref) => this.storeFilter = ref}
+                        filterOnlyOpenValue={this.props.state.filterOnlyOpenValue}
+                    />
                 </ModalScreen>
             </View>
         );
@@ -301,34 +226,6 @@ const styles = StyleSheet.create({
     },
     activeOverlayButtonText: {
         color: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor
-    },
-    filterContainer: {
-        margin: 20
-    },
-    filterRowContainer: {},
-    filterTitle: {
-        color: colors.darkTextColor
-    },
-    filterSliderContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignSelf: 'center',
-        width: '100%'
-    },
-    filterSlider: {
-        width: '100%'
-    },
-    filterSliderText: {
-        fontSize: 20,
-        marginBottom: 20,
-        marginTop: 10,
-        alignSelf: 'center'
-    },
-    filterMarkerStyle: {
-        backgroundColor: colors.activeTabColor
-    },
-    filterTrackStyle: {
-        backgroundColor: colors.activeTabColor,
     }
 });
 

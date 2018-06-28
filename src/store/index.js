@@ -2,32 +2,36 @@ import {applyMiddleware, combineReducers, createStore} from 'redux';
 import thunk from 'redux-thunk';
 import reducers from '../reducers';
 import {createReactNavigationReduxMiddleware, createReduxBoundAddListener} from 'react-navigation-redux-helpers';
-import types from '../actions/ActionTypes';
-import storage from 'redux-persist/lib/storage';
 import {persistStore, persistReducer} from 'redux-persist';
+import {AsyncStorage} from 'react-native';
 
 export let addListener;
 
-const persistConfig = {
+const rootPersistConfig = {
     key: 'root',
-    storage,
-    //blacklist: ['navigationReducer', 'authReducer', 'refundReducer', 'merchantReducer']
+    storage: AsyncStorage,
+};
+
+const authPersistConfig = {
+    key: 'authReducer',
+    storage: AsyncStorage
+};
+
+const refundPersistConfig = {
+    key: 'refundReducer',
+    storage: AsyncStorage,
+};
+
+const merchantPersistConfig = {
+    key: 'merchantReducer',
+    storage: AsyncStorage,
 };
 
 export function configureStore() {
-    const appReducer = combineReducers(reducers);
 
-    const rootReducer = (state, action) => {
-        if (action.type === types.AUTH_LOGOUT_SUCCESS) {
-            Object.keys(state).forEach(key => {
-                storage.removeItem(`persist:${key}`);
-            });
-            state = undefined;
-        }
-        return appReducer(state, action);
-    };
+    const rootReducer = createRootReducer(reducers);
 
-    const persistedReducer = persistReducer(persistConfig, rootReducer);
+    const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
 
     const navigationMiddleware = createReactNavigationReduxMiddleware(
         'root',
@@ -42,10 +46,19 @@ export function configureStore() {
     );
     if (module.hot) {
         module.hot.accept(() => {
-            const nextRootReducer = combineReducers(require('../reducers/index').default);
+            const nextRootReducer = createRootReducer(require('../reducers/index').default);
             store.replaceReducer(nextRootReducer);
         });
     }
     let persistor = persistStore(store);
     return {store, persistor};
+}
+
+function createRootReducer(reducers) {
+    return combineReducers({
+        navigationReducer: reducers.navigationReducer,
+        authReducer: persistReducer(authPersistConfig, reducers.authReducer),
+        refundReducer: persistReducer(refundPersistConfig, reducers.refundReducer),
+        merchantReducer: persistReducer(merchantPersistConfig, reducers.merchantReducer),
+    });
 }

@@ -69,7 +69,7 @@ export default class RefundCaseListItem extends Component {
                         </View>
                         <View style={styles.detailsContainer}>
                             <Text
-                                style={styles.detailBigTitle}>{refundCase.refundAmount.toFixed(2).replace(/[.,]00$/, '')}</Text>
+                                style={styles.detailBigTitle}>{refundCase.merchant.currency + ' ' + refundCase.refundAmount.toFixed(2).replace(/[.,]00$/, '')}</Text>
                             <Icon style={styles.angleRightIcon} name='angle-right'/>
                             <View/>
                         </View>

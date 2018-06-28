@@ -231,17 +231,15 @@ class RefundCase extends Component {
                 <View style={styles.bannerTextBarContainer}>
                     <View style={styles.bannerContentContainer}>
                         <View style={styles.bannerColumnContainer}>
-                            <Text style={styles.leftText}>{strings('refund_case.purchase_amount_vat')}</Text>
                             <Text style={styles.leftText}>{strings('refund_case.amount')}</Text>
                             <Text style={styles.leftText}>{strings('refund_case.refund_amount')}</Text>
                             <Text style={styles.leftText}>{strings('refund_case.date_created')}</Text>
                         </View>
                         <View style={styles.bannerColumnContainer}>
-                            <Text style={styles.contentText}>{refundCase.amount}</Text>
                             <Text
-                                style={styles.contentText}>{refundCase.amount.toFixed(2).replace(/[.,]00$/, '')}</Text>
+                                style={styles.contentText}>{refundCase.merchant.currency + ' ' + refundCase.amount.toFixed(2).replace(/[.,]00$/, '')}</Text>
                             <Text
-                                style={styles.contentText}>{refundCase.refundAmount.toFixed(2).replace(/[.,]00$/, '')}</Text>
+                                style={styles.contentText}>{refundCase.merchant.currency + ' ' + refundCase.refundAmount.toFixed(2).replace(/[.,]00$/, '')}</Text>
                             <Text style={styles.contentText}>{refundDate}</Text>
                         </View>
                     </View>

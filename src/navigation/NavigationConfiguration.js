@@ -12,6 +12,7 @@ import React from 'react';
 import Header from '../containers/Header';
 import HomeTab from './HomeTab';
 import EmptyOverviewScreen from '../components/EmptyOverview';
+import Help from '../containers/Help';
 import StoreProfile from '../containers/StoreProfile';
 import Scanner from '../containers/Scanner';
 import RefundCase from '../containers/RefundCase';
@@ -86,7 +87,8 @@ const MainDrawerNavigator = DrawerNavigator({
 const MainStackNavigator = StackNavigator({
     Home: {screen: HomeTab, navigationOptions: homeNavigatorOptions},
     Settings: {screen: SettingsScreen, navigationOptions: headerBackNavigationOptions},
-    Help: {screen: EmptyOverviewScreen, navigationOptions: headerBackNavigationOptions},
+    Help: {screen: Help, navigationOptions: headerBackNavigationOptions},
+    Tutorial: {screen: EmptyOverviewScreen, navigationOptions: headerBackNavigationOptions},
     StoreProfile: {screen: StoreProfile, navigationOptions: headerBackNavigationOptions},
     RefundCase: {screen: RefundCase, navigationOptions: headerBackNavigationOptions},
     UploadDocumentation: {screen: UploadDocumentation, navigationOptions: headerBackNavigationOptions}

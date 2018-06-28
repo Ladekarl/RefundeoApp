@@ -24,6 +24,7 @@ class StoreProfile extends Component {
 
     render() {
         const {selectedMerchant} = this.props.state;
+        const openingHours = selectedMerchant.openingHours.find(o => o.day === (new Date).getDay());
 
         return (
             <View style={styles.container}>
@@ -43,7 +44,8 @@ class StoreProfile extends Component {
                             <Text style={styles.leftText}>{strings('stores.refund_percentage')}</Text>
                         </View>
                         <View style={styles.bannerColumnContainer}>
-                            <Text style={styles.contentText}>{selectedMerchant.openingHours}</Text>
+                            <Text
+                                style={styles.contentText}>{openingHours.open + ' - ' + openingHours.close}</Text>
                             <Text style={styles.contentText}>{95 - selectedMerchant.refundPercentage}</Text>
                         </View>
                     </View>
