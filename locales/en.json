@@ -213,6 +213,13 @@
     "my_id": "My ID",
     "show_this": "Show this QR code in one of our partner stores when shopping tax free."
   },
+  "help": {
+    "help": "Help",
+    "contact_support": "Contact support",
+    "contact": "Contact",
+    "support": "Support",
+    "guide": "Guide"
+  },
   "root": {
     "no_connection": "No Internet Connection"
   }

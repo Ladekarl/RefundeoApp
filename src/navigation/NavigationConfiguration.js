@@ -17,6 +17,7 @@ import StoreProfile from '../containers/StoreProfile';
 import Scanner from '../containers/Scanner';
 import RefundCase from '../containers/RefundCase';
 import UploadDocumentation from '../containers/UploadDocumentation';
+import Contact from '../components/Contact';
 
 const {width, height} = Dimensions.get('screen');
 const noHeaderNavigationOptions = {headerMode: 'none', gesturesEnabled: false};
@@ -88,7 +89,8 @@ const MainStackNavigator = StackNavigator({
     Home: {screen: HomeTab, navigationOptions: homeNavigatorOptions},
     Settings: {screen: SettingsScreen, navigationOptions: headerBackNavigationOptions},
     Help: {screen: Help, navigationOptions: headerBackNavigationOptions},
-    Tutorial: {screen: EmptyOverviewScreen, navigationOptions: headerBackNavigationOptions},
+    Guide: {screen: EmptyOverviewScreen, navigationOptions: headerBackNavigationOptions},
+    Contact: {screen: Contact, navigationOptions: headerBackNavigationOptions},
     StoreProfile: {screen: StoreProfile, navigationOptions: headerBackNavigationOptions},
     RefundCase: {screen: RefundCase, navigationOptions: headerBackNavigationOptions},
     UploadDocumentation: {screen: UploadDocumentation, navigationOptions: headerBackNavigationOptions}

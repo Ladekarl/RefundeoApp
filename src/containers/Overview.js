@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: colors.backgroundColor
+        backgroundColor: colors.slightlyDarkerColor
     },
     emptyText: {
         alignSelf: 'center',

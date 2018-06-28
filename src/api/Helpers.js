@@ -90,7 +90,6 @@ export default class Helpers {
     }
 
     static async handleRefundCasesResponse(refundCases) {
-
         if (refundCases) {
             refundCases.sort((a, b) => {
                 return new Date(b.dateCreated) - new Date(a.dateCreated);
@@ -99,11 +98,6 @@ export default class Helpers {
         } else {
             refundCases = await LocalStorage.getRefundCases();
         }
-
-        await refundCases.forEach(async r => {
-            r.tempVatFormImage = await LocalStorage.getVatFormImage(r.id);
-            r.tempReceiptImage = await LocalStorage.getReceiptImage(r.id);
-        });
         return refundCases;
     }
 

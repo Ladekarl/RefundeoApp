@@ -255,12 +255,26 @@ export default function navigationReducer(state = initialState, action = {}) {
         }
         case types.NAVIGATE_GUIDE: {
             const navigationAction = NavigationActions.navigate({routeName: 'Guide'});
-            nextState = {
-                ...state,
-                ...RootNavigator.router.getStateForAction(navigationAction, state),
-                currentRoute: 'Guide',
-                drawerRoute: 'Home'
-            };
+            if (state.currentRoute !== 'Guide') {
+                nextState = {
+                    ...state,
+                    ...RootNavigator.router.getStateForAction(navigationAction, state),
+                    currentRoute: 'Guide',
+                    drawerRoute: 'Home'
+                };
+            }
+            break;
+        }
+        case types.NAVIGATE_CONTACT: {
+            const navigationAction = NavigationActions.navigate({routeName: 'Contact'});
+            if (state.currentRoute !== 'Contact') {
+                nextState = {
+                    ...state,
+                    ...RootNavigator.router.getStateForAction(navigationAction, state),
+                    currentRoute: 'Contact',
+                    drawerRoute: 'Home'
+                };
+            }
             break;
         }
         case types.NAVIGATE_UPLOAD_DOCUMENTATION: {

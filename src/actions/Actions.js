@@ -30,6 +30,8 @@ export default {
     navigateStoreList,
     navigateStoreMap,
     navigateRegisterExtra,
+    navigateGuide,
+    navigateContact,
     openModal,
     closeModal,
     login,
@@ -62,6 +64,12 @@ function navigateGuide() {
     return {
         type: types.NAVIGATE_GUIDE
     };
+}
+
+function navigateContact() {
+    return {
+        type: types.NAVIGATE_CONTACT
+    }
 }
 
 function sendVatFormEmail(refundCase, email) {

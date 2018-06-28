@@ -369,9 +369,12 @@ class SettingsScreen extends Component {
                          value={state.user.addressCity} required={true}/>
                 <Setting label={strings('settings.address_country')} onPress={this.showCountryModal}
                          value={state.user.addressCountry} required={true}/>
+                {requiredOnly &&
                 <View style={styles.sectionHeaderContainer}>
                     <Text style={styles.sectionHeaderText}>{strings('settings.legal_privacy')}</Text>
                 </View>
+                }
+                {requiredOnly &&
                 <TouchableOpacity style={styles.rowContainer} onPress={this.openTermsOfServiceModal}>
                     <View style={styles.rowInnerContainer}>
                         {!state.user.acceptedTermsOfService &&
@@ -385,6 +388,8 @@ class SettingsScreen extends Component {
                             thumbTintColor={colors.activeTabColor}
                             onValueChange={this.acceptTermsOfService}/>
                 </TouchableOpacity>
+                }
+                {requiredOnly &&
                 <TouchableOpacity style={styles.rowContainer} onPress={this.openPrivacyPolicyModal}>
                     <View style={styles.rowInnerContainer}>
                         {!state.user.acceptedPrivacyPolicy &&
@@ -398,6 +403,7 @@ class SettingsScreen extends Component {
                             thumbTintColor={colors.activeTabColor}
                             onValueChange={this.acceptPrivacyPolicy}/>
                 </TouchableOpacity>
+                }
                 {!requiredOnly &&
                 <View style={styles.sectionHeaderContainer}>
                 </View>

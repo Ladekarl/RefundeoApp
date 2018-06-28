@@ -4,6 +4,11 @@ import {USER_STORAGE_KEY} from 'react-native-dotenv';
 
 export default class LocalStorage {
 
+    static vatFormStorageString = 'com.refundeo.storage.vatFormImage.';
+    static receiptStorageString = 'com.refundeo.storage.receiptImage.';
+    static refundCasesStorageString = 'com.refundeo.storage.refundCases';
+
+
     static async getUser() {
         try {
             let userJson = await AsyncStorage.getItem(USER_STORAGE_KEY);
@@ -31,7 +36,7 @@ export default class LocalStorage {
 
     static async saveVatFormImage(refundCaseId, image) {
         try {
-            return await AsyncStorage.setItem('com.refundeo.vatFormImage.' + refundCaseId, JSON.stringify(image));
+            return await AsyncStorage.setItem(this.vatFormStorageString + refundCaseId, JSON.stringify(image));
         } catch (error) {
             return error;
         }
@@ -39,7 +44,7 @@ export default class LocalStorage {
 
     static async getVatFormImage(refundCaseId) {
         try {
-            let vatFormImageJson = await AsyncStorage.getItem('com.refundeo.vatFormImage.' + refundCaseId);
+            let vatFormImageJson = await AsyncStorage.getItem(this.vatFormStorageString + refundCaseId);
             return await JSON.parse(vatFormImageJson) || null;
         } catch (error) {
             return error;
@@ -48,7 +53,32 @@ export default class LocalStorage {
 
     static async removeVatFormImage(refundCaseId) {
         try {
-            return await AsyncStorage.removeItem('com.refundeo.vatFormImage.' + refundCaseId);
+            return await AsyncStorage.removeItem(this.vatFormStorageString + refundCaseId);
+        } catch (error) {
+            return error;
+        }
+    }
+
+    static async saveReceiptImage(refundCaseId, image) {
+        try {
+            return await AsyncStorage.setItem(this.receiptStorageString + refundCaseId, JSON.stringify(image));
+        } catch (error) {
+            return error;
+        }
+    }
+
+    static async getReceiptImage(refundCaseId) {
+        try {
+            let vatFormImageJson = await AsyncStorage.getItem(this.receiptStorageString + refundCaseId);
+            return await JSON.parse(vatFormImageJson) || null;
+        } catch (error) {
+            return error;
+        }
+    }
+
+    static async removeReceiptImage(refundCaseId) {
+        try {
+            return await AsyncStorage.removeItem(this.receiptStorageString + refundCaseId);
         } catch (error) {
             return error;
         }
@@ -56,7 +86,7 @@ export default class LocalStorage {
 
     static async saveRefundCases(refundCases) {
         try {
-            return await AsyncStorage.setItem('com.refundeo.storage.refundCases' + refundCaseId, JSON.stringify(refundCases));
+            return await AsyncStorage.setItem(this.refundCasesStorageString, JSON.stringify(refundCases));
         } catch (error) {
             return error;
         }
@@ -64,7 +94,7 @@ export default class LocalStorage {
 
     static async getRefundCases() {
         try {
-            let refundCase = await AsyncStorage.getItem('com.refundeo.storage.refundCases');
+            let refundCase = await AsyncStorage.getItem(this.refundCasesStorageString);
             return await JSON.parse(refundCase) || null;
         } catch (error) {
             return error;
@@ -73,7 +103,7 @@ export default class LocalStorage {
 
     static async removeRefundCases() {
         try {
-            return await AsyncStorage.removeItem('com.refundeo.storage.refundCases');
+            return await AsyncStorage.removeItem(this.refundCasesStorageString);
         } catch (error) {
             return error;
         }

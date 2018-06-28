@@ -19,6 +19,7 @@ import PropTypes from 'prop-types';
 import Icon from 'react-native-fa-icons';
 import ModalScreen from '../components/Modal';
 import Validation from '../shared/Validation';
+import LocalStorage from '../storage';
 
 class RefundCase extends Component {
 
@@ -41,9 +42,25 @@ class RefundCase extends Component {
         this.state = {
             modalTitle: '',
             modalText: '',
+            tempVatFormImage: undefined,
+            tempReceiptImage: undefined,
             email: this.props.state.user.email,
             isValidEmail: Validation.validateEmail(this.props.state.user.email)
         };
+    }
+
+    componentDidMount() {
+        const refundCase = this.props.state.selectedRefundCase;
+        if (!refundCase.receiptImage) {
+            LocalStorage.getReceiptImage(refundCase.id).then((tempReceiptImage) => {
+                this.setState({tempReceiptImage});
+            });
+        }
+        if (!refundCase.vatFormImage) {
+            LocalStorage.getVatFormImage(refundCase.id).then((tempVatFormImage) => {
+                this.setState({tempVatFormImage});
+            });
+        }
     }
 
     getVatImage = (refundCase) => {
@@ -51,9 +68,9 @@ class RefundCase extends Component {
             return <Image style={styles.uploadImage} resizeMode='cover'
                           source={{uri: 'data:image/png;base64,' + refundCase.vatFormImage}}/>;
         }
-        if (refundCase.tempVatFormImage) {
+        if (this.state.tempVatFormImage) {
             return <Image style={styles.uploadImage} resizeMode='cover'
-                          source={{uri: 'data:image/png;base64,' + refundCase.tempVatFormImage}}/>;
+                          source={{uri: 'data:image/png;base64,' + this.state.tempVatFormImage}}/>;
         }
         return <Image style={styles.uploadImage} resizeMode='cover'
                       source={require('../../assets/tax_form.png')}/>;
@@ -64,9 +81,9 @@ class RefundCase extends Component {
             return <Image style={styles.uploadImage} resizeMode='cover'
                           source={{uri: 'data:image/png;base64,' + refundCase.receiptImage}}/>;
         }
-        if (refundCase.tempReceiptImage) {
+        if (this.state.tempReceiptImage) {
             return <Image style={styles.uploadImage} resizeMode='cover'
-                          source={{uri: 'data:image/png;base64,' + refundCase.tempReceiptImage}}/>;
+                          source={{uri: 'data:image/png;base64,' + this.state.tempReceiptImage}}/>;
         }
         return <Image style={styles.uploadImage} resizeMode='contain'
                       source={require('../../assets/receipt.png')}/>;

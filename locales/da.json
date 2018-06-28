@@ -213,6 +213,13 @@
     "my_id": "Mit ID",
     "show_this": "Vis denne QR kode i en af vores partnerbutikker når du shopper tax free."
   },
+  "help": {
+    "help": "Hjælp",
+    "contact_support": "Kontakt support",
+    "contact": "Kontakt",
+    "support": "Support",
+    "guide": "Guide"
+  },
   "root": {
     "no_connection": "Ingen forbindelse til internettet"
   }
