@@ -18,6 +18,13 @@ function registerHandler() {
         'connectionChange',
         _handleConnectionInfo
     );
+
+    NetInfo.isConnected.fetch().done(
+        (isConnected) => {
+            _isConnected = isConnected;
+        }
+    );
+
     _isHandlerRegistered = true;
 }
 
