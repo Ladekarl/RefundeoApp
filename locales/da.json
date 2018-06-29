@@ -161,7 +161,7 @@
     "request_documentation": "Du anmoder med denne dokumentation",
     "claim_refund_case_error": "Noget gik galt. Prøv igen.",
     "refund_case_already_claimed": "Refusionen er allerede blevet registreret.",
-    "receipt_number": "Kvittering:",
+    "receipt_number": "Kvittering",
     "missing_documentation_title": "Mangler dokumentation",
     "missing_documentation_text": "Før du anmoder om en refusion, skal du uploade den stemplede tax free form og kvittering.",
     "missing_information_title": "Manger information",
@@ -172,7 +172,8 @@
     "purchase_amount_vat": "Købsbeløb inkl. VAT",
     "invalid_email": "Angiv venligst en gyldig emailadresse.",
     "upload_tax_free_form": "Upload tax free form",
-    "upload_receipt": "Upload kvittering"
+    "upload_receipt": "Upload kvittering",
+    "send_form": "Send form"
   },
   "stores": {
     "opening_hours": "Åbningstider",
@@ -192,10 +193,9 @@
     "tag_footwear": "Sko",
     "tag_accessories": "Accessories",
     "tag_sportswear": "Sport",
-    "tag_technology": "Teknologi",
+    "tag_electronics": "Elektronik",
     "tag_children": "Børn",
-    "tag_books": "Bøger",
-    "tag_department": "Stormagasin"
+    "tag_books": "Bøger"
   },
   "tutorial": {
     "welcome_title": "Velkommen til Refundeo",

@@ -30,7 +30,7 @@ class RefundCase extends Component {
 
     static navigationOptions = ({navigation}) => {
         return {
-            title: navigation.getParam('receiptNumber', '...'),
+            title: navigation.getParam('dateCreated', '...'),
             headerTitleStyle: {
                 fontSize: 18
             }
@@ -224,7 +224,6 @@ class RefundCase extends Component {
         const vatImage = this.getVatImage(refundCase);
         const refundCaseText = this.getRefundCaseText(refundCase);
         const refundCaseIcon = this.getRefundCaseIcon(refundCase);
-        const refundDate = formatDate(new Date(refundCase.dateCreated));
         return (
             <ScrollView
                 style={styles.container}
@@ -250,20 +249,21 @@ class RefundCase extends Component {
                         <View style={styles.bannerColumnContainer}>
                             <Text style={styles.leftText}>{strings('refund_case.amount')}</Text>
                             <Text style={styles.leftText}>{strings('refund_case.refund_amount')}</Text>
-                            <Text style={styles.leftText}>{strings('refund_case.date_created')}</Text>
+                            <Text style={styles.leftText}>{strings('refund_case.receipt_number')}</Text>
                         </View>
                         <View style={styles.bannerColumnContainer}>
                             <Text
                                 style={styles.contentText}>{refundCase.merchant.currency + ' ' + refundCase.amount.toFixed(2).replace(/[.,]00$/, '')}</Text>
                             <Text
                                 style={styles.contentText}>{refundCase.merchant.currency + ' ' + refundCase.refundAmount.toFixed(2).replace(/[.,]00$/, '')}</Text>
-                            <Text style={styles.contentText}>{refundDate}</Text>
+                            <Text style={styles.contentText}>{refundCase.receiptNumber}</Text>
                         </View>
                     </View>
                     {!refundCase.isRequested &&
                     <View style={styles.emailContainer}>
                         <TouchableOpacity style={styles.emailButtonContainer} onPress={this.onEmailPress}>
                             <Icon style={styles.emailIcon} name='share-square'/>
+                            <Text style={styles.sendText}>{strings('refund_case.send_form')}</Text>
                         </TouchableOpacity>
                     </View>
                     }
@@ -551,6 +551,12 @@ const styles = StyleSheet.create({
     activityIndicator: {
         elevation: 10,
         backgroundColor: 'transparent'
+    },
+    sendText: {
+        color: colors.backgroundColor,
+        marginTop: 5,
+        fontSize: 12,
+        textAlign: 'center'
     }
 });
 

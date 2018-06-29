@@ -11,7 +11,7 @@ import colors from '../shared/colors';
 import 'moment/locale/da';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-fa-icons';
-import {formatDate, strings} from '../shared/i18n';
+import {formatDate} from '../shared/i18n';
 
 export default class RefundCaseListItem extends Component {
 

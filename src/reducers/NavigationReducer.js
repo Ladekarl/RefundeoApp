@@ -296,7 +296,7 @@ export default function navigationReducer(state = initialState, action = {}) {
                 const navigationAction = NavigationActions.navigate({
                     routeName: 'RefundCase',
                     params: {
-                        receiptNumber: action.receiptNumber
+                        dateCreated: action.dateCreated
                     }
                 });
                 nextState = {

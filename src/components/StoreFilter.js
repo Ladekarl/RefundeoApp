@@ -95,7 +95,7 @@ export default class StoreFilter extends React.PureComponent {
 
         const arrayLength = tags.length;
         const renderedTags = [];
-        const chunkSize = 5;
+        const chunkSize = 4;
         const filterTagValue = this.state.filterTagValue;
 
 
@@ -133,13 +133,11 @@ export default class StoreFilter extends React.PureComponent {
             case 4:
                 return strings('stores.tag_sportswear');
             case 5:
-                return strings('stores.tag_technology');
+                return strings('stores.tag_electronics');
             case 6:
                 return strings('stores.tag_children');
             case 7:
                 return strings('stores.tag_books');
-            case 8:
-                return strings('stores.tag_department');
         }
     };
 
@@ -173,7 +171,7 @@ export default class StoreFilter extends React.PureComponent {
                     <View style={styles.filterSliderContainer}>
                         <Icon name='car' style={styles.filterIcon}/>
                         <Slider
-                            value={this.state.filterDistanceSliderValue}
+                            value={this.props.filterDistanceSliderValue}
                             minimumValue={0}
                             maximumValue={10000}
                             step={100}
@@ -194,7 +192,7 @@ export default class StoreFilter extends React.PureComponent {
                     <View style={styles.filterSliderContainer}>
                         <Icon name='money' style={styles.filterIcon}/>
                         <Slider
-                            value={this.state.filterRefundSliderValue}
+                            value={this.props.filterRefundSliderValue}
                             minimumValue={0}
                             maximumValue={100}
                             step={1}

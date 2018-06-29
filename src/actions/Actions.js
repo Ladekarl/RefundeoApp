@@ -1,6 +1,6 @@
 import types from './ActionTypes';
 import LocalStorage from '../storage';
-import {strings} from '../shared/i18n';
+import {formatDate, strings} from '../shared/i18n';
 import Api from '../api';
 import {LoginManager} from 'react-native-fbsdk';
 import {Alert} from 'react-native';
@@ -209,7 +209,7 @@ function selectRefundCase(refundCase) {
             type: types.REFUND_SELECT_REFUND_CASE,
             refundCase
         });
-        dispatch(navigateRefundCase(refundCase.receiptNumber));
+        dispatch(navigateRefundCase(formatDate(refundCase.dateCreated)));
     };
 }
 
@@ -293,10 +293,10 @@ function navigateStoreProfile(companyName) {
     };
 }
 
-function navigateRefundCase(receiptNumber) {
+function navigateRefundCase(dateCreated) {
     return {
         type: types.NAVIGATE_REFUND_CASE,
-        receiptNumber
+        dateCreated
     };
 }
 

@@ -161,7 +161,7 @@
     "request_documentation": "You are requesting with this documentation",
     "claim_refund_case_error": "Something went wrong. Please try again",
     "refund_case_already_claimed": "The refund has already been claimed.",
-    "receipt_number": "Receipt:",
+    "receipt_number": "Receipt",
     "missing_documentation_title": "Missing documentation",
     "missing_documentation_text": "Please upload stamped tax free form and receipt before requesting refund.",
     "missing_information_title": "Missing information",
@@ -172,7 +172,8 @@
     "purchase_amount_vat": "Purchase amount incl. VAT",
     "invalid_email": "Please provide a valid email address.",
     "upload_tax_free_form": "Upload tax free form",
-    "upload_receipt": "Upload receipt"
+    "upload_receipt": "Upload receipt",
+    "send_form": "Send form"
   },
   "stores": {
     "opening_hours": "Opening hours",
@@ -192,10 +193,9 @@
     "tag_footwear": "Footwear",
     "tag_accessories": "Accessories",
     "tag_sportswear": "Sportswear",
-    "tag_technology": "Technology",
+    "tag_electronics": "Electronics",
     "tag_children": "Children",
-    "tag_books": "Books and stationary",
-    "tag_department": "Department store"
+    "tag_books": "Books and stationary"
   },
   "tutorial": {
     "welcome_title": "Welcome to Refundeo",
