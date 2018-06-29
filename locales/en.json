@@ -180,7 +180,7 @@
     "refund_percentage_filter": "Minimum refund",
     "address": "Address",
     "distance": "Distance",
-    "distance_all": "all",
+    "distance_all": "All",
     "filter": "Filter",
     "refund": "Refund",
     "empty": "No stores available.\n\nPlease adjust filter settings.",
