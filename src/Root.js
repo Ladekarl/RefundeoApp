@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import AppNavigator from './navigation/AppNavigator';
-import {View, StyleSheet, NetInfo, Text, Dimensions} from 'react-native';
+import {View, StyleSheet, NetInfo, Text, Dimensions, Platform} from 'react-native';
 import colors from './shared/colors';
 import NetworkConnection from './shared/NetworkConnection';
 import {strings} from './shared/i18n';
@@ -34,7 +34,7 @@ export default class Root extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={[styles.content, {marginTop: this.state.isConnected ? 0 : 30}]}>
+                <View style={[styles.content, {marginTop: this.state.isConnected ? 0 : Platform.OS === 'ios' ?  20 : 30}]}>
                     <AppNavigator/>
                 </View>
                 {!this.state.isConnected &&
@@ -56,10 +56,10 @@ const styles = StyleSheet.create({
         flex: 1
     },
     offlineContainer: {
-        backgroundColor: colors.cancelButtonColor,
-        height: 30,
+        backgroundColor: colors.activeTabColor,
+        height: Platform.OS === 'ios' ? 35 : 30,
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: Platform.OS === 'ios' ? 'flex-end' : 'center',
         flexDirection: 'row',
         width,
         position: 'absolute',
