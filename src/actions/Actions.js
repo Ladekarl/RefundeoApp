@@ -217,7 +217,6 @@ function navigateInitial() {
     return dispatch => {
         LocalStorage.getUser().then(user => {
             if (user && user.token) {
-                NotificationService.register();
                 dispatch(loginSuccess(user));
                 if (user.isMerchant) {
                     dispatch(navigateScanner());
@@ -225,6 +224,7 @@ function navigateInitial() {
                 else if (Validation.missingUserInfo(user)) {
                     dispatch(navigateRegisterExtraReset());
                 } else {
+                    NotificationService.register();
                     dispatch(getInitialDataThenNavigate());
                 }
             } else {
@@ -440,13 +440,13 @@ function loginFacebook(accessToken) {
         Api.getTokenFacebook(accessToken).then(user => {
             if (user && user.token) {
                 dispatch(loginSuccess(user));
-                NotificationService.register();
                 if (user.isMerchant) {
                     dispatch(navigateScanner());
                 }
                 else if (Validation.missingUserInfo(user)) {
                     dispatch(navigateRegisterExtra());
                 } else {
+                    NotificationService.register();
                     dispatch(navigateAndResetToMainFlow());
                     dispatch(getRefundCases());
                 }
@@ -470,7 +470,6 @@ function login(username, password) {
         dispatch({type: types.AUTH_LOGGING_IN});
         Api.getToken(username, password).then(user => {
             if (user && user.token) {
-                NotificationService.register();
                 dispatch(loginSuccess(user));
                 if (user.isMerchant) {
                     dispatch(navigateScanner());
@@ -478,6 +477,7 @@ function login(username, password) {
                 else if (Validation.missingUserInfo(user)) {
                     dispatch(navigateRegisterExtra());
                 } else {
+                    NotificationService.register();
                     dispatch(navigateAndResetToMainFlow());
                     dispatch(getRefundCases());
                 }
@@ -514,7 +514,6 @@ function register(username, password, email, confPassword, acceptedTermsOfServic
         dispatch({type: types.AUTH_REGISTERING});
         Api.register(username, password, email, acceptedTermsOfService, termsOfService, acceptedPrivacyPolicy, privacyPolicy).then(user => {
             if (user && user.token) {
-                NotificationService.register();
                 dispatch(registerSuccess(user));
                 if (user.isMerchant) {
                     dispatch(navigateScanner());
@@ -523,6 +522,7 @@ function register(username, password, email, confPassword, acceptedTermsOfServic
                     dispatch(navigateRegisterExtra());
                 }
                 else {
+                    NotificationService.register();
                     dispatch(navigateAndResetToMainFlow());
                     dispatch(getRefundCases());
                 }

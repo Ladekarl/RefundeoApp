@@ -1,6 +1,6 @@
 import Helpers, {API_URL} from './Helpers';
 import LocalStorage from '../storage';
-import Help from '../containers/Help';
+import {getCurrentLocaleFormatted} from '../shared/i18n';
 
 export default class Api {
     static async getTokenFacebook(accessToken) {
@@ -45,6 +45,7 @@ export default class Api {
     }
 
     static async register(username, password, email, acceptedTermsOfService, termsOfService, acceptedPrivacyPolicy, privacyPolicy) {
+
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -54,6 +55,7 @@ export default class Api {
                 email,
                 acceptedTermsOfService,
                 termsOfService,
+                language: getCurrentLocaleFormatted(),
                 acceptedPrivacyPolicy,
                 privacyPolicy,
                 scopes: ['offline_access']
@@ -103,7 +105,8 @@ export default class Api {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                ...user
+                ...user,
+                language: getCurrentLocaleFormatted(),
             })
         };
 
