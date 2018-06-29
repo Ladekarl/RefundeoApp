@@ -273,8 +273,8 @@ function getInitialDataThenNavigate() {
         ).then(([refundCases, merchants, tags]) => {
             dispatch(getRefundCasesSuccess(refundCases));
             dispatch(getMerchantsSuccess(merchants));
-            dispatch(navigateAndResetToMainFlow());
             dispatch(getTagsSuccess(tags));
+            dispatch(navigateAndResetToMainFlow());
         });
     };
 }
@@ -447,8 +447,7 @@ function loginFacebook(accessToken) {
                     dispatch(navigateRegisterExtra());
                 } else {
                     NotificationService.register();
-                    dispatch(navigateAndResetToMainFlow());
-                    dispatch(getRefundCases());
+                    getInitialDataThenNavigate();
                 }
             } else {
                 dispatch(facebookLoginError(strings('login.error_user_does_not_exist_in_database')));
@@ -478,8 +477,7 @@ function login(username, password) {
                     dispatch(navigateRegisterExtra());
                 } else {
                     NotificationService.register();
-                    dispatch(navigateAndResetToMainFlow());
-                    dispatch(getRefundCases());
+                    getInitialDataThenNavigate();
                 }
             } else {
                 dispatch(loginError(strings('login.error_user_does_not_exist_in_database')));
