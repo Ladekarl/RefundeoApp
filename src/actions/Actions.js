@@ -238,37 +238,35 @@ function navigateInitial() {
 
 function getInitialDataThenNavigate() {
     return dispatch => {
-        let handlePromises = [];
-
         Promise.all([
                 Api.getRefundCases().catch((response) => {
                     if (shouldLogout(response)) {
                         dispatch(logout());
                     } else {
-                        let promise = Helpers.handleRefundCasesResponse().then(refundCases => {
+                        Helpers.handleRefundCasesResponse().then(refundCases => {
                             dispatch(getRefundCasesSuccess(refundCases));
+                            dispatch(navigateAndResetToMainFlow());
                         });
-                        handlePromises.push(promise);
                     }
                 }),
                 Api.getAllMerchants().catch((response) => {
                     if (shouldLogout(response)) {
                         dispatch(logout());
                     } else {
-                        let promise = Helpers.handleMerchantsResponse().then(merchants => {
+                        Helpers.handleMerchantsResponse().then(merchants => {
                             dispatch(getMerchantsSuccess(merchants));
+                            dispatch(navigateAndResetToMainFlow());
                         });
-                        handlePromises.push(promise);
                     }
                 }),
                 Api.getTags().catch(response => {
                     if (shouldLogout(response)) {
                         dispatch(logout());
                     } else {
-                        let promise = Helpers.handleTagsResponse().then(tags => {
+                        Helpers.handleTagsResponse().then(tags => {
                             dispatch(getTagsSuccess(tags));
+                            dispatch(navigateAndResetToMainFlow());
                         });
-                        handlePromises.push(promise);
                     }
                 })
             ]
@@ -277,14 +275,6 @@ function getInitialDataThenNavigate() {
             dispatch(getMerchantsSuccess(merchants));
             dispatch(navigateAndResetToMainFlow());
             dispatch(getTagsSuccess(tags));
-        }).finally(() => {
-            if (handlePromises.length > 0) {
-                Promise.all[handlePromises].then(() => {
-                    dispatch(navigateAndResetToMainFlow());
-                });
-            } else {
-                dispatch(navigateAndResetToMainFlow());
-            }
         });
     };
 }

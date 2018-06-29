@@ -8,7 +8,7 @@ export default class LocalStorage {
     static receiptStorageString = 'com.refundeo.storage.receiptImage.';
     static refundCasesStorageString = 'com.refundeo.storage.refundCases';
     static merchantsStorageString = 'com.refundeo.storage.merchants';
-    static tagsStorageString = 'com.refundeo.storage.merchants';
+    static tagsStorageString = 'com.refundeo.storage.tags';
 
     static async getUser() {
         try {

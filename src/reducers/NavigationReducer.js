@@ -30,12 +30,14 @@ export default function navigationReducer(state = initialState, action = {}) {
             break;
         }
         case types.NAVIGATE_LOGGED_IN: {
-            nextState = {
-                ...state,
-                ...navigateAndReset('mainFlow', state),
-                currentRoute: 'Home',
-                drawerRoute: 'Home'
-            };
+            if (state.currentRoute !== 'Home') {
+                nextState = {
+                    ...state,
+                    ...navigateAndReset('mainFlow', state),
+                    currentRoute: 'Home',
+                    drawerRoute: 'Home'
+                };
+            }
             break;
         }
         case types.NAVIGATE_LOGGED_OUT: {

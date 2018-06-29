@@ -12,7 +12,7 @@ export default class StoreFilter extends React.PureComponent {
         filterRefundSliderValue: PropTypes.number.isRequired,
         filterDistanceSliderValue: PropTypes.number.isRequired,
         filterOnlyOpenValue: PropTypes.bool.isRequired,
-        tags: PropTypes.array.isRequired,
+        tags: PropTypes.array,
         filterTagValue: PropTypes.object.isRequired
     };
 
@@ -91,10 +91,13 @@ export default class StoreFilter extends React.PureComponent {
 
     renderTags = () => {
         const tags = this.props.tags;
+        if (!tags || tags.length === 0) return null;
+
         const arrayLength = tags.length;
         const renderedTags = [];
         const chunkSize = 5;
         const filterTagValue = this.state.filterTagValue;
+
 
         for (let i = 0; i < arrayLength; i += chunkSize) {
             const chunk = tags.slice(i, i + chunkSize > arrayLength ? arrayLength : i + chunkSize);

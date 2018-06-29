@@ -251,7 +251,7 @@ export default class Api {
 
         const response = await Helpers.fetchAuthenticated(`${API_URL}/api/tag`, requestOptions);
 
-        const tags = response.json();
+        const tags = await response.json();
 
         return await Helpers.handleTagsResponse(tags);
     }
