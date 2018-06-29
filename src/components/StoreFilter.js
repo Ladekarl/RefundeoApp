@@ -292,6 +292,7 @@ const styles = StyleSheet.create({
     filterTag: {
         flex: 1,
         padding: 2,
+        minHeight: 40,
         marginTop: 10,
         borderColor: colors.activeTabColor,
         borderRadius: 2,
@@ -306,6 +307,7 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 2,
         marginTop: 10,
+        minHeight: 40,
         borderColor: colors.activeTabColor,
         borderRadius: 2,
         borderWidth: 1,
