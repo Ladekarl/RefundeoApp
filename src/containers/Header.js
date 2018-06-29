@@ -8,7 +8,6 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {hasDrawer} from '../navigation/NavigationConfiguration';
 import ModalScreen from '../components/Modal';
-import geolib from 'geolib';
 import {strings} from '../shared/i18n';
 import StoreFilter from '../components/StoreFilter';
 
@@ -32,9 +31,8 @@ class HeaderScreen extends Component {
         const distanceValue = this.storeFilter.getDistanceValue();
         const refundValue = this.storeFilter.getRefundSliderValue();
         const onlyOpenValue = this.storeFilter.getOnlyOpenValue();
-        this.props.actions.changeFilterRefundSliderValue(refundValue);
-        this.props.actions.changeFilterDistanceSliderValue(distanceValue);
-        this.props.actions.changeFilterOnlyOpen(onlyOpenValue);
+        const filterTag = this.storeFilter.getFilterTagValue();
+        this.props.actions.changeFilterValues(distanceValue, refundValue, onlyOpenValue, filterTag);
     };
 
     openSignOutModal = () => {
@@ -57,9 +55,10 @@ class HeaderScreen extends Component {
         let displayFilter = navigation.currentRoute === 'Stores' && !navigation.isMap;
         let isOverview = navigation.currentRoute === 'Overview';
         let displayHelp = !displayFilter && refundCases.length > 0;
+        let isRefundCaseView = isOverview && refundCases.length > 0;
 
         return (
-            <View style={[styles.container, isOverview ? styles.noElevation : {}]}>
+            <View style={[styles.container, isRefundCaseView ? styles.noElevation : {}]}>
                 {isMerchant &&
                 <View style={styles.noDrawerHeader}>
                 </View>
@@ -133,6 +132,8 @@ class HeaderScreen extends Component {
                     <StoreFilter
                         filterDistanceSliderValue={this.props.state.filterDistanceSliderValue}
                         filterRefundSliderValue={this.props.state.filterRefundSliderValue}
+                        filterTagValue={this.props.state.filterTag}
+                        tags={this.props.state.tags}
                         ref={(ref) => this.storeFilter = ref}
                         filterOnlyOpenValue={this.props.state.filterOnlyOpenValue}
                     />
@@ -152,7 +153,8 @@ const styles = StyleSheet.create({
         paddingRight: 25,
         paddingTop: Platform.OS === 'ios' ? 19 : 11,
         paddingBottom: Platform.OS === 'ios' ? 10 : 11,
-        elevation: 1
+        elevation: 1,
+        zIndex: 9999
     },
     headerText: {
         fontSize: Platform.OS === 'ios' ? 17 : 18,

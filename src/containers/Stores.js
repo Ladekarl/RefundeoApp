@@ -42,12 +42,20 @@ class StoresScreen extends Component {
         longitudeDelta: 12
     };
 
+    isMounted = false;
+    locationPermission = false;
+
     componentDidMount() {
         Location.getCurrentPosition()
             .then((location) => this.setLocation(location))
             .catch(() => {
                 this.setState({locationPermission: false});
             });
+        this.isMounted = true;
+    }
+
+    componentWillUnmount() {
+        this.isMounted = false;
     }
 
     setLocation = (location) => {
@@ -56,7 +64,11 @@ class StoresScreen extends Component {
             longitudeDelta: 0.1,
             ...location.coords
         };
-        this.setState({locationPermission: true});
+        if (this.isMounted) {
+            this.setState({locationPermission: true});
+        } else {
+            this.locationPermission = true;
+        }
     };
 
 
@@ -103,13 +115,16 @@ class StoresScreen extends Component {
     };
 
     render() {
-        const {navigation, merchants, fetchingMerchants, filterDistanceSliderValue, filterRefundSliderValue, filterOnlyOpenValue} = this.props.state;
+        const {navigation, merchants, fetchingMerchants, filterDistanceSliderValue, filterRefundSliderValue, filterOnlyOpenValue, filterTag} = this.props.state;
 
-        let clusteredMapData = this.getClusteredMapData(merchants);
+        let clusteredMapData;
+        if (merchants) {
+            clusteredMapData = this.getClusteredMapData(merchants);
+        }
 
         return (
             <View style={styles.container}>
-                {this.state.locationPermission && navigation.isMap &&
+                {(this.state.locationPermission || this.locationPermission) && navigation.isMap &&
                 <ClusteredMapView
                     style={styles.container}
                     data={clusteredMapData}
@@ -130,6 +145,7 @@ class StoresScreen extends Component {
                     distance={filterDistanceSliderValue}
                     minRefund={filterRefundSliderValue}
                     onlyOpen={filterOnlyOpenValue}
+                    tag={filterTag}
                     fetching={fetchingMerchants}
                 />
                 }

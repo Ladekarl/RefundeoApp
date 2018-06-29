@@ -80,7 +80,7 @@ export default class Helpers {
         if (isConnected) {
             return await fetch(request, requestOptions);
         } else {
-            throw 'No internet connection';
+            throw {noNetwork: true};
         }
     }
 
@@ -99,6 +99,25 @@ export default class Helpers {
             refundCases = await LocalStorage.getRefundCases();
         }
         return refundCases;
+    }
+
+    static async handleMerchantsResponse(merchants) {
+        if (merchants) {
+            merchants = await this.setMerchantDistances(merchants);
+            await LocalStorage.saveMerchants(merchants.slice(0, merchants.length > 100 ? 100 : merchants.length));
+        } else {
+            merchants = await LocalStorage.getMerchants();
+        }
+        return merchants;
+    }
+
+    static async handleTagsResponse(tags) {
+        if (tags) {
+            await LocalStorage.saveTags(tags);
+        } else {
+            tags = await LocalStorage.getTags();
+        }
+        return tags;
     }
 
     static async handleAuthenticatedResponse(request, requestOptions, response) {

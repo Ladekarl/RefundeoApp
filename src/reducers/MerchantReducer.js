@@ -19,7 +19,7 @@ export type Merchant = {
     distance: number,
     currency: string,
     vatNumber: string,
-    tags: Array<string>,
+    tags: Array<number>,
     openingHours: Array<OpeningHours>
 }
 
@@ -36,8 +36,12 @@ type MerchantReducer = {
     getMerchantsError: string,
     filterDistanceSliderValue: number,
     filterRefundSliderValue: number,
-    filterOnlyOpenValue: boolean
+    filterOnlyOpenValue: boolean,
+    filterTag: Tag,
+    tags: Array<Tag>
 }
+
+type Tag = { key: number, value: string }
 
 const initialState: MerchantReducer = {
     merchants: [],
@@ -46,7 +50,9 @@ const initialState: MerchantReducer = {
     getMerchantsError: '',
     filterDistanceSliderValue: 10000,
     filterRefundSliderValue: 0,
-    filterOnlyOpenValue: false
+    filterOnlyOpenValue: false,
+    filterTag: {},
+    tags: []
 };
 
 export default function merchantReducer(state = initialState, action = {}) {
@@ -84,24 +90,20 @@ export default function merchantReducer(state = initialState, action = {}) {
             };
             break;
         }
-        case types.MERCHANT_CHANGE_FILTER_REFUND_SLIDER_VALUE: {
+        case types.MERCHANT_CHANGE_FILTER_VALUE: {
             nextState = {
                 ...state,
-                filterRefundSliderValue: action.sliderValue
+                filterDistanceSliderValue: action.distanceSliderValue,
+                filterRefundSliderValue: action.refundSliderValue,
+                filterOnlyOpenValue: action.onlyOpenValue,
+                filterTag: action.tagValue
             };
             break;
         }
-        case types.MERCHANT_CHANGE_FILTER_DISTANCE_SLIDER_VALUE: {
+        case types.MERCHANT_GET_TAGS_SUCCESS: {
             nextState = {
                 ...state,
-                filterDistanceSliderValue: action.sliderValue
-            };
-            break;
-        }
-        case types.MERCHANT_CHANGE_FILTER_ONLY_OPEN: {
-            nextState = {
-                ...state,
-                filterOnlyOpenValue: action.value
+                tags: action.tags
             };
             break;
         }

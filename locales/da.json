@@ -186,7 +186,16 @@
     "empty": "Ingen butikker tilgængelige.\n\nJustér filterindstillingerne.",
     "vat_number": "Vat no.",
     "open_hours_filter": "Åbent",
-    "open_stores_filter": "Vis kun åbne butikker"
+    "open_stores_filter": "Vis kun åbne butikker",
+    "tag_jewelry": "Smykker og ure",
+    "tag_clothes": "Tøj",
+    "tag_footwear": "Sko",
+    "tag_accessories": "Accessories",
+    "tag_sportswear": "Sport",
+    "tag_technology": "Teknologi",
+    "tag_children": "Børn",
+    "tag_books": "Bøger",
+    "tag_department": "Stormagasin"
   },
   "tutorial": {
     "welcome_title": "Velkommen til Refundeo",

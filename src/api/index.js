@@ -1,5 +1,6 @@
 import Helpers, {API_URL} from './Helpers';
 import LocalStorage from '../storage';
+import Help from '../containers/Help';
 
 export default class Api {
     static async getTokenFacebook(accessToken) {
@@ -222,7 +223,7 @@ export default class Api {
 
         const merchants = await response.json();
 
-        return await Helpers.setMerchantDistances(merchants);
+        return await Helpers.handleMerchantsResponse(merchants);
     }
 
     static async postEmail(refundCase, email) {
@@ -238,5 +239,20 @@ export default class Api {
         };
 
         return await Helpers.fetchAuthenticated(`${API_URL}/api/user/refundcase/${refundCase.id}/email`, requestOptions);
+    }
+
+    static async getTags() {
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                ...await Helpers.authHeader()
+            }
+        };
+
+        const response = await Helpers.fetchAuthenticated(`${API_URL}/api/tag`, requestOptions);
+
+        const tags = response.json();
+
+        return await Helpers.handleTagsResponse(tags);
     }
 }

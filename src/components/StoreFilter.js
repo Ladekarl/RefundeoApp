@@ -1,18 +1,19 @@
 import React from 'react';
-import {View, StyleSheet, Text, Slider, Switch, Platform} from 'react-native';
+import {View, StyleSheet, Text, Slider, Switch, Platform, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import colors from '../shared/colors';
 import {strings} from '../shared/i18n';
 import Icon from 'react-native-fa-icons';
 import geolib from 'geolib';
-import ModalScreen from './Modal';
 
 export default class StoreFilter extends React.PureComponent {
 
     static propTypes = {
         filterRefundSliderValue: PropTypes.number.isRequired,
         filterDistanceSliderValue: PropTypes.number.isRequired,
-        filterOnlyOpenValue: PropTypes.bool.isRequired
+        filterOnlyOpenValue: PropTypes.bool.isRequired,
+        tags: PropTypes.array.isRequired,
+        filterTagValue: PropTypes.object.isRequired
     };
 
     constructor(props) {
@@ -26,7 +27,8 @@ export default class StoreFilter extends React.PureComponent {
         return {
             filterRefundSliderValue: this.props.filterRefundSliderValue,
             filterDistanceSliderValue: this.props.filterDistanceSliderValue,
-            filterOnlyOpenValue: this.props.filterOnlyOpenValue
+            filterOnlyOpenValue: this.props.filterOnlyOpenValue,
+            filterTagValue: this.props.filterTagValue
         };
     };
 
@@ -60,6 +62,17 @@ export default class StoreFilter extends React.PureComponent {
         }
     };
 
+    onTagPress = (tag) => {
+        let newTag = {};
+        if (this.state.filterTagValue !== tag) {
+            newTag = tag;
+        }
+        this.setState({
+            filterTagValue: newTag
+        });
+    };
+
+
     getDistanceValue = () => {
         return this.state.filterDistanceSliderValue;
     };
@@ -70,6 +83,61 @@ export default class StoreFilter extends React.PureComponent {
 
     getOnlyOpenValue = () => {
         return this.state.filterOnlyOpenValue;
+    };
+
+    getFilterTagValue = () => {
+        return this.state.filterTagValue;
+    };
+
+    renderTags = () => {
+        const tags = this.props.tags;
+        const arrayLength = tags.length;
+        const renderedTags = [];
+        const chunkSize = 5;
+        const filterTagValue = this.state.filterTagValue;
+
+        for (let i = 0; i < arrayLength; i += chunkSize) {
+            const chunk = tags.slice(i, i + chunkSize > arrayLength ? arrayLength : i + chunkSize);
+            renderedTags.push(
+                <View style={styles.filterTagsContainer} key={Math.random()}>
+                    {
+                        chunk.map(t =>
+                            <TouchableOpacity
+                                style={filterTagValue.key === t.key ? styles.selectedFilterTag : styles.filterTag}
+                                key={t.key}
+                                onPress={() => this.onTagPress(t)}>
+                                <Text
+                                    style={filterTagValue.key === t.key ? styles.selectedFilterTagText : styles.filterTagText}>{this.getTagText(t)}</Text>
+                            </TouchableOpacity>)
+                    }
+                </View>
+            );
+        }
+        return renderedTags;
+    };
+
+    getTagText = (tag) => {
+        const key = tag.key;
+        switch (key) {
+            case 0:
+                return strings('stores.tag_jewelry');
+            case 1:
+                return strings('stores.tag_clothes');
+            case 2:
+                return strings('stores.tag_footwear');
+            case 3:
+                return strings('stores.tag_accessories');
+            case 4:
+                return strings('stores.tag_sportswear');
+            case 5:
+                return strings('stores.tag_technology');
+            case 6:
+                return strings('stores.tag_children');
+            case 7:
+                return strings('stores.tag_books');
+            case 8:
+                return strings('stores.tag_department');
+        }
     };
 
 
@@ -135,6 +203,9 @@ export default class StoreFilter extends React.PureComponent {
                         />
                     </View>
                 </View>
+                <View style={styles.filterBottomRowContainer}>
+                    {this.renderTags()}
+                </View>
             </View>
         );
     }
@@ -142,23 +213,32 @@ export default class StoreFilter extends React.PureComponent {
 
 const styles = StyleSheet.create({
     filterContainer: {
-        marginTop: 20,
-        marginBottom: 20,
+        marginTop: 10,
         marginLeft: -10,
         marginRight: -10
     },
     filterRowContainerNoBorder: {
         paddingLeft: 20,
-        paddingRight: 20,
-        paddingBottom: 10
+        paddingRight: 20
     },
     filterRowContainer: {
         borderTopWidth: StyleSheet.hairlineWidth,
         borderTopColor: colors.separatorColor,
         paddingLeft: 20,
         paddingRight: 20,
-        paddingBottom: 10,
         paddingTop: 10
+    },
+    filterBottomRowContainer: {
+        borderTopWidth: StyleSheet.hairlineWidth,
+        borderTopColor: colors.separatorColor,
+        paddingBottom: 0,
+        paddingTop: 0,
+        paddingLeft: 10,
+        paddingRight: 10
+    },
+    filterTagsContainer: {
+        justifyContent: 'space-evenly',
+        flexDirection: 'row'
     },
     filterTitle: {
         color: colors.darkTextColor
@@ -208,5 +288,43 @@ const styles = StyleSheet.create({
         marginTop: 5,
         alignSelf: 'center',
         textAlign: 'center'
+    },
+    filterTag: {
+        flex: 1,
+        padding: 2,
+        marginTop: 10,
+        borderColor: colors.activeTabColor,
+        borderRadius: 2,
+        borderWidth: 1,
+        marginLeft: 1,
+        marginRight: 1,
+        backgroundColor: colors.backgroundColor,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    selectedFilterTag: {
+        flex: 1,
+        padding: 2,
+        marginTop: 10,
+        borderColor: colors.activeTabColor,
+        borderRadius: 2,
+        borderWidth: 1,
+        marginLeft: 1,
+        marginRight: 1,
+        backgroundColor: colors.activeTabColor,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    filterTagText: {
+        textAlign: 'center',
+        alignSelf: 'center',
+        fontSize: 10,
+        color: colors.activeTabColor
+    },
+    selectedFilterTagText: {
+        textAlign: 'center',
+        alignSelf: 'center',
+        fontSize: 10,
+        color: colors.whiteColor
     }
 });

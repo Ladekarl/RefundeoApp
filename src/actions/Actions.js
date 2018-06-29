@@ -50,14 +50,12 @@ export default {
     getMerchants,
     selectMerchant,
     selectRefundCase,
-    changeFilterDistanceSliderValue,
-    changeFilterRefundSliderValue,
     navigateUploadDocumentation,
     selectUploadDocumentation,
     uploadTempVatFormImage,
     uploadTempReceiptImage,
     sendVatFormEmail,
-    changeFilterOnlyOpen
+    changeFilterValues
 };
 
 function navigateGuide() {
@@ -69,7 +67,7 @@ function navigateGuide() {
 function navigateContact() {
     return {
         type: types.NAVIGATE_CONTACT
-    }
+    };
 }
 
 function sendVatFormEmail(refundCase, email) {
@@ -150,24 +148,13 @@ function navigateUploadDocumentation() {
     };
 }
 
-function changeFilterDistanceSliderValue(sliderValue) {
+function changeFilterValues(distanceSliderValue, refundSliderValue, onlyOpenValue, tagValue) {
     return {
-        type: types.MERCHANT_CHANGE_FILTER_DISTANCE_SLIDER_VALUE,
-        sliderValue
-    };
-}
-
-function changeFilterRefundSliderValue(sliderValue) {
-    return {
-        type: types.MERCHANT_CHANGE_FILTER_REFUND_SLIDER_VALUE,
-        sliderValue
-    };
-}
-
-function changeFilterOnlyOpen(value) {
-    return {
-        type: types.MERCHANT_CHANGE_FILTER_ONLY_OPEN,
-        value
+        type: types.MERCHANT_CHANGE_FILTER_VALUE,
+        distanceSliderValue,
+        refundSliderValue,
+        onlyOpenValue,
+        tagValue
     };
 }
 
@@ -251,23 +238,61 @@ function navigateInitial() {
 
 function getInitialDataThenNavigate() {
     return dispatch => {
+        let handlePromises = [];
+
         Promise.all([
-            Api.getRefundCases(),
-            Api.getAllMerchants()]
-        ).then(([refundCases, merchants]) => {
+                Api.getRefundCases().catch((response) => {
+                    if (shouldLogout(response)) {
+                        dispatch(logout());
+                    } else {
+                        let promise = Helpers.handleRefundCasesResponse().then(refundCases => {
+                            dispatch(getRefundCasesSuccess(refundCases));
+                        });
+                        handlePromises.push(promise);
+                    }
+                }),
+                Api.getAllMerchants().catch((response) => {
+                    if (shouldLogout(response)) {
+                        dispatch(logout());
+                    } else {
+                        let promise = Helpers.handleMerchantsResponse().then(merchants => {
+                            dispatch(getMerchantsSuccess(merchants));
+                        });
+                        handlePromises.push(promise);
+                    }
+                }),
+                Api.getTags().catch(response => {
+                    if (shouldLogout(response)) {
+                        dispatch(logout());
+                    } else {
+                        let promise = Helpers.handleTagsResponse().then(tags => {
+                            dispatch(getTagsSuccess(tags));
+                        });
+                        handlePromises.push(promise);
+                    }
+                })
+            ]
+        ).then(([refundCases, merchants, tags]) => {
             dispatch(getRefundCasesSuccess(refundCases));
             dispatch(getMerchantsSuccess(merchants));
-        }).catch(response => {
-            if (shouldLogout(response)) {
-                dispatch(logout());
-            } else {
-                Helpers.handleRefundCasesResponse().then(refundCases => {
-                    dispatch(getRefundCasesSuccess(refundCases));
-                });
-            }
-        }).finally(() => {
             dispatch(navigateAndResetToMainFlow());
+            dispatch(getTagsSuccess(tags));
+        }).finally(() => {
+            if (handlePromises.length > 0) {
+                Promise.all[handlePromises].then(() => {
+                    dispatch(navigateAndResetToMainFlow());
+                });
+            } else {
+                dispatch(navigateAndResetToMainFlow());
+            }
         });
+    };
+}
+
+function getTagsSuccess(tags) {
+    return {
+        type: types.MERCHANT_GET_TAGS_SUCCESS,
+        tags
     };
 }
 
@@ -438,8 +463,7 @@ function loginFacebook(accessToken) {
             } else {
                 dispatch(facebookLoginError(strings('login.error_user_does_not_exist_in_database')));
             }
-        }).catch((error) => {
-            console.log(error);
+        }).catch(() => {
             dispatch(facebookLoginError(strings('login.unknown_error')));
         });
     };

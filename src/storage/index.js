@@ -7,7 +7,8 @@ export default class LocalStorage {
     static vatFormStorageString = 'com.refundeo.storage.vatFormImage.';
     static receiptStorageString = 'com.refundeo.storage.receiptImage.';
     static refundCasesStorageString = 'com.refundeo.storage.refundCases';
-
+    static merchantsStorageString = 'com.refundeo.storage.merchants';
+    static tagsStorageString = 'com.refundeo.storage.merchants';
 
     static async getUser() {
         try {
@@ -94,8 +95,8 @@ export default class LocalStorage {
 
     static async getRefundCases() {
         try {
-            let refundCase = await AsyncStorage.getItem(this.refundCasesStorageString);
-            return await JSON.parse(refundCase) || null;
+            let refundCases = await AsyncStorage.getItem(this.refundCasesStorageString);
+            return await JSON.parse(refundCases) || null;
         } catch (error) {
             return error;
         }
@@ -104,6 +105,56 @@ export default class LocalStorage {
     static async removeRefundCases() {
         try {
             return await AsyncStorage.removeItem(this.refundCasesStorageString);
+        } catch (error) {
+            return error;
+        }
+    }
+
+    static async saveMerchants(merchants) {
+        try {
+            return await AsyncStorage.setItem(this.merchantsStorageString, JSON.stringify(merchants));
+        } catch (error) {
+            return error;
+        }
+    }
+
+    static async getMerchants() {
+        try {
+            let merchants = await AsyncStorage.getItem(this.merchantsStorageString);
+            return await JSON.parse(merchants) || null;
+        } catch (error) {
+            return error;
+        }
+    }
+
+    static async removeMerchants() {
+        try {
+            return await AsyncStorage.removeItem(this.merchantsStorageString);
+        } catch (error) {
+            return error;
+        }
+    }
+
+    static async saveTags(tags) {
+        try {
+            return await AsyncStorage.setItem(this.tagsStorageString, JSON.stringify(tags));
+        } catch (error) {
+            return error;
+        }
+    }
+
+    static async getTags() {
+        try {
+            let tags = await AsyncStorage.getItem(this.tagsStorageString);
+            return await JSON.parse(tags) || null;
+        } catch (error) {
+            return error;
+        }
+    }
+
+    static async removeTags() {
+        try {
+            return await AsyncStorage.removeItem(this.tagsStorageString);
         } catch (error) {
             return error;
         }

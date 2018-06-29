@@ -13,7 +13,8 @@ export default class StoresList extends PureComponent {
         fetching: PropTypes.bool.isRequired,
         minRefund: PropTypes.number.isRequired,
         distance: PropTypes.number.isRequired,
-        onlyOpen: PropTypes.bool.isRequired
+        onlyOpen: PropTypes.bool.isRequired,
+        tag: PropTypes.object.isRequired
     };
 
     constructor(props) {
@@ -21,7 +22,7 @@ export default class StoresList extends PureComponent {
     }
 
     filterMerchants = () => {
-        const {merchants, distance, minRefund, onlyOpen} = this.props;
+        const {merchants, distance, minRefund, onlyOpen, tag} = this.props;
         let filteredMerchants = [];
         const currentDate = new Date();
         const currentHours = currentDate.getHours();
@@ -30,7 +31,7 @@ export default class StoresList extends PureComponent {
         merchants.forEach((merchant) => {
             const dist = merchant.distance;
             const ref = 95 - merchant.refundPercentage;
-            if ((dist <= distance || distance === 10000) && ref >= minRefund) {
+            if ((dist <= distance || distance === 10000) && ref >= minRefund && (!tag.value || merchant.tags.indexOf(tag.key) > -1)) {
                 if (onlyOpen) {
                     const openingHours = merchant.openingHours.find(o => o.day === currentDay);
                     const openStrSplit = openingHours.open.split(':');
