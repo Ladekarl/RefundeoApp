@@ -93,8 +93,13 @@ class UploadDocumentation extends Component {
     onQrCodeScan = (e) => {
         Vibration.vibrate();
         if (e.data) {
-            const refundCaseId = JSON.parse(e.data);
-            if (this.props.state.selectedRefundCase.id === refundCaseId) {
+            let refundCaseId;
+            try {
+                refundCaseId = JSON.parse(e.data);
+            } catch (e) {
+                this.props.actions.openModal('uploadDocumentationModal');
+            }
+            if (refundCaseId && this.props.state.selectedRefundCase.id === refundCaseId) {
                 this.setState({page: 1});
                 return;
             }
