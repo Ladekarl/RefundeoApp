@@ -224,8 +224,8 @@ function navigateInitial() {
                 else if (Validation.missingUserInfo(user)) {
                     dispatch(navigateRegisterExtraReset());
                 } else {
-                    NotificationService.register();
                     dispatch(getInitialDataThenNavigate());
+                    NotificationService.register();
                 }
             } else {
                 dispatch(navigateAndResetToLogin());
@@ -446,8 +446,8 @@ function loginFacebook(accessToken) {
                 else if (Validation.missingUserInfo(user)) {
                     dispatch(navigateRegisterExtra());
                 } else {
-                    NotificationService.register();
                     dispatch(getInitialDataThenNavigate());
+                    NotificationService.register();
                 }
             } else {
                 dispatch(facebookLoginError(strings('login.error_user_does_not_exist_in_database')));
@@ -476,8 +476,8 @@ function login(username, password) {
                 else if (Validation.missingUserInfo(user)) {
                     dispatch(navigateRegisterExtra());
                 } else {
-                    NotificationService.register();
                     dispatch(getInitialDataThenNavigate());
+                    NotificationService.register();
                 }
             } else {
                 dispatch(loginError(strings('login.error_user_does_not_exist_in_database')));
@@ -520,9 +520,8 @@ function register(username, password, email, confPassword, acceptedTermsOfServic
                     dispatch(navigateRegisterExtra());
                 }
                 else {
+                    dispatch(getInitialDataThenNavigate());
                     NotificationService.register();
-                    dispatch(navigateAndResetToMainFlow());
-                    dispatch(getRefundCases());
                 }
             } else {
                 dispatch(registerError(strings('register.unknown_error')));
