@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Platform, StyleSheet, Text, TouchableOpacity, View, SafeAreaView} from 'react-native';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-fa-icons';
@@ -59,64 +59,66 @@ class HeaderScreen extends Component {
 
         return (
             <View style={[styles.container, isRefundCaseView ? styles.noElevation : {}]}>
-                {isMerchant &&
-                <View style={styles.noDrawerHeader}>
-                </View>
-                }
-                {hasDrawer && !isMerchant &&
-                <TouchableOpacity style={styles.headerButton} onPress={this.props.actions.toggleDrawer}>
-                    <Icon name='bars' style={styles.drawerIcon}/>
-                </TouchableOpacity>
-                }
-                {!hasDrawer && !isMerchant &&
-                <TouchableOpacity style={styles.noDrawerHeader}
-                                  onPress={this.props.actions.navigateSettings}>
-                    <Icon name='user-circle' style={hasDrawer ? styles.drawerIcon : styles.noDrawerIcon}/>
-                </TouchableOpacity>
-                }
-                {navigation.currentRoute !== 'Stores' &&
-                <Text style={styles.headerText}>Refundeo</Text>
-                }
-                {navigation.currentRoute === 'Stores' &&
-                <View style={styles.overlayContainer}>
-                    <TouchableOpacity
-                        activeOpacity={1}
-                        onPress={this.props.actions.navigateStoreMap}
-                        style={[styles.leftOverlayButton, navigation.isMap ? styles.activeButton : {}]}>
-                        <Icon name='map'
-                              style={[styles.overlayButtonText, navigation.isMap ? styles.activeOverlayButtonText : {}]}/>
+                <SafeAreaView style={styles.safeContainer}>
+                    {isMerchant &&
+                    <View style={styles.noDrawerHeader}>
+                    </View>
+                    }
+                    {hasDrawer && !isMerchant &&
+                    <TouchableOpacity style={styles.headerButton} onPress={this.props.actions.toggleDrawer}>
+                        <Icon name='bars' style={styles.drawerIcon}/>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                        activeOpacity={1}
-                        onPress={this.props.actions.navigateStoreList}
-                        style={[styles.rightOverlayButton, !navigation.isMap ? styles.activeButton : {}]}>
-                        <Icon name='list'
-                              style={[styles.overlayButtonText, !navigation.isMap ? styles.activeOverlayButtonText : {}]}/>
+                    }
+                    {!hasDrawer && !isMerchant &&
+                    <TouchableOpacity style={styles.noDrawerHeader}
+                                      onPress={this.props.actions.navigateSettings}>
+                        <Icon name='user-circle' style={hasDrawer ? styles.drawerIcon : styles.noDrawerIcon}/>
                     </TouchableOpacity>
-                </View>
-                }
-                {displayFilter &&
-                <TouchableOpacity onPress={this.onFilterPress}
-                                  style={hasDrawer ? styles.headerButton : styles.noDrawerHeader}>
-                    <Icon name='filter' style={hasDrawer ? styles.drawerIcon : styles.noDrawerIcon}/>
-                </TouchableOpacity>
-                }
-                {displayHelp &&
-                <TouchableOpacity style={hasDrawer ? styles.headerButton : styles.noDrawerHeader}
-                                  onPress={this.props.actions.navigateHelp}>
-                    <Icon name='question-circle' style={hasDrawer ? styles.drawerIcon : styles.noDrawerIcon}/>
-                </TouchableOpacity>
-                }
-                {!displayFilter && !displayHelp && !isMerchant &&
-                <View style={styles.noDrawerHeader}>
-                </View>
-                }
-                {isMerchant &&
-                <TouchableOpacity style={styles.noDrawerHeader}
-                                  onPress={this.openSignOutModal}>
-                    <Icon name='sign-out' style={styles.noDrawerIcon}/>
-                </TouchableOpacity>
-                }
+                    }
+                    {navigation.currentRoute !== 'Stores' &&
+                    <Text style={styles.headerText}>Refundeo</Text>
+                    }
+                    {navigation.currentRoute === 'Stores' &&
+                    <View style={styles.overlayContainer}>
+                        <TouchableOpacity
+                            activeOpacity={1}
+                            onPress={this.props.actions.navigateStoreMap}
+                            style={[styles.leftOverlayButton, navigation.isMap ? styles.activeButton : {}]}>
+                            <Icon name='map'
+                                  style={[styles.overlayButtonText, navigation.isMap ? styles.activeOverlayButtonText : {}]}/>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            activeOpacity={1}
+                            onPress={this.props.actions.navigateStoreList}
+                            style={[styles.rightOverlayButton, !navigation.isMap ? styles.activeButton : {}]}>
+                            <Icon name='list'
+                                  style={[styles.overlayButtonText, !navigation.isMap ? styles.activeOverlayButtonText : {}]}/>
+                        </TouchableOpacity>
+                    </View>
+                    }
+                    {displayFilter &&
+                    <TouchableOpacity onPress={this.onFilterPress}
+                                      style={hasDrawer ? styles.headerButton : styles.noDrawerHeader}>
+                        <Icon name='filter' style={hasDrawer ? styles.drawerIcon : styles.noDrawerIcon}/>
+                    </TouchableOpacity>
+                    }
+                    {displayHelp &&
+                    <TouchableOpacity style={hasDrawer ? styles.headerButton : styles.noDrawerHeader}
+                                      onPress={this.props.actions.navigateHelp}>
+                        <Icon name='question-circle' style={hasDrawer ? styles.drawerIcon : styles.noDrawerIcon}/>
+                    </TouchableOpacity>
+                    }
+                    {!displayFilter && !displayHelp && !isMerchant &&
+                    <View style={styles.noDrawerHeader}>
+                    </View>
+                    }
+                    {isMerchant &&
+                    <TouchableOpacity style={styles.noDrawerHeader}
+                                      onPress={this.openSignOutModal}>
+                        <Icon name='sign-out' style={styles.noDrawerIcon}/>
+                    </TouchableOpacity>
+                    }
+                </SafeAreaView>
                 <ModalScreen
                     modalTitle={strings('settings.sign_out_title')}
                     onSubmit={this.onSignOut}
@@ -155,6 +157,13 @@ const styles = StyleSheet.create({
         paddingBottom: Platform.OS === 'ios' ? 10 : 11,
         elevation: 1,
         zIndex: 9999
+    },
+    safeContainer: {
+        flex: 1,
+        backgroundColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     headerText: {
         fontSize: Platform.OS === 'ios' ? 17 : 18,

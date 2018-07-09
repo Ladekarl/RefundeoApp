@@ -17,7 +17,7 @@ class Help extends Component {
     };
 
     static navigationOptions = {
-        title: 'Help',
+        title: strings('help.help'),
         headerTitleStyle: {
             fontSize: 18
         }

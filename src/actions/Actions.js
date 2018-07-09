@@ -447,7 +447,7 @@ function loginFacebook(accessToken) {
                     dispatch(navigateRegisterExtra());
                 } else {
                     NotificationService.register();
-                    getInitialDataThenNavigate();
+                    dispatch(getInitialDataThenNavigate());
                 }
             } else {
                 dispatch(facebookLoginError(strings('login.error_user_does_not_exist_in_database')));
@@ -477,7 +477,7 @@ function login(username, password) {
                     dispatch(navigateRegisterExtra());
                 } else {
                     NotificationService.register();
-                    getInitialDataThenNavigate();
+                    dispatch(getInitialDataThenNavigate());
                 }
             } else {
                 dispatch(loginError(strings('login.error_user_does_not_exist_in_database')));

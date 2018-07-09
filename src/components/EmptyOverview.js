@@ -10,7 +10,7 @@ import {strings} from '../shared/i18n';
 export default class EmptyOverviewScreen extends PureComponent {
 
     static navigationOptions = {
-        title: 'Guide',
+        title: strings('help.guide'),
         headerTitleStyle: {
             fontSize: 18
         }

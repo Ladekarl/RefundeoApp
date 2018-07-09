@@ -30,7 +30,7 @@ class ScannerScreen extends Component {
 
     // noinspection JSUnusedGlobalSymbols
     static navigationOptions = {
-        title: 'Scanner'
+        title: strings('scanner.scanner')
     };
 
     static propTypes = {

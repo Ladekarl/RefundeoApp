@@ -7,7 +7,7 @@ import Icon from 'react-native-fa-icons';
 export default class Contact extends PureComponent {
 
     static navigationOptions = {
-        title: 'Contact',
+        title: strings('help.contact'),
         headerTitleStyle: {
             fontSize: 18
         }
@@ -29,7 +29,7 @@ export default class Contact extends PureComponent {
                     </View>
                     <View style={styles.rowContainer}>
                         <Icon name='phone' style={styles.leftText}/>
-                        <Text style={styles.rightText}>+45 12345678</Text>
+                        <Text style={styles.rightText}>+45 52306035</Text>
                     </View>
                     <View style={styles.rowContainer}>
                         <Icon name='envelope' style={styles.leftText}/>
