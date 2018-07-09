@@ -8,7 +8,8 @@ import {
     View,
     Platform,
     KeyboardAvoidingView,
-    ViewPropTypes
+    ViewPropTypes,
+    SafeAreaView
 } from 'react-native';
 import PropTypes from 'prop-types';
 import colors from '../shared/colors';
@@ -90,18 +91,21 @@ export default class ModalScreen extends PureComponent {
                     behavior='padding'>
                     <View
                         style={[styles.modalInnerContainer, fullScreen ? styles.fullInnerContainer : {}]}>
+                        <SafeAreaView style={[styles.safeContainer, fullScreen ? styles.fullSafeContainer : {}]}>
+                            <View
+                                style={[styles.modalTopContainer, topContainerStyle]}>
+                                {!noCancelButton &&
+                                <TouchableOpacity style={styles.cancelButton} onPress={onCancel}>
+                                    <Icon style={styles.cancelIcon} name='times'/>
+                                </TouchableOpacity>}
+                                {noCancelButton &&
+                                <View style={styles.emptyContainer}/>}
+                                <Text style={styles.modalTitleText}>{modalTitle}</Text>
+                                <View style={styles.emptyContainer}/>
+                            </View>
+                        </SafeAreaView>
                         <View
-                            style={[styles.modalTopContainer, topContainerStyle, fullScreen ? styles.fullTopContainer : {}]}>
-                            {!noCancelButton &&
-                            <TouchableOpacity style={styles.cancelButton} onPress={onCancel}>
-                                <Icon style={styles.cancelIcon} name='times'/>
-                            </TouchableOpacity>}
-                            {noCancelButton &&
-                            <View style={styles.emptyContainer}/>}
-                            <Text style={styles.modalTitleText}>{modalTitle}</Text>
-                            <View style={styles.emptyContainer}/>
-                        </View>
-                        <View style={[styles.modalCenterContainer, contentContainerStyle, fullScreen ? styles.fullCenterContainer : {}]}>
+                            style={[styles.modalCenterContainer, contentContainerStyle, fullScreen ? styles.fullCenterContainer : {}]}>
                             {isPicker &&
                             <View style={styles.modalPickerContainer}>
                                 <Picker
@@ -131,7 +135,6 @@ export default class ModalScreen extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    // eslint-disable-next-line
     modalContainer: {
         position: 'absolute',
         right: 0,
@@ -151,6 +154,19 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         elevation: 5,
         backgroundColor: colors.backgroundColor
+    },
+    safeContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        width: '100%',
+        backgroundColor: colors.activeTabColor,
+        borderTopRightRadius: 2,
+        borderTopLeftRadius: 2
+    },
+    fullSafeContainer: {
+        borderTopRightRadius: 0,
+        borderTopLeftRadius: 0,
     },
     modalTopContainer: {
         justifyContent: 'center',
@@ -216,11 +232,5 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '100%',
         borderRadius: 0
-    },
-    fullTopContainer: {
-        height: Platform.OS === 'ios' ? 70 : 60,
-        paddingTop: Platform.OS === 'ios' ? 25 : 15,
-        borderTopRightRadius: 0,
-        borderTopLeftRadius: 0
     }
 });
