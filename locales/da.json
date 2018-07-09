@@ -214,7 +214,8 @@
     "scan_qrcode": "Scan QR koden på din tax free form",
     "picture_tff": "Tag et billede af din tax free form",
     "picture_receipt": "Tag et billede af kvitteringen",
-    "incorrect_qrcode": "Forkert QR kode. Prøv igen."
+    "incorrect_qrcode": "Forkert QR kode. Prøv igen.",
+    "wrong_qr_code": "Forkert QR kode"
   },
   "qr_code": {
     "id": "ID",

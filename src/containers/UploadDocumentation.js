@@ -190,7 +190,7 @@ class UploadDocumentation extends Component {
                 </View>
                 }
                 <ModalScreen
-                    modalTitle={'Wrong code'}
+                    modalTitle={strings('upload_documentation.wrong_qr_code')}
                     onBack={this.closeUploadDocumentationModal}
                     onCancel={this.closeUploadDocumentationModal}
                     onSubmit={this.closeUploadDocumentationModal}

@@ -216,7 +216,8 @@
     "scan_qrcode": "Scan the QR Code on the tax free form",
     "picture_tff": "Take picture of tax free form",
     "picture_receipt": "Take picture of receipt",
-    "incorrect_qrcode": "Incorrect QR Code. Please try again."
+    "incorrect_qrcode": "Incorrect QR Code. Please try again.",
+    "wrong_qr_code": "Wrong QR code"
   },
   "qr_code": {
     "id": "ID",
