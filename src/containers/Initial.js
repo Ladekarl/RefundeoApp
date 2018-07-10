@@ -83,7 +83,7 @@ class InitialScreen extends Component {
     };
 
     loginFacebook = () => {
-        LoginManager.logInWithReadPermissions(['email', 'user_birthday', 'user_location']).then(
+        LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_location']).then(
             result => {
                 if (result.isCancelled) {
                     this.props.actions.facebookLoginError(strings('login.unknown_error'));
