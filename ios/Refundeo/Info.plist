@@ -30,7 +30,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>3</string>
 	<key>FacebookAppID</key>
 	<string>618541648483874</string>
 	<key>FacebookDisplayName</key>
@@ -48,7 +48,7 @@
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
-			<key>refundeo20180331121625.azurewebsites.net</key>
+			<key>app.refundeo.com</key>
 			<dict>
 				<key>NSIncludesSubdomains</key>
 				<true/>

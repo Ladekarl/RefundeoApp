@@ -4,7 +4,7 @@ import Location from '../shared/Location';
 import geolib from 'geolib';
 import NetworkConnection from '../shared/NetworkConnection';
 
-export const API_URL = 'https://refundeo20180331121625.azurewebsites.net';
+export const API_URL = 'https://app.refundeo.com';
 //export const API_URL = 'http://localhost:4200';
 
 export default class Helpers {
