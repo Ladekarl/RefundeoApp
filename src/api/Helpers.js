@@ -94,11 +94,24 @@ export default class Helpers {
             refundCases.sort((a, b) => {
                 return new Date(b.dateCreated) - new Date(a.dateCreated);
             });
+            refundCases.forEach(async r => await this.handleRefundCaseByIdResponse(r));
             await LocalStorage.saveRefundCases(refundCases);
         } else {
             refundCases = await LocalStorage.getRefundCases();
         }
         return refundCases;
+    }
+
+    static async handleRefundCaseByIdResponse(refundCase) {
+        if (refundCase && !refundCase.isRequested) {
+            if (!refundCase.vatFormImage) {
+                refundCase.tempVatFormImage = await LocalStorage.getVatFormImage(refundCase.id);
+            }
+            if (!refundCase.receiptImage) {
+                refundCase.tempReceiptImage = await LocalStorage.getReceiptImage(refundCase.id);
+            }
+        }
+        return refundCase;
     }
 
     static async handleMerchantsResponse(merchants) {

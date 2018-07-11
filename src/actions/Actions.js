@@ -106,29 +106,27 @@ function sendEmailError(error = '') {
 
 function uploadTempVatFormImage(refundCaseId, tempVatFormImage, goBack) {
     return dispatch => {
-        LocalStorage.saveVatFormImage(refundCaseId, tempVatFormImage).then(() => {
-            dispatch({
-                type: types.REFUND_UPLOAD_TEMP_VAT_FORM_IMAGE,
-                tempVatFormImage
-            });
-            if (goBack) {
-                dispatch(navigateBack());
-            }
+        LocalStorage.saveVatFormImage(refundCaseId, tempVatFormImage);
+        dispatch({
+            type: types.REFUND_UPLOAD_TEMP_VAT_FORM_IMAGE,
+            tempVatFormImage
         });
+        if (goBack) {
+            dispatch(navigateBack());
+        }
     };
 }
 
 function uploadTempReceiptImage(refundCaseId, tempReceiptImage, goBack) {
     return dispatch => {
-        LocalStorage.saveReceiptImage(refundCaseId, tempReceiptImage).then(() => {
-            dispatch({
-                type: types.REFUND_UPLOAD_TEMP_RECEIPT_IMAGE,
-                tempReceiptImage
-            });
-            if (goBack) {
-                dispatch(navigateBack());
-            }
+        LocalStorage.saveReceiptImage(refundCaseId, tempReceiptImage);
+        dispatch({
+            type: types.REFUND_UPLOAD_TEMP_RECEIPT_IMAGE,
+            tempReceiptImage
         });
+        if (goBack) {
+            dispatch(navigateBack());
+        }
     };
 }
 
@@ -439,7 +437,6 @@ function loginFacebook(accessToken) {
         dispatch({type: types.AUTH_LOGGING_IN});
         Api.getTokenFacebook(accessToken).then(user => {
             if (user && user.token) {
-                dispatch(loginSuccess(user));
                 if (user.isMerchant) {
                     dispatch(navigateScanner());
                 }
@@ -449,6 +446,7 @@ function loginFacebook(accessToken) {
                     dispatch(getInitialDataThenNavigate());
                     NotificationService.register();
                 }
+                dispatch(loginSuccess(user));
             } else {
                 dispatch(facebookLoginError(strings('login.error_user_does_not_exist_in_database')));
             }
@@ -469,7 +467,6 @@ function login(username, password) {
         dispatch({type: types.AUTH_LOGGING_IN});
         Api.getToken(username, password).then(user => {
             if (user && user.token) {
-                dispatch(loginSuccess(user));
                 if (user.isMerchant) {
                     dispatch(navigateScanner());
                 }
@@ -479,6 +476,7 @@ function login(username, password) {
                     dispatch(getInitialDataThenNavigate());
                     NotificationService.register();
                 }
+                dispatch(loginSuccess(user));
             } else {
                 dispatch(loginError(strings('login.error_user_does_not_exist_in_database')));
             }
@@ -512,7 +510,6 @@ function register(username, password, email, confPassword, acceptedTermsOfServic
         dispatch({type: types.AUTH_REGISTERING});
         Api.register(username, password, email, acceptedTermsOfService, termsOfService, acceptedPrivacyPolicy, privacyPolicy).then(user => {
             if (user && user.token) {
-                dispatch(registerSuccess(user));
                 if (user.isMerchant) {
                     dispatch(navigateScanner());
                 }
@@ -523,6 +520,7 @@ function register(username, password, email, confPassword, acceptedTermsOfServic
                     dispatch(getInitialDataThenNavigate());
                     NotificationService.register();
                 }
+                dispatch(registerSuccess(user));
             } else {
                 dispatch(registerError(strings('register.unknown_error')));
             }
@@ -537,7 +535,7 @@ function uploadDocumentation(refundCase, vatForm, receipt) {
         dispatch(uploadingDocumentation());
         Api.uploadDocumentation(refundCase, vatForm, receipt).then(() => {
             dispatch(uploadDocumentationSuccess());
-            dispatch(requestRefund());
+            dispatch(requestRefund(refundCase));
         }).catch((response) => {
             if (shouldLogout(response)) {
                 dispatch(logout());

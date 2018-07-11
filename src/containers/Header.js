@@ -54,8 +54,8 @@ class HeaderScreen extends Component {
 
         let displayFilter = navigation.currentRoute === 'Stores' && !navigation.isMap;
         let isOverview = navigation.currentRoute === 'Overview';
-        let displayHelp = !displayFilter && refundCases.length > 0;
-        let isRefundCaseView = isOverview && refundCases.length > 0;
+        let displayHelp = !displayFilter && refundCases && refundCases.length > 0;
+        let isRefundCaseView = isOverview && refundCases && refundCases.length > 0;
 
         return (
             <View style={[styles.container, isRefundCaseView ? styles.noElevation : {}]}>

@@ -1,5 +1,4 @@
 import types from '../actions/ActionTypes';
-import storage from 'redux-persist/lib/storage';
 
 const initialState = {
     loggedIn: false,
@@ -101,7 +100,6 @@ export default function authReducer(state = initialState, action = {}) {
             nextState = {
                 ...state,
                 user: action.user,
-                fetching: false,
                 ...resetErrors
             };
             break;
@@ -160,6 +158,14 @@ export default function authReducer(state = initialState, action = {}) {
                 ...state,
                 fetching: false,
                 changePasswordError: action.error
+            };
+            break;
+        }
+        case types.NAVIGATE_LOGGED_IN: {
+            nextState = {
+                ...state,
+                fetching: false,
+                ...resetErrors
             };
             break;
         }

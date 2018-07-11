@@ -153,7 +153,9 @@ export default class Api {
 
         const response = await Helpers.fetchAuthenticated(`${API_URL}/api/user/refundcase/${refundCaseId}`, requestOptions);
 
-        return await response.json();
+        const refundCase = response.json();
+
+        return await Helpers.handleRefundCaseByIdResponse(refundCase);
     }
 
     static async uploadDocumentation(refundCase, vatForm, receipt) {

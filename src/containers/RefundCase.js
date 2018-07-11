@@ -50,23 +50,39 @@ class RefundCase extends Component {
     }
 
     componentDidMount() {
+        this.getTempImages();
+    }
+
+    getTempImages() {
         const refundCase = this.props.state.selectedRefundCase;
-        if (!refundCase.receiptImage) {
-            LocalStorage.getReceiptImage(refundCase.id).then((tempReceiptImage) => {
-                this.setState({tempReceiptImage});
-            });
+        let receiptPromise;
+        let vatFormPromise;
+
+        if (!refundCase.vatFormImage &&
+            (refundCase.tempVatFormImage !== this.state.tempVatFormImage || !this.state.tempReceiptImage)) {
+            vatFormPromise = LocalStorage.getVatFormImage(refundCase.id);
         }
-        if (!refundCase.vatFormImage) {
-            LocalStorage.getVatFormImage(refundCase.id).then((tempVatFormImage) => {
-                this.setState({tempVatFormImage});
-            });
+        if (!refundCase.receiptImage &&
+            (refundCase.tempReceiptImage !== this.state.tempReceiptImage || !this.state.tempReceiptImage)) {
+            receiptPromise = LocalStorage.getReceiptImage(refundCase.id);
         }
+
+        Promise.all([receiptPromise, vatFormPromise]).then(([tempReceiptImage, tempVatFormImage]) => {
+            this.setState({
+                tempVatFormImage,
+                tempReceiptImage
+            });
+        });
     }
 
     getVatImage = (refundCase) => {
         if (refundCase.vatFormImage) {
             return <Image style={styles.uploadImage} resizeMode='cover'
                           source={{uri: 'data:image/png;base64,' + refundCase.vatFormImage}}/>;
+        }
+        if (refundCase.tempVatFormImage) {
+            return <Image style={styles.uploadImage} resizeMode='cover'
+                          source={{uri: 'data:image/png;base64,' + refundCase.tempVatFormImage}}/>;
         }
         if (this.state.tempVatFormImage) {
             return <Image style={styles.uploadImage} resizeMode='cover'
@@ -81,6 +97,10 @@ class RefundCase extends Component {
             return <Image style={styles.uploadImage} resizeMode='cover'
                           source={{uri: 'data:image/png;base64,' + refundCase.receiptImage}}/>;
         }
+        if (refundCase.tempReceiptImage) {
+            return <Image style={styles.uploadImage} resizeMode='cover'
+                          source={{uri: 'data:image/png;base64,' + refundCase.tempReceiptImage}}/>;
+        }
         if (this.state.tempReceiptImage) {
             return <Image style={styles.uploadImage} resizeMode='cover'
                           source={{uri: 'data:image/png;base64,' + this.state.tempReceiptImage}}/>;
@@ -92,16 +112,20 @@ class RefundCase extends Component {
     onRequestRefundPress = () => {
         const refundCase = this.props.state.selectedRefundCase;
         const hasTempImages = refundCase.tempReceiptImage && refundCase.tempVatFormImage;
+        const hasTempStateImages = this.state.tempReceiptImage && this.state.tempVatFormImage;
         const hasImages = refundCase.receiptImage && refundCase.vatFormImage;
         const user = this.props.state.user;
         const missingInfo = Validation.missingUserInfo(user);
         const missingSwift = Validation.missingRequestRefundUserInfo(user);
-        if (!hasTempImages && !hasImages && !refundCase.isRequested) {
+        if (!hasTempImages && !hasTempStateImages && !hasImages && !refundCase.isRequested) {
             this.openRefundCaseModal(strings('refund_case.missing_documentation_title'), strings('refund_case.missing_documentation_text'), this.closeRefundCaseModal);
-        } else if (hasTempImages && !refundCase.isRequested && !missingSwift && !missingInfo) {
+        } else if ((hasTempImages || hasTempStateImages) && !refundCase.isRequested && !missingSwift && !missingInfo) {
             this.requestRefund(() => {
                 this.closeRefundCaseModal();
-                this.props.actions.uploadDocumentation(refundCase, refundCase.tempVatFormImage, refundCase.tempReceiptImage);
+                this.props.actions.uploadDocumentation(
+                    refundCase,
+                    hasTempImages ? refundCase.tempVatFormImage : this.state.tempVatFormImage,
+                    hasTempImages ? refundCase.tempReceiptImage : this.state.tempReceiptImage);
             });
         } else if (missingInfo || missingSwift) {
             const modalText = missingSwift ? strings('refund_case.missing_information_swift_text') : strings('refund_case.missing_information_other_text');
@@ -216,7 +240,7 @@ class RefundCase extends Component {
 
     render() {
         const {state, actions} = this.props;
-        const {navigation, selectedRefundCase, fetchingRefundCases, fetchingSendEmail, fetchingRequestRefund} = state;
+        const {navigation, selectedRefundCase, fetchingRefundCases, fetchingSendEmail, fetchingRequestRefund, fetchingDocumentation} = state;
         const refundCase = selectedRefundCase;
         const {merchant} = refundCase;
 
@@ -231,7 +255,7 @@ class RefundCase extends Component {
                 refreshControl={
                     <RefreshControl
                         tintColor={colors.activeTabColor}
-                        refreshing={fetchingRefundCases || fetchingSendEmail || fetchingRequestRefund}
+                        refreshing={fetchingRefundCases}
                         onRefresh={() => actions.getSelectedRefundCase(refundCase.id)}
                     />
                 }>
@@ -287,7 +311,8 @@ class RefundCase extends Component {
                 </TouchableOpacity>
                 }
                 {!refundCase.isRequested &&
-                <TouchableOpacity disabled={fetchingRequestRefund} style={styles.submitButton}
+                <TouchableOpacity disabled={fetchingRequestRefund || fetchingDocumentation || fetchingRefundCases}
+                                  style={styles.submitButton}
                                   onPress={this.onRequestRefundPress}>
                     <Text style={styles.submitButtonText}>{strings('refund_case.send_documentation')}</Text>
                 </TouchableOpacity>
@@ -337,7 +362,7 @@ class RefundCase extends Component {
                             style={!this.state.email || !this.state.isValidEmail ? styles.modalInputErrorText : styles.hidden}>{strings('refund_case.invalid_email')}</Text>
                     </View>
                 </ModalScreen>
-                {this.props.state.fetchingRequestRefund &&
+                {(fetchingRequestRefund || fetchingDocumentation || fetchingSendEmail) &&
                 <View style={styles.loadingContainer}>
                     <ActivityIndicator size='large' color={colors.activeTabColor} style={styles.activityIndicator}/>
                 </View>

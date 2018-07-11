@@ -117,7 +117,7 @@ class StoresScreen extends Component {
     render() {
         const {navigation, merchants, fetchingMerchants, filterDistanceSliderValue, filterRefundSliderValue, filterOnlyOpenValue, filterTag} = this.props.state;
 
-        let clusteredMapData;
+        let clusteredMapData = [];
         if (merchants) {
             clusteredMapData = this.getClusteredMapData(merchants);
         }
