@@ -73,7 +73,7 @@ export default class StoreListItem extends PureComponent {
                         </View>
                         <View style={styles.rightContainer}>
                             <Text
-                                style={styles.rightText}>{strings('stores.refund') + '\n' + (95 - refundPercentage) + ' %'}</Text>
+                                style={styles.rightText}>{strings('stores.refund') + '\n' + (100 - refundPercentage) + ' %'}</Text>
                         </View>
                     </View>
                 </View>

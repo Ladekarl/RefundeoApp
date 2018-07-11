@@ -84,7 +84,7 @@ class InitialScreen extends Component {
 
     loginFacebook = () => {
         // TODO: Change to ['public_profile', 'email', 'user_location'] when facebook approves
-        LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_location']).then(
+        LoginManager.logInWithReadPermissions(['public_profile', 'email']).then(
             result => {
                 if (!result.isCancelled) {
                     AccessToken.getCurrentAccessToken().then((data) => {

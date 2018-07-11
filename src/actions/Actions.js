@@ -220,16 +220,32 @@ function navigateInitial() {
                     dispatch(navigateScanner());
                 }
                 else if (Validation.missingUserInfo(user)) {
+                    dispatch(getInitialData());
+                    NotificationService.register();
                     dispatch(navigateRegisterExtraReset());
                 } else {
-                    dispatch(getInitialDataThenNavigate());
                     NotificationService.register();
+                    dispatch(getInitialDataThenNavigate());
                 }
             } else {
                 dispatch(navigateAndResetToLogin());
             }
         }).catch(() => {
             dispatch(navigateAndResetToLogin());
+        });
+    };
+}
+
+function getInitialData() {
+    return dispatch => {
+        Promise.all([
+            Api.getRefundCases(),
+            Api.getAllMerchants(),
+            Api.getTags()
+        ]).then(([refundCases, merchants, tags]) => {
+            dispatch(getRefundCasesSuccess(refundCases));
+            dispatch(getMerchantsSuccess(merchants));
+            dispatch(getTagsSuccess(tags));
         });
     };
 }
@@ -242,7 +258,11 @@ function getInitialDataThenNavigate() {
                         dispatch(logout());
                     } else {
                         Helpers.handleRefundCasesResponse().then(refundCases => {
-                            dispatch(getRefundCasesSuccess(refundCases));
+                            if (refundCases) {
+                                dispatch(getRefundCasesError(refundCases));
+                            } else {
+                                dispatch(getRefundCasesError());
+                            }
                             dispatch(navigateAndResetToMainFlow());
                         });
                     }
@@ -252,7 +272,11 @@ function getInitialDataThenNavigate() {
                         dispatch(logout());
                     } else {
                         Helpers.handleMerchantsResponse().then(merchants => {
-                            dispatch(getMerchantsSuccess(merchants));
+                            if (merchants) {
+                                dispatch(getMerchantsSuccess(merchants));
+                            } else {
+                                dispatch(getMerchantsError());
+                            }
                             dispatch(navigateAndResetToMainFlow());
                         });
                     }
@@ -262,7 +286,9 @@ function getInitialDataThenNavigate() {
                         dispatch(logout());
                     } else {
                         Helpers.handleTagsResponse().then(tags => {
-                            dispatch(getTagsSuccess(tags));
+                            if (tags) {
+                                dispatch(getTagsSuccess(tags));
+                            }
                             dispatch(navigateAndResetToMainFlow());
                         });
                     }
@@ -441,6 +467,8 @@ function loginFacebook(accessToken) {
                     dispatch(navigateScanner());
                 }
                 else if (Validation.missingUserInfo(user)) {
+                    dispatch(getInitialData());
+                    NotificationService.register();
                     dispatch(navigateRegisterExtra());
                 } else {
                     dispatch(getInitialDataThenNavigate());
@@ -471,6 +499,8 @@ function login(username, password) {
                     dispatch(navigateScanner());
                 }
                 else if (Validation.missingUserInfo(user)) {
+                    dispatch(getInitialData());
+                    NotificationService.register();
                     dispatch(navigateRegisterExtra());
                 } else {
                     dispatch(getInitialDataThenNavigate());
@@ -515,6 +545,7 @@ function register(username, password, email, confPassword, acceptedTermsOfServic
                 }
                 else if (Validation.missingUserInfo(user)) {
                     dispatch(navigateRegisterExtra());
+                    dispatch(getInitialData());
                 }
                 else {
                     dispatch(getInitialDataThenNavigate());

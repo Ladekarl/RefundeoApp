@@ -95,7 +95,15 @@ export default function authReducer(state = initialState, action = {}) {
             break;
         }
         case types.AUTH_REGISTER_SUCCESS:
-        case types.AUTH_GET_USER_SUCCESS:
+        case types.AUTH_GET_USER_SUCCESS: {
+            nextState = {
+                ...state,
+                user: action.user,
+                fetching: false,
+                ...resetErrors
+            };
+            break;
+        }
         case types.AUTH_LOGIN_SUCCESS: {
             nextState = {
                 ...state,
@@ -161,6 +169,7 @@ export default function authReducer(state = initialState, action = {}) {
             };
             break;
         }
+        case types.NAVIGATE_REGISTER_EXTRA:
         case types.NAVIGATE_LOGGED_IN: {
             nextState = {
                 ...state,

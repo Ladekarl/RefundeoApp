@@ -96,6 +96,9 @@ class RegisterScreen extends Component {
         ]).start();
     }
 
+    termsOfService = strings('register.terms_of_service');
+    privacyPolicy = strings('register.privacy_policy');
+
     onRegisterPress = () => {
         Keyboard.dismiss();
         const {username, password, confirmPassword, acceptedTermsOfService, acceptedPrivacyPolicy} = this.state;

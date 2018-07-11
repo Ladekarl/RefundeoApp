@@ -55,11 +55,13 @@ class RegisterExtraScreen extends Component {
                     <Text style={styles.topText}>{strings('register.more_information')}</Text>
                 </View>
                 <View style={styles.settingsContainer}>
+                    {!!state.user.id &&
                     <SettingsScreen
                         state={state}
                         requiredOnly={true}
                         actions={actions}
                     />
+                    }
                 </View>
                 <Text style={styles.errorText}>{this.state.error}</Text>
                 <View style={styles.buttonContainer}>

@@ -46,7 +46,7 @@ class StoreProfile extends Component {
                         <View style={styles.bannerColumnContainer}>
                             <Text
                                 style={styles.contentText}>{openingHours.open + ' - ' + openingHours.close}</Text>
-                            <Text style={styles.contentText}>{95 - selectedMerchant.refundPercentage}</Text>
+                            <Text style={styles.contentText}>{100 - selectedMerchant.refundPercentage}</Text>
                         </View>
                     </View>
                     <View style={styles.descriptionContainer}>

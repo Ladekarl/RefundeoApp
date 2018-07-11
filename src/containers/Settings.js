@@ -328,7 +328,9 @@ class SettingsScreen extends Component {
                                 }
                                 <Text style={styles.leftText}>{strings('settings.country')}</Text>
                             </View>
+                            {!!state.user.country &&
                             <Text style={styles.rightText}>{state.user.country}</Text>
+                            }
                         </View>
                     </CountryPicker>
                 </View>
