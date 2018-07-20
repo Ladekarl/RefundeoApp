@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, TouchableOpacity, View, SafeAreaView} from 'react-native';
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView} from 'react-navigation';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-fa-icons';
@@ -59,7 +60,7 @@ class HeaderScreen extends Component {
 
         return (
             <View style={[styles.container, isRefundCaseView ? styles.noElevation : {}]}>
-                <SafeAreaView style={styles.safeContainer}>
+                <SafeAreaView forceInset={{top: 'always'}} style={styles.safeContainer}>
                     {isMerchant &&
                     <View style={styles.noDrawerHeader}>
                     </View>
@@ -153,8 +154,8 @@ const styles = StyleSheet.create({
         backgroundColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor,
         paddingLeft: 25,
         paddingRight: 25,
-        paddingTop: Platform.OS === 'ios' ? 19 : 11,
-        paddingBottom: Platform.OS === 'ios' ? 10 : 11,
+        paddingTop: Platform.OS === 'ios' ? 0 : 11,
+        paddingBottom: Platform.OS === 'ios' ? 9 : 11,
         elevation: 1,
         zIndex: 9999
     },

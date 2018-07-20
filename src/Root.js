@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import AppNavigator from './navigation/AppNavigator';
+import {AppNavigator} from './navigation/AppNavigator';
 import {View, StyleSheet, NetInfo, Text, Dimensions, Platform} from 'react-native';
 import colors from './shared/colors';
 import NetworkConnection from './shared/NetworkConnection';

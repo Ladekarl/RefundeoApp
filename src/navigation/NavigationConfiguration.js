@@ -1,4 +1,4 @@
-import {DrawerNavigator, StackNavigator} from 'react-navigation';
+import {createDrawerNavigator, createStackNavigator} from 'react-navigation';
 import InitialScreen from '../containers/Initial';
 import LoginScreen from '../containers/Login';
 import SettingsScreen from '../containers/Settings';
@@ -64,14 +64,14 @@ const homeNavigatorOptions = () => ({
     ...noHeaderNavigationOptions,
 });
 
-const MainDrawerNavigator = DrawerNavigator({
+const MainDrawerNavigator = createDrawerNavigator({
     Home: {
-        screen: StackNavigator({
+        screen: createStackNavigator({
             Home: {screen: HomeTab, navigationOptions: homeNavigatorOptions}
         })
     },
     Settings: {
-        screen: StackNavigator({
+        screen: createStackNavigator({
             Settings: {screen: SettingsScreen, navigationOptions: drawerPageNavigationOptions}
         })
     }
@@ -85,7 +85,7 @@ const MainDrawerNavigator = DrawerNavigator({
     drawerWidth: Math.min(height, width) * 0.8
 });
 
-const MainStackNavigator = StackNavigator({
+const MainStackNavigator = createStackNavigator({
     Home: {screen: HomeTab, navigationOptions: homeNavigatorOptions},
     Settings: {screen: SettingsScreen, navigationOptions: headerBackNavigationOptions},
     Help: {screen: Help, navigationOptions: headerBackNavigationOptions},
@@ -94,11 +94,18 @@ const MainStackNavigator = StackNavigator({
     StoreProfile: {screen: StoreProfile, navigationOptions: headerBackNavigationOptions},
     RefundCase: {screen: RefundCase, navigationOptions: headerBackNavigationOptions},
     UploadDocumentation: {screen: UploadDocumentation, navigationOptions: headerBackNavigationOptions}
+}, {
+    lazy: true,
+    // transitionConfig: () => ({
+    //     transitionSpec: {
+    //         duration: 0,
+    //     },
+    // }),
 });
 
 const routeConfiguration = {
     loginFlow: {
-        screen: StackNavigator({
+        screen: createStackNavigator({
             Initial: {screen: InitialScreen, navigationOptions: noHeaderNavigationOptions},
             Login: {screen: LoginScreen, navigationOptions: headerBackNavigationOptions},
             Register: {screen: RegisterScreen, navigationOptions: headerBackNavigationOptions},
@@ -109,7 +116,7 @@ const routeConfiguration = {
         screen: hasDrawer ? MainDrawerNavigator : MainStackNavigator
     },
     merchantFlow: {
-        screen: StackNavigator({
+        screen: createStackNavigator({
             Scanner: {screen: Scanner, navigationOptions: homeNavigatorOptions}
         }, {initialRouteName: 'Scanner'})
     }
@@ -120,7 +127,7 @@ const rootNavigatorOptions = {
     ...noHeaderNavigationOptions
 };
 
-const RootNavigator = StackNavigator(routeConfiguration, rootNavigatorOptions);
+const RootNavigator = createStackNavigator(routeConfiguration, rootNavigatorOptions);
 
 export {
     RootNavigator,

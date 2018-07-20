@@ -406,6 +406,7 @@
 		CBA4A81420B62EB800A32902 /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-Black.ttf"; path = "../fonts/Lato-Black.ttf"; sourceTree = "<group>"; };
 		CBA4A81520B62EB800A32902 /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-Light.ttf"; path = "../fonts/Lato-Light.ttf"; sourceTree = "<group>"; };
 		CBA4A81620B62EB800A32902 /* Lato-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-BoldItalic.ttf"; path = "../fonts/Lato-BoldItalic.ttf"; sourceTree = "<group>"; };
+		CBACB53120F8D19800AA7297 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "Refundeo/en-US.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		CBB70D4A2095E33A0003DF7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Refundeo/Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		CCCAB3D084E348138CA63940 /* refundeo_logo.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = refundeo_logo.png; path = ../assets/refundeo_logo.png; sourceTree = "<group>"; };
 		D2C311B1DAD74F2BB7491A9E /* facebook-icon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "facebook-icon.png"; path = "../assets/facebook-icon.png"; sourceTree = "<group>"; };
@@ -786,7 +787,8 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 2AFEAX4TBH;
+						DevelopmentTeam = 6RUUX8C445;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1311,6 +1313,7 @@
 			children = (
 				CBB70D4A2095E33A0003DF7F /* Base */,
 				CB273B9520B734AF00FCCD2B /* da-DK */,
+				CBACB53120F8D19800AA7297 /* en-US */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";
@@ -1387,9 +1390,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Refundeo/Refundeo.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 2AFEAX4TBH;
+				DEVELOPMENT_TEAM = 6RUUX8C445;
 				HEADER_SEARCH_PATHS = (
 					"<Multiple",
 					"values>",
@@ -1423,8 +1428,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.refundeo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.refundeo.refundeo;
 				PRODUCT_NAME = Refundeo;
+				PROVISIONING_PROFILE = "64b08909-093a-4ab9-b23d-edb4365aa0b5";
+				PROVISIONING_PROFILE_SPECIFIER = RefundeoDevelopmentProfile;
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1437,8 +1444,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Refundeo/Refundeo.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2AFEAX4TBH;
+				DEVELOPMENT_TEAM = 6RUUX8C445;
 				HEADER_SEARCH_PATHS = (
 					"<Multiple",
 					"values>",
@@ -1472,8 +1481,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.refundeo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.refundeo.refundeo;
 				PRODUCT_NAME = Refundeo;
+				PROVISIONING_PROFILE = "d7c44814-2791-426e-8f10-e9f17b6ad98e";
+				PROVISIONING_PROFILE_SPECIFIER = RefundeoDistributionProfile;
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";

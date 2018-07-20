@@ -1,4 +1,4 @@
-import {NavigationActions} from 'react-navigation';
+import {NavigationActions, StackActions} from 'react-navigation';
 import {RootNavigator} from '../navigation/NavigationConfiguration';
 import types from '../actions/ActionTypes';
 
@@ -180,20 +180,13 @@ export default function navigationReducer(state = initialState, action = {}) {
             break;
         }
         case NavigationActions.NAVIGATE: {
-            nextState = {
-                ...state,
-                ...RootNavigator.router.getStateForAction(action, state),
-                drawerOpen: action.routeName === 'DrawerOpen'
-            };
-            break;
-        }
-        case NavigationActions.COMPLETE_TRANSITION: {
             const transitionState = RootNavigator.router.getStateForAction(action, state);
             const currentRoute = getCurrentRoute(transitionState);
             nextState = {
                 ...state,
                 ...transitionState,
                 currentRoute: currentRoute,
+                drawerOpen: action.routeName === 'DrawerOpen'
             };
             break;
         }
@@ -343,7 +336,7 @@ export default function navigationReducer(state = initialState, action = {}) {
 }
 
 const navigateAndReset = (routeName, state, isNested) => {
-    const action = NavigationActions.reset({
+    const action = StackActions.reset({
         index: 0,
         actions: [NavigationActions.navigate({routeName: routeName})],
     });

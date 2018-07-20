@@ -99,6 +99,44 @@ class OverviewScreen extends Component {
         return <View style={styles.emptyContentContainer}><Text style={styles.emptyText}>{text}</Text></View>;
     };
 
+    renderHeader = () => {
+        return (
+            <View style={styles.headerContainer}>
+                <TouchableOpacity
+                    onPress={this.onFirstPress}
+                    style={[styles.headerButton, this.state.page === 0 ? styles.activeButton : {}]}>
+                    <Text
+                        style={[styles.headerButtonText, this.state.page === 0 ? styles.activeButtonText : {}]}>
+                        {strings('overview.new')}
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={this.onSecondPress}
+                    style={[styles.headerButton, this.state.page === 1 ? styles.activeButton : {}]}>
+                    <Text
+                        style={[styles.headerButtonText, this.state.page === 1 ? styles.activeButtonText : {}]}>
+                        {strings('overview.pending')}
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={this.onThirdPress}
+                    style={[styles.headerButton, this.state.page === 2 ? styles.activeButton : {}]}>
+                    <Text
+                        style={[styles.headerButtonText, this.state.page === 2 ? styles.activeButtonText : {}]}>
+                        {strings('overview.approved')}
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={this.onFourthPress}
+                    style={[styles.headerButton, this.state.page === 3 ? styles.activeButton : {}]}>
+                    <Text
+                        style={[styles.headerButtonText, this.state.page === 3 ? styles.activeButtonText : {}]}>
+                        {strings('overview.rejected')}
+                    </Text>
+                </TouchableOpacity>
+            </View>);
+    };
+
     render() {
         const {actions, state} = this.props;
         const {refundCases, fetchingRefundCases, fetchingDocumentation, fetchingRequestRefund} = state;
@@ -108,40 +146,7 @@ class OverviewScreen extends Component {
         return (
             <View style={styles.container}>
                 {refundCases && refundCases.length > 0 &&
-                <View style={styles.headerContainer}>
-                    <TouchableOpacity
-                        onPress={this.onFirstPress}
-                        style={[styles.headerButton, this.state.page === 0 ? styles.activeButton : {}]}>
-                        <Text
-                            style={[styles.headerButtonText, this.state.page === 0 ? styles.activeButtonText : {}]}>
-                            {strings('overview.new')}
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={this.onSecondPress}
-                        style={[styles.headerButton, this.state.page === 1 ? styles.activeButton : {}]}>
-                        <Text
-                            style={[styles.headerButtonText, this.state.page === 1 ? styles.activeButtonText : {}]}>
-                            {strings('overview.pending')}
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={this.onThirdPress}
-                        style={[styles.headerButton, this.state.page === 2 ? styles.activeButton : {}]}>
-                        <Text
-                            style={[styles.headerButtonText, this.state.page === 2 ? styles.activeButtonText : {}]}>
-                            {strings('overview.approved')}
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={this.onFourthPress}
-                        style={[styles.headerButton, this.state.page === 3 ? styles.activeButton : {}]}>
-                        <Text
-                            style={[styles.headerButtonText, this.state.page === 3 ? styles.activeButtonText : {}]}>
-                            {strings('overview.rejected')}
-                        </Text>
-                    </TouchableOpacity>
-                </View>
+                this.renderHeader()
                 }
                 <FlatList
                     style={styles.flatListContainer}
@@ -153,6 +158,7 @@ class OverviewScreen extends Component {
                             onRefresh={actions.getRefundCases}
                         />
                     }
+                    initialNumToRender={refundCases && refundCases.length > 0 ? 8 : 0}
                     data={refundCases && refundCases.length > 0 ? filteredRefundCases : null}
                     keyExtractor={this._keyExtractor}
                     renderItem={this._renderRefundCase}

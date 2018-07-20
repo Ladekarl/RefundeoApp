@@ -27,7 +27,8 @@ export default class Pulse extends React.PureComponent {
         Animated.timing(this.anim, {
             toValue: 1,
             duration: 2500,
-            easing: Easing.linear
+            easing: Easing.linear,
+            isInteraction: false
         }).start(this.animate.bind(this));
 
     }

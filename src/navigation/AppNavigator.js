@@ -1,14 +1,63 @@
 import React, {Component} from 'react';
-import {addNavigationHelpers} from 'react-navigation';
 import {connect} from 'react-redux';
 import {BackHandler} from 'react-native';
-import {RootNavigator} from './NavigationConfiguration';
 import PropTypes from 'prop-types';
-import {addListener} from '../store';
 import Actions from '../actions/Actions';
 import {bindActionCreators} from 'redux';
+import {RootNavigator} from './NavigationConfiguration';
+import {applyMiddleware, combineReducers, createStore} from 'redux';
+import {createReactNavigationReduxMiddleware, reduxifyNavigator} from 'react-navigation-redux-helpers';
+import thunk from 'redux-thunk';
+import rootReducer from '../reducers';
 
-class AppNavigator extends Component {
+const navigationMiddleware = createReactNavigationReduxMiddleware(
+    'root',
+    state => state.navigationReducer,
+);
+
+const App = reduxifyNavigator(RootNavigator, 'root');
+
+const mapStateToProps = state => {
+    const navigation = state.navigationReducer;
+    return {
+        navigation,
+        state: {
+            ...state.navigationReducer
+        }
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        actions: bindActionCreators(Actions, dispatch),
+        dispatch
+    };
+};
+
+const AppWithNavigationState = connect(
+    mapStateToProps
+)(App);
+
+const reducer = combineReducers(rootReducer);
+
+const configureStore = () => {
+    const store = createStore(
+        reducer,
+        applyMiddleware(navigationMiddleware, thunk)
+    );
+
+    if (module.hot) {
+        module.hot.accept(() => {
+            const nextRootReducer = combineReducers(require('../reducers/index').default);
+            store.replaceReducer(nextRootReducer);
+        });
+    }
+
+    return store;
+};
+
+
+class AppNavigatorScreen extends Component {
 
     static propTypes = {
         dispatch: PropTypes.func.isRequired,
@@ -23,7 +72,7 @@ class AppNavigator extends Component {
     }
 
     componentWillUnmount() {
-        this.backHandlerSub.remove()
+        this.backHandlerSub.remove();
     }
 
     _handleBackPress = () => {
@@ -49,38 +98,18 @@ class AppNavigator extends Component {
     };
 
     render() {
-        const {dispatch, navigation} = this.props;
-
         return (
-            <RootNavigator
-                navigation={addNavigationHelpers({
-                    dispatch,
-                    state: navigation,
-                    addListener
-                })}
-            />
+            <AppWithNavigationState/>
         );
     }
 }
 
-const mapStateToProps = state => {
-    const navigation = state.navigationReducer;
-    return {
-        navigation,
-        state: {
-            ...state.navigationReducer
-        }
-    }
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-        actions: bindActionCreators(Actions, dispatch),
-        dispatch
-    }
-};
-
-export default connect(
+const AppNavigator = connect(
     mapStateToProps,
     mapDispatchToProps
-)(AppNavigator)
+)(AppNavigatorScreen);
+
+export {
+    configureStore,
+    AppNavigator
+};

@@ -42,7 +42,6 @@ class StoresScreen extends Component {
         longitudeDelta: 12
     };
 
-    isMounted = false;
     locationPermission = false;
 
     componentDidMount() {
@@ -51,11 +50,6 @@ class StoresScreen extends Component {
             .catch(() => {
                 this.setState({locationPermission: false});
             });
-        this.isMounted = true;
-    }
-
-    componentWillUnmount() {
-        this.isMounted = false;
     }
 
     setLocation = (location) => {
@@ -64,11 +58,8 @@ class StoresScreen extends Component {
             longitudeDelta: 0.1,
             ...location.coords
         };
-        if (this.isMounted) {
-            this.setState({locationPermission: true});
-        } else {
-            this.locationPermission = true;
-        }
+
+        this.setState({locationPermission: true});
     };
 
 

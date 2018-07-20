@@ -1,12 +1,12 @@
 import {Platform} from 'react-native';
-import {TabNavigator} from 'react-navigation';
+import {createBottomTabNavigator} from 'react-navigation';
 import OverviewScreen from '../containers/Overview';
 import colors from '../shared/colors';
 import StoresScreen from '../containers/Stores';
 import {StyleSheet} from 'react-native';
 import QRCode from '../containers/QRCode';
 
-const HomeTab = TabNavigator({
+const HomeTab = createBottomTabNavigator({
     Overview: {
         screen: OverviewScreen
     },
@@ -17,13 +17,10 @@ const HomeTab = TabNavigator({
         screen: StoresScreen
     }
 }, {
-    animationEnabled: false,
-    swipeEnabled: false,
-    lazy: false,
-    tabBarPosition: 'bottom',
     tabBarOptions: {
         activeTintColor: colors.activeTabColor,
         inactiveTintColor: colors.inactiveTabColor,
+        lazy: false,
         tabStyle: {
             backgroundColor: colors.backgroundColor,
             justifyContent: 'center',

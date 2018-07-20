@@ -8,9 +8,9 @@ import {
     View,
     Platform,
     KeyboardAvoidingView,
-    ViewPropTypes,
-    SafeAreaView
+    ViewPropTypes
 } from 'react-native';
+import {SafeAreaView} from 'react-navigation';
 import PropTypes from 'prop-types';
 import colors from '../shared/colors';
 import {strings} from '../shared/i18n';
