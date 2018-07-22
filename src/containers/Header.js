@@ -55,7 +55,7 @@ class HeaderScreen extends Component {
 
         let displayFilter = navigation.currentRoute === 'Stores' && !navigation.isMap;
         let isOverview = navigation.currentRoute === 'Overview';
-        let displayHelp = !displayFilter;
+        let displayHelp = !displayFilter && !isMerchant;
         let isRefundCaseView = isOverview && refundCases && refundCases.length > 0;
 
         return (

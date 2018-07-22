@@ -42,8 +42,6 @@ class StoresScreen extends Component {
         longitudeDelta: 12
     };
 
-    locationPermission = false;
-
     componentDidMount() {
         Location.getCurrentPosition()
             .then((location) => this.setLocation(location))
@@ -109,13 +107,14 @@ class StoresScreen extends Component {
         const {navigation, merchants, fetchingMerchants, filterDistanceSliderValue, filterRefundSliderValue, filterOnlyOpenValue, filterTag} = this.props.state;
 
         let clusteredMapData = [];
+
         if (merchants) {
             clusteredMapData = this.getClusteredMapData(merchants);
         }
 
         return (
             <View style={styles.container}>
-                {(this.state.locationPermission || this.locationPermission) && navigation.isMap &&
+                {this.state.locationPermission && navigation.isMap &&
                 <ClusteredMapView
                     style={styles.container}
                     data={clusteredMapData}

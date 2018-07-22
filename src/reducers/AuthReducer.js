@@ -112,6 +112,13 @@ export default function authReducer(state = initialState, action = {}) {
             };
             break;
         }
+        case types.AUTH_STOP_FETCHING: {
+            nextState = {
+                ...state,
+                fetching: false
+            };
+            break;
+        }
         case types.AUTH_GET_OTHER_USER_SUCCESS: {
             nextState = {
                 ...state,

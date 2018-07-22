@@ -29,7 +29,7 @@ export default class Contact extends PureComponent {
                     </View>
                     <View style={styles.rowContainer}>
                         <Icon name='phone' style={styles.leftText}/>
-                        <Text style={styles.rightText}>+45 52306035</Text>
+                        <Text style={styles.rightText}>(+45) 89 88 14 90</Text>
                     </View>
                     <View style={styles.rowContainer}>
                         <Icon name='envelope' style={styles.leftText}/>

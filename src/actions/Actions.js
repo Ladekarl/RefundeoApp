@@ -496,6 +496,7 @@ function login(username, password) {
         Api.getToken(username, password).then(user => {
             if (user && user.token) {
                 if (user.isMerchant) {
+                    dispatch({type: types.AUTH_STOP_FETCHING});
                     dispatch(navigateScanner());
                 }
                 else if (Validation.missingUserInfo(user)) {
@@ -541,6 +542,7 @@ function register(username, password, email, confPassword, acceptedTermsOfServic
         Api.register(username, password, email, acceptedTermsOfService, termsOfService, acceptedPrivacyPolicy, privacyPolicy).then(user => {
             if (user && user.token) {
                 if (user.isMerchant) {
+                    dispatch({type: types.AUTH_STOP_FETCHING});
                     dispatch(navigateScanner());
                 }
                 else if (Validation.missingUserInfo(user)) {

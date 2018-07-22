@@ -5,7 +5,8 @@ import geolib from 'geolib';
 import NetworkConnection from '../shared/NetworkConnection';
 
 export const API_URL = 'https://app.refundeo.com';
-//export const API_URL = 'http://localhost:4200';
+//export const API_URL = 'http://192.168.1.104:5000';
+//export const API_URL = 'http://refundeodev.azurewebsites.net';
 
 export default class Helpers {
     static termsOfService = strings('register.terms_of_service');
@@ -162,7 +163,7 @@ export default class Helpers {
                 user.acceptedTermsOfService = false;
             }
             user.isMerchant = false;
-        } else if (user.roles.indexOf('Merchant') > -1) {
+        } else if (user.roles.indexOf('Merchant') > -1 || user.roles.indexOf('AttachedMerchant' > -1)) {
             user.isMerchant = true;
         } else {
             throw user;

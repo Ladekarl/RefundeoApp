@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, ImageBackground, Platform, Image} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View, ImageBackground, Image} from 'react-native';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 import geolib from 'geolib';
@@ -68,12 +68,14 @@ export default class StoreListItem extends PureComponent {
                         <View style={styles.contentTextContainer}>
                             <Text
                                 style={styles.mainText}>{name}</Text>
+                            {oHours &&
                             <Text
                                 style={styles.subText}>{oHours.open + ' - ' + oHours.close}</Text>
+                            }
                         </View>
                         <View style={styles.rightContainer}>
                             <Text
-                                style={styles.rightText}>{strings('stores.refund') + '\n' + (100 - refundPercentage) + ' %'}</Text>
+                                style={styles.rightText}>{strings('stores.refund') + '\n' + (refundPercentage) + ' %'}</Text>
                         </View>
                     </View>
                 </View>
