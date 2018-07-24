@@ -34,18 +34,20 @@ export default class StoresList extends PureComponent {
             if ((dist <= distance || distance === 10000) && ref >= minRefund && (!tag.value || merchant.tags.indexOf(tag.key) > -1)) {
                 if (onlyOpen) {
                     const openingHours = merchant.openingHours.find(o => o.day === currentDay);
-                    const openStrSplit = openingHours.open.split(':');
-                    const closeStrSplit = openingHours.close.split(':');
-                    const openHours = parseInt(openStrSplit[0]);
-                    const openMinutes = parseInt(openStrSplit[1]);
-                    const closeHours = parseInt(closeStrSplit[0]);
-                    const closeMinutes = parseInt(closeStrSplit[1]);
+                    if (openingHours) {
+                        const openStrSplit = openingHours.open.split(':');
+                        const closeStrSplit = openingHours.close.split(':');
+                        const openHours = parseInt(openStrSplit[0]);
+                        const openMinutes = parseInt(openStrSplit[1]);
+                        const closeHours = parseInt(closeStrSplit[0]);
+                        const closeMinutes = parseInt(closeStrSplit[1]);
 
-                    const isOpenHours = currentHours > openHours || (currentHours === openHours && currentMinutes >= openMinutes);
-                    const isCloseHours = currentHours < closeHours || (currentHours === closeHours && currentMinutes <= closeMinutes);
+                        const isOpenHours = currentHours > openHours || (currentHours === openHours && currentMinutes >= openMinutes);
+                        const isCloseHours = currentHours < closeHours || (currentHours === closeHours && currentMinutes <= closeMinutes);
 
-                    if (isOpenHours && isCloseHours) {
-                        filteredMerchants.push(merchant);
+                        if (isOpenHours && isCloseHours) {
+                            filteredMerchants.push(merchant);
+                        }
                     }
                 } else {
                     filteredMerchants.push(merchant);
