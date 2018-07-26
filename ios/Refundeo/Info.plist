@@ -48,6 +48,16 @@
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
+			<key>localhost</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+			<key>refundeo20180331121625.blob.core.windows.net</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
 			<key>app.refundeo.com</key>
 			<dict>
 				<key>NSIncludesSubdomains</key>

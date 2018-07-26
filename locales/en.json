@@ -178,6 +178,7 @@
   },
   "stores": {
     "opening_hours": "Opening hours",
+    "closed": "Closed",
     "refund_percentage": "Refund percentage",
     "refund_percentage_filter": "Minimum refund",
     "address": "Address",
@@ -190,13 +191,15 @@
     "open_hours_filter": "Open now",
     "open_stores_filter": "Only show open stores",
     "tag_jewelry": "Jewelry and watches",
-    "tag_clothes": "Clothes",
+    "tag_leather": "Leather Goods",
     "tag_footwear": "Footwear",
     "tag_accessories": "Accessories",
     "tag_sportswear": "Sportswear",
     "tag_electronics": "Electronics",
     "tag_children": "Children",
-    "tag_books": "Books and stationary"
+    "tag_books": "Books and stationary",
+    "tag_menswear": "Menswear",
+    "tag_womenswear": "Womenswear"
   },
   "tutorial": {
     "welcome_title": "Welcome to Refundeo",

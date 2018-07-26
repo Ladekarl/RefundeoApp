@@ -22,6 +22,7 @@ import CountryPicker, {getAllCountries} from 'react-native-country-picker-modal'
 import Icon from 'react-native-fa-icons';
 import Setting from '../components/Setting';
 import Validation from '../shared/Validation';
+import Helpers from '../api/Helpers';
 
 class SettingsScreen extends Component {
 
@@ -44,8 +45,8 @@ class SettingsScreen extends Component {
     secondTextInput;
     thirdTextInput;
 
-    termsOfService = strings('register.terms_of_service');
-    privacyPolicy = strings('register.privacy_policy');
+    termsOfServiceVersion = Helpers.termsOfServiceVersion;
+    privacyPolicyVersion = Helpers.privacyPolicyVersion;
 
     constructor(props) {
         super(props);
@@ -261,14 +262,14 @@ class SettingsScreen extends Component {
     acceptTermsOfService = (isAccepted) => {
         let user = this.props.state.user;
         user.acceptedTermsOfService = isAccepted;
-        user.termsOfService = this.termsOfService;
+        user.termsOfServiceVersion = this.termsOfServiceVersion;
         this.props.actions.changeUser(user);
     };
 
     acceptPrivacyPolicy = (isAccepted) => {
         let user = this.props.state.user;
         user.acceptedPrivacyPolicy = isAccepted;
-        user.privacyPolicy = this.privacyPolicy;
+        user.privacyPolicyVersion = this.privacyPolicyVersion;
         this.props.actions.changeUser(user);
     };
 

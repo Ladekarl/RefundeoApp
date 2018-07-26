@@ -34,7 +34,7 @@ export default class StoresList extends PureComponent {
             if ((dist <= distance || distance === 10000) && ref >= minRefund && (!tag.value || merchant.tags.indexOf(tag.key) > -1)) {
                 if (onlyOpen) {
                     const openingHours = merchant.openingHours.find(o => o.day === currentDay);
-                    if (openingHours) {
+                    if (openingHours && openingHours.open && openingHours.close) {
                         const openStrSplit = openingHours.open.split(':');
                         const closeStrSplit = openingHours.close.split(':');
                         const openHours = parseInt(openStrSplit[0]);
@@ -61,8 +61,8 @@ export default class StoresList extends PureComponent {
         return (<StoreListItem
             distance={item.distance}
             key={item.id}
-            logo={item.logo}
-            banner={item.banner}
+            logo={item.logo || ''}
+            banner={item.banner || ''}
             name={item.companyName}
             openingHours={item.openingHours}
             refundPercentage={item.refundPercentage}

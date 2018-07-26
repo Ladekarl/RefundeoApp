@@ -101,17 +101,22 @@ export default class StoreFilter extends React.PureComponent {
 
         for (let i = 0; i < arrayLength; i += chunkSize) {
             const chunk = tags.slice(i, i + chunkSize > arrayLength ? arrayLength : i + chunkSize);
+
             renderedTags.push(
                 <View style={styles.filterTagsContainer} key={Math.random()}>
                     {
-                        chunk.map(t =>
-                            <TouchableOpacity
-                                style={filterTagValue.key === t.key ? styles.selectedFilterTag : styles.filterTag}
-                                key={t.key}
-                                onPress={() => this.onTagPress(t)}>
-                                <Text
-                                    style={filterTagValue.key === t.key ? styles.selectedFilterTagText : styles.filterTagText}>{this.getTagText(t)}</Text>
-                            </TouchableOpacity>)
+                        chunk.map(t => {
+                            const tagText = this.getTagText(t);
+                            if (tagText) {
+                                return <TouchableOpacity
+                                    style={filterTagValue.key === t.key ? styles.selectedFilterTag : styles.filterTag}
+                                    key={t.key}
+                                    onPress={() => this.onTagPress(t)}>
+                                    <Text
+                                        style={filterTagValue.key === t.key ? styles.selectedFilterTagText : styles.filterTagText}>{tagText}</Text>
+                                </TouchableOpacity>;
+                            }
+                        })
                     }
                 </View>
             );
@@ -125,7 +130,7 @@ export default class StoreFilter extends React.PureComponent {
             case 0:
                 return strings('stores.tag_jewelry');
             case 1:
-                return strings('stores.tag_clothes');
+                return strings('stores.tag_leather');
             case 2:
                 return strings('stores.tag_footwear');
             case 3:
@@ -138,6 +143,12 @@ export default class StoreFilter extends React.PureComponent {
                 return strings('stores.tag_children');
             case 7:
                 return strings('stores.tag_books');
+            case 8:
+                return strings('stores.tag_menswear');
+            case 9:
+                return strings('stores.tag_womenswear');
+            default:
+                return null;
         }
     };
 

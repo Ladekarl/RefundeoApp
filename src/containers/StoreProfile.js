@@ -26,16 +26,22 @@ class StoreProfile extends Component {
         const {selectedMerchant} = this.props.state;
         const openingHours = selectedMerchant.openingHours.find(o => o.day === (new Date).getDay());
 
+        let oHoursString = strings('stores.closed');
+
+        if (openingHours && openingHours.open && openingHours.close) {
+            oHoursString = openingHours.open + ' - ' + openingHours.close;
+        }
+
         return (
             <View style={styles.container}>
                 <ScrollView styles={styles.scrollContainer} contentContainerStyle={styles.scrollContent}>
                     <ImageBackground
                         style={styles.bannerImage}
-                        source={{uri: 'data:image/png;base64,' + selectedMerchant.banner}}
+                        source={{uri: selectedMerchant.banner || ''}}
                         borderRadius={2}>
                         <View style={styles.iconContainer}>
                             <Image style={styles.logoImage} resizeMode='contain'
-                                   source={{uri: 'data:image/png;base64,' + selectedMerchant.logo}}/>
+                                   source={{uri: selectedMerchant.logo || ''}}/>
                         </View>
                     </ImageBackground>
                     <View style={styles.bannerTextBarContainer}>
@@ -45,7 +51,7 @@ class StoreProfile extends Component {
                         </View>
                         <View style={styles.bannerColumnContainer}>
                             <Text
-                                style={styles.contentText}>{openingHours.open + ' - ' + openingHours.close}</Text>
+                                style={styles.contentText}>{oHoursString}</Text>
                             <Text
                                 style={styles.contentText}>{selectedMerchant.refundPercentage.toFixed(2).replace(/[.,]00$/, '')}</Text>
                         </View>

@@ -261,11 +261,11 @@ class RefundCase extends Component {
                 }>
                 <ImageBackground
                     style={styles.bannerImage}
-                    source={{uri: 'data:image/png;base64,' + merchant.banner}}
+                    source={{uri: merchant.banner || ''}}
                     borderRadius={2}>
                     <View style={styles.iconContainer}>
                         <Image style={styles.logoImage} resizeMode='contain'
-                               source={{uri: 'data:image/png;base64,' + merchant.logo}}/>
+                               source={{uri: merchant.logo || ''}}/>
                     </View>
                 </ImageBackground>
                 <View style={styles.bannerTextBarContainer}>

@@ -4,13 +4,13 @@ import Location from '../shared/Location';
 import geolib from 'geolib';
 import NetworkConnection from '../shared/NetworkConnection';
 
-export const API_URL = 'https://app.refundeo.com';
-//export const API_URL = 'http://192.168.1.104:5000';
+//export const API_URL = 'https://app.refundeo.com';
+export const API_URL = 'http://localhost:5000';
 //export const API_URL = 'http://refundeodev.azurewebsites.net';
 
 export default class Helpers {
-    static termsOfService = strings('register.terms_of_service');
-    static privacyPolicy = strings('register.privacy_policy');
+    static termsOfServiceVersion = 1;
+    static privacyPolicyVersion = 1;
 
     static async authHeader() {
         let user = await LocalStorage.getUser();
@@ -156,10 +156,10 @@ export default class Helpers {
 
     static async saveUser(user) {
         if (user && user.token && user.roles && user.roles.indexOf('User') > -1) {
-            if (!user.privacyPolicy || user.acceptedPrivacyPolicy && user.privacyPolicy && user.privacyPolicy.localeCompare(Helpers.privacyPolicy) !== 0) {
+            if (!user.privacyPolicyVersion || user.acceptedPrivacyPolicy && user.privacyPolicyVersion && user.privacyPolicyVersion !== Helpers.privacyPolicyVersion) {
                 user.acceptedPrivacyPolicy = false;
             }
-            if (!user.termsOfService || user.acceptedTermsOfService && user.termsOfService && user.termsOfService.localeCompare(Helpers.termsOfService) !== 0) {
+            if (!user.termsOfServiceVersion || user.acceptedTermsOfService && user.termsOfServiceVersion && user.termsOfServiceVersion !== Helpers.termsOfServiceVersion) {
                 user.acceptedTermsOfService = false;
             }
             user.isMerchant = false;

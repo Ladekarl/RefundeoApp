@@ -45,6 +45,12 @@ export default class StoreListItem extends PureComponent {
 
         const oHours = openingHours.find(o => o.day === (new Date).getDay());
 
+        let oHoursString = strings('stores.closed');
+
+        if (oHours && oHours.open && oHours.close) {
+            oHoursString = oHours.open + ' - ' + oHours.close;
+        }
+
         return (
             <TouchableOpacity
                 activeOpacity={0.7}
@@ -53,11 +59,11 @@ export default class StoreListItem extends PureComponent {
                 <View style={styles.cardContainer}>
                     <ImageBackground
                         style={styles.bannerImage}
-                        source={{uri: 'data:image/png;base64,' + banner}}>
+                        source={{uri: banner || ''}}>
                         <View style={styles.bannerTextBarContainer}>
                             <View style={styles.iconContainer}>
                                 <Image style={styles.logoImage} resizeMode='contain'
-                                       source={{uri: 'data:image/png;base64,' + logo}}/>
+                                       source={{uri: logo || ''}}/>
                             </View>
                         </View>
                     </ImageBackground>
@@ -68,10 +74,8 @@ export default class StoreListItem extends PureComponent {
                         <View style={styles.contentTextContainer}>
                             <Text
                                 style={styles.mainText}>{name}</Text>
-                            {oHours &&
                             <Text
-                                style={styles.subText}>{oHours.open + ' - ' + oHours.close}</Text>
-                            }
+                                style={styles.subText}>{oHoursString}</Text>
                         </View>
                         <View style={styles.rightContainer}>
                             <Text

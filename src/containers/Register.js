@@ -22,6 +22,7 @@ import Actions from '../actions/Actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import Helpers from '../api/Helpers';
 
 const window = Dimensions.get('window');
 const IMAGE_HEIGHT = window.width / 4;
@@ -96,14 +97,14 @@ class RegisterScreen extends Component {
         ]).start();
     }
 
-    termsOfService = strings('register.terms_of_service');
-    privacyPolicy = strings('register.privacy_policy');
+    termsOfServiceVersion = Helpers.termsOfServiceVersion;
+    privacyPolicyVersion = Helpers.privacyPolicyVersion;
 
     onRegisterPress = () => {
         Keyboard.dismiss();
         const {username, password, confirmPassword, acceptedTermsOfService, acceptedPrivacyPolicy} = this.state;
 
-        this.props.actions.register(username, password, username, confirmPassword, acceptedTermsOfService, this.termsOfService, acceptedPrivacyPolicy, this.privacyPolicy);
+        this.props.actions.register(username, password, username, confirmPassword, acceptedTermsOfService, this.termsOfServiceVersion, acceptedPrivacyPolicy, this.privacyPolicyVersion);
     };
 
     closeTermsOfServiceModal = () => {

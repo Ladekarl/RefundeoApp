@@ -43,7 +43,7 @@ export default class RefundCaseListItem extends Component {
 
     _getRefundCaseIcon = (refundCase) => {
         return <Image style={styles.documentationIcon} resizeMode='contain'
-                      source={{uri: 'data:image/png;base64,' + refundCase.merchant.logo}}/>;
+                      source={{uri: refundCase.merchant.logo || ''}}/>;
     };
 
     _handlePress = () => {
