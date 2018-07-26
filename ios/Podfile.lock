@@ -13,24 +13,24 @@ PODS:
     - FBSDKCoreKit
   - FBSDKShareKit (4.33.0):
     - FBSDKCoreKit (~> 4.33.0)
-  - Firebase/Core (5.0.0):
+  - Firebase/Core (5.3.0):
     - Firebase/CoreOnly
-    - FirebaseAnalytics (= 5.0.0)
-  - Firebase/CoreOnly (5.0.0):
-    - FirebaseCore (= 5.0.0)
-  - Firebase/Messaging (5.0.0):
+    - FirebaseAnalytics (= 5.0.1)
+  - Firebase/CoreOnly (5.3.0):
+    - FirebaseCore (= 5.0.4)
+  - Firebase/Messaging (5.3.0):
     - Firebase/CoreOnly
-    - FirebaseMessaging (= 3.0.0)
-  - FirebaseAnalytics (5.0.0):
+    - FirebaseMessaging (= 3.0.2)
+  - FirebaseAnalytics (5.0.1):
     - FirebaseCore (~> 5.0)
     - FirebaseInstanceID (~> 3.0)
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
     - nanopb (~> 0.3)
-  - FirebaseCore (5.0.0):
+  - FirebaseCore (5.0.4):
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
-  - FirebaseInstanceID (3.0.0):
+  - FirebaseInstanceID (3.1.1):
     - FirebaseCore (~> 5.0)
-  - FirebaseMessaging (3.0.0):
+  - FirebaseMessaging (3.0.2):
     - FirebaseCore (~> 5.0)
     - FirebaseInstanceID (~> 3.0)
     - GoogleToolboxForMac/Logger (~> 2.1)
@@ -71,7 +71,7 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
-  - Protobuf (3.5.0)
+  - Protobuf (3.6.0)
   - React (0.56.0):
     - React/Core (= 0.56.0)
   - react-native-camera (1.1.4):
@@ -151,8 +151,8 @@ DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBSDKLoginKit
   - FBSDKShareKit
-  - Firebase/Core
-  - Firebase/Messaging
+  - Firebase/Core (~> 5.3.0)
+  - Firebase/Messaging (~> 5.3.0)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - Google-Maps-iOS-Utils
@@ -235,19 +235,19 @@ SPEC CHECKSUMS:
   DoubleConversion: a9706f16e388b53ff12cca34473428ee29746a26
   FBSDKCoreKit: 572b047a7e029bc44542bcf8a59414e7ff2b543e
   FBSDKLoginKit: 88cb456349cfb3b554427ce4f8b43729d85dfb40
-  FBSDKShareKit: b7b5002833a4104fbecad75e8e4e082e91c7a08a
-  Firebase: 4bd804448ab2596794698773d41520a0af101e65
-  FirebaseAnalytics: 19812b49fa5f283dd6b23edf8a14b5d477029ab8
-  FirebaseCore: e46e4babb9de298fb2f736958edcc6da1dc60d73
-  FirebaseInstanceID: 83e0040351565df711a5db3d8ebe5ea21aca998a
-  FirebaseMessaging: f2360a966ecfb0d14facf0fbdf306efc2df0ddbe
+  FBSDKShareKit: 1869cb24db2cea90666a50cb9d568deb38e2d16e
+  Firebase: 68afeeb05461db02d7c9e3215cda28068670f4aa
+  FirebaseAnalytics: b3628aea54c50464c32c393fb2ea032566e7ecc2
+  FirebaseCore: 62f1b792a49bb9e8b4073f24606d2c93ffc352f0
+  FirebaseInstanceID: f3f0657372592ecdfdfe2cac604a5a75758376a6
+  FirebaseMessaging: 6894b8fe0a0cf26c3b13dad729f1131654ae0bdb
   Folly: c89ac2d5c6ab169cd7397ef27485c44f35f742c7
   glog: b3b0330915eccea41c5cc9731a77cf564a9be5ea
   Google-Maps-iOS-Utils: c32891ff472eaaa1fca032beedafa1a013af7875
   GoogleMaps: c087b8e5dfe87ca6ebf59adb9b4894a4146bec4f
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
+  Protobuf: 0fc0ad8bec688b2a3017a139953e01374fedbd5f
   React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
   react-native-camera: ab22041dcf0403d88f2ae4b9ea3ed2644e680423
   react-native-document-picker: e7934f6a3c898a1b62fa68b1f09371beef6ac51a
@@ -260,6 +260,6 @@ SPEC CHECKSUMS:
   RNI18n: 46b8694063fbd699f2c06a4dc8e835b3176763b1
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: 677d4a1e5182c1f3e4b5ef6b60106426345c028b
+PODFILE CHECKSUM: aa5b1fb2c994ce5920972b6d9ed660bbac508d26
 
 COCOAPODS: 1.5.2
