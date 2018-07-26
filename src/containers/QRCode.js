@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {View, StyleSheet, Platform, Image, Text} from 'react-native';
+import {View, StyleSheet, Platform, Image} from 'react-native';
 import {bindActionCreators} from 'redux';
 import Actions from '../actions/Actions';
-import Icon from 'react-native-fa-icons';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 import {strings} from '../shared/i18n';
+import CustomText from '../components/CustomText';
 
 class QRCode extends Component {
 
@@ -20,12 +20,12 @@ class QRCode extends Component {
             if (Platform.OS === 'ios') {
                 return (
                     <View style={styles.tabBarContainerIOs}>
-                        <Text style={[styles.tabBarIconIOs, {color: newTintColor}]}>{strings('qr_code.id')}</Text>
+                        <CustomText style={[styles.tabBarIconIOs, {color: newTintColor}]}>{strings('qr_code.id')}</CustomText>
                     </View>
                 );
             } else {
                 return (
-                    <Text style={[styles.tabBarIconAndroid, {color: tintColor}]}>{strings('qr_code.id')}</Text>
+                    <CustomText style={[styles.tabBarIconAndroid, {color: tintColor}]}>{strings('qr_code.id')}</CustomText>
                 );
             }
         }
@@ -36,13 +36,13 @@ class QRCode extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.topContainer}>
-                    <Text style={styles.topText}>{strings('qr_code.my_id')}</Text>
+                    <CustomText style={styles.topText}>{strings('qr_code.my_id')}</CustomText>
                 </View>
                 <View style={styles.imageContainer}>
                     <Image style={styles.qrCode} source={{uri: 'data:image/png;base64,' + user.qrCode}}/>
                 </View>
                 <View style={styles.bottomContainer}>
-                    <Text style={styles.bottomText}>{strings('qr_code.show_this')}</Text>
+                    <CustomText style={styles.bottomText}>{strings('qr_code.show_this')}</CustomText>
                 </View>
             </View>
         );

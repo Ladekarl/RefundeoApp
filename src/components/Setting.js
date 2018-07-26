@@ -1,10 +1,15 @@
 import React, {PureComponent} from 'react';
 import {
-    StyleSheet, Text, TouchableOpacity, View, ViewPropTypes
+    StyleSheet,
+    TouchableOpacity,
+    View,
+    ViewPropTypes,
+    Text
 } from 'react-native';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-fa-icons';
 import colors from '../shared/colors';
+import CustomText from './CustomText';
 
 export default class Setting extends PureComponent {
 
@@ -44,10 +49,10 @@ export default class Setting extends PureComponent {
                     {required && !value &&
                     <Icon name='exclamation-circle' style={styles.requiredIcon}/>
                     }
-                    <Text style={[styles.leftText, labelStyle]}>{label}</Text>
+                    <CustomText style={[styles.leftText, labelStyle]}>{label}</CustomText>
                 </View>
                 {value &&
-                <Text style={styles.rightText}>{value}</Text>
+                <CustomText style={styles.rightText}>{value}</CustomText>
                 }
             </TouchableOpacity>
         );

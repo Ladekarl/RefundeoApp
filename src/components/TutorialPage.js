@@ -1,7 +1,8 @@
 import React, {PureComponent} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, Platform} from 'react-native';
+import {StyleSheet, TouchableOpacity, View, Platform} from 'react-native';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
+import CustomText from './CustomText';
 
 export default class TutorialPage extends PureComponent {
 
@@ -26,12 +27,12 @@ export default class TutorialPage extends PureComponent {
         return (
             <View style={styles.container}>
                 <View style={[styles.bottomContainer, {backgroundColor: contentColor}]}>
-                    <Text style={[styles.headlineText, {color: headlineColor}]}>
+                    <CustomText style={[styles.headlineText, {color: headlineColor}]}>
                         {headline}
-                    </Text>
-                    <Text style={[styles.text,  {color: textColor}]}>
+                    </CustomText>
+                    <CustomText style={[styles.text,  {color: textColor}]}>
                         {text}
-                    </Text>
+                    </CustomText>
                 </View>
                 {icon &&
                 <TouchableOpacity disabled={!onIconPress} style={styles.logoButtonContainer} onPress={onIconPress}>

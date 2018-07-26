@@ -6,9 +6,7 @@ import {
     Platform,
     ScrollView,
     StyleSheet,
-    Text,
     Dimensions,
-    TextInput,
     TouchableOpacity,
     View
 } from 'react-native';
@@ -22,6 +20,8 @@ import PropTypes from 'prop-types';
 import ModalScreen from '../components/Modal';
 import SignatureCapture from 'react-native-signature-capture';
 import Orientation from 'react-native-orientation';
+import CustomText from '../components/CustomText';
+import CustomTextInput from '../components/CustomTextInput';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -56,7 +56,7 @@ class ScannerScreen extends Component {
         this.state = this.initialState;
     }
 
-    componentWillUpdate() {
+    UNSAFE_componentWillUpdate() {
         this.reactivateQrCodeScanner();
     }
 
@@ -198,16 +198,16 @@ class ScannerScreen extends Component {
                     }
                     topContent={
                         <View style={styles.cameraContentContainer}>
-                            <Text style={styles.centerTopText}>
+                            <CustomText style={styles.centerTopText}>
                                 {strings('scanner.top_text')}
-                            </Text>
+                            </CustomText>
                         </View>
                     }
                     bottomContent={
                         <View style={styles.cameraContentContainer}>
-                            <Text style={styles.centerBottomText}>
+                            <CustomText style={styles.centerBottomText}>
                                 {error}
-                            </Text>
+                            </CustomText>
                         </View>
                     }
                     cameraStyle={styles.cameraStyle}
@@ -225,8 +225,8 @@ class ScannerScreen extends Component {
                     onSubmit={this.closeSuccessModal}
                     visible={state.navigation.modal['createRefundSuccessModal'] || false}>
                     <View>
-                        <Text
-                            style={styles.headlineText}>{strings('scanner.create_refund_success')}</Text>
+                        <CustomText
+                            style={styles.headlineText}>{strings('scanner.create_refund_success')}</CustomText>
                     </View>
                 </ModalScreen>
                 <Modal
@@ -236,8 +236,8 @@ class ScannerScreen extends Component {
                     supportedOrientations={['portrait', 'landscape']}
                     visible={signatureModalOpen || false}>
                     <View style={styles.signRotate}>
-                        <Text
-                            style={styles.signatureText}>{customerSignature ? strings('scanner.merchant_signature') : strings('scanner.customer_signature')}</Text>
+                        <CustomText
+                            style={styles.signatureText}>{customerSignature ? strings('scanner.merchant_signature') : strings('scanner.customer_signature')}</CustomText>
                         <SignatureCapture
                             style={styles.signature}
                             ref={ref => this.sign = ref}
@@ -252,14 +252,14 @@ class ScannerScreen extends Component {
                                 onPress={() => {
                                     this.saveSign();
                                 }}>
-                                <Text style={styles.buttonText}>{strings('scanner.save')}</Text>
+                                <CustomText style={styles.buttonText}>{strings('scanner.save')}</CustomText>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={styles.buttonStyle}
                                 onPress={() => {
                                     this.resetSign();
                                 }}>
-                                <Text style={styles.buttonText}>{strings('scanner.reset')}</Text>
+                                <CustomText style={styles.buttonText}>{strings('scanner.reset')}</CustomText>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -272,12 +272,12 @@ class ScannerScreen extends Component {
                     fullScreen={true}
                     onCancel={this.backModal}>
                     <ScrollView contentContainerStyle={styles.modalContainer}>
-                        <Text style={styles.headlineText}>{strings('scanner.customer')}</Text>
-                        <Text
-                            style={styles.modalInput}>{state.otherUser.firstName + ' ' + state.otherUser.lastName}</Text>
-                        <Text style={styles.modalInput}>{state.otherUser.email}</Text>
-                        <Text style={styles.headlineText}>{strings('scanner.amount')}</Text>
-                        <TextInput
+                        <CustomText style={styles.headlineText}>{strings('scanner.customer')}</CustomText>
+                        <CustomText
+                            style={styles.modalInput}>{state.otherUser.firstName + ' ' + state.otherUser.lastName}</CustomText>
+                        <CustomText style={styles.modalInput}>{state.otherUser.email}</CustomText>
+                        <CustomText style={styles.headlineText}>{strings('scanner.amount')}</CustomText>
+                        <CustomTextInput
                             ref={(input) => this.modalTextInput = input}
                             style={styles.modalInput}
                             value={this.state.amount}
@@ -295,8 +295,8 @@ class ScannerScreen extends Component {
                             onSubmitEditing={this.focusSecondTextInput}
                             blurOnSubmit={false}
                         />
-                        <Text style={styles.headlineText}>{strings('scanner.receipt_number')}</Text>
-                        <TextInput
+                        <CustomText style={styles.headlineText}>{strings('scanner.receipt_number')}</CustomText>
+                        <CustomTextInput
                             ref={(input) => this.secondTextInput = input}
                             style={styles.modalInput}
                             value={this.state.receiptNumber}
@@ -313,7 +313,7 @@ class ScannerScreen extends Component {
                             editable={true}
                             returnKeyType={'done'}
                         />
-                        <Text style={styles.modalInputErrorText}>{this.state.modalInputError}</Text>
+                        <CustomText style={styles.modalInputErrorText}>{this.state.modalInputError}</CustomText>
                     </ScrollView>
                 </ModalScreen>
             </View>

@@ -1,10 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, Text, Slider, Switch, Platform, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Slider, Switch, Platform, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import colors from '../shared/colors';
 import {strings} from '../shared/i18n';
 import Icon from 'react-native-fa-icons';
 import geolib from 'geolib';
+import CustomText from './CustomText';
 
 export default class StoreFilter extends React.PureComponent {
 
@@ -112,8 +113,8 @@ export default class StoreFilter extends React.PureComponent {
                                     style={filterTagValue.key === t.key ? styles.selectedFilterTag : styles.filterTag}
                                     key={t.key}
                                     onPress={() => this.onTagPress(t)}>
-                                    <Text
-                                        style={filterTagValue.key === t.key ? styles.selectedFilterTagText : styles.filterTagText}>{tagText}</Text>
+                                    <CustomText
+                                        style={filterTagValue.key === t.key ? styles.selectedFilterTagText : styles.filterTagText}>{tagText}</CustomText>
                                 </TouchableOpacity>;
                             }
                         })
@@ -159,11 +160,11 @@ export default class StoreFilter extends React.PureComponent {
         return (
             <View style={styles.filterContainer}>
                 <View style={styles.filterRowContainerNoBorder}>
-                    <Text style={styles.filterTitle}>
+                    <CustomText style={styles.filterTitle}>
                         {strings('stores.open_hours_filter')}
-                    </Text>
+                    </CustomText>
                     <View style={styles.filterSwitchContainer}>
-                        <Text style={styles.filterSwitchText}>{strings('stores.open_stores_filter')}</Text>
+                        <CustomText style={styles.filterSwitchText}>{strings('stores.open_stores_filter')}</CustomText>
                         <Switch
                             value={this.state.filterOnlyOpenValue}
                             tintColor={Platform.OS === 'ios' ? colors.activeTabColor : undefined}
@@ -173,12 +174,12 @@ export default class StoreFilter extends React.PureComponent {
                     </View>
                 </View>
                 <View style={styles.filterRowContainer}>
-                    <Text style={styles.filterTitle}>
+                    <CustomText style={styles.filterTitle}>
                         {strings('stores.distance')}
-                    </Text>
-                    <Text style={styles.filterSliderText}>
+                    </CustomText>
+                    <CustomText style={styles.filterSliderText}>
                         {distanceValue}
-                    </Text>
+                    </CustomText>
                     <View style={styles.filterSliderContainer}>
                         <Icon name='car' style={styles.filterIcon}/>
                         <Slider
@@ -195,11 +196,11 @@ export default class StoreFilter extends React.PureComponent {
                     </View>
                 </View>
                 <View style={styles.filterRowContainer}>
-                    <Text style={styles.filterTitle}>
+                    <CustomText style={styles.filterTitle}>
                         {strings('stores.refund_percentage_filter')}
-                    </Text>
-                    <Text style={styles.filterSliderText}>
-                        {this.state.filterRefundSliderValue + ' %'}</Text>
+                    </CustomText>
+                    <CustomText style={styles.filterSliderText}>
+                        {this.state.filterRefundSliderValue + ' %'}</CustomText>
                     <View style={styles.filterSliderContainer}>
                         <Icon name='money' style={styles.filterIcon}/>
                         <Slider

@@ -2,7 +2,6 @@ import React, {PureComponent} from 'react';
 import {Image, Platform, StyleSheet, Dimensions} from 'react-native';
 import colors from '../shared/colors';
 import Icon from 'react-native-fa-icons';
-
 import Swiper from 'react-native-swiper';
 import TutorialPage from './TutorialPage';
 import {strings} from '../shared/i18n';

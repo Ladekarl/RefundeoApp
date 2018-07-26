@@ -1,8 +1,9 @@
 import React, {PureComponent} from 'react';
-import {Text, View, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 import colors from '../shared/colors';
 import {strings} from '../shared/i18n';
 import Icon from 'react-native-fa-icons';
+import CustomText from '../components/CustomText';
 
 export default class Contact extends PureComponent {
 
@@ -25,15 +26,15 @@ export default class Contact extends PureComponent {
                 </View>
                 <View style={styles.bottomContainer}>
                     <View style={styles.sectionHeaderTopContainer}>
-                        <Text style={styles.sectionHeaderText}>{strings('help.support')}</Text>
+                        <CustomText style={styles.sectionHeaderText}>{strings('help.support')}</CustomText>
                     </View>
                     <View style={styles.rowContainer}>
                         <Icon name='phone' style={styles.leftText}/>
-                        <Text style={styles.rightText}>(+45) 89 88 14 90</Text>
+                        <CustomText style={styles.rightText}>(+45) 89 88 14 90</CustomText>
                     </View>
                     <View style={styles.rowContainer}>
                         <Icon name='envelope' style={styles.leftText}/>
-                        <Text style={styles.rightText}>contact@refundeo.com</Text>
+                        <CustomText style={styles.rightText}>contact@refundeo.com</CustomText>
                     </View>
                 </View>
             </View>

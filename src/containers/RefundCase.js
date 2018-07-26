@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {
-    Text,
     View,
     StyleSheet,
     ScrollView,
@@ -8,9 +7,10 @@ import {
     Image,
     Platform,
     TouchableOpacity,
-    RefreshControl, TextInput, ActivityIndicator
+    RefreshControl,
+    ActivityIndicator
 } from 'react-native';
-import {formatDate, strings} from '../shared/i18n';
+import {strings} from '../shared/i18n';
 import Actions from '../actions/Actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -20,6 +20,7 @@ import Icon from 'react-native-fa-icons';
 import ModalScreen from '../components/Modal';
 import Validation from '../shared/Validation';
 import LocalStorage from '../storage';
+import CustomText from '../components/CustomText';
 
 class RefundCase extends Component {
 
@@ -199,14 +200,14 @@ class RefundCase extends Component {
         const isRequested = refundCase.isRequested;
 
         if (isAccepted) {
-            return <Text style={styles.approvedText}>{strings('refund_case.approved')}</Text>;
+            return <CustomText style={styles.approvedText}>{strings('refund_case.approved')}</CustomText>;
         }
         else if (isRejected) {
-            return <Text style={styles.rejectedText}>{strings('refund_case.denied')}</Text>;
+            return <CustomText style={styles.rejectedText}>{strings('refund_case.denied')}</CustomText>;
         }
         else if (isRequested) {
-            return <Text
-                style={styles.requestedText}>{strings('refund_case.pending_approval')}</Text>;
+            return <CustomText
+                style={styles.requestedText}>{strings('refund_case.pending_approval')}</CustomText>;
         }
     };
 
@@ -271,23 +272,23 @@ class RefundCase extends Component {
                 <View style={styles.bannerTextBarContainer}>
                     <View style={styles.bannerContentContainer}>
                         <View style={styles.bannerColumnContainer}>
-                            <Text style={styles.leftText}>{strings('refund_case.amount')}</Text>
-                            <Text style={styles.leftText}>{strings('refund_case.refund_amount')}</Text>
-                            <Text style={styles.leftText}>{strings('refund_case.receipt_number')}</Text>
+                            <CustomText style={styles.leftText}>{strings('refund_case.amount')}</CustomText>
+                            <CustomText style={styles.leftText}>{strings('refund_case.refund_amount')}</CustomText>
+                            <CustomText style={styles.leftText}>{strings('refund_case.receipt_number')}</CustomText>
                         </View>
                         <View style={styles.bannerColumnContainer}>
-                            <Text
-                                style={styles.contentText}>{refundCase.merchant.currency + ' ' + refundCase.amount.toFixed(2).replace(/[.,]00$/, '')}</Text>
-                            <Text
-                                style={styles.contentText}>{refundCase.merchant.currency + ' ' + refundCase.refundAmount.toFixed(2).replace(/[.,]00$/, '')}</Text>
-                            <Text style={styles.contentText}>{refundCase.receiptNumber}</Text>
+                            <CustomText
+                                style={styles.contentText}>{refundCase.merchant.currency + ' ' + refundCase.amount.toFixed(2).replace(/[.,]00$/, '')}</CustomText>
+                            <CustomText
+                                style={styles.contentText}>{refundCase.merchant.currency + ' ' + refundCase.refundAmount.toFixed(2).replace(/[.,]00$/, '')}</CustomText>
+                            <CustomText style={styles.contentText}>{refundCase.receiptNumber}</CustomText>
                         </View>
                     </View>
                     {!refundCase.isRequested &&
                     <View style={styles.emailContainer}>
                         <TouchableOpacity style={styles.emailButtonContainer} onPress={this.onEmailPress}>
                             <Icon style={styles.emailIcon} name='share-square'/>
-                            <Text style={styles.sendText}>{strings('refund_case.send_form')}</Text>
+                            <CustomText style={styles.sendText}>{strings('refund_case.send_form')}</CustomText>
                         </TouchableOpacity>
                     </View>
                     }
@@ -297,7 +298,7 @@ class RefundCase extends Component {
                     <View style={styles.uploadImageContainer}>
                         {vatImage}
                     </View>
-                    <Text style={styles.buttonText}>{strings('refund_case.upload_tax_free_form')}</Text>
+                    <CustomText style={styles.buttonText}>{strings('refund_case.upload_tax_free_form')}</CustomText>
                     <Icon style={styles.angleRightIcon} name='angle-right'/>
                 </TouchableOpacity>
                 }
@@ -306,7 +307,7 @@ class RefundCase extends Component {
                     <View style={styles.uploadImageContainer}>
                         {receiptImage}
                     </View>
-                    <Text style={styles.buttonText}>{strings('refund_case.upload_receipt')}</Text>
+                    <CustomText style={styles.buttonText}>{strings('refund_case.upload_receipt')}</CustomText>
                     <Icon style={styles.angleRightIcon} name='angle-right'/>
                 </TouchableOpacity>
                 }
@@ -314,7 +315,7 @@ class RefundCase extends Component {
                 <TouchableOpacity disabled={fetchingRequestRefund || fetchingDocumentation || fetchingRefundCases}
                                   style={styles.submitButton}
                                   onPress={this.onRequestRefundPress}>
-                    <Text style={styles.submitButtonText}>{strings('refund_case.send_documentation')}</Text>
+                    <CustomText style={styles.submitButtonText}>{strings('refund_case.send_documentation')}</CustomText>
                 </TouchableOpacity>
                 }
                 {refundCase.isRequested &&
@@ -330,7 +331,7 @@ class RefundCase extends Component {
                     onSubmit={this.onModalSubmit}
                     visible={navigation.modal['refundCaseModal'] || false}>
                     <View style={styles.modalContainer}>
-                        <Text style={styles.modalText}>{this.state.modalText}</Text>
+                        <CustomText style={styles.modalText}>{this.state.modalText}</CustomText>
                     </View>
                 </ModalScreen>
                 <ModalScreen
@@ -340,7 +341,7 @@ class RefundCase extends Component {
                     onSubmit={this.onEmailModalSubmit}
                     visible={navigation.modal['emailModal'] || false}>
                     <View style={styles.modalContainer}>
-                        <TextInput
+                        <CustomTextInput
                             style={styles.modalInput}
                             value={this.state.email}
                             onChangeText={this.changeEmail}
@@ -358,8 +359,8 @@ class RefundCase extends Component {
                             autoCorrect={false}
                             blurOnSubmit={false}
                         />
-                        <Text
-                            style={!this.state.email || !this.state.isValidEmail ? styles.modalInputErrorText : styles.hidden}>{strings('refund_case.invalid_email')}</Text>
+                        <CustomText
+                            style={!this.state.email || !this.state.isValidEmail ? styles.modalInputErrorText : styles.hidden}>{strings('refund_case.invalid_email')}</CustomText>
                     </View>
                 </ModalScreen>
                 {(fetchingRequestRefund || fetchingDocumentation || fetchingSendEmail) &&

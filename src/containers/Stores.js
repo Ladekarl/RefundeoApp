@@ -2,7 +2,7 @@ import {connect} from 'react-redux';
 import Actions from '../actions/Actions';
 import {bindActionCreators} from 'redux';
 import React, {Component} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {strings} from '../shared/i18n';
 import PropTypes from 'prop-types';
 import colors from '../shared/colors';
@@ -11,6 +11,7 @@ import {Callout, Marker} from 'react-native-maps';
 import ClusteredMapView from 'react-native-maps-super-cluster';
 import StoresList from '../components/StoresList';
 import Location from '../shared/Location';
+import CustomText from '../components/CustomText';
 
 class StoresScreen extends Component {
 
@@ -69,9 +70,9 @@ class StoresScreen extends Component {
         return (
             <Marker identifier={'cluster-' + cluster.clusterId} coordinate={cluster.coordinate} onPress={onPress}>
                 <View style={styles.clusterContainer}>
-                    <Text style={styles.clusterText}>
+                    <CustomText style={styles.clusterText}>
                         {cluster.pointCount}
-                    </Text>
+                    </CustomText>
                 </View>
             </Marker>
         );
@@ -83,7 +84,7 @@ class StoresScreen extends Component {
                     style={styles.markerContainer} coordinate={merchant.location}>
                 <Callout onPress={() => this.onCalloutPress(merchant)}>
                     <View style={styles.calloutContainer}>
-                        <Text style={styles.calloutText}>{merchant.companyName}</Text>
+                        <CustomText style={styles.calloutText}>{merchant.companyName}</CustomText>
                         <Icon style={styles.calloutIcon} name='angle-right'/>
                     </View>
                 </Callout>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Platform, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-navigation';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
@@ -11,6 +11,7 @@ import {hasDrawer} from '../navigation/NavigationConfiguration';
 import ModalScreen from '../components/Modal';
 import {strings} from '../shared/i18n';
 import StoreFilter from '../components/StoreFilter';
+import CustomText from '../components/CustomText';
 
 class HeaderScreen extends Component {
 
@@ -77,7 +78,7 @@ class HeaderScreen extends Component {
                     </TouchableOpacity>
                     }
                     {navigation.currentRoute !== 'Stores' &&
-                    <Text style={styles.headerText}>Refundeo</Text>
+                    <CustomText style={styles.headerText}>Refundeo</CustomText>
                     }
                     {navigation.currentRoute === 'Stores' &&
                     <View style={styles.overlayContainer}>

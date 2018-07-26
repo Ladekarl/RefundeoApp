@@ -3,7 +3,6 @@ import {
     Modal,
     Picker,
     StyleSheet,
-    Text,
     TouchableOpacity,
     View,
     Platform,
@@ -15,6 +14,7 @@ import PropTypes from 'prop-types';
 import colors from '../shared/colors';
 import {strings} from '../shared/i18n';
 import Icon from 'react-native-fa-icons';
+import CustomText from '../components/CustomText';
 
 export default class ModalScreen extends PureComponent {
 
@@ -100,7 +100,7 @@ export default class ModalScreen extends PureComponent {
                                 </TouchableOpacity>}
                                 {noCancelButton &&
                                 <View style={styles.emptyContainer}/>}
-                                <Text style={styles.modalTitleText}>{modalTitle}</Text>
+                                <CustomText style={styles.modalTitleText}>{modalTitle}</CustomText>
                                 <View style={styles.emptyContainer}/>
                             </View>
                         </SafeAreaView>
@@ -123,7 +123,7 @@ export default class ModalScreen extends PureComponent {
                             <TouchableOpacity
                                 style={styles.modalSubmitButton}
                                 onPress={onSubmit}>
-                                <Text style={styles.modalButtonText}>{strings('modal.ok')}</Text>
+                                <CustomText style={styles.modalButtonText}>{strings('modal.ok')}</CustomText>
                             </TouchableOpacity>}
                         </View>
                         }

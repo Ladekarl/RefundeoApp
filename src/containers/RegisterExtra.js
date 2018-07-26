@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import colors from '../shared/colors';
 import SettingsScreen from './Settings';
 import Actions from '../actions/Actions';
@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {strings} from '../shared/i18n';
 import Validation from '../shared/Validation';
+import CustomText from '../components/CustomText';
 
 class RegisterExtraScreen extends Component {
 
@@ -52,7 +53,7 @@ class RegisterExtraScreen extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.topContainer}>
-                    <Text style={styles.topText}>{strings('register.more_information')}</Text>
+                    <CustomText style={styles.topText}>{strings('register.more_information')}</CustomText>
                 </View>
                 <View style={styles.settingsContainer}>
                     {!!state.user.id &&
@@ -63,12 +64,12 @@ class RegisterExtraScreen extends Component {
                     />
                     }
                 </View>
-                <Text style={styles.errorText}>{this.state.error}</Text>
+                <CustomText style={styles.errorText}>{this.state.error}</CustomText>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity style={styles.loginButton}
                                       onPress={this.onLoginPress}
                                       disabled={state.fetching}>
-                        <Text style={styles.buttonText}>{strings('login.login_button')}</Text>
+                        <CustomText style={styles.buttonText}>{strings('login.login_button')}</CustomText>
                     </TouchableOpacity>
                 </View>
             </View>

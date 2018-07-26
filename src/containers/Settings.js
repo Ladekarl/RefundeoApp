@@ -3,13 +3,11 @@ import {
     Platform,
     ScrollView,
     StyleSheet,
-    Text,
-    TextInput,
     TouchableOpacity,
     View,
     Switch,
     Keyboard,
-    RefreshControl, WebView
+    WebView
 } from 'react-native';
 import colors from '../shared/colors';
 import {strings} from '../shared/i18n';
@@ -23,6 +21,8 @@ import Icon from 'react-native-fa-icons';
 import Setting from '../components/Setting';
 import Validation from '../shared/Validation';
 import Helpers from '../api/Helpers';
+import CustomText from '../components/CustomText';
+import CustomTextInput from '../components/CustomTextInput';
 
 class SettingsScreen extends Component {
 
@@ -290,21 +290,15 @@ class SettingsScreen extends Component {
     };
 
     render() {
-        const {state, actions, requiredOnly} = this.props;
+        const {state, requiredOnly} = this.props;
 
         return (
             <ScrollView
                 style={styles.container}
                 keyboardShouldPersistTaps={'always'}
-                refreshControl={
-                    <RefreshControl
-                        tintColor={colors.activeTabColor}
-                        refreshing={state.fetching}
-                        onRefresh={actions.getUser}
-                    />
-                }>
+            >
                 <View style={[styles.sectionHeaderContainer, styles.sectionTopContainer]}>
-                    <Text style={styles.sectionHeaderText}>{strings('settings.profile')}</Text>
+                    <CustomText style={styles.sectionHeaderText}>{strings('settings.profile')}</CustomText>
                 </View>
                 {!state.user.isOauth &&
                 <Setting label={strings('settings.username')} required={true} value={state.user.username}/>
@@ -327,10 +321,10 @@ class SettingsScreen extends Component {
                                 {!state.user.country &&
                                 <Icon name='exclamation-circle' style={styles.requiredIcon}/>
                                 }
-                                <Text style={styles.leftText}>{strings('settings.country')}</Text>
+                                <CustomText style={styles.leftText}>{strings('settings.country')}</CustomText>
                             </View>
                             {!!state.user.country &&
-                            <Text style={styles.rightText}>{state.user.country}</Text>
+                            <CustomText style={styles.rightText}>{state.user.country}</CustomText>
                             }
                         </View>
                     </CountryPicker>
@@ -346,7 +340,7 @@ class SettingsScreen extends Component {
                 }
                 {!requiredOnly &&
                 <View style={styles.sectionHeaderContainer}>
-                    <Text style={styles.sectionHeaderText}>{strings('settings.payment')}</Text>
+                    <CustomText style={styles.sectionHeaderText}>{strings('settings.payment')}</CustomText>
                 </View>
                 }
                 {!requiredOnly &&
@@ -360,7 +354,7 @@ class SettingsScreen extends Component {
                     value={state.user.accountNumber}/>
                 }
                 <View style={styles.sectionHeaderContainer}>
-                    <Text style={styles.sectionHeaderText}>{strings('settings.address')}</Text>
+                    <CustomText style={styles.sectionHeaderText}>{strings('settings.address')}</CustomText>
                 </View>
                 <Setting label={strings('settings.address_street_name')} onPress={this.showStreetNameModal}
                          value={state.user.addressStreetName} required={true}/>
@@ -374,7 +368,7 @@ class SettingsScreen extends Component {
                          value={state.user.addressCountry} required={true}/>
                 {requiredOnly &&
                 <View style={styles.sectionHeaderContainer}>
-                    <Text style={styles.sectionHeaderText}>{strings('settings.legal_privacy')}</Text>
+                    <CustomText style={styles.sectionHeaderText}>{strings('settings.legal_privacy')}</CustomText>
                 </View>
                 }
                 {requiredOnly &&
@@ -383,8 +377,8 @@ class SettingsScreen extends Component {
                         {!state.user.acceptedTermsOfService &&
                         <Icon name='exclamation-circle' style={styles.requiredIcon}/>
                         }
-                        <Text style={styles.leftText}>{strings('register.terms_of_service_1')}</Text>
-                        <Text style={styles.leftButtonText}>{strings('register.terms_of_service_2')}</Text>
+                        <CustomText style={styles.leftText}>{strings('register.terms_of_service_1')}</CustomText>
+                        <CustomText style={styles.leftButtonText}>{strings('register.terms_of_service_2')}</CustomText>
                     </View>
                     <Switch value={state.user.acceptedTermsOfService}
                             tintColor={Platform.OS === 'ios' ? colors.activeTabColor : undefined}
@@ -398,8 +392,8 @@ class SettingsScreen extends Component {
                         {!state.user.acceptedPrivacyPolicy &&
                         <Icon name='exclamation-circle' style={styles.requiredIcon}/>
                         }
-                        <Text style={styles.leftText}>{strings('register.privacy_policy_1')}</Text>
-                        <Text style={styles.leftButtonText}>{strings('register.privacy_policy_2')}</Text>
+                        <CustomText style={styles.leftText}>{strings('register.privacy_policy_1')}</CustomText>
+                        <CustomText style={styles.leftButtonText}>{strings('register.privacy_policy_2')}</CustomText>
                     </View>
                     <Switch value={state.user.acceptedPrivacyPolicy}
                             tintColor={Platform.OS === 'ios' ? colors.activeTabColor : undefined}
@@ -423,7 +417,7 @@ class SettingsScreen extends Component {
                     onSubmit={this.submitFunction}
                     onBack={this.closeModal}>
                     <View style={styles.modalContainer}>
-                        <TextInput
+                        <CustomTextInput
                             ref={(input) => this.modalTextInput = input}
                             style={styles.modalInput}
                             value={this.state.modalValue}
@@ -445,7 +439,7 @@ class SettingsScreen extends Component {
                             blurOnSubmit={false}
                         />
                         {this.state.isChangePassword &&
-                        <TextInput
+                        <CustomTextInput
                             ref={(input) => this.secondTextInput = input}
                             style={styles.modalInput}
                             value={this.state.change}
@@ -465,7 +459,7 @@ class SettingsScreen extends Component {
                             onSubmitEditing={this.focusThirdTextInput}
                         />}
                         {this.state.isChangePassword &&
-                        <TextInput
+                        <CustomTextInput
                             ref={(input) => this.thirdTextInput = input}
                             style={styles.modalInput}
                             value={this.state.change}
@@ -482,8 +476,8 @@ class SettingsScreen extends Component {
                             numberOfLines={1}
                             editable={true}
                         />}
-                        <Text
-                            style={this.state.modalInputError ? styles.modalInputErrorText : styles.hidden}>{this.state.modalInputError}</Text>
+                        <CustomText
+                            style={this.state.modalInputError ? styles.modalInputErrorText : styles.hidden}>{this.state.modalInputError}</CustomText>
                     </View>
                 </ModalScreen>
                 <ModalScreen
@@ -496,7 +490,7 @@ class SettingsScreen extends Component {
                     contentContainerStyle={styles.policyContainer}
                     visible={this.props.state.navigation.modal['termsOfServiceModal'] || false}>
                     <View style={styles.policyContainer}>
-                        <WebView style={styles.policyContainer} source={{html: strings('register.terms_of_service')}}/>
+                        <WebView originWhitelist={['*']} style={styles.policyContainer} source={{html: strings('register.terms_of_service')}}/>
                     </View>
                 </ModalScreen>
                 <ModalScreen
@@ -509,7 +503,7 @@ class SettingsScreen extends Component {
                     fullScreen={true}
                     visible={this.props.state.navigation.modal['privacyPolicyModal'] || false}>
                     <View style={styles.policyContainer}>
-                        <WebView style={styles.policyContainer} source={{html: strings('register.privacy_policy')}}/>
+                        <WebView originWhitelist={['*']} style={styles.policyContainer} source={{html: strings('register.privacy_policy')}}/>
                     </View>
                 </ModalScreen>
             </ScrollView>

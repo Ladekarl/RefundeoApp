@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {AppNavigator} from './navigation/AppNavigator';
-import {View, StyleSheet, NetInfo, Text, Dimensions, Platform} from 'react-native';
+import {View, StyleSheet, NetInfo, Dimensions, Platform} from 'react-native';
 import colors from './shared/colors';
 import NetworkConnection from './shared/NetworkConnection';
 import {strings} from './shared/i18n';
+import CustomText from './components/CustomText';
 
 const {width} = Dimensions.get('window');
 
@@ -39,7 +40,7 @@ export default class Root extends Component {
                 </View>
                 {!this.state.isConnected &&
                 <View style={styles.offlineContainer}>
-                    <Text style={styles.offlineText}>{strings('root.no_connection')}</Text>
+                    <CustomText style={styles.offlineText}>{strings('root.no_connection')}</CustomText>
                 </View>
                 }
             </View>

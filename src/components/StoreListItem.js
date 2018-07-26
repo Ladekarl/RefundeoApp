@@ -1,9 +1,10 @@
 import React, {PureComponent} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, ImageBackground, Image} from 'react-native';
+import {StyleSheet, TouchableOpacity, View, ImageBackground, Image} from 'react-native';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 import geolib from 'geolib';
 import {strings} from '../shared/i18n';
+import CustomText from './CustomText';
 
 export default class StoreListItem extends PureComponent {
 
@@ -69,17 +70,17 @@ export default class StoreListItem extends PureComponent {
                     </ImageBackground>
                     <View style={styles.contentContainer}>
                         <View style={styles.leftContainer}>
-                            <Text style={styles.leftText}>{dist}</Text>
+                            <CustomText style={styles.leftText}>{dist}</CustomText>
                         </View>
                         <View style={styles.contentTextContainer}>
-                            <Text
-                                style={styles.mainText}>{name}</Text>
-                            <Text
-                                style={styles.subText}>{oHoursString}</Text>
+                            <CustomText
+                                style={styles.mainText}>{name}</CustomText>
+                            <CustomText
+                                style={styles.subText}>{oHoursString}</CustomText>
                         </View>
                         <View style={styles.rightContainer}>
-                            <Text
-                                style={styles.rightText}>{strings('stores.refund') + '\n' + (refundPercentage.toFixed(2).replace(/[.,]00$/, '')) + ' %'}</Text>
+                            <CustomText
+                                style={styles.rightText}>{strings('stores.refund') + '\n' + (refundPercentage.toFixed(2).replace(/[.,]00$/, '')) + ' %'}</CustomText>
                         </View>
                     </View>
                 </View>

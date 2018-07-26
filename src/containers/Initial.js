@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ActivityIndicator, Animated, Dimensions, Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ActivityIndicator, Animated, Dimensions, Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import colors from '../shared/colors';
 import Actions from '../actions/Actions';
 import {connect} from 'react-redux';
@@ -9,6 +9,7 @@ import LocalStorage from '../storage';
 import {strings} from '../shared/i18n';
 import {AccessToken, LoginManager} from 'react-native-fbsdk';
 import Pulse from '../components/Pulse';
+import CustomText from '../components/CustomText';
 
 const window = Dimensions.get('window');
 const IMAGE_HEIGHT = 100;
@@ -125,7 +126,7 @@ class InitialScreen extends Component {
                     marginTop: this.state.offsetY
                 }]}>
                     <View style={styles.errorContainer}>
-                        <Text style={styles.errorText}>{facebookLoginError}</Text>
+                        <CustomText style={styles.errorText}>{facebookLoginError}</CustomText>
                     </View>
                     <TouchableOpacity style={styles.facebookButton}
                                       onPress={this.loginFacebook}
@@ -134,20 +135,20 @@ class InitialScreen extends Component {
                             <Image style={styles.facebookIcon}
                                    source={require('../../assets/facebook-icon.png')}/>
                         </View>
-                        <Text style={styles.buttonText}>{strings('register.facebook_button')}</Text>
+                        <CustomText style={styles.buttonText}>{strings('register.facebook_button')}</CustomText>
                         <View style={styles.facebookAligner}/>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.signUpButton}
                                       onPress={this.props.actions.navigateRegister}
                                       disabled={fetching}>
-                        <Text style={styles.buttonText}>{strings('register.register_button')}</Text>
+                        <CustomText style={styles.buttonText}>{strings('register.register_button')}</CustomText>
                     </TouchableOpacity>
                     <View style={styles.alreadyCustomerContainer}>
-                        <Text style={styles.alreadyCustomerText}>{strings('login.already_have_account')}</Text>
+                        <CustomText style={styles.alreadyCustomerText}>{strings('login.already_have_account')}</CustomText>
                         <TouchableOpacity style={styles.loginButton}
                                           onPress={this.props.actions.navigateLogIn}
                                           disabled={fetching}>
-                            <Text style={styles.loginButtonText}>{strings('login.login_button')}</Text>
+                            <CustomText style={styles.loginButtonText}>{strings('login.login_button')}</CustomText>
                         </TouchableOpacity>
                     </View>
                 </Animated.View>

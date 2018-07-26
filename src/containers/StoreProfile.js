@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, ImageBackground, Platform, Image, Text, ScrollView} from 'react-native';
+import {StyleSheet, View, ImageBackground, Platform, Image, ScrollView} from 'react-native';
 import colors from '../shared/colors';
 import {bindActionCreators} from 'redux';
 import Actions from '../actions/Actions';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {strings} from '../shared/i18n';
+import CustomText from '../components/CustomText';
 
 class StoreProfile extends Component {
 
@@ -46,32 +47,32 @@ class StoreProfile extends Component {
                     </ImageBackground>
                     <View style={styles.bannerTextBarContainer}>
                         <View style={styles.bannerColumnContainer}>
-                            <Text style={styles.leftText}>{strings('stores.opening_hours')}</Text>
-                            <Text style={styles.leftText}>{strings('stores.refund_percentage')}</Text>
+                            <CustomText style={styles.leftText}>{strings('stores.opening_hours')}</CustomText>
+                            <CustomText style={styles.leftText}>{strings('stores.refund_percentage')}</CustomText>
                         </View>
                         <View style={styles.bannerColumnContainer}>
-                            <Text
-                                style={styles.contentText}>{oHoursString}</Text>
-                            <Text
-                                style={styles.contentText}>{selectedMerchant.refundPercentage.toFixed(2).replace(/[.,]00$/, '')}</Text>
+                            <CustomText
+                                style={styles.contentText}>{oHoursString}</CustomText>
+                            <CustomText
+                                style={styles.contentText}>{selectedMerchant.refundPercentage.toFixed(2).replace(/[.,]00$/, '')}</CustomText>
                         </View>
                     </View>
                     <View style={styles.descriptionContainer}>
-                        <Text>
+                        <CustomText>
                             {selectedMerchant.description}
-                        </Text>
+                        </CustomText>
                     </View>
                     <View style={styles.bottomContainer}>
-                        <Text style={styles.bottomTitleText}>{strings('stores.address')}</Text>
-                        <Text style={styles.bottomText}>
+                        <CustomText style={styles.bottomTitleText}>{strings('stores.address')}</CustomText>
+                        <CustomText style={styles.bottomText}>
                             {`${selectedMerchant.addressStreetName} ${selectedMerchant.addressStreetNumber}, ${selectedMerchant.addressPostalCode} ${selectedMerchant.addressCity}, ${selectedMerchant.addressCountry}`}
-                        </Text>
+                        </CustomText>
                     </View>
                     <View style={styles.bottomContainer}>
-                        <Text style={styles.bottomTitleText}>{strings('stores.vat_number')}</Text>
-                        <Text style={styles.bottomText}>
+                        <CustomText style={styles.bottomTitleText}>{strings('stores.vat_number')}</CustomText>
+                        <CustomText style={styles.bottomText}>
                             {selectedMerchant.vatNumber}
-                        </Text>
+                        </CustomText>
                     </View>
                 </ScrollView>
             </View>

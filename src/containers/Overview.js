@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {RefreshControl, StyleSheet, View, FlatList, Text, TouchableOpacity, Platform} from 'react-native';
+import {RefreshControl, StyleSheet, View, FlatList, TouchableOpacity, Platform} from 'react-native';
 import Icon from 'react-native-fa-icons';
 import colors from '../shared/colors';
 import {connect} from 'react-redux';
@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import EmptyOverviewScreen from '../components/EmptyOverview';
 import RefundCaseListItem from '../components/RefundCaseListItem';
 import {strings} from '../shared/i18n';
+import CustomText from '../components/CustomText';
 
 class OverviewScreen extends Component {
 
@@ -96,7 +97,8 @@ class OverviewScreen extends Component {
             text = strings('overview.no_approved');
         if (page === 3)
             text = strings('overview.no_rejected');
-        return <View style={styles.emptyContentContainer}><Text style={styles.emptyText}>{text}</Text></View>;
+        return <View style={styles.emptyContentContainer}><CustomText
+            style={styles.emptyText}>{text}</CustomText></View>;
     };
 
     renderHeader = () => {
@@ -105,34 +107,34 @@ class OverviewScreen extends Component {
                 <TouchableOpacity
                     onPress={this.onFirstPress}
                     style={[styles.headerButton, this.state.page === 0 ? styles.activeButton : {}]}>
-                    <Text
+                    <CustomText
                         style={[styles.headerButtonText, this.state.page === 0 ? styles.activeButtonText : {}]}>
                         {strings('overview.new')}
-                    </Text>
+                    </CustomText>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={this.onSecondPress}
                     style={[styles.headerButton, this.state.page === 1 ? styles.activeButton : {}]}>
-                    <Text
+                    <CustomText
                         style={[styles.headerButtonText, this.state.page === 1 ? styles.activeButtonText : {}]}>
                         {strings('overview.pending')}
-                    </Text>
+                    </CustomText>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={this.onThirdPress}
                     style={[styles.headerButton, this.state.page === 2 ? styles.activeButton : {}]}>
-                    <Text
+                    <CustomText
                         style={[styles.headerButtonText, this.state.page === 2 ? styles.activeButtonText : {}]}>
                         {strings('overview.approved')}
-                    </Text>
+                    </CustomText>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={this.onFourthPress}
                     style={[styles.headerButton, this.state.page === 3 ? styles.activeButton : {}]}>
-                    <Text
+                    <CustomText
                         style={[styles.headerButtonText, this.state.page === 3 ? styles.activeButtonText : {}]}>
                         {strings('overview.rejected')}
-                    </Text>
+                    </CustomText>
                 </TouchableOpacity>
             </View>);
     };
@@ -256,4 +258,3 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(OverviewScreen);
-;

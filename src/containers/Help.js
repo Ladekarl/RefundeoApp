@@ -2,12 +2,13 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import Actions from '../actions/Actions';
 import {connect} from 'react-redux';
-import {Text, View, StyleSheet, Image, TouchableOpacity, WebView, ScrollView} from 'react-native';
+import {View, StyleSheet, Image, TouchableOpacity, WebView, ScrollView} from 'react-native';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-fa-icons';
 import {strings} from '../shared/i18n';
 import ModalScreen from '../components/Modal';
+import CustomText from '../components/CustomText';
 
 class Help extends Component {
 
@@ -61,25 +62,25 @@ class Help extends Component {
                 </View>
                 <View style={styles.bottomContainer}>
                     <View style={styles.sectionHeaderTopContainer}>
-                        <Text style={styles.sectionHeaderText}>{strings('help.help')}</Text>
+                        <CustomText style={styles.sectionHeaderText}>{strings('help.help')}</CustomText>
                     </View>
                     <TouchableOpacity style={styles.rowContainer} onPress={this.onContactPress}>
-                        <Text style={styles.leftText}>{strings('help.contact')}</Text>
+                        <CustomText style={styles.leftText}>{strings('help.contact')}</CustomText>
                         <Icon name='angle-right' style={styles.rightText}/>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.rowContainer} onPress={this.onGuidePress}>
-                        <Text style={styles.leftText}>{strings('help.guide')}</Text>
+                        <CustomText style={styles.leftText}>{strings('help.guide')}</CustomText>
                         <Icon name='angle-right' style={styles.rightText}/>
                     </TouchableOpacity>
                     <View style={styles.sectionHeaderContainer}>
-                        <Text style={styles.sectionHeaderText}>{strings('settings.legal_privacy')}</Text>
+                        <CustomText style={styles.sectionHeaderText}>{strings('settings.legal_privacy')}</CustomText>
                     </View>
                     <TouchableOpacity style={styles.rowContainer} onPress={this.openTermsOfServiceModal}>
-                        <Text style={styles.leftText}>{strings('register.terms_of_service_2')}</Text>
+                        <CustomText style={styles.leftText}>{strings('register.terms_of_service_2')}</CustomText>
                         <Icon name='angle-right' style={styles.rightText}/>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.rowContainer} onPress={this.openPrivacyPolicyModal}>
-                        <Text style={styles.leftText}>{strings('register.privacy_policy_2')}</Text>
+                        <CustomText style={styles.leftText}>{strings('register.privacy_policy_2')}</CustomText>
                         <Icon name='angle-right' style={styles.rightText}/>
                     </TouchableOpacity>
                 </View>
@@ -92,7 +93,7 @@ class Help extends Component {
                     contentContainerStyle={styles.policyContainer}
                     visible={this.props.state.navigation.modal['termsOfServiceModal'] || false}>
                     <View style={styles.policyContainer}>
-                        <WebView style={styles.policyContainer} source={{html: strings('register.terms_of_service')}}/>
+                        <WebView originWhitelist={['*']} style={styles.policyContainer} source={{html: strings('register.terms_of_service')}}/>
                     </View>
                 </ModalScreen>
                 <ModalScreen
@@ -104,7 +105,7 @@ class Help extends Component {
                     fullScreen={true}
                     visible={this.props.state.navigation.modal['privacyPolicyModal'] || false}>
                     <View style={styles.policyContainer}>
-                        <WebView style={styles.policyContainer} source={{html: strings('register.privacy_policy')}}/>
+                        <WebView originWhitelist={['*']} style={styles.policyContainer} source={{html: strings('register.privacy_policy')}}/>
                     </View>
                 </ModalScreen>
             </ScrollView>

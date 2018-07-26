@@ -8,8 +8,6 @@ import {
     Platform, ScrollView,
     StyleSheet,
     Switch,
-    Text,
-    TextInput,
     TouchableOpacity,
     View,
     WebView
@@ -23,6 +21,8 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import Helpers from '../api/Helpers';
+import CustomText from '../components/CustomText';
+import CustomTextInput from '../components/CustomTextInput';
 
 const window = Dimensions.get('window');
 const IMAGE_HEIGHT = window.width / 4;
@@ -138,53 +138,53 @@ class RegisterScreen extends Component {
                         <View style={styles.inputContainer}>
                             <View style={[styles.elevatedInputContainer, styles.firstInput]}>
                                 <Icon name='envelope' style={styles.icon}/>
-                                <TextInput style={styles.usernameInput}
-                                           ref={(input) => this.firstInput = input}
-                                           placeholder={strings('login.email_placeholder')}
-                                           autoCapitalize='none'
-                                           textAlignVertical='center'
-                                           editable={!fetching}
-                                           returnKeyType='next'
-                                           keyboardType={'email-address'}
-                                           underlineColorAndroid='transparent'
-                                           autoCorrect={false}
-                                           selectionColor={colors.activeTabColor}
-                                           onSubmitEditing={() => this.secondInput.focus()}
-                                           value={this.state.username}
-                                           onChangeText={username => this.setState({username})}/>
+                                <CustomTextInput style={styles.usernameInput}
+                                                 ref={(input) => this.firstInput = input}
+                                                 placeholder={strings('login.email_placeholder')}
+                                                 autoCapitalize='none'
+                                                 textAlignVertical='center'
+                                                 editable={!fetching}
+                                                 returnKeyType='next'
+                                                 keyboardType={'email-address'}
+                                                 underlineColorAndroid='transparent'
+                                                 autoCorrect={false}
+                                                 selectionColor={colors.activeTabColor}
+                                                 onSubmitEditing={() => this.secondInput.focus()}
+                                                 value={this.state.username}
+                                                 onChangeText={username => this.setState({username})}/>
                             </View>
                             <View style={styles.elevatedInputContainer}>
                                 <Icon name='lock' style={[styles.icon, styles.secondIcon]}/>
-                                <TextInput style={styles.passwordInput}
-                                           ref={(input) => this.secondInput = input}
-                                           secureTextEntry={true}
-                                           textAlignVertical='center'
-                                           editable={!fetching}
-                                           returnKeyType='next'
-                                           autoCapitalize='none'
-                                           underlineColorAndroid='transparent'
-                                           autoCorrect={false}
-                                           selectionColor={colors.activeTabColor}
-                                           onSubmitEditing={() => this.thirdInput.focus()}
-                                           placeholder={strings('login.password_placeholder')}
-                                           value={this.state.password}
-                                           onChangeText={password => this.setState({password})}/>
+                                <CustomTextInput style={styles.passwordInput}
+                                                 ref={(input) => this.secondInput = input}
+                                                 secureTextEntry={true}
+                                                 textAlignVertical='center'
+                                                 editable={!fetching}
+                                                 returnKeyType='next'
+                                                 autoCapitalize='none'
+                                                 underlineColorAndroid='transparent'
+                                                 autoCorrect={false}
+                                                 selectionColor={colors.activeTabColor}
+                                                 onSubmitEditing={() => this.thirdInput.focus()}
+                                                 placeholder={strings('login.password_placeholder')}
+                                                 value={this.state.password}
+                                                 onChangeText={password => this.setState({password})}/>
                             </View>
                             <View style={[styles.elevatedInputContainer, styles.thirdInput]}>
                                 <Icon name='lock' style={[styles.icon, styles.secondIcon]}/>
-                                <TextInput style={styles.passwordInput}
-                                           ref={(input) => this.thirdInput = input}
-                                           secureTextEntry={true}
-                                           textAlignVertical='center'
-                                           editable={!fetching}
-                                           returnKeyType='done'
-                                           autoCapitalize='none'
-                                           underlineColorAndroid='transparent'
-                                           autoCorrect={false}
-                                           selectionColor={colors.activeTabColor}
-                                           placeholder={strings('register.confirm_password_placeholder')}
-                                           value={this.state.confirmPassword}
-                                           onChangeText={confirmPassword => this.setState({confirmPassword})}/>
+                                <CustomTextInput style={styles.passwordInput}
+                                                 ref={(input) => this.thirdInput = input}
+                                                 secureTextEntry={true}
+                                                 textAlignVertical='center'
+                                                 editable={!fetching}
+                                                 returnKeyType='done'
+                                                 autoCapitalize='none'
+                                                 underlineColorAndroid='transparent'
+                                                 autoCorrect={false}
+                                                 selectionColor={colors.activeTabColor}
+                                                 placeholder={strings('register.confirm_password_placeholder')}
+                                                 value={this.state.confirmPassword}
+                                                 onChangeText={confirmPassword => this.setState({confirmPassword})}/>
                             </View>
                             <View style={styles.eulaContainer}>
                                 <Switch disabled={fetching}
@@ -194,13 +194,13 @@ class RegisterScreen extends Component {
                                         onValueChange={acceptedTermsOfService => this.setState({acceptedTermsOfService})}>
                                 </Switch>
                                 <View style={styles.eulaTextContainer}>
-                                    <Text
-                                        style={styles.eulaContainerText}>{strings('register.terms_of_service_1')}</Text>
+                                    <CustomText
+                                        style={styles.eulaContainerText}>{strings('register.terms_of_service_1')}</CustomText>
                                     <TouchableOpacity style={styles.eulaButton}
                                                       onPress={this.openTermsOfServiceModal}
                                                       disabled={fetching}>
-                                        <Text
-                                            style={styles.eulaButtonText}>{strings('register.terms_of_service_2')}</Text>
+                                        <CustomText
+                                            style={styles.eulaButtonText}>{strings('register.terms_of_service_2')}</CustomText>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -212,23 +212,25 @@ class RegisterScreen extends Component {
                                         onValueChange={acceptedPrivacyPolicy => this.setState({acceptedPrivacyPolicy})}>
                                 </Switch>
                                 <View style={styles.eulaTextContainer}>
-                                    <Text style={styles.eulaContainerText}>{strings('register.privacy_policy_1')}</Text>
+                                    <CustomText
+                                        style={styles.eulaContainerText}>{strings('register.privacy_policy_1')}</CustomText>
                                     <TouchableOpacity style={styles.eulaButton}
                                                       onPress={this.openPrivacyPolicyModal}
                                                       disabled={fetching}>
-                                        <Text
-                                            style={styles.eulaButtonText}>{strings('register.privacy_policy_2')}</Text>
+                                        <CustomText
+                                            style={styles.eulaButtonText}>{strings('register.privacy_policy_2')}</CustomText>
                                     </TouchableOpacity>
                                 </View>
                             </View>
                             <View style={styles.errorContainer}>
-                                <Text style={styles.errorText}>{registerError}</Text>
+                                <CustomText style={styles.errorText}>{registerError}</CustomText>
                             </View>
                             <View style={styles.buttonContainer}>
                                 <TouchableOpacity style={styles.registerButton}
                                                   onPress={this.onRegisterPress}
                                                   disabled={fetching}>
-                                    <Text style={styles.buttonText}>{strings('register.register_button')}</Text>
+                                    <CustomText
+                                        style={styles.buttonText}>{strings('register.register_button')}</CustomText>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -249,6 +251,7 @@ class RegisterScreen extends Component {
                         visible={this.props.state.navigation.modal['termsOfServiceModal'] || false}>
                         <View style={styles.policyContainer}>
                             <WebView style={styles.policyContainer}
+                                     originWhitelist={['*']}
                                      source={{html: strings('register.terms_of_service')}}/>
                         </View>
                     </ModalScreen>
@@ -262,7 +265,7 @@ class RegisterScreen extends Component {
                         fullScreen={true}
                         visible={this.props.state.navigation.modal['privacyPolicyModal'] || false}>
                         <View style={styles.policyContainer}>
-                            <WebView style={styles.policyContainer}
+                            <WebView originWhitelist={['*']} style={styles.policyContainer}
                                      source={{html: strings('register.privacy_policy')}}/>
                         </View>
                     </ModalScreen>

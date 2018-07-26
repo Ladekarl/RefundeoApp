@@ -1,6 +1,4 @@
 import {AsyncStorage} from 'react-native';
-// noinspection ES6CheckImport
-import {USER_STORAGE_KEY} from 'react-native-dotenv';
 
 export default class LocalStorage {
 
@@ -9,10 +7,11 @@ export default class LocalStorage {
     static refundCasesStorageString = 'com.refundeo.storage.refundCases';
     static merchantsStorageString = 'com.refundeo.storage.merchants';
     static tagsStorageString = 'com.refundeo.storage.tags';
+    static userStorageString = 'com.refundeo.storage.user';
 
     static async getUser() {
         try {
-            let userJson = await AsyncStorage.getItem(USER_STORAGE_KEY);
+            let userJson = await AsyncStorage.getItem(this.userStorageString);
             return await JSON.parse(userJson) || null;
         } catch (error) {
             return error;
@@ -21,7 +20,7 @@ export default class LocalStorage {
 
     static async setUser(user) {
         try {
-            return await AsyncStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
+            return await AsyncStorage.setItem(this.userStorageString, JSON.stringify(user));
         } catch (error) {
             return error;
         }
@@ -29,7 +28,7 @@ export default class LocalStorage {
 
     static async removeUser() {
         try {
-            return await AsyncStorage.removeItem(USER_STORAGE_KEY);
+            return await AsyncStorage.removeItem(this.userStorageString);
         } catch (error) {
             return error;
         }

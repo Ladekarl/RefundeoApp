@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {Platform, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View} from 'react-native';
+import {
+    Platform,
+    ScrollView,
+    StyleSheet,
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    View
+} from 'react-native';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-fa-icons';
 import colors from '../shared/colors';
@@ -7,6 +14,7 @@ import {strings} from '../shared/i18n';
 import Actions from '../actions/Actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import CustomText from '../components/CustomText';
 
 class DrawerScreen extends Component {
 
@@ -30,29 +38,29 @@ class DrawerScreen extends Component {
                             <View style={styles.headerIconContainer}>
                                 <Icon name='user' style={styles.headerIcon}/>
                             </View>
-                            <Text numberOfLines={2}
-                                  style={styles.headerText}>{`${this.props.state.user.firstName} ${this.props.state.user.lastName}`}</Text>
+                            <CustomText numberOfLines={2}
+                                        style={styles.headerText}>{`${this.props.state.user.firstName} ${this.props.state.user.lastName}`}</CustomText>
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
                 <View style={styles.divider}/>
                 <ScrollView style={styles.drawerItemsContainer}>
                     <TouchableOpacity onPress={actions.navigateDrawerHome}>
-                        <Text style={styles.drawerItemText}>{strings('drawer.home')}</Text>
+                        <CustomText style={styles.drawerItemText}>{strings('drawer.home')}</CustomText>
                     </TouchableOpacity>
                 </ScrollView>
                 <View style={styles.footerContainer}>
                     <TouchableOpacity style={styles.footerIconContainer} onPress={actions.navigateDrawerSettings}>
                         <Icon name='cog' style={styles.footerIcon}/>
-                        <Text>{strings('drawer.settings')}</Text>
+                        <CustomText>{strings('drawer.settings')}</CustomText>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.footerIconContainer} onPress={actions.logout}>
                         <Icon name='sign-out' style={styles.footerIcon}/>
-                        <Text>{strings('drawer.logout')}</Text>
+                        <CustomText>{strings('drawer.logout')}</CustomText>
                     </TouchableOpacity>
                 </View>
             </View>
-        )
+        );
     }
 }
 
@@ -140,13 +148,13 @@ const mapStateToProps = state => {
             navigation,
             ...state.authReducer
         }
-    }
+    };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         actions: bindActionCreators(Actions, dispatch)
-    }
+    };
 };
 
 export default connect(

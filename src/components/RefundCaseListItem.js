@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {
-    Text,
     StyleSheet,
     View,
     TouchableOpacity,
@@ -12,6 +11,7 @@ import 'moment/locale/da';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-fa-icons';
 import {formatDate} from '../shared/i18n';
+import CustomText from './CustomText';
 
 export default class RefundCaseListItem extends Component {
 
@@ -43,7 +43,7 @@ export default class RefundCaseListItem extends Component {
 
     _getRefundCaseIcon = (refundCase) => {
         return <Image style={styles.documentationIcon} resizeMode='contain'
-                      source={{uri: refundCase.merchant.logo || ''}}/>;
+                      source={{uri: refundCase.merchant.logo}}/>;
     };
 
     _handlePress = () => {
@@ -64,12 +64,12 @@ export default class RefundCaseListItem extends Component {
                     </View>
                     <View style={styles.detailContentContainer}>
                         <View style={styles.firstDetailsContainer}>
-                            <Text style={styles.detailSmallText}>{this.state.dateCreatedFormatted}</Text>
-                            <Text style={styles.detailText}>{refundCase.merchant.companyName}</Text>
+                            <CustomText style={styles.detailSmallText}>{this.state.dateCreatedFormatted}</CustomText>
+                            <CustomText style={styles.detailText}>{refundCase.merchant.companyName}</CustomText>
                         </View>
                         <View style={styles.detailsContainer}>
-                            <Text
-                                style={styles.detailBigTitle}>{refundCase.merchant.currency + ' ' + refundCase.refundAmount.toFixed(2).replace(/[.,]00$/, '')}</Text>
+                            <CustomText
+                                style={styles.detailBigTitle}>{refundCase.merchant.currency + ' ' + refundCase.refundAmount.toFixed(2).replace(/[.,]00$/, '')}</CustomText>
                             <Icon style={styles.angleRightIcon} name='angle-right'/>
                             <View/>
                         </View>

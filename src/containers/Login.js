@@ -7,8 +7,6 @@ import {
     KeyboardAvoidingView,
     Platform,
     StyleSheet,
-    Text,
-    TextInput,
     TouchableOpacity,
     View
 } from 'react-native';
@@ -19,6 +17,8 @@ import Actions from '../actions/Actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import CustomText from '../components/CustomText';
+import CustomTextInput from '../components/CustomTextInput';
 
 const window = Dimensions.get('window');
 const IMAGE_HEIGHT = 100;
@@ -114,7 +114,7 @@ class LoginScreen extends Component {
                         <View style={styles.inputContainer}>
                             <View style={[styles.elevatedInputContainer, styles.firstInput]}>
                                 <Icon name={'envelope'} style={styles.icon}/>
-                                <TextInput style={styles.usernameInput}
+                                <CustomTextInput style={styles.usernameInput}
                                            ref={(input) => this.firstInput = input}
                                            placeholder={strings('login.email_placeholder')}
                                            autoCapitalize='none'
@@ -130,7 +130,7 @@ class LoginScreen extends Component {
                             </View>
                             <View style={styles.elevatedInputContainer}>
                                 <Icon name={'lock'} style={[styles.icon, styles.secondIcon]}/>
-                                <TextInput style={styles.passwordInput}
+                                <CustomTextInput style={styles.passwordInput}
                                            ref={(input) => this.secondInput = input}
                                            secureTextEntry={true}
                                            textAlignVertical='center'
@@ -144,13 +144,13 @@ class LoginScreen extends Component {
                                            onChangeText={password => this.setState({password})}/>
                             </View>
                             <View style={styles.errorContainer}>
-                                <Text style={styles.errorText}>{loginError}</Text>
+                                <CustomText style={styles.errorText}>{loginError}</CustomText>
                             </View>
                             <View style={styles.buttonContainer}>
                                 <TouchableOpacity style={styles.loginButton}
                                                   onPress={this.onLoginPress}
                                                   disabled={fetching}>
-                                    <Text style={styles.buttonText}>{strings('login.login_button')}</Text>
+                                    <CustomText style={styles.buttonText}>{strings('login.login_button')}</CustomText>
                                 </TouchableOpacity>
                             </View>
                         </View>

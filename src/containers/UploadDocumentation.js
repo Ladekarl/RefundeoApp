@@ -3,7 +3,6 @@ import {
     Platform,
     StyleSheet,
     View,
-    Text,
     TouchableOpacity,
     Vibration,
     ActivityIndicator
@@ -17,6 +16,7 @@ import PropTypes from 'prop-types';
 import {RNCamera} from 'react-native-camera';
 import {strings} from '../shared/i18n';
 import ModalScreen from '../components/Modal';
+import CustomText from '../components/CustomText';
 
 class UploadDocumentation extends Component {
 
@@ -156,7 +156,7 @@ class UploadDocumentation extends Component {
                     permissionDialogMessage={strings('refund_case.permission_text')}>
                     <View style={styles.topContainer}>
                         <View style={styles.topTextContainer}>
-                            <Text style={styles.topText}>{topText}</Text>
+                            <CustomText style={styles.topText}>{topText}</CustomText>
                         </View>
                     </View>
                     <View style={styles.centerContainer}>
@@ -170,7 +170,7 @@ class UploadDocumentation extends Component {
                                 onPress={this.skipPressed}
                                 disabled={page !== 2 || takingPicture}
                                 style={page === 2 ? styles.skipButton : styles.hiddenButton}>
-                                <Text style={styles.skipText}>Skip</Text>
+                                <CustomText style={styles.skipText}>Skip</CustomText>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.centerRowContainer}>
@@ -196,7 +196,8 @@ class UploadDocumentation extends Component {
                     onSubmit={this.closeUploadDocumentationModal}
                     visible={this.props.state.navigation.modal['uploadDocumentationModal'] || false}>
                     <View style={styles.modalContainer}>
-                        <Text style={styles.modalText}>{strings('upload_documentation.incorrect_qrcode')}</Text>
+                        <CustomText
+                            style={styles.modalText}>{strings('upload_documentation.incorrect_qrcode')}</CustomText>
                     </View>
                 </ModalScreen>
             </View>
