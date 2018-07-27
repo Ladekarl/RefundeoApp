@@ -21,6 +21,7 @@ import ModalScreen from '../components/Modal';
 import Validation from '../shared/Validation';
 import LocalStorage from '../storage';
 import CustomText from '../components/CustomText';
+import CustomTextInput from '../components/CustomTextInput';
 
 class RefundCase extends Component {
 
