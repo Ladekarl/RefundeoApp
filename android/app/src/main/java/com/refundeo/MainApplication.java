@@ -22,6 +22,7 @@ import com.facebook.appevents.AppEventsLogger;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.rssignaturecapture.RSSignatureCapturePackage;
 import com.github.yamill.orientation.OrientationPackage;
+import com.dylanvann.fastimage.FastImageViewPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -55,7 +56,8 @@ public class MainApplication extends Application implements ReactApplication {
             new RNCameraPackage(),
             new FBSDKPackage(mCallbackManager),
             new RSSignatureCapturePackage(),
-            new OrientationPackage()
+            new OrientationPackage(),
+            new FastImageViewPackage()
       );
     }
 

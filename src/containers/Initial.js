@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ActivityIndicator, Animated, Dimensions, Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {ActivityIndicator, Animated, Dimensions, StyleSheet, TouchableOpacity, View} from 'react-native';
 import colors from '../shared/colors';
 import Actions from '../actions/Actions';
 import {connect} from 'react-redux';
@@ -10,6 +10,8 @@ import {strings} from '../shared/i18n';
 import {AccessToken, LoginManager} from 'react-native-fbsdk';
 import Pulse from '../components/Pulse';
 import CustomText from '../components/CustomText';
+import Orientation from 'react-native-orientation';
+import FastImage from 'react-native-fast-image';
 
 const window = Dimensions.get('window');
 const IMAGE_HEIGHT = 100;
@@ -42,6 +44,7 @@ class InitialScreen extends Component {
     }
 
     componentDidMount() {
+        Orientation.lockToPortrait();
         this._shouldNavigate().then(shouldNavigate => {
             if (shouldNavigate) {
                 this.setState({isLoading: true});
@@ -132,7 +135,7 @@ class InitialScreen extends Component {
                                       onPress={this.loginFacebook}
                                       disabled={fetching}>
                         <View style={styles.facebookIconContainer}>
-                            <Image style={styles.facebookIcon}
+                            <FastImage style={styles.facebookIcon}
                                    source={require('../../assets/facebook-icon.png')}/>
                         </View>
                         <CustomText style={styles.buttonText}>{strings('register.facebook_button')}</CustomText>

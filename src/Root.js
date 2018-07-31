@@ -5,6 +5,7 @@ import colors from './shared/colors';
 import NetworkConnection from './shared/NetworkConnection';
 import {strings} from './shared/i18n';
 import CustomText from './components/CustomText';
+import {SafeAreaView} from 'react-navigation';
 
 const {width} = Dimensions.get('window');
 
@@ -33,15 +34,16 @@ export default class Root extends Component {
     };
 
     render() {
+        const isConnected = this.state.isConnected;
         return (
             <View style={styles.container}>
-                <View style={[styles.content, {marginTop: this.state.isConnected ? 0 : Platform.OS === 'ios' ?  20 : 30}]}>
+                <View style={[styles.content, {marginTop: isConnected ? 0 : 30}]}>
                     <AppNavigator/>
                 </View>
-                {!this.state.isConnected &&
-                <View style={styles.offlineContainer}>
+                {!isConnected &&
+                <SafeAreaView forceInset={{top: 'always'}} style={styles.offlineContainer}>
                     <CustomText style={styles.offlineText}>{strings('root.no_connection')}</CustomText>
-                </View>
+                </SafeAreaView>
                 }
             </View>
         );
@@ -58,7 +60,7 @@ const styles = StyleSheet.create({
     },
     offlineContainer: {
         backgroundColor: colors.activeTabColor,
-        height: Platform.OS === 'ios' ? 35 : 30,
+        height: Platform.OS === 'ios' ? 20 : 30,
         justifyContent: 'center',
         alignItems: Platform.OS === 'ios' ? 'flex-end' : 'center',
         flexDirection: 'row',

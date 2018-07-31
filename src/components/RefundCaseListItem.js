@@ -3,7 +3,6 @@ import {
     StyleSheet,
     View,
     TouchableOpacity,
-    Image,
     Platform
 } from 'react-native';
 import colors from '../shared/colors';
@@ -12,6 +11,7 @@ import PropTypes from 'prop-types';
 import Icon from 'react-native-fa-icons';
 import {formatDate} from '../shared/i18n';
 import CustomText from './CustomText';
+import FastImage from 'react-native-fast-image';
 
 export default class RefundCaseListItem extends Component {
 
@@ -42,8 +42,11 @@ export default class RefundCaseListItem extends Component {
     };
 
     _getRefundCaseIcon = (refundCase) => {
-        return <Image style={styles.documentationIcon} resizeMode='contain'
-                      source={{uri: refundCase.merchant.logo}}/>;
+        return <FastImage
+            style={styles.documentationIcon}
+            resizeMode={FastImage.resizeMode.contain}
+            source={{uri: refundCase.merchant.logo}}
+        />;
     };
 
     _handlePress = () => {

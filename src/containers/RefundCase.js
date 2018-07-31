@@ -22,6 +22,7 @@ import Validation from '../shared/Validation';
 import LocalStorage from '../storage';
 import CustomText from '../components/CustomText';
 import CustomTextInput from '../components/CustomTextInput';
+import FastImage from 'react-native-fast-image'
 
 class RefundCase extends Component {
 
@@ -79,36 +80,36 @@ class RefundCase extends Component {
 
     getVatImage = (refundCase) => {
         if (refundCase.vatFormImage) {
-            return <Image style={styles.uploadImage} resizeMode='cover'
+            return <Image style={styles.uploadImage}
                           source={{uri: 'data:image/png;base64,' + refundCase.vatFormImage}}/>;
         }
         if (refundCase.tempVatFormImage) {
-            return <Image style={styles.uploadImage} resizeMode='cover'
+            return <Image style={styles.uploadImage}
                           source={{uri: 'data:image/png;base64,' + refundCase.tempVatFormImage}}/>;
         }
         if (this.state.tempVatFormImage) {
-            return <Image style={styles.uploadImage} resizeMode='cover'
+            return <Image style={styles.uploadImage}
                           source={{uri: 'data:image/png;base64,' + this.state.tempVatFormImage}}/>;
         }
-        return <Image style={styles.uploadImage} resizeMode='cover'
-                      source={require('../../assets/tax_form.png')}/>;
+        return <FastImage style={styles.uploadImage}
+                          source={require('../../assets/tax_form.png')}/>;
     };
 
     getReceiptImage = (refundCase) => {
         if (refundCase.receiptImage) {
-            return <Image style={styles.uploadImage} resizeMode='cover'
+            return <Image style={styles.uploadImage}
                           source={{uri: 'data:image/png;base64,' + refundCase.receiptImage}}/>;
         }
         if (refundCase.tempReceiptImage) {
-            return <Image style={styles.uploadImage} resizeMode='cover'
+            return <Image style={styles.uploadImage}
                           source={{uri: 'data:image/png;base64,' + refundCase.tempReceiptImage}}/>;
         }
         if (this.state.tempReceiptImage) {
-            return <Image style={styles.uploadImage} resizeMode='cover'
+            return <Image style={styles.uploadImage}
                           source={{uri: 'data:image/png;base64,' + this.state.tempReceiptImage}}/>;
         }
-        return <Image style={styles.uploadImage} resizeMode='contain'
-                      source={require('../../assets/receipt.png')}/>;
+        return <FastImage style={styles.uploadImage}
+                          source={require('../../assets/receipt.png')}/>;
     };
 
     onRequestRefundPress = () => {
@@ -261,15 +262,21 @@ class RefundCase extends Component {
                         onRefresh={() => actions.getSelectedRefundCase(refundCase.id)}
                     />
                 }>
-                <ImageBackground
+                {merchant.banner &&
+                <FastImage
                     style={styles.bannerImage}
-                    source={{uri: merchant.banner || ''}}
+                    source={{uri: merchant.banner}}
                     borderRadius={2}>
-                    <View style={styles.iconContainer}>
-                        <Image style={styles.logoImage} resizeMode='contain'
-                               source={{uri: merchant.logo || ''}}/>
+                    <View style={styles.flexIconContainer}>
+                        <View style={styles.iconContainer}>
+                            {merchant.logo &&
+                            <FastImage style={styles.logoImage} resizeMode='contain'
+                                       source={{uri: merchant.logo}}/>
+                            }
+                        </View>
                     </View>
-                </ImageBackground>
+                </FastImage>
+                }
                 <View style={styles.bannerTextBarContainer}>
                     <View style={styles.bannerContentContainer}>
                         <View style={styles.bannerColumnContainer}>
@@ -384,9 +391,12 @@ const styles = StyleSheet.create({
     },
     bannerImage: {
         width: '100%',
-        height: 180,
+        height: 180
+    },
+    flexIconContainer: {
+        flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     iconContainer: {
         height: 80,

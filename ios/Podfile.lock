@@ -35,6 +35,7 @@ PODS:
     - FirebaseInstanceID (~> 3.0)
     - GoogleToolboxForMac/Logger (~> 2.1)
     - Protobuf (~> 3.1)
+  - FLAnimatedImage (1.0.12)
   - Folly (2016.10.31.00):
     - boost-for-react-native
     - DoubleConversion
@@ -84,6 +85,11 @@ PODS:
     - React
   - react-native-document-picker (2.1.0):
     - React
+  - react-native-fast-image (4.0.14):
+    - FLAnimatedImage
+    - React
+    - SDWebImage/Core
+    - SDWebImage/GIF
   - react-native-fetch-blob (0.10.6):
     - React/Core
   - react-native-google-maps (0.21.0):
@@ -145,6 +151,10 @@ PODS:
     - React
   - RNI18n (2.0.15):
     - React
+  - SDWebImage/Core (4.4.2)
+  - SDWebImage/GIF (4.4.2):
+    - FLAnimatedImage (~> 1.0)
+    - SDWebImage/Core
   - yoga (0.56.0.React)
 
 DEPENDENCIES:
@@ -159,6 +169,7 @@ DEPENDENCIES:
   - GoogleMaps
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-document-picker (from `../node_modules/react-native-document-picker`)
+  - react-native-fast-image (from `../node_modules/react-native-fast-image`)
   - react-native-fetch-blob (from `../node_modules/react-native-fetch-blob`)
   - react-native-google-maps (from `../node_modules/react-native-maps`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
@@ -193,11 +204,13 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseInstanceID
     - FirebaseMessaging
+    - FLAnimatedImage
     - Google-Maps-iOS-Utils
     - GoogleMaps
     - GoogleToolboxForMac
     - nanopb
     - Protobuf
+    - SDWebImage
 
 EXTERNAL SOURCES:
   DoubleConversion:
@@ -212,6 +225,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-camera"
   react-native-document-picker:
     :path: "../node_modules/react-native-document-picker"
+  react-native-fast-image:
+    :path: "../node_modules/react-native-fast-image"
   react-native-fetch-blob:
     :path: "../node_modules/react-native-fetch-blob"
   react-native-google-maps:
@@ -241,6 +256,7 @@ SPEC CHECKSUMS:
   FirebaseCore: 62f1b792a49bb9e8b4073f24606d2c93ffc352f0
   FirebaseInstanceID: f3f0657372592ecdfdfe2cac604a5a75758376a6
   FirebaseMessaging: 6894b8fe0a0cf26c3b13dad729f1131654ae0bdb
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   Folly: c89ac2d5c6ab169cd7397ef27485c44f35f742c7
   glog: b3b0330915eccea41c5cc9731a77cf564a9be5ea
   Google-Maps-iOS-Utils: c32891ff472eaaa1fca032beedafa1a013af7875
@@ -251,6 +267,7 @@ SPEC CHECKSUMS:
   React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
   react-native-camera: ab22041dcf0403d88f2ae4b9ea3ed2644e680423
   react-native-document-picker: e7934f6a3c898a1b62fa68b1f09371beef6ac51a
+  react-native-fast-image: cba3d9bf9c2cf8ddb643d887a686c53a5dd90a2c
   react-native-fetch-blob: 63394b1d7b0781547b3e4463b3195790177b1222
   react-native-google-maps: 2cfe3b01f8422c7dae51d8764139fd70f888cfce
   react-native-image-picker: b303e31c3c4ada1d7cb1342423d328d2efb07fb3
@@ -258,8 +275,9 @@ SPEC CHECKSUMS:
   ReactNativePermissions: 9f2d9c45c98800795e6c2ed330e25d11a66a8169
   RNFS: bbb1a64eb245763daf34aea86f97c97c4e85f74c
   RNI18n: 46b8694063fbd699f2c06a4dc8e835b3176763b1
+  SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: aa5b1fb2c994ce5920972b6d9ed660bbac508d26
+PODFILE CHECKSUM: 4c92ba3161d4f0f7b4b8c18be0f808593fc7e0f7
 
 COCOAPODS: 1.5.3

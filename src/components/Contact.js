@@ -1,9 +1,10 @@
 import React, {PureComponent} from 'react';
-import {View, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import colors from '../shared/colors';
 import {strings} from '../shared/i18n';
 import Icon from 'react-native-fa-icons';
 import CustomText from '../components/CustomText';
+import FastImage from 'react-native-fast-image';
 
 export default class Contact extends PureComponent {
 
@@ -18,8 +19,8 @@ export default class Contact extends PureComponent {
         return (
             <View style={styles.container}>
                 <View style={styles.topContainer}>
-                    <Image
-                        resizeMode='contain'
+                    <FastImage
+                        resizeMode={FastImage.resizeMode.contain}
                         source={require('../../assets/refundeo_logo.png')}
                         style={styles.image}
                     />

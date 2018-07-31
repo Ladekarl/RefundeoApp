@@ -1,6 +1,7 @@
 import React from 'react';
-import {View, StyleSheet, Animated, Easing, Dimensions, Image} from 'react-native';
+import {View, StyleSheet, Animated, Easing, Dimensions} from 'react-native';
 import PropTypes from 'prop-types';
+import FastImage from 'react-native-fast-image';
 
 const {height, width} = Dimensions.get('window');
 
@@ -61,7 +62,7 @@ export default class Pulse extends React.PureComponent {
                         })
                     }]}
                 />
-                <Image
+                <FastImage
                     source={require('../../assets/refundeo_logo.png')}
                     style={[styles.image, {
                         width: size,

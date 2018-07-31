@@ -1,10 +1,11 @@
 import React, {PureComponent} from 'react';
-import {StyleSheet, TouchableOpacity, View, ImageBackground, Image} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 import geolib from 'geolib';
 import {strings} from '../shared/i18n';
 import CustomText from './CustomText';
+import FastImage from 'react-native-fast-image';
 
 export default class StoreListItem extends PureComponent {
 
@@ -58,16 +59,22 @@ export default class StoreListItem extends PureComponent {
                 style={styles.container}
                 onPress={onPress}>
                 <View style={styles.cardContainer}>
-                    <ImageBackground
+                    {banner &&
+                    <FastImage
                         style={styles.bannerImage}
-                        source={{uri: banner || ''}}>
+                        source={{uri: banner}}>
                         <View style={styles.bannerTextBarContainer}>
                             <View style={styles.iconContainer}>
-                                <Image style={styles.logoImage} resizeMode='contain'
-                                       source={{uri: logo || ''}}/>
+                                {logo &&
+                                <FastImage
+                                    style={styles.logoImage}
+                                    resizeMode={FastImage.resizeMode.contain}
+                                    source={{uri: logo}}/>
+                                }
                             </View>
                         </View>
-                    </ImageBackground>
+                    </FastImage>
+                    }
                     <View style={styles.contentContainer}>
                         <View style={styles.leftContainer}>
                             <CustomText style={styles.leftText}>{dist}</CustomText>
@@ -125,6 +132,7 @@ const styles = StyleSheet.create({
     bannerTextBarContainer: {
         justifyContent: 'center',
         alignItems: 'center',
+        flex: 1
     },
     leftContainer: {
         flex: 1,

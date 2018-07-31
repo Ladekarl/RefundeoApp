@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, ImageBackground, Platform, Image, ScrollView} from 'react-native';
+import {StyleSheet, View, Platform, ScrollView} from 'react-native';
 import colors from '../shared/colors';
 import {bindActionCreators} from 'redux';
 import Actions from '../actions/Actions';
@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {strings} from '../shared/i18n';
 import CustomText from '../components/CustomText';
+import FastImage from 'react-native-fast-image';
 
 class StoreProfile extends Component {
 
@@ -36,15 +37,21 @@ class StoreProfile extends Component {
         return (
             <View style={styles.container}>
                 <ScrollView styles={styles.scrollContainer} contentContainerStyle={styles.scrollContent}>
-                    <ImageBackground
+                    {selectedMerchant.banner &&
+                    <FastImage
                         style={styles.bannerImage}
-                        source={{uri: selectedMerchant.banner || ''}}
+                        source={{uri: selectedMerchant.banner}}
                         borderRadius={2}>
-                        <View style={styles.iconContainer}>
-                            <Image style={styles.logoImage} resizeMode='contain'
-                                   source={{uri: selectedMerchant.logo || ''}}/>
+                        <View style={styles.flexIconContainer}>
+                            <View style={styles.iconContainer}>
+                                {selectedMerchant.logo &&
+                                <FastImage style={styles.logoImage} resizeMode={FastImage.resizeMode.contain}
+                                           source={{uri: selectedMerchant.logo}}/>
+                                }
+                            </View>
                         </View>
-                    </ImageBackground>
+                    </FastImage>
+                    }
                     <View style={styles.bannerTextBarContainer}>
                         <View style={styles.bannerColumnContainer}>
                             <CustomText style={styles.leftText}>{strings('stores.opening_hours')}</CustomText>
@@ -93,9 +100,12 @@ const styles = StyleSheet.create({
     },
     bannerImage: {
         width: '100%',
-        height: 180,
+        height: 180
+    },
+    flexIconContainer: {
+        flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     iconContainer: {
         height: 80,

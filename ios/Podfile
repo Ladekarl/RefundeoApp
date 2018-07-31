@@ -39,6 +39,7 @@ target 'Refundeo' do
   pod 'RNI18n', :path => '../node_modules/react-native-i18n'
   pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
   pod 'react-native-camera', :path => '../node_modules/react-native-camera'
+  pod 'react-native-fast-image', :path => '../node_modules/react-native-fast-image'
   pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
   pod 'FBSDKLoginKit'
   pod 'FBSDKShareKit'

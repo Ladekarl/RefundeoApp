@@ -1,10 +1,11 @@
 import React, {PureComponent} from 'react';
-import {Image, Platform, StyleSheet, Dimensions} from 'react-native';
+import {Platform, StyleSheet, Dimensions} from 'react-native';
 import colors from '../shared/colors';
 import Icon from 'react-native-fa-icons';
 import Swiper from 'react-native-swiper';
 import TutorialPage from './TutorialPage';
 import {strings} from '../shared/i18n';
+import FastImage from 'react-native-fast-image'
 
 export default class EmptyOverviewScreen extends PureComponent {
 
@@ -33,7 +34,7 @@ export default class EmptyOverviewScreen extends PureComponent {
                     headline={strings('tutorial.welcome_title')}
                     headlineColor={colors.backgroundColor}
                     textColor={colors.separatorColor}
-                    icon={<Image style={styles.logoImage} source={require('../../assets/refundeo_logo.png')}/>}
+                    icon={<FastImage style={styles.logoImage} source={require('../../assets/refundeo_logo.png')}/>}
                     text={strings('tutorial.welcome_text')}/>
                 <TutorialPage
                     contentColor={colors.activeTabColor}

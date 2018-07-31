@@ -95,9 +95,8 @@ class ScannerScreen extends Component {
             modalInputError: strings('scanner.fill_all_fields')
         });
         if (customerId && receiptNumber && amount) {
-            this.props.actions.openModal('signatureModal');
             this.closeModal();
-            Orientation.lockToLandscapeLeft();
+            this.props.actions.openModal('signatureModal');
         } else if (customerId) {
             this.setState({
                 modalInputError: strings('scanner.fill_all_fields')
@@ -150,7 +149,6 @@ class ScannerScreen extends Component {
             this.setState({
                 customerSignature
             });
-            Orientation.lockToLandscapeRight();
         } else {
             let merchantSignature = result.encoded;
             this.setState({
@@ -170,7 +168,16 @@ class ScannerScreen extends Component {
         this.setState({
             ...this.initialState
         });
-        Orientation.lockToPortrait();
+    };
+
+    handleOrientation = (signatureModalOpen, customerSignature) => {
+        if (signatureModalOpen && !customerSignature) {
+            Orientation.lockToLandscapeLeft();
+        } else if (signatureModalOpen && customerSignature) {
+            Orientation.lockToLandscapeRight();
+        } else {
+            Orientation.lockToPortrait();
+        }
     };
 
     render() {
@@ -181,6 +188,8 @@ class ScannerScreen extends Component {
         const modalOpen = state.navigation.modal['createRefundSuccessModal'] || state.navigation.modal['createRefundModal'] || signatureModalOpen;
         const navigation = state.navigation;
         const customerSignature = this.state.customerSignature;
+
+        this.handleOrientation(signatureModalOpen, customerSignature);
 
         return (
             <View style={styles.container}>

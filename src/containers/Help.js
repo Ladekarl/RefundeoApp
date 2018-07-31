@@ -2,13 +2,14 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import Actions from '../actions/Actions';
 import {connect} from 'react-redux';
-import {View, StyleSheet, Image, TouchableOpacity, WebView, ScrollView} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, WebView, ScrollView} from 'react-native';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-fa-icons';
 import {strings} from '../shared/i18n';
 import ModalScreen from '../components/Modal';
 import CustomText from '../components/CustomText';
+import FastImage from 'react-native-fast-image';
 
 class Help extends Component {
 
@@ -54,8 +55,8 @@ class Help extends Component {
                 style={styles.container}
                 contentContainerStyle={styles.contentContainer}>
                 <View style={styles.topContainer}>
-                    <Image
-                        resizeMode='contain'
+                    <FastImage
+                        resizeMode={FastImage.resizeMode.contain}
                         source={require('../../assets/help.png')}
                         style={styles.image}
                     />
