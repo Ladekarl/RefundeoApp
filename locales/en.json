@@ -113,7 +113,11 @@
     "missing_username": "Please enter email",
     "missing_password": "Please enter password",
     "user_does_not_exist": "The user does not exist",
-    "wrong_password": "Wrong password"
+    "wrong_password": "Wrong password",
+    "forgot_password": "Forgot password?",
+    "forgot_password_modal": "Forgot password",
+    "forgot_password_modal_text": "Please enter the email you use to login",
+    "password_reset_link": "An email with a password reset link has been sent to"
   },
   "scanner": {
     "scanner": "Scanner",
@@ -128,7 +132,8 @@
     "create_refund_modal_title": "Fill all fields",
     "customer": "Customer",
     "amount": "Amount",
-    "receipt_number": "Receipt number"
+    "receipt_number": "Receipt number",
+    "success": "Success"
   },
   "overview": {
     "welcome_text": "Welcome to Refundeo",
@@ -174,7 +179,8 @@
     "invalid_email": "Please provide a valid email address.",
     "upload_tax_free_form": "Upload tax free form",
     "upload_receipt": "Upload receipt",
-    "send_form": "Send form"
+    "send_form": "Send form",
+    "send_modal_title": "Send tax free form"
   },
   "stores": {
     "opening_hours": "Opening hours",

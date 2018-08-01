@@ -55,8 +55,44 @@ export default {
     uploadTempVatFormImage,
     uploadTempReceiptImage,
     sendVatFormEmail,
-    changeFilterValues
+    changeFilterValues,
+    forgotPassword
 };
+
+function forgotPassword(username) {
+    if (!username) {
+        return forgotPasswordError(strings('login.missing_username'));
+    }
+    return dispatch => {
+        dispatch(postingForgotPassword());
+        Api.postRequestResetPassword(username).then((response) => {
+            dispatch(forgotPasswordSuccess(response.email));
+        }).catch(error => {
+            dispatch(forgotPasswordError(strings('login.unknown_error')));
+        });
+    };
+}
+
+function forgotPasswordSuccess(email) {
+    return {
+        type: types.AUTH_FORGOT_PASSWORD_SUCCESS,
+        forgotPasswordEmail: email
+    }
+}
+
+
+function forgotPasswordError(error = '') {
+    return {
+        type: types.AUTH_FORGOT_PASSWORD_ERROR,
+        error
+    }
+}
+
+function postingForgotPassword() {
+    return {
+        type: types.AUTH_POSTING_FORGOT_PASSWORD
+    }
+}
 
 function navigateGuide() {
     return {

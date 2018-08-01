@@ -260,4 +260,20 @@ export default class Api {
 
         return await Helpers.handleTagsResponse(tags);
     }
+
+    static async postRequestResetPassword(username) {
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username
+            })
+        };
+
+        const response = await Helpers.fetch(`${API_URL}/api/account/RequestResetPassword`, requestOptions);
+
+        return await response.json();
+    }
 }

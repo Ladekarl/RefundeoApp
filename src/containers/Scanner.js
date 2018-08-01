@@ -228,7 +228,7 @@ class ScannerScreen extends Component {
                 </View>
                 }
                 <ModalScreen
-                    modalTitle={'Success'}
+                    modalTitle={strings('scanner.success')}
                     onBack={this.closeSuccessModal}
                     onCancel={this.closeSuccessModal}
                     onSubmit={this.closeSuccessModal}

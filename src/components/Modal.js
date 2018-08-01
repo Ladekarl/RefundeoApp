@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     View,
     Platform,
+    ActivityIndicator,
     KeyboardAvoidingView,
     ViewPropTypes
 } from 'react-native';
@@ -28,6 +29,7 @@ export default class ModalScreen extends PureComponent {
         visible: PropTypes.bool.isRequired,
         onSubmit: PropTypes.func,
         onCancel: PropTypes.func,
+        fetching: PropTypes.bool,
         onBack: PropTypes.func,
         noCancelButton: PropTypes.bool,
         noSubmitButton: PropTypes.bool,
@@ -72,6 +74,7 @@ export default class ModalScreen extends PureComponent {
             noSubmitButton,
             children,
             noChildren,
+            fetching,
             contentContainerStyle,
             topContainerStyle,
             fullScreen,
@@ -122,6 +125,7 @@ export default class ModalScreen extends PureComponent {
                             {!noSubmitButton &&
                             <TouchableOpacity
                                 style={styles.modalSubmitButton}
+                                disabled={fetching}
                                 onPress={onSubmit}>
                                 <CustomText style={styles.modalButtonText}>{strings('modal.ok')}</CustomText>
                             </TouchableOpacity>}
@@ -129,6 +133,11 @@ export default class ModalScreen extends PureComponent {
                         }
                     </View>
                 </KeyboardAvoidingView>
+                {fetching &&
+                <View style={styles.loadingContainer}>
+                    <ActivityIndicator size='large' color={colors.activeTabColor} style={styles.activityIndicator}/>
+                </View>
+                }
             </Modal>
         );
     }
@@ -232,5 +241,17 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '100%',
         borderRadius: 0
+    },
+    loadingContainer: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    activityIndicator: {
+        elevation: 10
     }
 });

@@ -27,7 +27,7 @@ import CustomTextInput from '../components/CustomTextInput';
 const window = Dimensions.get('window');
 const IMAGE_HEIGHT = window.width / 4;
 const CONTAINER_HEIGHT = window.height / 4;
-const CONTAINER_HEIGHT_SMALL = window.height / 8;
+const CONTAINER_HEIGHT_SMALL = 10;
 const IMAGE_HEIGHT_SMALL = 0;
 
 class RegisterScreen extends Component {
@@ -277,7 +277,9 @@ class RegisterScreen extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: colors.backgroundColor,
+        width: '100%',
+        alignItems: 'center',
+        backgroundColor: colors.backgroundColor
     },
     policyContainer: {
         flex: 1,
@@ -298,9 +300,9 @@ const styles = StyleSheet.create({
         flex: 1
     },
     loginFormContainer: {
+        width: '90%',
         justifyContent: 'space-between',
         alignItems: 'stretch',
-        width: '80%',
         flex: 1,
         paddingBottom: '5%'
     },

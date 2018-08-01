@@ -19,12 +19,13 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import CustomText from '../components/CustomText';
 import CustomTextInput from '../components/CustomTextInput';
+import ModalScreen from '../components/Modal';
 
 const window = Dimensions.get('window');
 const IMAGE_HEIGHT = 100;
 const CONTAINER_HEIGHT = window.height / 2;
-const CONTAINER_HEIGHT_SMALL = 150;
-const IMAGE_HEIGHT_SMALL = 100;
+const CONTAINER_HEIGHT_SMALL = 0;
+const IMAGE_HEIGHT_SMALL = 0;
 
 class LoginScreen extends Component {
 
@@ -46,6 +47,7 @@ class LoginScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            error: '',
             username: '',
             password: '',
             imageHeight: new Animated.Value(IMAGE_HEIGHT),
@@ -64,11 +66,17 @@ class LoginScreen extends Component {
     }
 
     _keyboardWillShow = () => {
-        this._animate(CONTAINER_HEIGHT_SMALL, IMAGE_HEIGHT_SMALL);
+        const isForgotPasswordModalOpen = this.props.state.navigation.modal['forgotPasswordModal'];
+        if (!isForgotPasswordModalOpen) {
+            this._animate(CONTAINER_HEIGHT_SMALL, IMAGE_HEIGHT_SMALL);
+        }
     };
 
     _keyboardWillHide = () => {
-        this._animate(CONTAINER_HEIGHT, IMAGE_HEIGHT);
+        const isForgotPasswordModalOpen = this.props.state.navigation.modal['forgotPasswordModal'];
+        if (!isForgotPasswordModalOpen) {
+            this._animate(CONTAINER_HEIGHT, IMAGE_HEIGHT);
+        }
     };
 
     _animate(containerHeight, imageHeight) {
@@ -94,12 +102,35 @@ class LoginScreen extends Component {
         this._login(username.trim(), password);
     };
 
+    onForgotPassword = () => {
+        Keyboard.dismiss();
+        this.openForgotPasswordModal();
+    };
+
     _login = (username, password) => {
         this.props.actions.login(username, password);
     };
 
+    closeForgotPasswordModal = () => {
+        this.props.actions.closeModal('forgotPasswordModal');
+    };
+
+    openForgotPasswordModal = () => {
+        this.props.actions.openModal('forgotPasswordModal');
+    };
+
+    onForgotPasswordModalSuccess = () => {
+        const username = this.state.username;
+        const forgotPasswordEmail = this.props.state.forgotPasswordEmail;
+        if (forgotPasswordEmail) {
+            this.closeForgotPasswordModal();
+        }
+        this.props.actions.forgotPassword(this.state.username);
+    };
+
     render() {
-        const {fetching, loginError} = this.props.state;
+        const {fetching, loginError, navigation, forgotPasswordError, forgotPasswordEmail} = this.props.state;
+
         return (
             <KeyboardAvoidingView style={styles.container} keyboardVerticalOffset={Platform.OS === 'ios' ? 50 : 0}
                                   behavior='padding'>
@@ -115,36 +146,41 @@ class LoginScreen extends Component {
                             <View style={[styles.elevatedInputContainer, styles.firstInput]}>
                                 <Icon name={'envelope'} style={styles.icon}/>
                                 <CustomTextInput style={styles.usernameInput}
-                                           ref={(input) => this.firstInput = input}
-                                           placeholder={strings('login.email_placeholder')}
-                                           autoCapitalize='none'
-                                           textAlignVertical='center'
-                                           editable={!fetching}
-                                           returnKeyType='next'
-                                           keyboardType={'email-address'}
-                                           underlineColorAndroid='transparent'
-                                           selectionColor={colors.activeTabColor}
-                                           onSubmitEditing={() => this.secondInput.focus()}
-                                           value={this.state.username}
-                                           onChangeText={username => this.setState({username})}/>
+                                                 ref={(input) => this.firstInput = input}
+                                                 placeholder={strings('login.email_placeholder')}
+                                                 autoCapitalize='none'
+                                                 textAlignVertical='center'
+                                                 editable={!fetching}
+                                                 returnKeyType='next'
+                                                 keyboardType={'email-address'}
+                                                 underlineColorAndroid='transparent'
+                                                 selectionColor={colors.activeTabColor}
+                                                 onSubmitEditing={() => this.secondInput.focus()}
+                                                 value={this.state.username}
+                                                 onChangeText={username => this.setState({username})}/>
                             </View>
                             <View style={styles.elevatedInputContainer}>
                                 <Icon name={'lock'} style={[styles.icon, styles.secondIcon]}/>
                                 <CustomTextInput style={styles.passwordInput}
-                                           ref={(input) => this.secondInput = input}
-                                           secureTextEntry={true}
-                                           textAlignVertical='center'
-                                           editable={!fetching}
-                                           returnKeyType='done'
-                                           autoCapitalize='none'
-                                           underlineColorAndroid='transparent'
-                                           selectionColor={colors.activeTabColor}
-                                           placeholder={strings('login.password_placeholder')}
-                                           value={this.state.password}
-                                           onChangeText={password => this.setState({password})}/>
+                                                 ref={(input) => this.secondInput = input}
+                                                 secureTextEntry={true}
+                                                 textAlignVertical='center'
+                                                 editable={!fetching}
+                                                 returnKeyType='done'
+                                                 autoCapitalize='none'
+                                                 underlineColorAndroid='transparent'
+                                                 selectionColor={colors.activeTabColor}
+                                                 placeholder={strings('login.password_placeholder')}
+                                                 value={this.state.password}
+                                                 onChangeText={password => this.setState({password})}/>
                             </View>
-                            <View style={styles.errorContainer}>
-                                <CustomText style={styles.errorText}>{loginError}</CustomText>
+                            <View style={styles.forgotPasswordContainer}>
+                                <TouchableOpacity style={styles.forgotPasswordButton}
+                                                  onPress={this.onForgotPassword}
+                                                  disabled={fetching}>
+                                    <CustomText
+                                        style={styles.forgotPasswordText}>{strings('login.forgot_password')}</CustomText>
+                                </TouchableOpacity>
                             </View>
                             <View style={styles.buttonContainer}>
                                 <TouchableOpacity style={styles.loginButton}
@@ -153,8 +189,47 @@ class LoginScreen extends Component {
                                     <CustomText style={styles.buttonText}>{strings('login.login_button')}</CustomText>
                                 </TouchableOpacity>
                             </View>
+                            <View style={styles.errorContainer}>
+                                <CustomText style={styles.errorText}>{loginError}</CustomText>
+                            </View>
                         </View>
                     </View>
+                    <ModalScreen
+                        modalTitle={strings('login.forgot_password_modal')}
+                        onBack={this.closeForgotPasswordModal}
+                        onCancel={this.closeForgotPasswordModal}
+                        fetching={fetching}
+                        onSubmit={this.onForgotPasswordModalSuccess}
+                        visible={navigation.modal['forgotPasswordModal'] || false}>
+                        <View style={styles.modalContainer}>
+                            {!forgotPasswordEmail &&
+                            <CustomText
+                                style={styles.headlineText}>{strings('login.forgot_password_modal_text')}</CustomText>
+                            }
+                            {!forgotPasswordEmail &&
+                            <CustomTextInput style={styles.forgotPasswordInput}
+                                             textAlignVertical='center'
+                                             editable={!fetching}
+                                             returnKeyType='done'
+                                             autoCapitalize='none'
+                                             selectionColor={colors.activeTabColor}
+                                             placeholder={strings('login.email_placeholder')}
+                                             value={this.state.username}
+                                             onChangeText={username => this.setState({username})}/>
+                            }
+                            {!!forgotPasswordEmail &&
+                            <View style={styles.forgotPasswordModalContainer}>
+                                <CustomText
+                                    style={styles.forgotPasswordEmailText}>{strings('login.password_reset_link') + ' ' + forgotPasswordEmail}</CustomText>
+                            </View>
+                            }
+                            {!!forgotPasswordError &&
+                            <View style={styles.forgotPasswordModalContainer}>
+                                <CustomText style={styles.errorText}>{forgotPasswordError}</CustomText>
+                            </View>
+                            }
+                        </View>
+                    </ModalScreen>
                     {fetching &&
                     <View style={styles.loadingContainer}>
                         <ActivityIndicator size='large' color={colors.activeTabColor} style={styles.activityIndicator}/>
@@ -187,8 +262,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'stretch',
         width: '80%',
-        flex: 1,
-        paddingBottom: '10%'
+        flex: 1
     },
     inputContainer: {
         justifyContent: 'center',
@@ -216,8 +290,27 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 6
     },
+    forgotPasswordContainer: {
+        height: 80,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    forgotPasswordButton: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    forgotPasswordText: {
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: colors.submitButtonColor
+    },
+    forgotPasswordModalContainer: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     errorContainer: {
-        height: 50,
+        height: 80,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -243,6 +336,21 @@ const styles = StyleSheet.create({
         marginTop: 1,
         marginBottom: 1
     },
+    modalContainer: {
+        paddingTop: 20,
+        paddingBottom: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    forgotPasswordInput: {
+        fontSize: 16,
+        height: 40,
+        width: '80%',
+        padding: 5,
+        marginTop: 1,
+        marginBottom: 1,
+        textAlign: 'center'
+    },
     passwordInput: {
         flex: 1,
         fontSize: 16,
@@ -256,7 +364,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         fontWeight: 'bold',
-        color: colors.submitButtonColor
+        color: colors.cancelButtonColor
+    },
+    forgotPasswordEmailText: {
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontWeight: 'bold'
     },
     buttonContainer: {
         alignItems: 'stretch'

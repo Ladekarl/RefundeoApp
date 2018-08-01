@@ -111,7 +111,11 @@
     "missing_username": "Indtast email",
     "missing_password": "Indtast password",
     "user_does_not_exist": "Brugeren eksisterer ikke",
-    "wrong_password": "Forkert password"
+    "wrong_password": "Forkert password",
+    "forgot_password": "Glemt kodeord?",
+    "forgot_password_modal": "Glemt kodeord",
+    "forgot_password_modal_text": "Indtast den email du bruger til at logge ind",
+    "password_reset_link": "En email med et link til nulstilling af kodeord er sendt til"
   },
   "scanner": {
     "scanner": "Scanner",
@@ -126,7 +130,8 @@
     "create_refund_modal_title": "Udfyld alle felter",
     "customer": "Kunde",
     "amount": "Beløb",
-    "receipt_number": "Kvitteringsnummer"
+    "receipt_number": "Kvitteringsnummer",
+    "success": "Success"
   },
   "overview": {
     "welcome_text": "Velkommen til Refundeo",
@@ -172,7 +177,8 @@
     "invalid_email": "Angiv venligst en gyldig emailadresse.",
     "upload_tax_free_form": "Upload tax free form",
     "upload_receipt": "Upload kvittering",
-    "send_form": "Send form"
+    "send_form": "Send form",
+    "send_modal_title": "Send tax free form"
   },
   "stores": {
     "opening_hours": "Åbningstider",

@@ -343,7 +343,7 @@ class RefundCase extends Component {
                     </View>
                 </ModalScreen>
                 <ModalScreen
-                    modalTitle={'Send tax free form'}
+                    modalTitle={strings('refund_case.send_modal_title')}
                     onBack={this.closeEmailModal}
                     onCancel={this.closeEmailModal}
                     onSubmit={this.onEmailModalSubmit}
