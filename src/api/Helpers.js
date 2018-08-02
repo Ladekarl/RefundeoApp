@@ -31,49 +31,57 @@ export default class Helpers {
     static async handleLoginResponse(response) {
         if (response.status === 400) {
             const error = await response.json();
-            switch (error.error) {
-                case -1:
-                    throw strings('login.wrong_password');
-                case -2:
-                    throw strings('login.user_does_not_exist');
-                case -3:
-                    throw strings('login.missing_password');
-                case -4:
-                    throw strings('login.missing_username');
-                default:
-                    throw strings('login.unknown_error');
+            console.log(error);
+            if (error.errors) {
+                throw Helpers.getRegisterError(error);
+            } else if (error.error) {
+                throw Helpers.getLoginError(error);
+            } else {
+                throw strings('login.unknown_error');
             }
         }
         Helpers.handleResponse(response);
     }
 
-    static async handleRegisterResponse(response) {
-        if (response.status === 400) {
-            const respObj = await response.json();
-            for (let error of respObj.errors)
-                switch (error.code) {
-                    case 'InvalidUserName':
-                        throw strings('register.invalid_username');
-                    case 'DuplicateUserName':
-                        throw strings('register.duplicate_username');
-                    case 'PasswordTooShort':
-                        throw strings('register.password_too_short');
-                    case 'PasswordRequiresNonAlphanumeric':
-                        throw strings('register.password_non_alpha');
-                    case 'PasswordRequiresDigit':
-                        throw strings('register.password_digit');
-                    case 'PasswordRequiresLower':
-                        throw strings('register.password_lower');
-                    case 'PasswordRequiresUpper':
-                        throw strings('register.password_upper');
-                    case 'PasswordMismatch':
-                        throw strings('register.password_mismatch');
-                    default:
-                        throw strings('register.unknown_error');
-
-                }
+    static getLoginError(response) {
+        switch (response.error) {
+            case -1:
+                throw strings('login.wrong_password');
+            case -2:
+                throw strings('login.user_does_not_exist');
+            case -3:
+                throw strings('login.missing_password');
+            case -4:
+                throw strings('login.missing_username');
+            default:
+                throw strings('login.unknown_error');
         }
-        Helpers.handleResponse(response);
+    }
+
+    static getRegisterError(response) {
+        for (let error of response.errors)
+            switch (error.code) {
+                case 'InvalidUserName':
+                    return strings('register.invalid_username');
+                case 'DuplicateUserName':
+                    return strings('register.duplicate_username');
+                case 'PasswordTooShort':
+                    return strings('register.password_too_short');
+                case 'PasswordRequiresNonAlphanumeric':
+                    return strings('register.password_non_alpha');
+                case 'PasswordRequiresDigit':
+                    return strings('register.password_digit');
+                case 'PasswordRequiresLower':
+                    return strings('register.password_lower');
+                case 'PasswordRequiresUpper':
+                    return strings('register.password_upper');
+                case 'PasswordMismatch':
+                    return strings('register.password_mismatch');
+                case 'PasswordRequiresUniqueChars':
+                    return strings('register.password_not_unique');
+                default:
+                    return strings('register.unknown_error');
+            }
     }
 
     static async fetch(request, requestOptions) {

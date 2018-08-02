@@ -88,6 +88,7 @@
     "password_lower": "The password must contain lower case letters.",
     "password_upper": "The password must container upper case letters.",
     "password_mismatch": "The confirmation password does not match the password.",
+    "password_not_unique": "The password must contain at least 4 unique characters.",
     "not_email": " is not a valid email.",
     "terms_of_service_title": "Terms of Service",
     "terms_of_service_1": "I agree to the",
@@ -103,7 +104,7 @@
   },
   "login": {
     "login_button": "LOGIN",
-    "unknown_error": "An error occurred. Please try again later.",
+    "unknown_error": "An error occurred. Please try again.",
     "login": "Login",
     "already_have_account": "Already have an account?",
     "error_user_does_not_exist_in_database": "User does not exist in database",

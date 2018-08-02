@@ -12,7 +12,7 @@ export default class Api {
 
         const response = await Helpers.fetch(`${API_URL}/Token/Facebook`, requestOptions);
 
-        Helpers.handleResponse(response);
+        await Helpers.handleLoginResponse(response);
 
         const user = await response.json();
 
@@ -64,7 +64,7 @@ export default class Api {
 
         const response = await Helpers.fetch(`${API_URL}/api/user/account`, requestOptions);
 
-        await Helpers.handleRegisterResponse(response);
+        await Helpers.handleLoginResponse(response);
 
         const user = await response.json();
 
@@ -129,7 +129,11 @@ export default class Api {
             })
         };
 
-        return await Helpers.fetchAuthenticated(`${API_URL}/api/account/ChangePassword`, requestOptions);
+        const response = await Helpers.fetchAuthenticated(`${API_URL}/api/account/ChangePassword`, requestOptions);
+
+        await Helpers.handleLoginResponse(response);
+
+        return response
     }
 
     static async getRefundCases() {
@@ -273,6 +277,8 @@ export default class Api {
         };
 
         const response = await Helpers.fetch(`${API_URL}/api/account/RequestResetPassword`, requestOptions);
+
+        await Helpers.handleLoginResponse(response);
 
         return await response.json();
     }

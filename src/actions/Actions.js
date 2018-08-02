@@ -514,8 +514,8 @@ function loginFacebook(accessToken) {
             } else {
                 dispatch(facebookLoginError(strings('login.error_user_does_not_exist_in_database')));
             }
-        }).catch(() => {
-            dispatch(facebookLoginError(strings('login.unknown_error')));
+        }).catch((error) => {
+            dispatch(facebookLoginError(error));
         });
     };
 }
@@ -547,8 +547,8 @@ function login(username, password) {
             } else {
                 dispatch(loginError(strings('login.error_user_does_not_exist_in_database')));
             }
-        }).catch(() => {
-            dispatch(loginError(strings('login.unknown_error')));
+        }).catch((error) => {
+            dispatch(loginError(error));
         });
     };
 }
