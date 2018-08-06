@@ -60,9 +60,9 @@ export default class StoresList extends PureComponent {
     renderStoreListItem = ({item}) => {
         return (<StoreListItem
             distance={item.distance}
-            key={item.id}
-            logo={item.logo || ''}
-            banner={item.banner || ''}
+            key={Math.random()}
+            logo={item.logo}
+            banner={item.banner}
             name={item.companyName}
             openingHours={item.openingHours}
             refundPercentage={item.refundPercentage}
@@ -71,7 +71,7 @@ export default class StoresList extends PureComponent {
         />);
     };
 
-    keyExtractor = (merchant) => merchant.id.toString();
+    keyExtractor = (merchant, index) => index;
 
     _renderSeparator = () => {
         return <View

@@ -32,19 +32,10 @@ class OverviewScreen extends Component {
     }
 
     _renderRefundCase = ({item}) => (
-        <RefundCaseListItem refundCase={item} onPress={this.props.actions.selectRefundCase}
-                            onIconPress={this.handleIconPressed}/>
+        <RefundCaseListItem refundCase={item} onPress={this.props.actions.selectRefundCase}/>
     );
 
     _keyExtractor = (refundCase) => refundCase.id.toString();
-
-    _renderSeparator = () => {
-        return (
-            <View
-                style={styles.separatorStyle}
-            />
-        );
-    };
 
     onFirstPress = () => {
         this.changePage(0);

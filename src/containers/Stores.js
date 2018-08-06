@@ -80,7 +80,7 @@ class StoresScreen extends Component {
 
     renderMarker = (merchant) => {
         return (
-            <Marker key={merchant.id}
+            <Marker key={Math.random()}
                     style={styles.markerContainer} coordinate={merchant.location}>
                 <Callout onPress={() => this.onCalloutPress(merchant)}>
                     <View style={styles.calloutContainer}>

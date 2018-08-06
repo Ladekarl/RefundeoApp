@@ -17,8 +17,7 @@ export default class RefundCaseListItem extends Component {
 
     static propTypes = {
         refundCase: PropTypes.object.isRequired,
-        onPress: PropTypes.func,
-        onIconPress: PropTypes.func,
+        onPress: PropTypes.func
     };
 
     refundCaseIcon;

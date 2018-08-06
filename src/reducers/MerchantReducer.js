@@ -1,7 +1,6 @@
 import types from '../actions/ActionTypes';
 
 export type Merchant = {
-    id: string,
     companyName: string,
     cvrNumber: string,
     refundPercentage: number,
