@@ -54,7 +54,9 @@ class HeaderScreen extends Component {
         const {navigation, refundCases, user} = this.props.state;
         const isMerchant = user.isMerchant;
 
-        let displayFilter = navigation.currentRoute === 'Stores' && !navigation.isMap;
+        // TODO display filter
+        // let displayFilter = navigation.currentRoute === 'Stores' && !navigation.isMap;
+        let displayFilter = false;
         let isOverview = navigation.currentRoute === 'Overview';
         let displayHelp = !displayFilter && !isMerchant;
         let isRefundCaseView = isOverview && refundCases && refundCases.length > 0;

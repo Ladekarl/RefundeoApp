@@ -68,7 +68,7 @@ class StoresScreen extends Component {
 
     renderCluster = (cluster, onPress) => {
         return (
-            <Marker identifier={'cluster-' + cluster.clusterId} coordinate={cluster.coordinate} onPress={onPress}>
+            <Marker identifier={`cluster-${cluster.clusterId}`} coordinate={cluster.coordinate} onPress={onPress}>
                 <View style={styles.clusterContainer}>
                     <CustomText style={styles.clusterText}>
                         {cluster.pointCount}
@@ -80,7 +80,7 @@ class StoresScreen extends Component {
 
     renderMarker = (merchant) => {
         return (
-            <Marker key={Math.random()}
+            <Marker key={merchant.vatNumber}
                     style={styles.markerContainer} coordinate={merchant.location}>
                 <Callout onPress={() => this.onCalloutPress(merchant)}>
                     <View style={styles.calloutContainer}>

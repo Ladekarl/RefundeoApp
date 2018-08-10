@@ -13,7 +13,7 @@ export default class StoreListItem extends PureComponent {
         distance: PropTypes.number.isRequired,
         logo: PropTypes.string.isRequired,
         banner: PropTypes.string.isRequired,
-        refundPercentage: PropTypes.number.isRequired,
+        refundPercentage: PropTypes.number,
         openingHours: PropTypes.array.isRequired,
         name: PropTypes.string.isRequired,
         city: PropTypes.string.isRequired,
@@ -86,8 +86,14 @@ export default class StoreListItem extends PureComponent {
                                 style={styles.subText}>{oHoursString}</CustomText>
                         </View>
                         <View style={styles.rightContainer}>
+                            {refundPercentage &&
                             <CustomText
                                 style={styles.rightText}>{strings('stores.refund') + '\n' + (refundPercentage.toFixed(2).replace(/[.,]00$/, '')) + ' %'}</CustomText>
+                            }
+                            {!refundPercentage &&
+                            <CustomText
+                                style={styles.rightText}>{strings('stores.no_refund')}</CustomText>
+                            }
                         </View>
                     </View>
                 </View>

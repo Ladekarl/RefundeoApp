@@ -219,12 +219,14 @@ export default class Helpers {
         const location = await Location.getCurrentPosition();
         let merchantsWithDistance = [];
         merchants.forEach((merchant) => {
-            merchant.distance = geolib.getDistance(location.coords, {
-                latitude: merchant.latitude,
-                longitude: merchant.longitude
-            }, 100);
-            if (merchant.distance) {
-                merchantsWithDistance.push(merchant);
+            if(merchant.latitude && merchant.longitude) {
+                merchant.distance = geolib.getDistance(location.coords, {
+                    latitude: merchant.latitude,
+                    longitude: merchant.longitude
+                }, 100);
+                if (merchant.distance) {
+                    merchantsWithDistance.push(merchant);
+                }
             }
         });
         merchantsWithDistance.sort((a, b) => {

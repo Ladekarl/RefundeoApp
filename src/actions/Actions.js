@@ -960,9 +960,5 @@ function changePasswordError(error = '') {
 }
 
 function shouldLogout(response) {
-    return response && response.status === 401 || response.status === 403;
+    return response && (response.status === 401 || response.status === 403);
 }
-
-
-
-

@@ -30,8 +30,7 @@ export default class StoresList extends PureComponent {
         const currentDay = currentDate.getDay();
         merchants.forEach((merchant) => {
             const dist = merchant.distance;
-            const ref = merchant.refundPercentage;
-            if ((dist <= distance || distance === 10000) && ref >= minRefund && (!tag.value || merchant.tags.indexOf(tag.key) > -1)) {
+            if ((dist <= distance || distance === 10000) && (minRefund === 0 || merchant.refundPercentage >= minRefund) && (!tag.value || merchant.tags.indexOf(tag.key) > -1)) {
                 if (onlyOpen) {
                     const openingHours = merchant.openingHours.find(o => o.day === currentDay);
                     if (openingHours && openingHours.open && openingHours.close) {
@@ -71,7 +70,7 @@ export default class StoresList extends PureComponent {
         />);
     };
 
-    keyExtractor = (merchant, index) => index;
+    keyExtractor = (merchant, index) => `stores-list-${index}`;
 
     _renderSeparator = () => {
         return <View
