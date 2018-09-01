@@ -21,6 +21,7 @@ import Contact from '../components/Contact';
 import Cities from '../containers/Cities';
 import AddCity from '../containers/AddCity';
 import StoresScreen from '../containers/Stores';
+import OverviewScreen from '../containers/Overview';
 
 const {width, height} = Dimensions.get('screen');
 const noHeaderNavigationOptions = {headerMode: 'none', gesturesEnabled: false};
@@ -33,7 +34,7 @@ const headerBackNavigationOptions = ({navigation}) => ({
             <Icon name={Platform.OS === 'ios' ? 'angle-left' : 'arrow-left'} style={styles.defaultHeaderLeftIcon}/>
         </TouchableOpacity>,
     headerTitleStyle: {
-        fontSize: 18,
+        fontSize: Platform.OS === 'ios' ? 17 : 18,
         color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
     },
     gesturesEnabled: false,
@@ -91,6 +92,7 @@ const MainDrawerNavigator = createDrawerNavigator({
 const MainStackNavigator = createStackNavigator({
     //Home: {screen: HomeTab, navigationOptions: homeNavigatorOptions},
     Cities: {screen: Cities, navigationOptions: homeNavigatorOptions},
+    Overview: {screen: OverviewScreen, navigationOptions: homeNavigatorOptions},
     Settings: {screen: SettingsScreen, navigationOptions: headerBackNavigationOptions},
     AddCity: {screen: AddCity, navigationOptions: headerBackNavigationOptions},
     Stores: {screen: StoresScreen, navigationOptions: homeNavigatorOptions},
@@ -154,6 +156,7 @@ const styles = StyleSheet.create({
         elevation: 1,
         backgroundColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor,
         margin: 0,
-        paddingBottom: Platform.OS === 'ios' ? 10 : 0
+        paddingBottom: Platform.OS === 'ios' ? 10 : 0,
+        borderBottomWidth: 0
     }
 });

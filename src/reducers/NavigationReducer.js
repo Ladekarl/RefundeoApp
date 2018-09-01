@@ -30,11 +30,11 @@ export default function navigationReducer(state = initialState, action = {}) {
             break;
         }
         case types.NAVIGATE_LOGGED_IN: {
-            if (state.currentRoute !== 'Overview') {
+            if (state.currentRoute !== 'Cities') {
                 nextState = {
                     ...state,
                     ...navigateAndReset('mainFlow', state),
-                    currentRoute: 'Overview',
+                    currentRoute: 'Cities',
                     drawerRoute: 'Home'
                 };
             }

@@ -71,20 +71,23 @@ class HeaderScreen extends Component {
                         <Icon name='bars' style={styles.drawerIcon}/>
                     </TouchableOpacity>
                     }
-                    {!hasDrawer && !isMerchant && navigation.currentRoute !== 'Stores' &&
+                    {!hasDrawer && !isMerchant && navigation.currentRoute === 'Cities' &&
                     <TouchableOpacity style={styles.noDrawerHeader}
                                       onPress={this.props.actions.navigateSettings}>
                         <Icon name='user-circle' style={styles.noDrawerIcon}/>
                     </TouchableOpacity>
                     }
-                    {!hasDrawer && !isMerchant && navigation.currentRoute === 'Stores' &&
+                    {!hasDrawer && !isMerchant && navigation.currentRoute !== 'Cities' &&
                     <TouchableOpacity style={styles.noDrawerHeader}
                                       onPress={this.props.actions.navigateBack}>
                         <Icon name='angle-left' style={styles.navigateBackIcon}/>
                     </TouchableOpacity>
                     }
-                    {navigation.currentRoute !== 'Stores' &&
+                    {navigation.currentRoute === 'Cities' &&
                     <CustomText style={styles.headerText}>Refundeo</CustomText>
+                    }
+                    {navigation.currentRoute === 'Overview' &&
+                    <CustomText style={styles.headerText}>{strings('overview.refunds')}</CustomText>
                     }
                     {navigation.currentRoute === 'Stores' &&
                     <View style={styles.overlayContainer}>

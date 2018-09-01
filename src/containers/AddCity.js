@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {
     ActivityIndicator,
+    PixelRatio,
     StyleSheet,
     View
 } from 'react-native';
@@ -41,10 +42,12 @@ class AddCity extends Component {
             <View style={styles.container}>
                 {!fetching &&
                 <GooglePlacesAutocomplete
-                    placeholder='Search'
+                    placeholder={strings('cities.search')}
                     minLength={2}
-                    autoFocus={false}
+                    autoFocus={true}
                     listViewDisplayed='auto'
+                    enablePoweredByContainer={true}
+                    listUnderlayColor={colors.activeTabColor}
                     debounce={200}
                     onPress={this.addCity}
                     getDefaultValue={() => ''}
@@ -92,8 +95,10 @@ const googlePlacesStyles = StyleSheet.flatten({
         width: '100%',
         height: 55,
         backgroundColor: colors.activeTabColor,
-        borderWidth: 0,
-        margin: 0
+        borderTopWidth: 0,
+        borderBottomWidth: 0,
+        margin: 0,
+        borderTopColor: colors.activeTabColor
     },
     container: {
         backgroundColor: colors.activeTabColor
@@ -106,11 +111,37 @@ const googlePlacesStyles = StyleSheet.flatten({
     description: {
         color: colors.whiteColor,
         fontFamily: 'Lato',
-        fontSize: 17,
-        height: 50
+        fontSize: 16,
+        paddingLeft: 10
+    },
+    row: {
+        backgroundColor: 'rgba(0,0,0,0.1)',
+        borderWidth: 2,
+        borderColor: colors.addButtonOuterColor,
+        borderRadius: 5,
+        marginLeft: 5,
+        marginRight: 5,
+        height: 40,
+        padding: 0,
+        alignItems: 'center'
+    },
+    separator: {
+        margin: 2,
+        backgroundColor: colors.activeTabColor,
+        borderWidth: 0
     },
     poweredContainer: {
-        display: 'none'
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        backgroundColor: colors.activeTabColor,
+        margin: 0,
+        padding: 0
+    },
+    powered: {
+        tintColor: colors.whiteColor,
+        height: 12,
+        margin: 0,
+        padding: 0
     }
 });
 

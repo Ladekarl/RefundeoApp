@@ -22,7 +22,7 @@ export default {
     navigateDrawerSettings,
     navigateScanner,
     navigateQrCode,
-    navgiateOverview,
+    navigateOverview,
     navigateHelp,
     navigateStoreProfile,
     navigateRefundCase,
@@ -90,6 +90,7 @@ function addCity(placesId) {
                     dispatch(addCityError());
                 });
             } else {
+                dispatch(addCitySuccess(city));
                 dispatch(navigateCities());
             }
         }).catch(response => {
@@ -568,7 +569,7 @@ function navigateQrCode() {
     };
 }
 
-function navgiateOverview() {
+function navigateOverview() {
     return {
         type: types.NAVIGATE_OVERVIEW
     };

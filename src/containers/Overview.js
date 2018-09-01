@@ -78,8 +78,6 @@ class OverviewScreen extends Component {
     };
 
     emptyListScreen = () => {
-        if (!this.props.state.refundCases || this.props.state.refundCases.length === 0)
-            return <EmptyOverviewScreen actions={this.props.actions}/>;
         const page = this.state.page;
         let text = strings('overview.no_new');
         if (page === 1)
@@ -132,14 +130,13 @@ class OverviewScreen extends Component {
 
     render() {
         const {actions, state} = this.props;
-        const {refundCases, fetchingRefundCases, fetchingDocumentation, fetchingRequestRefund} = state;
-
+        const {fetchingRefundCases, fetchingDocumentation, fetchingRequestRefund} = state;
         const filteredRefundCases = this.getFilteredRefundCases();
-
+        const fetching = fetchingRefundCases || fetchingDocumentation || fetchingRequestRefund;
         return (
             <View style={styles.container}>
-                {refundCases && refundCases.length > 0 &&
-                this.renderHeader()
+                {
+                    this.renderHeader()
                 }
                 <FlatList
                     style={styles.flatListContainer}
@@ -147,12 +144,11 @@ class OverviewScreen extends Component {
                     refreshControl={
                         <RefreshControl
                             tintColor={colors.activeTabColor}
-                            refreshing={fetchingRefundCases || fetchingDocumentation || fetchingRequestRefund}
+                            refreshing={fetching}
                             onRefresh={actions.getRefundCases}
                         />
                     }
-                    initialNumToRender={refundCases && refundCases.length > 0 ? 8 : 0}
-                    data={refundCases && refundCases.length > 0 ? filteredRefundCases : null}
+                    data={filteredRefundCases}
                     keyExtractor={this._keyExtractor}
                     renderItem={this._renderRefundCase}
                     ListEmptyComponent={!fetchingRefundCases && (!filteredRefundCases || !filteredRefundCases.length > 0) ?

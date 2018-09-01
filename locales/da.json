@@ -135,6 +135,7 @@
     "success": "Success"
   },
   "overview": {
+    "refunds": "Refusioner",
     "welcome_text": "Velkommen til Refundeo",
     "no_refunds_text": "Du har endnu ingen refusioner.",
     "get_started_text": "Tryk på knappen og scan QR koden på din kvittering.",
@@ -245,6 +246,7 @@
   },
   "cities": {
     "get_city_error": "Kunne ikke hente byen",
-    "add_city": "Tilføj by"
+    "add_city": "Tilføj by",
+    "search": "Søg"
   }
 }

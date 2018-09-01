@@ -137,6 +137,7 @@
     "success": "Success"
   },
   "overview": {
+    "refunds": "Refunds",
     "welcome_text": "Welcome to Refundeo",
     "no_refunds_text": "You don't have any refunds.",
     "get_started_text": "Push the button to scan the QR code on your receipt.",
@@ -247,6 +248,7 @@
   },
   "cities": {
     "get_city_error": "Could not get the city",
-    "add_city": "Add City"
+    "add_city": "Add City",
+    "search": "Search"
   }
 }

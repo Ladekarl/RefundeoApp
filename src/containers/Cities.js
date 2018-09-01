@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {
     View,
     StyleSheet,
-    ImageBackground,
     TouchableOpacity,
     FlatList
 } from 'react-native';
@@ -13,6 +12,7 @@ import PropTypes from 'prop-types';
 import CustomText from '../components/CustomText';
 import colors from '../shared/colors';
 import Icon from 'react-native-fa-icons';
+import FastImage from 'react-native-fast-image';
 
 class Cities extends Component {
 
@@ -39,14 +39,13 @@ class Cities extends Component {
                 activeOpacity={0.7}
                 onPress={() => this.props.actions.selectCity(item.googlePlaceId)}
                 style={styles.cityContainer}>
-                <ImageBackground
-                    borderRadius={10}
+                <FastImage
                     style={styles.cityImage}
                     source={{uri: item.image}}>
                     <View style={styles.bannerTextBarContainer}>
                         <CustomText style={styles.cityText}>{item.name}</CustomText>
                     </View>
-                </ImageBackground>
+                </FastImage>
             </TouchableOpacity>
         );
     };
@@ -61,16 +60,27 @@ class Cities extends Component {
                 <FlatList
                     style={styles.flatListContainer}
                     ItemSeparatorComponent={this._renderSeparator}
-                    data={cities}
+                    data={cities.concat(cities)}
                     keyExtractor={this.keyExtractor}
                     renderItem={this.renderCity}
                 />
                 <View style={styles.addButtonContainer}>
                     <View style={styles.addButtonInnerContainer}>
                         <TouchableOpacity
+                            activeOpacity={0.7}
                             style={styles.addButton}
                             onPress={actions.navigateAddCity}>
                             <Icon style={styles.addIcon} name='plus'/>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                <View style={styles.refundCasesButtonContainer}>
+                    <View style={styles.addButtonInnerContainer}>
+                        <TouchableOpacity
+                            activeOpacity={0.7}
+                            style={styles.refundCasesButton}
+                            onPress={actions.navigateOverview}>
+                            <Icon style={styles.addIcon} name='list'/>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -86,14 +96,23 @@ const styles = StyleSheet.create({
         backgroundColor: colors.activeTabColor
     },
     flatListContainer: {
-        backgroundColor: colors.activeTabColor,
-        marginLeft: 10,
-        marginRight: 10,
-        marginBottom: 50
+        backgroundColor: colors.activeTabColor
     },
     separatorStyle: {
-        margin: 5,
         backgroundColor: colors.activeTabColor
+    },
+    refundCasesButtonContainer: {
+        backgroundColor: colors.addButtonOuterColor,
+        width: 80,
+        height: 80,
+        justifyContent: 'center',
+        alignItems: 'stretch',
+        borderRadius: 50,
+        position: 'absolute',
+        bottom: -15,
+        left: -15,
+        alignSelf: 'center',
+        opacity: 0.9
     },
     addButtonContainer: {
         backgroundColor: colors.addButtonOuterColor,
@@ -103,8 +122,10 @@ const styles = StyleSheet.create({
         alignItems: 'stretch',
         borderRadius: 50,
         position: 'absolute',
-        bottom: -20,
-        alignSelf: 'center'
+        bottom: -15,
+        right: -15,
+        alignSelf: 'center',
+        opacity: 0.9
     },
     addButtonInnerContainer: {
         backgroundColor: colors.addButtonInnerColor,
@@ -122,17 +143,33 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 50,
     },
+    refundCasesButton: {
+        backgroundColor: colors.facebookColor,
+        flex: 1,
+        margin: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 50,
+    },
     addIcon: {
         fontSize: 30,
         color: colors.whiteColor
     },
     cityContainer: {
         flex: 1,
+        borderWidth: 4,
+        borderColor: colors.addButtonOuterColor,
+        borderRadius: 10,
+        marginLeft: 5,
+        marginRight: 5
     },
     cityImage: {
         justifyContent: 'center',
         width: '100%',
-        height: 120
+        height: 120,
+        borderWidth: 4,
+        borderColor: colors.addButtonInnerColor,
+        borderRadius: 10
     },
     bannerTextBarContainer: {
         justifyContent: 'center',
@@ -143,11 +180,12 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 40,
         backgroundColor: 'rgba(0,0,0,0.6)',
-        borderBottomLeftRadius: 10,
-        borderBottomRightRadius: 10
+        borderBottomLeftRadius: 5,
+        borderBottomRightRadius: 5,
     },
     cityText: {
         color: colors.whiteColor,
+        fontSize: 16,
         fontWeight: 'bold'
     }
 });
