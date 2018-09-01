@@ -18,6 +18,9 @@ import Scanner from '../containers/Scanner';
 import RefundCase from '../containers/RefundCase';
 import UploadDocumentation from '../containers/UploadDocumentation';
 import Contact from '../components/Contact';
+import Cities from '../containers/Cities';
+import AddCity from '../containers/AddCity';
+import StoresScreen from '../containers/Stores';
 
 const {width, height} = Dimensions.get('screen');
 const noHeaderNavigationOptions = {headerMode: 'none', gesturesEnabled: false};
@@ -86,8 +89,11 @@ const MainDrawerNavigator = createDrawerNavigator({
 });
 
 const MainStackNavigator = createStackNavigator({
-    Home: {screen: HomeTab, navigationOptions: homeNavigatorOptions},
+    //Home: {screen: HomeTab, navigationOptions: homeNavigatorOptions},
+    Cities: {screen: Cities, navigationOptions: homeNavigatorOptions},
     Settings: {screen: SettingsScreen, navigationOptions: headerBackNavigationOptions},
+    AddCity: {screen: AddCity, navigationOptions: headerBackNavigationOptions},
+    Stores: {screen: StoresScreen, navigationOptions: homeNavigatorOptions},
     Help: {screen: Help, navigationOptions: headerBackNavigationOptions},
     Guide: {screen: EmptyOverviewScreen, navigationOptions: headerBackNavigationOptions},
     Contact: {screen: Contact, navigationOptions: headerBackNavigationOptions},
@@ -95,12 +101,7 @@ const MainStackNavigator = createStackNavigator({
     RefundCase: {screen: RefundCase, navigationOptions: headerBackNavigationOptions},
     UploadDocumentation: {screen: UploadDocumentation, navigationOptions: headerBackNavigationOptions}
 }, {
-    lazy: true,
-    // transitionConfig: () => ({
-    //     transitionSpec: {
-    //         duration: 0,
-    //     },
-    // }),
+    lazy: true
 });
 
 const routeConfiguration = {

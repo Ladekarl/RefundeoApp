@@ -59,13 +59,13 @@ export default class StoreListItem extends PureComponent {
                 style={styles.container}
                 onPress={onPress}>
                 <View style={styles.cardContainer}>
-                    {banner &&
+                    {!!banner &&
                     <FastImage
                         style={styles.bannerImage}
                         source={{uri: banner}}>
                         <View style={styles.bannerTextBarContainer}>
                             <View style={styles.iconContainer}>
-                                {logo &&
+                                {!!logo &&
                                 <FastImage
                                     style={styles.logoImage}
                                     resizeMode={FastImage.resizeMode.contain}
@@ -77,16 +77,22 @@ export default class StoreListItem extends PureComponent {
                     }
                     <View style={styles.contentContainer}>
                         <View style={styles.leftContainer}>
+                            {!!dist &&
                             <CustomText style={styles.leftText}>{dist}</CustomText>
+                            }
                         </View>
                         <View style={styles.contentTextContainer}>
+                            {!!name &&
                             <CustomText
                                 style={styles.mainText}>{name}</CustomText>
+                            }
+                            {!!oHoursString &&
                             <CustomText
                                 style={styles.subText}>{oHoursString}</CustomText>
+                            }
                         </View>
                         <View style={styles.rightContainer}>
-                            {refundPercentage &&
+                            {!!refundPercentage &&
                             <CustomText
                                 style={styles.rightText}>{strings('stores.refund') + '\n' + (refundPercentage.toFixed(2).replace(/[.,]00$/, '')) + ' %'}</CustomText>
                             }

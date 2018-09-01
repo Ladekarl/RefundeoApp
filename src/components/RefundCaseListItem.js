@@ -41,6 +41,8 @@ export default class RefundCaseListItem extends Component {
     };
 
     _getRefundCaseIcon = (refundCase) => {
+        if(!refundCase.merchant.logo) return;
+
         return <FastImage
             style={styles.documentationIcon}
             resizeMode={FastImage.resizeMode.contain}

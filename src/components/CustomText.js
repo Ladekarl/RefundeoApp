@@ -23,6 +23,6 @@ export default class CustomText extends PureComponent {
 
 const styles = StyleSheet.create({
     textStyle: {
-        fontFamily: 'Lato'
+            fontFamily: 'Lato'
     }
 });

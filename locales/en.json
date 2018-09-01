@@ -244,5 +244,9 @@
   },
   "root": {
     "no_connection": "No Internet Connection"
+  },
+  "cities": {
+    "get_city_error": "Could not get the city",
+    "add_city": "Add City"
   }
 }

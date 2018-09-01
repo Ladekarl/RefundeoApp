@@ -272,6 +272,30 @@ export default function navigationReducer(state = initialState, action = {}) {
             }
             break;
         }
+        case types.NAVIGATE_ADD_CITY: {
+            const navigationAction = NavigationActions.navigate({routeName: 'AddCity'});
+            if (state.currentRoute !== 'AddCity') {
+                nextState = {
+                    ...state,
+                    ...RootNavigator.router.getStateForAction(navigationAction, state),
+                    currentRoute: 'AddCity',
+                    drawerRoute: 'Home'
+                };
+            }
+            break;
+        }
+        case types.NAVIGATE_CITIES: {
+            const navigationAction = NavigationActions.navigate({routeName: 'Cities'});
+            if (state.currentRoute !== 'Cities') {
+                nextState = {
+                    ...state,
+                    ...RootNavigator.router.getStateForAction(navigationAction, state),
+                    currentRoute: 'Cities',
+                    drawerRoute: 'Home'
+                };
+            }
+            break;
+        }
         case types.NAVIGATE_UPLOAD_DOCUMENTATION: {
             if (state.currentRoute !== 'UploadDocumentation') {
                 const navigationAction = NavigationActions.navigate({routeName: 'UploadDocumentation'});

@@ -8,6 +8,14 @@ export default class {
 
     static missingUserInfo(user) {
         let requiredAttributes = [
+            user.acceptedPrivacyPolicy,
+            user.acceptedTermsOfService,
+        ];
+        return requiredAttributes.some(val => !val);
+    }
+
+    static missingRequestRefundUserInfo(user) {
+        let requiredAttributes = [
             user.username,
             user.email,
             user.firstName,
@@ -18,14 +26,6 @@ export default class {
             user.addressPostalCode,
             user.addressCity,
             user.addressCountry,
-            user.acceptedPrivacyPolicy,
-            user.acceptedTermsOfService,
-        ];
-        return requiredAttributes.some(val => !val);
-    }
-
-    static missingRequestRefundUserInfo(user) {
-        let requiredAttributes = [
             user.swift,
             user.accountNumber
         ];

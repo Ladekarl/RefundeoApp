@@ -242,5 +242,9 @@
   },
   "root": {
     "no_connection": "Ingen forbindelse til internettet"
+  },
+  "cities": {
+    "get_city_error": "Kunne ikke hente byen",
+    "add_city": "Tilføj by"
   }
 }

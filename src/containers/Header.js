@@ -54,9 +54,7 @@ class HeaderScreen extends Component {
         const {navigation, refundCases, user} = this.props.state;
         const isMerchant = user.isMerchant;
 
-        // TODO display filter
-        // let displayFilter = navigation.currentRoute === 'Stores' && !navigation.isMap;
-        let displayFilter = false;
+        let displayFilter = navigation.currentRoute === 'Stores' && !navigation.isMap;
         let isOverview = navigation.currentRoute === 'Overview';
         let displayHelp = !displayFilter && !isMerchant;
         let isRefundCaseView = isOverview && refundCases && refundCases.length > 0;
@@ -73,10 +71,16 @@ class HeaderScreen extends Component {
                         <Icon name='bars' style={styles.drawerIcon}/>
                     </TouchableOpacity>
                     }
-                    {!hasDrawer && !isMerchant &&
+                    {!hasDrawer && !isMerchant && navigation.currentRoute !== 'Stores' &&
                     <TouchableOpacity style={styles.noDrawerHeader}
                                       onPress={this.props.actions.navigateSettings}>
-                        <Icon name='user-circle' style={hasDrawer ? styles.drawerIcon : styles.noDrawerIcon}/>
+                        <Icon name='user-circle' style={styles.noDrawerIcon}/>
+                    </TouchableOpacity>
+                    }
+                    {!hasDrawer && !isMerchant && navigation.currentRoute === 'Stores' &&
+                    <TouchableOpacity style={styles.noDrawerHeader}
+                                      onPress={this.props.actions.navigateBack}>
+                        <Icon name='angle-left' style={styles.navigateBackIcon}/>
                     </TouchableOpacity>
                     }
                     {navigation.currentRoute !== 'Stores' &&
@@ -200,6 +204,10 @@ const styles = StyleSheet.create({
     },
     noDrawerIcon: {
         fontSize: Platform.OS === 'ios' ? 20 : 25,
+        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
+    },
+    navigateBackIcon: {
+        fontSize: Platform.OS === 'ios' ? 25 : 20,
         color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
     },
     overlayContainer: {

@@ -7,6 +7,8 @@ export default class LocalStorage {
     static refundCasesStorageString = 'com.refundeo.storage.refundCases';
     static merchantsStorageString = 'com.refundeo.storage.merchants';
     static tagsStorageString = 'com.refundeo.storage.tags';
+    static cityStorageString = 'com.refundeo.storage.city';
+    static citiesStorageString = 'com.refundeo.storage.cities';
     static userStorageString = 'com.refundeo.storage.user';
 
     static async getUser() {
@@ -154,6 +156,56 @@ export default class LocalStorage {
     static async removeTags() {
         try {
             return await AsyncStorage.removeItem(this.tagsStorageString);
+        } catch (error) {
+            return error;
+        }
+    }
+
+    static async saveCity(id, city) {
+        try {
+            return await AsyncStorage.setItem(this.cityStorageString + id, JSON.stringify(city));
+        } catch (error) {
+            return error;
+        }
+    }
+
+    static async getCity(id) {
+        try {
+            let city = await AsyncStorage.getItem(this.cityStorageString + id);
+            return await JSON.parse(city) || null;
+        } catch (error) {
+            return error;
+        }
+    }
+
+    static async removeCity(id) {
+        try {
+            return await AsyncStorage.removeItem(this.cityStorageString + id);
+        } catch (error) {
+            return error;
+        }
+    }
+
+    static async saveCities(cities) {
+        try {
+            return await AsyncStorage.setItem(this.citiesStorageString, JSON.stringify(cities));
+        } catch (error) {
+            return error;
+        }
+    }
+
+    static async getCities() {
+        try {
+            let city = await AsyncStorage.getItem(this.citiesStorageString);
+            return await JSON.parse(city) || null;
+        } catch (error) {
+            return error;
+        }
+    }
+
+    static async removeCities() {
+        try {
+            return await AsyncStorage.removeItem(this.citiesStorageString);
         } catch (error) {
             return error;
         }

@@ -4,8 +4,8 @@ import Location from '../shared/Location';
 import geolib from 'geolib';
 import NetworkConnection from '../shared/NetworkConnection';
 
-export const API_URL = 'https://app.refundeo.com';
-//export const API_URL = 'http://localhost:5000';
+//export const API_URL = 'https://app.refundeo.com';
+export const API_URL = 'http://localhost:5000';
 //export const API_URL = 'https://refundeodev.azurewebsites.net';
 
 export default class Helpers {
@@ -139,6 +139,18 @@ export default class Helpers {
             tags = await LocalStorage.getTags();
         }
         return tags;
+    }
+
+    static async handleCityResponse(id, city) {
+        if(city) {
+            if(city.merchants) {
+                city.merchants = await this.setMerchantDistances(city.merchants);
+            }
+            await LocalStorage.saveCity(id, city);
+        } else {
+            city = await LocalStorage.getCity(id);
+        }
+        return city;
     }
 
     static async handleAuthenticatedResponse(request, requestOptions, response) {
