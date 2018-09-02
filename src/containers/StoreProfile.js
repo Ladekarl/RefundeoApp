@@ -60,7 +60,7 @@ class StoreProfile extends Component {
                         <View style={styles.bannerColumnContainer}>
                             <CustomText
                                 style={styles.contentText}>{oHoursString}</CustomText>
-                            {selectedMerchant.refundPercentage &&
+                            {!!selectedMerchant.refundPercentage &&
                             <CustomText
                                 style={styles.contentText}>{selectedMerchant.refundPercentage.toFixed(2).replace(/[.,]00$/, '') + ' %'}</CustomText>
                             }

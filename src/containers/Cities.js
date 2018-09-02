@@ -60,7 +60,7 @@ class Cities extends Component {
                 <FlatList
                     style={styles.flatListContainer}
                     ItemSeparatorComponent={this._renderSeparator}
-                    data={cities.concat(cities)}
+                    data={cities}
                     keyExtractor={this.keyExtractor}
                     renderItem={this.renderCity}
                 />
@@ -80,7 +80,7 @@ class Cities extends Component {
                             activeOpacity={0.7}
                             style={styles.refundCasesButton}
                             onPress={actions.navigateOverview}>
-                            <Icon style={styles.addIcon} name='list'/>
+                            <Icon style={styles.refundCaseIcon} name='list'/>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -153,6 +153,10 @@ const styles = StyleSheet.create({
     },
     addIcon: {
         fontSize: 30,
+        color: colors.whiteColor
+    },
+    refundCaseIcon: {
+        fontSize: 25,
         color: colors.whiteColor
     },
     cityContainer: {
