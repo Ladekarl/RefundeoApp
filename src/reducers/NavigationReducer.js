@@ -6,7 +6,7 @@ const initialState = {
     currentRoute: 'Initial',
     drawerRoute: '',
     previousRoute: '',
-    isMap: true,
+    isMap: false,
     drawerOpen: false,
     modal: {},
     ...RootNavigator.router.getStateForAction(NavigationActions.navigate({routeName: 'loginFlow'}))

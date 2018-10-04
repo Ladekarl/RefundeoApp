@@ -133,7 +133,7 @@ function selectCity(id) {
                type: types.CITY_SELECT_CITY,
                city
             });
-            dispatch(navigateStoreMap());
+            dispatch(navigateStoreList());
         }).catch(response => {
             if (shouldLogout(response)) {
                 dispatch(logout());
@@ -145,7 +145,7 @@ function selectCity(id) {
                             type: types.CITY_SELECT_CITY,
                             city
                         });
-                        dispatch(navigateStoreMap());
+                        dispatch(navigateStoreList());
                     } else {
                         dispatch(getCityError(strings('cities.get_city_error')));
                     }

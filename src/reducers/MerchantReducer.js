@@ -4,6 +4,7 @@ export type Merchant = {
     companyName: string,
     cvrNumber: string,
     refundPercentage: number,
+    priceLevel: number,
     addressCity: string,
     addressStreetNumber: string,
     addressStreetName: string,
@@ -18,7 +19,7 @@ export type Merchant = {
     distance: number,
     currency: string,
     vatNumber: string,
-    tags: Array<number>,
+    tags: Array<Tag>,
     openingHours: Array<OpeningHours>
 }
 
@@ -40,7 +41,11 @@ type MerchantReducer = {
     tags: Array<Tag>
 }
 
-type Tag = { key: number, value: string }
+type Tag = {
+    key: number,
+    value: string,
+    displayName: string
+}
 
 const initialState: MerchantReducer = {
     merchants: [],

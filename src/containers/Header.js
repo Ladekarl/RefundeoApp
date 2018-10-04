@@ -93,17 +93,17 @@ class HeaderScreen extends Component {
                     <View style={styles.overlayContainer}>
                         <TouchableOpacity
                             activeOpacity={1}
-                            onPress={this.props.actions.navigateStoreMap}
-                            style={[styles.leftOverlayButton, navigation.isMap ? styles.activeButton : {}]}>
-                            <Icon name='map'
-                                  style={[styles.overlayButtonText, navigation.isMap ? styles.activeOverlayButtonText : {}]}/>
+                            onPress={this.props.actions.navigateStoreList}
+                            style={[styles.leftOverlayButton, !navigation.isMap ? styles.activeButton : {}]}>
+                            <Icon name='list'
+                                  style={[styles.overlayButtonText, !navigation.isMap ? styles.activeOverlayButtonText : {}]}/>
                         </TouchableOpacity>
                         <TouchableOpacity
                             activeOpacity={1}
-                            onPress={this.props.actions.navigateStoreList}
-                            style={[styles.rightOverlayButton, !navigation.isMap ? styles.activeButton : {}]}>
-                            <Icon name='list'
-                                  style={[styles.overlayButtonText, !navigation.isMap ? styles.activeOverlayButtonText : {}]}/>
+                            onPress={this.props.actions.navigateStoreMap}
+                            style={[styles.rightOverlayButton, navigation.isMap ? styles.activeButton : {}]}>
+                            <Icon name='map'
+                                  style={[styles.overlayButtonText, navigation.isMap ? styles.activeOverlayButtonText : {}]}/>
                         </TouchableOpacity>
                     </View>
                     }
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor,
+        backgroundColor: colors.backgroundColor,
         paddingLeft: 25,
         paddingRight: 25,
         paddingTop: Platform.OS === 'ios' ? 0 : 11,
@@ -171,14 +171,14 @@ const styles = StyleSheet.create({
     },
     safeContainer: {
         flex: 1,
-        backgroundColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor,
+        backgroundColor: colors.backgroundColor,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
     },
     headerText: {
         fontSize: Platform.OS === 'ios' ? 17 : 18,
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor,
+        color: colors.whiteColor,
         fontWeight: 'bold'
     },
     headerButton: {
@@ -207,11 +207,11 @@ const styles = StyleSheet.create({
     },
     noDrawerIcon: {
         fontSize: Platform.OS === 'ios' ? 20 : 25,
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
+        color: colors.activeTabColor
     },
     navigateBackIcon: {
         fontSize: Platform.OS === 'ios' ? 25 : 20,
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
+        color: colors.activeTabColor
     },
     overlayContainer: {
         alignSelf: 'center',
@@ -229,8 +229,8 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 5,
         borderBottomLeftRadius: 5,
         borderWidth: Platform.OS === 'ios' ? 2 : StyleSheet.hairlineWidth,
-        borderColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.blackColor,
-        backgroundColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor
+        borderColor: colors.whiteColor,
+        backgroundColor: colors.backgroundColor
     },
     rightOverlayButton: {
         paddingTop: 7,
@@ -240,18 +240,18 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 5,
         borderBottomRightRadius: 5,
         borderWidth: Platform.OS === 'ios' ? 2 : StyleSheet.hairlineWidth,
-        borderColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.blackColor,
-        backgroundColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor
+        borderColor: colors.whiteColor,
+        backgroundColor: colors.backgroundColor
     },
     activeButton: {
-        backgroundColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
+        backgroundColor: colors.whiteColor
     },
     overlayButtonText: {
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor,
+        color: colors.whiteColor,
         fontSize: 15
     },
     activeOverlayButtonText: {
-        color: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor
+        color: colors.backgroundColor
     }
 });
 

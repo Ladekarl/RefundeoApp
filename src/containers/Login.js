@@ -10,6 +10,7 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
+import {SafeAreaView} from 'react-navigation';
 import colors from '../shared/colors';
 import Icon from 'react-native-fa-icons';
 import {strings} from '../shared/i18n';
@@ -132,7 +133,7 @@ class LoginScreen extends Component {
         const {fetching, loginError, navigation, forgotPasswordError, forgotPasswordEmail} = this.props.state;
 
         return (
-            <KeyboardAvoidingView style={styles.container} keyboardVerticalOffset={Platform.OS === 'ios' ? 50 : 0}
+            <SafeAreaView style={styles.container} keyboardVerticalOffset={Platform.OS === 'ios' ? 50 : 0}
                                   behavior='padding'>
                 <View style={styles.innerContainer}>
                     <View style={styles.loginFormContainer}>
@@ -236,7 +237,7 @@ class LoginScreen extends Component {
                     </View>
                     }
                 </View>
-            </KeyboardAvoidingView>
+            </SafeAreaView>
         );
     }
 }

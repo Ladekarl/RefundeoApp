@@ -93,7 +93,7 @@ export default class ModalScreen extends PureComponent {
                     keyboardVerticalOffset={Platform.OS === 'ios' ? -100 + keyboardVerticalOffset : -300 + keyboardVerticalOffset}
                     behavior='padding'>
                     <View
-                        style={[styles.modalInnerContainer, fullScreen ? styles.fullInnerContainer : {}]}>
+                        style={[styles.modalInnerContainer, fullScreen ? styles.fullInnerContainer : styles.partialInnerContainer]}>
                         <SafeAreaView style={[styles.safeContainer, fullScreen ? styles.fullSafeContainer : {}]}>
                             <View
                                 style={[styles.modalTopContainer, topContainerStyle]}>
@@ -158,20 +158,19 @@ const styles = StyleSheet.create({
     modalInnerContainer: {
         maxHeight: '100%',
         width: '90%',
-        borderRadius: 2,
+        borderRadius: 5,
         alignItems: 'center',
         justifyContent: 'center',
-        elevation: 5,
-        backgroundColor: colors.backgroundColor
+        elevation: 5
     },
     safeContainer: {
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
         width: '100%',
-        backgroundColor: colors.activeTabColor,
-        borderTopRightRadius: 2,
-        borderTopLeftRadius: 2
+        backgroundColor: colors.backgroundColor,
+        borderTopRightRadius: 5,
+        borderTopLeftRadius: 5
     },
     fullSafeContainer: {
         borderTopRightRadius: 0,
@@ -181,10 +180,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
-        borderTopRightRadius: 2,
-        borderTopLeftRadius: 2,
+        borderTopRightRadius: 5,
+        borderTopLeftRadius: 5,
         padding: 12,
-        backgroundColor: colors.activeTabColor
+        backgroundColor: colors.backgroundColor
     },
     modalCenterContainer: {
         width: '100%',
@@ -195,6 +194,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: '100%',
         alignItems: 'stretch',
+        borderBottomRightRadius: 5,
+        borderBottomLeftRadius: 5,
         padding: 6
     },
     modalPickerContainer: {
@@ -205,14 +206,16 @@ const styles = StyleSheet.create({
     modalSubmitButton: {
         margin: 6,
         alignItems: 'center',
-        backgroundColor: colors.submitButtonColor,
-        borderRadius: 2
+        backgroundColor: colors.backgroundColor,
+        borderWidth: 2,
+        borderColor: colors.whiteColor,
+        borderRadius: 5
     },
     modalButtonText: {
         fontSize: 15,
         marginTop: 10,
         marginBottom: 10,
-        color: colors.backgroundColor,
+        color: colors.whiteColor,
         fontWeight: 'bold'
     },
     modalTitleText: {
@@ -220,7 +223,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center',
-        color: colors.backgroundColor
+        color: colors.whiteColor
     },
     emptyContainer: {
         flex: 1,
@@ -232,7 +235,7 @@ const styles = StyleSheet.create({
     },
     cancelIcon: {
         fontSize: 20,
-        color: colors.backgroundColor
+        color: colors.whiteColor
     },
     fullCenterContainer: {
         flex: 1,
@@ -241,6 +244,11 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '100%',
         borderRadius: 0
+    },
+    partialInnerContainer: {
+        borderWidth: 2,
+        borderColor: colors.whiteColor,
+        backgroundColor: colors.backgroundColor
     },
     loadingContainer: {
         position: 'absolute',

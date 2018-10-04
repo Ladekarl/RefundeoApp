@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
         paddingBottom: 10
     },
     topContainer: {
-        flex: 1,
+        flex: 0.5,
         padding: '10%',
         flexDirection: 'row',
         justifyContent: 'center',
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
         width: undefined,
     },
     leftText: {
-        color: colors.activeTabColor,
+        color: colors.backgroundColor,
         fontSize: 15,
         marginLeft: 10,
         alignSelf: 'stretch',
@@ -180,7 +180,8 @@ const styles = StyleSheet.create({
     sectionHeaderText: {
         fontSize: 18,
         marginLeft: 10,
-        textAlign: 'center'
+        textAlign: 'center',
+        color: colors.whiteColor
     },
     policyContainer: {
         flex: 1,

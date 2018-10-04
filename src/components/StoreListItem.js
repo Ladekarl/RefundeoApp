@@ -5,29 +5,31 @@ import PropTypes from 'prop-types';
 import geolib from 'geolib';
 import {strings} from '../shared/i18n';
 import CustomText from './CustomText';
-import FastImage from 'react-native-fast-image';
+import Icon from 'react-native-fa-icons';
 
 export default class StoreListItem extends PureComponent {
 
     static propTypes = {
         distance: PropTypes.number.isRequired,
-        logo: PropTypes.string.isRequired,
-        banner: PropTypes.string.isRequired,
         refundPercentage: PropTypes.number,
         openingHours: PropTypes.array.isRequired,
         name: PropTypes.string.isRequired,
-        city: PropTypes.string.isRequired,
-        onPress: PropTypes.func.isRequired
+        onPress: PropTypes.func.isRequired,
+        tags: PropTypes.array.isRequired,
+        priceLevel: PropTypes.number.isRequired,
+        address: PropTypes.string.isRequired
     };
+
 
     render() {
         const {
             distance,
-            logo,
-            banner,
             refundPercentage,
             openingHours,
+            tags,
+            priceLevel,
             name,
+            address,
             onPress
         } = this.props;
 
@@ -53,53 +55,52 @@ export default class StoreListItem extends PureComponent {
             oHoursString = oHours.open + ' - ' + oHours.close;
         }
 
+
+
         return (
             <TouchableOpacity
                 activeOpacity={0.7}
                 style={styles.container}
                 onPress={onPress}>
                 <View style={styles.cardContainer}>
-                    {!!banner &&
-                    <FastImage
-                        style={styles.bannerImage}
-                        source={{uri: banner}}>
-                        <View style={styles.bannerTextBarContainer}>
-                            <View style={styles.iconContainer}>
-                                {!!logo &&
-                                <FastImage
-                                    style={styles.logoImage}
-                                    resizeMode={FastImage.resizeMode.contain}
-                                    source={{uri: logo}}/>
-                                }
+                    <View style={styles.leftColumnContainer}>
+                        <View style={styles.topLeftRowContainer}>
+                            <CustomText style={styles.merchantName}>{name}</CustomText>
+                        </View>
+                        <View style={styles.leftRowContainer}>
+                            {!!tags &&
+                            <View style={styles.leftInnerLeftContainer}>
+                                {tags.map((t, i) => t.displayName + (i !== tags.length - 1 ? ', ' : '')).map(t => {
+                                    return (<CustomText key={t}>{t}</CustomText>);
+                                })}
+                            </View>
+                            }
+                            <View style={styles.leftInnerRightContainer}>
+                                <Icon name='clock-o' style={styles.clockIcon}/>
+                                <CustomText>{oHoursString}</CustomText>
                             </View>
                         </View>
-                    </FastImage>
-                    }
-                    <View style={styles.contentContainer}>
-                        <View style={styles.leftContainer}>
-                            {!!dist &&
-                            <CustomText style={styles.leftText}>{dist}</CustomText>
+                        <View style={styles.leftRowContainer}>
+                            <View style={styles.leftInnerLeftContainer}>
+                                <CustomText>{dist}</CustomText>
+                            </View>
+                            {!!address &&
+                            <View style={styles.leftInnerRightContainer}>
+                                <CustomText>{address}</CustomText>
+                            </View>
                             }
                         </View>
-                        <View style={styles.contentTextContainer}>
-                            {!!name &&
-                            <CustomText
-                                style={styles.mainText}>{name}</CustomText>
-                            }
-                            {!!oHoursString &&
-                            <CustomText
-                                style={styles.subText}>{oHoursString}</CustomText>
-                            }
-                        </View>
-                        <View style={styles.rightContainer}>
+                    </View>
+                    <View style={styles.rightColumnContainer}>
+                        <View style={styles.rightInnerLeftColumnContainer}>
+                            <CustomText style={styles.saveText}>SAVE FROM</CustomText>
                             {!!refundPercentage &&
                             <CustomText
-                                style={styles.rightText}>{strings('stores.refund') + '\n' + (refundPercentage.toFixed(2).replace(/[.,]00$/, '')) + ' %'}</CustomText>
+                                style={styles.refundText}>{refundPercentage.toFixed(2).replace(/[.,]00$/, '') + ' %'}</CustomText>
                             }
-                            {!refundPercentage &&
-                            <CustomText
-                                style={styles.rightText}>{strings('stores.no_refund')}</CustomText>
-                            }
+                        </View>
+                        <View style={styles.rightInnerRightColumnContainer}>
+                            <Icon style={styles.angleRight} name='angle-right'/>
                         </View>
                     </View>
                 </View>
@@ -111,77 +112,84 @@ export default class StoreListItem extends PureComponent {
 const styles = StyleSheet.create({
     container: {
         justifyContent: 'flex-start',
-        backgroundColor: colors.slightlyDarkerColor
+        backgroundColor: colors.backgroundColor
     },
-    iconContainer: {
-        height: 70,
-        justifyContent: 'center',
+    cardContainer: {
+        flex: 1,
+        marginLeft: 10,
+        padding: 5,
+        marginRight: 10,
+        borderRadius: 5,
+        height: 90,
+        backgroundColor: colors.whiteColor,
+        flexDirection: 'row'
+    },
+    leftColumnContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center'
+    },
+    rightColumnContainer: {
+        width: 100,
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    topLeftRowContainer: {
+        flex: 1.5,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    leftRowContainer: {
+        flex: 1,
+        flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: colors.backgroundColor,
-        borderRadius: 40,
-        padding: 10,
-        borderWidth: StyleSheet.hairlineWidth,
-        borderColor: colors.separatorColor
     },
-    logoImage: {
-        height: 40,
-        width: 40,
-        margin: 5,
+    rightInnerLeftColumnContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'flex-end'
+    },
+    rightInnerRightColumnContainer: {
+        width: 20,
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center'
     },
-    cardContainer: {
-        height: 170,
-        backgroundColor: colors.backgroundColor,
-        borderWidth: StyleSheet.hairlineWidth,
-        borderColor: colors.separatorColor
+    leftInnerLeftContainer: {
+        flexDirection: 'row'
     },
-    bannerImage: {
-        justifyContent: 'center',
-        width: '100%',
-        height: 120
-    },
-    bannerTextBarContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        flex: 1
-    },
-    leftContainer: {
+    leftInnerRightContainer: {
         flex: 1,
-        marginLeft: 20,
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
+        flexDirection: 'row'
     },
-    rightContainer: {
-        flex: 1,
-        marginRight: 20,
-        justifyContent: 'flex-end',
-        alignItems: 'flex-end',
+    merchantName: {
+        fontWeight: 'bold',
+        fontSize: 25
     },
-    leftText: {
-        fontSize: 12,
-        textAlign: 'left'
+    saveText: {
+        fontSize: 13,
+        color: colors.darkTextColor
     },
-    rightText: {
-        fontSize: 12,
-        textAlign: 'right'
-    },
-    contentContainer: {
-        flex: 2,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        flexDirection: 'row',
-    },
-    contentTextContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    mainText: {
-        color: colors.darkTextColor,
-        fontSize: 16,
+    refundText: {
+        fontSize: 22,
         fontWeight: 'bold'
     },
-    subText: {
-        fontSize: 13
+    angleRight: {
+        marginLeft: 5,
+        fontSize: 30,
+        color: colors.inactiveTabColor
+    },
+    priceLevelContainer: {
+        marginLeft: 10,
+        flexDirection: 'row'
+    },
+    priceLevel: {
+        fontSize: 15,
+        color: colors.darkTextColor
+    },
+    clockIcon: {
+        color: colors.darkTextColor,
+        textAlign: 'center'
     }
 });

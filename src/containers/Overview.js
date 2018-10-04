@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import {RefreshControl, StyleSheet, View, FlatList, TouchableOpacity, Platform} from 'react-native';
+import {RefreshControl, StyleSheet, View, FlatList, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-fa-icons';
 import colors from '../shared/colors';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import Actions from '../actions/Actions';
 import PropTypes from 'prop-types';
-import EmptyOverviewScreen from '../components/EmptyOverview';
 import RefundCaseListItem from '../components/RefundCaseListItem';
 import {strings} from '../shared/i18n';
 import CustomText from '../components/CustomText';
@@ -168,7 +167,7 @@ const styles = StyleSheet.create({
         height: 50,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        backgroundColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor,
+        backgroundColor: colors.backgroundColor,
         marginTop: -10,
         elevation: 1
     },
@@ -177,20 +176,20 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flex: 1,
         borderBottomWidth: 2,
-        borderBottomColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor,
+        borderBottomColor: colors.backgroundColor,
     },
     activeButton: {
         borderBottomWidth: 2,
-        borderBottomColor: Platform.OS === 'ios' ? colors.whiteColor : colors.activeTabColor,
+        borderBottomColor: colors.activeTabColor,
     },
     headerButtonText: {
         fontSize: 11,
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.darkTextColor,
+        color: colors.whiteColor,
         fontWeight: 'bold'
     },
     activeButtonText: {
         fontSize: 12,
-        color: Platform.OS === 'ios' ? colors.whiteColor : colors.activeTabColor,
+        color: colors.activeTabColor,
         fontWeight: 'bold'
     },
     flatListContainer: {
@@ -220,7 +219,7 @@ const styles = StyleSheet.create({
     },
     emptyText: {
         alignSelf: 'center',
-        color: colors.activeTabColor,
+        color: colors.backgroundColor,
         fontSize: 20
     }
 });

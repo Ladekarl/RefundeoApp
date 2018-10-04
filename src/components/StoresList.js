@@ -1,11 +1,11 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {RefreshControl, FlatList, StyleSheet, View} from 'react-native';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 import StoreListItem from './StoreListItem';
 import EmptyStoreList from './EmptyStoreList';
 
-export default class StoresList extends PureComponent {
+export default class StoresList extends Component {
 
     static propTypes = {
         actions: PropTypes.object.isRequired,
@@ -30,7 +30,7 @@ export default class StoresList extends PureComponent {
         const currentDay = currentDate.getDay();
         merchants.forEach((merchant) => {
             const dist = merchant.distance;
-            if ((dist <= distance || distance === 10000) && (minRefund === 0 || merchant.refundPercentage >= minRefund) && (!tag.value || merchant.tags.indexOf(tag.key) > -1)) {
+            if ((dist <= distance || distance === 10000) && (minRefund === 0 || merchant.refundPercentage >= minRefund) && (!tag.value || merchant.tags.findIndex(t => t.value === tag.value) > -1)) {
                 if (onlyOpen) {
                     const openingHours = merchant.openingHours.find(o => o.day === currentDay);
                     if (openingHours && openingHours.open && openingHours.close) {
@@ -60,13 +60,13 @@ export default class StoresList extends PureComponent {
         return (<StoreListItem
             distance={item.distance}
             key={Math.random()}
-            logo={item.logo}
-            banner={item.banner}
             name={item.companyName}
             openingHours={item.openingHours}
+            tags={item.tags}
+            address={item.addressStreetName + ' ' + item.addressStreetNumber}
             refundPercentage={item.refundPercentage}
+            priceLevel={item.priceLevel}
             onPress={() => this.props.actions.selectMerchant(item)}
-            city={item.addressCity}
         />);
     };
 
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     flatListContainer: {
-        backgroundColor: colors.slightlyDarkerColor,
+        backgroundColor: colors.backgroundColor,
     },
     emptyContainer: {
         justifyContent: 'center',

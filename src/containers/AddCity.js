@@ -94,14 +94,14 @@ const googlePlacesStyles = StyleSheet.flatten({
     textInputContainer: {
         width: '100%',
         height: 55,
-        backgroundColor: colors.activeTabColor,
+        backgroundColor: colors.backgroundColor,
         borderTopWidth: 0,
         borderBottomWidth: 0,
         margin: 0,
-        borderTopColor: colors.activeTabColor
+        borderTopColor: colors.backgroundColor
     },
     container: {
-        backgroundColor: colors.activeTabColor
+        backgroundColor: colors.backgroundColor
     },
     textInput: {
         fontFamily: 'Lato',
@@ -127,13 +127,13 @@ const googlePlacesStyles = StyleSheet.flatten({
     },
     separator: {
         margin: 2,
-        backgroundColor: colors.activeTabColor,
+        backgroundColor: colors.backgroundColor,
         borderWidth: 0
     },
     poweredContainer: {
         justifyContent: 'flex-end',
         alignItems: 'center',
-        backgroundColor: colors.activeTabColor,
+        backgroundColor: colors.backgroundColor,
         margin: 0,
         padding: 0
     },

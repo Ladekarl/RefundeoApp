@@ -124,6 +124,7 @@ export default class Helpers {
 
     static async handleMerchantsResponse(merchants) {
         if (merchants) {
+            await this.setTags(merchants);
             merchants = await this.setMerchantDistances(merchants);
             await LocalStorage.saveMerchants(merchants.slice(0, merchants.length > 100 ? 100 : merchants.length));
         } else {
@@ -132,8 +133,22 @@ export default class Helpers {
         return merchants;
     }
 
+    static async setTags(merchants) {
+        const tags = await LocalStorage.getTags();
+        if (tags) {
+            merchants.forEach(m => {
+                if (m.tags) {
+                    for (let i = 0; i < m.tags.length; i++) {
+                        m.tags[i] = tags.find(t => t.key === m.tags[i]);
+                    }
+                }
+            });
+        }
+    }
+
     static async handleTagsResponse(tags) {
         if (tags) {
+            tags.forEach(t => t.displayName = this.getTagText(t));
             await LocalStorage.saveTags(tags);
         } else {
             tags = await LocalStorage.getTags();
@@ -142,8 +157,9 @@ export default class Helpers {
     }
 
     static async handleCityResponse(id, city) {
-        if(city) {
-            if(city.merchants) {
+        if (city) {
+            if (city.merchants) {
+                await this.setTags(city.merchants);
                 city.merchants = await this.setMerchantDistances(city.merchants);
             }
             await LocalStorage.saveCity(id, city);
@@ -231,7 +247,7 @@ export default class Helpers {
         const location = await Location.getCurrentPosition();
         let merchantsWithDistance = [];
         merchants.forEach((merchant) => {
-            if(merchant.latitude && merchant.longitude) {
+            if (merchant.latitude && merchant.longitude) {
                 merchant.distance = geolib.getDistance(location.coords, {
                     latitude: merchant.latitude,
                     longitude: merchant.longitude
@@ -245,5 +261,33 @@ export default class Helpers {
             return a.distance - b.distance;
         });
         return merchantsWithDistance;
+    }
+
+    static getTagText(tag) {
+        const key = tag.key;
+        switch (key) {
+            case 0:
+                return strings('stores.tag_jewelry');
+            case 1:
+                return strings('stores.tag_leather');
+            case 2:
+                return strings('stores.tag_footwear');
+            case 3:
+                return strings('stores.tag_accessories');
+            case 4:
+                return strings('stores.tag_sportswear');
+            case 5:
+                return strings('stores.tag_electronics');
+            case 6:
+                return strings('stores.tag_children');
+            case 7:
+                return strings('stores.tag_books');
+            case 8:
+                return strings('stores.tag_menswear');
+            case 9:
+                return strings('stores.tag_womenswear');
+            default:
+                return null;
+        }
     }
 }

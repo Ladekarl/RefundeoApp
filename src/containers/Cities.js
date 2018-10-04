@@ -93,13 +93,13 @@ class Cities extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.activeTabColor
+        backgroundColor: colors.backgroundColor
     },
     flatListContainer: {
-        backgroundColor: colors.activeTabColor
+        backgroundColor: colors.backgroundColor
     },
     separatorStyle: {
-        backgroundColor: colors.activeTabColor
+        backgroundColor: colors.backgroundColor
     },
     refundCasesButtonContainer: {
         backgroundColor: colors.addButtonOuterColor,
@@ -156,14 +156,14 @@ const styles = StyleSheet.create({
         color: colors.whiteColor
     },
     refundCaseIcon: {
-        fontSize: 25,
+        fontSize: 25    ,
         color: colors.whiteColor
     },
     cityContainer: {
         flex: 1,
         borderWidth: 4,
         borderColor: colors.addButtonOuterColor,
-        borderRadius: 10,
+        borderRadius: 15,
         marginLeft: 5,
         marginRight: 5
     },
