@@ -52,14 +52,14 @@ export default class Root extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: colors.activeTabColor,
+        backgroundColor: colors.backgroundColor,
         flex: 1
     },
     content: {
         flex: 1
     },
     offlineContainer: {
-        backgroundColor: colors.activeTabColor,
+        backgroundColor: colors.backgroundColor,
         justifyContent: 'center',
         alignItems: 'flex-start',
         flexDirection: 'row',

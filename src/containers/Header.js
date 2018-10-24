@@ -72,7 +72,7 @@ class HeaderScreen extends Component {
                     </TouchableOpacity>
                     }
                     {!hasDrawer && !isMerchant && navigation.currentRoute === 'Cities' &&
-                    <TouchableOpacity style={styles.noDrawerHeader}
+                    <TouchableOpacity style={styles.iconContainer}
                                       onPress={this.props.actions.navigateSettings}>
                         <Icon name='user-circle' style={styles.noDrawerIcon}/>
                     </TouchableOpacity>
@@ -114,7 +114,7 @@ class HeaderScreen extends Component {
                     </TouchableOpacity>
                     }
                     {displayHelp &&
-                    <TouchableOpacity style={hasDrawer ? styles.headerButton : styles.noDrawerHeader}
+                    <TouchableOpacity style={hasDrawer ? styles.headerButton : styles.iconContainer}
                                       onPress={this.props.actions.navigateHelp}>
                         <Icon name='question-circle' style={hasDrawer ? styles.drawerIcon : styles.noDrawerIcon}/>
                     </TouchableOpacity>
@@ -191,11 +191,13 @@ const styles = StyleSheet.create({
         backgroundColor: colors.activeTabColor
     },
     noDrawerHeader: {
-        height: 35,
-        width: 35,
-        borderRadius: 100,
+        marginLeft: 7,
+        marginRight: 7,
+        marginTop: 3,
+        marginBottom: 3,
         justifyContent: 'center',
         alignItems: 'center',
+        textAlign: 'center'
     },
     drawerIcon: {
         fontSize: Platform.OS === 'ios' ? 20 : 15,
@@ -205,15 +207,34 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         color: colors.backgroundColor
     },
+    iconContainer: {
+        backgroundColor: colors.addButtonInnerColor,
+        borderRadius: 20,
+        borderWidth: 2,
+        borderColor: colors.addButtonOuterColor,
+        padding: 2,
+        marginTop: 3,
+        marginBottom: 3,
+        paddingBottom: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center'
+    },
     noDrawerIcon: {
-        fontSize: Platform.OS === 'ios' ? 20 : 25,
-        color: colors.activeTabColor
+        fontSize: 25,
+        color: colors.activeTabColor,
+        textAlign: 'center'
     },
     navigateBackIcon: {
-        fontSize: Platform.OS === 'ios' ? 25 : 20,
+        fontSize: 25,
         color: colors.activeTabColor
     },
     overlayContainer: {
+        backgroundColor: colors.addButtonInnerColor,
+        borderRadius: 5,
+        borderWidth: 2,
+        padding: 2,
+        borderColor: colors.addButtonOuterColor,
         alignSelf: 'center',
         justifyContent: 'center',
         flexDirection: 'row',

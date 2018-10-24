@@ -55,6 +55,7 @@ class Cities extends Component {
         const citiesMap = state.cities;
         const cities = Array.from(citiesMap.values());
 
+
         return (
             <View style={styles.container}>
                 <FlatList
@@ -64,24 +65,26 @@ class Cities extends Component {
                     keyExtractor={this.keyExtractor}
                     renderItem={this.renderCity}
                 />
-                <View style={styles.addButtonContainer}>
-                    <View style={styles.addButtonInnerContainer}>
-                        <TouchableOpacity
-                            activeOpacity={0.7}
-                            style={styles.addButton}
-                            onPress={actions.navigateAddCity}>
-                            <Icon style={styles.addIcon} name='plus'/>
-                        </TouchableOpacity>
+                <View style={styles.buttonContainer}>
+                    <View style={styles.refundCasesButtonContainer}>
+                        <View style={styles.addButtonInnerContainer}>
+                            <TouchableOpacity
+                                activeOpacity={0.7}
+                                style={styles.refundCasesButton}
+                                onPress={actions.navigateOverview}>
+                                <Icon style={styles.refundCaseIcon} name='list'/>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                </View>
-                <View style={styles.refundCasesButtonContainer}>
-                    <View style={styles.addButtonInnerContainer}>
-                        <TouchableOpacity
-                            activeOpacity={0.7}
-                            style={styles.refundCasesButton}
-                            onPress={actions.navigateOverview}>
-                            <Icon style={styles.refundCaseIcon} name='list'/>
-                        </TouchableOpacity>
+                    <View style={styles.addButtonContainer}>
+                        <View style={styles.addButtonInnerContainer}>
+                            <TouchableOpacity
+                                activeOpacity={0.7}
+                                style={styles.addButton}
+                                onPress={actions.navigateAddCity}>
+                                <Icon style={styles.addIcon} name='plus'/>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
             </View>
@@ -108,24 +111,30 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'stretch',
         borderRadius: 50,
-        position: 'absolute',
-        bottom: -15,
-        left: -15,
         alignSelf: 'center',
         opacity: 0.9
     },
     addButtonContainer: {
         backgroundColor: colors.addButtonOuterColor,
-        width: 100,
-        height: 100,
+        width: 80,
+        height: 80,
         justifyContent: 'center',
         alignItems: 'stretch',
         borderRadius: 50,
-        position: 'absolute',
-        bottom: -15,
-        right: -15,
         alignSelf: 'center',
         opacity: 0.9
+    },
+    buttonContainer: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        opacity: 0.9,
+        height: 80,
+        backgroundColor: colors.backgroundColor,
     },
     addButtonInnerContainer: {
         backgroundColor: colors.addButtonInnerColor,
@@ -136,7 +145,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
     },
     addButton: {
-        backgroundColor: colors.addButtonColor,
+        backgroundColor: colors.activeTabColor,
         flex: 1,
         margin: 5,
         justifyContent: 'center',
@@ -156,7 +165,7 @@ const styles = StyleSheet.create({
         color: colors.whiteColor
     },
     refundCaseIcon: {
-        fontSize: 25    ,
+        fontSize: 25,
         color: colors.whiteColor
     },
     cityContainer: {

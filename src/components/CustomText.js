@@ -1,28 +1,26 @@
 import React, {PureComponent} from 'react';
 import {Text, StyleSheet} from 'react-native';
-import PropTypes from 'prop-types';
 
 export default class CustomText extends PureComponent {
 
     static propTypes = {
-        children: PropTypes.any,
-        style: Text.propTypes.style
+        ...Text.propTypes
     };
 
     static defaultProps = {
-        children: '',
         style: {}
     };
 
     render() {
+        const {style, ...textProps} = this.props;
         return (
-            <Text style={[styles.textStyle, this.props.style]}>{this.props.children}</Text>
+            <Text style={[styles.textStyle, style]} {...textProps}/>
         );
     }
 }
 
 const styles = StyleSheet.create({
     textStyle: {
-            fontFamily: 'Lato'
+        fontFamily: 'Lato'
     }
 });

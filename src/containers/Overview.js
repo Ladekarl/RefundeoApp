@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import RefundCaseListItem from '../components/RefundCaseListItem';
 import {strings} from '../shared/i18n';
 import CustomText from '../components/CustomText';
+import Swiper from 'react-native-swiper';
 
 class OverviewScreen extends Component {
 
@@ -26,58 +27,95 @@ class OverviewScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            page: 0
+            page: 0,
+            index: 0
         };
     }
 
-    _renderRefundCase = ({item}) => (
+    static _renderRefundCase = ({item}) => (
         <RefundCaseListItem refundCase={item} onPress={this.props.actions.selectRefundCase}/>
     );
 
-    _keyExtractor = (refundCase) => refundCase.id.toString();
+    static _keyExtractor = (refundCase) => refundCase.id.toString();
 
-    onFirstPress = () => {
-        this.changePage(0);
+    static onFirstPress = () => {
+        OverviewScreen.changePage(0);
     };
-    onSecondPress = () => {
-        this.changePage(1);
+    static onSecondPress = () => {
+        OverviewScreen.changePage(1);
     };
-    onThirdPress = () => {
-        this.changePage(2);
+    static onThirdPress = () => {
+        OverviewScreen.changePage(2);
     };
-    onFourthPress = () => {
-        this.changePage(3);
+    static onFourthPress = () => {
+        OverviewScreen.changePage(3);
     };
-    changePage = (page) => {
-        this.setState({
-            page
-        });
+    static changePage = (newPage) => {
+        const swiper = OverviewScreen.getSwiper();
+        if (typeof swiper !== 'undefined') {
+            const index = swiper.state && typeof swiper.state.index !== 'undefined' ? swiper.state.index : 0;
+            swiper.scrollBy(newPage - index, true);
+        }
     };
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        const refundCases = nextProps.state.refundCases;
-        if (!prevState || !prevState.state || refundCases !== prevState.state.refundCases) {
+        if (!prevState || !prevState.state || nextProps.state !== prevState.state) {
+            let changed = true;
+            let {fetchingRefundCases, fetchingDocumentation, fetchingRequestRefund, refundCases} = nextProps.state;
+
+            if (prevState && prevState.state) {
+                let prevFetchingRefundCases = prevState.state.fetchingRefundCases,
+                    prevFetchingDocumentation = prevState.state.fetchingDocumentation,
+                    prevFetchingRequestRefund = prevState.state.fetchingRequestRefund,
+                    prevRefundCases = prevState.state.refundCases;
+
+                changed = fetchingRefundCases !== prevFetchingRefundCases ||
+                    fetchingDocumentation !== prevFetchingDocumentation ||
+                    fetchingRequestRefund !== prevFetchingRequestRefund ||
+                    refundCases !== prevRefundCases;
+            }
+
+            let {
+                newRefundCases,
+                pendingRefundCases,
+                approvedRefundCases,
+                rejectedRefundCases,
+                newRefundCasesList,
+                pendingRefundCasesList,
+                approvedRefundCasesList,
+                rejectedRefundCasesList
+            } = prevState;
+
+            if (!prevState || !prevState.state || refundCases !== prevState.state.refundCases) {
+                newRefundCases = refundCases.filter(r => !r.isRequested);
+                pendingRefundCases = refundCases.filter(r => r.isRequested && !r.isAccepted && !r.isRejected);
+                approvedRefundCases = refundCases.filter(r => r.isRequested && r.isAccepted);
+                rejectedRefundCases = refundCases.filter(r => r.isRequested && r.isRejected);
+            }
+
+            if (changed) {
+                newRefundCasesList = OverviewScreen.renderList(0, newRefundCases, nextProps);
+                pendingRefundCasesList = OverviewScreen.renderList(1, pendingRefundCases, nextProps);
+                approvedRefundCasesList = OverviewScreen.renderList(2, approvedRefundCases, nextProps);
+                rejectedRefundCasesList = OverviewScreen.renderList(3, rejectedRefundCases, nextProps);
+            }
+
             return {
                 ...nextProps,
-                newRefundCases: refundCases.filter(r => !r.isRequested),
-                pendingRefundCases: refundCases.filter(r => r.isRequested && !r.isAccepted && !r.isRejected),
-                approvedRefundCases: refundCases.filter(r => r.isRequested && r.isAccepted),
-                rejectedRefundCases: refundCases.filter(r => r.isRequested && r.isRejected)
+                newRefundCasesList,
+                pendingRefundCasesList,
+                approvedRefundCasesList,
+                rejectedRefundCasesList,
+                newRefundCases,
+                pendingRefundCases,
+                approvedRefundCases,
+                rejectedRefundCases
             };
         }
         return null;
     }
 
-    getFilteredRefundCases = () => {
-        const page = this.state.page;
-        if (page === 0) return this.state.newRefundCases;
-        if (page === 1) return this.state.pendingRefundCases;
-        if (page === 2) return this.state.approvedRefundCases;
-        if (page === 3) return this.state.rejectedRefundCases;
-    };
-
-    emptyListScreen = () => {
-        const page = this.state.page;
+    static emptyListScreen = (page) => {
         let text = strings('overview.no_new');
         if (page === 1)
             text = strings('overview.no_pending');
@@ -89,70 +127,110 @@ class OverviewScreen extends Component {
             style={styles.emptyText}>{text}</CustomText></View>;
     };
 
-    renderHeader = () => {
+    static renderHeader = (page) => {
         return (
             <View style={styles.headerContainer}>
                 <TouchableOpacity
-                    onPress={this.onFirstPress}
-                    style={[styles.headerButton, this.state.page === 0 ? styles.activeButton : {}]}>
+                    onPress={OverviewScreen.onFirstPress}
+                    style={[styles.headerButton, page === 0 ? styles.activeButton : {}]}>
                     <CustomText
-                        style={[styles.headerButtonText, this.state.page === 0 ? styles.activeButtonText : {}]}>
+                        style={[styles.headerButtonText, page === 0 ? styles.activeButtonText : {}]}>
                         {strings('overview.new')}
                     </CustomText>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={this.onSecondPress}
-                    style={[styles.headerButton, this.state.page === 1 ? styles.activeButton : {}]}>
+                    onPress={OverviewScreen.onSecondPress}
+                    style={[styles.headerButton, page === 1 ? styles.activeButton : {}]}>
                     <CustomText
-                        style={[styles.headerButtonText, this.state.page === 1 ? styles.activeButtonText : {}]}>
+                        style={[styles.headerButtonText, page === 1 ? styles.activeButtonText : {}]}>
                         {strings('overview.pending')}
                     </CustomText>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={this.onThirdPress}
-                    style={[styles.headerButton, this.state.page === 2 ? styles.activeButton : {}]}>
+                    onPress={OverviewScreen.onThirdPress}
+                    style={[styles.headerButton, page === 2 ? styles.activeButton : {}]}>
                     <CustomText
-                        style={[styles.headerButtonText, this.state.page === 2 ? styles.activeButtonText : {}]}>
+                        style={[styles.headerButtonText, page === 2 ? styles.activeButtonText : {}]}>
                         {strings('overview.approved')}
                     </CustomText>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={this.onFourthPress}
-                    style={[styles.headerButton, this.state.page === 3 ? styles.activeButton : {}]}>
+                    onPress={OverviewScreen.onFourthPress}
+                    style={[styles.headerButton, page === 3 ? styles.activeButton : {}]}>
                     <CustomText
-                        style={[styles.headerButtonText, this.state.page === 3 ? styles.activeButtonText : {}]}>
+                        style={[styles.headerButtonText, page === 3 ? styles.activeButtonText : {}]}>
                         {strings('overview.rejected')}
                     </CustomText>
                 </TouchableOpacity>
             </View>);
     };
 
-    render() {
-        const {actions, state} = this.props;
+    static renderList = (page, refundCases, props) => {
+        const {actions, state} = props;
         const {fetchingRefundCases, fetchingDocumentation, fetchingRequestRefund} = state;
-        const filteredRefundCases = this.getFilteredRefundCases();
         const fetching = fetchingRefundCases || fetchingDocumentation || fetchingRequestRefund;
+
+        return <FlatList
+            style={styles.flatListContainer}
+            contentContainerStyle={[styles.scrollContainer, refundCases.length === 0 ? styles.emptyContainer : styles.nonEmptyContainer]}
+            refreshControl={
+                <RefreshControl
+                    tintColor={colors.activeTabColor}
+                    refreshing={fetching}
+                    onRefresh={actions.getRefundCases}
+                />
+            }
+            data={refundCases}
+            keyExtractor={this._keyExtractor}
+            renderItem={this._renderRefundCase}
+            ListEmptyComponent={!fetchingRefundCases && (!refundCases || !refundCases.length > 0) ?
+                OverviewScreen.emptyListScreen(page) : undefined}
+        />;
+    };
+
+    static swiper: Swiper;
+
+    static getSwiper() {
+        return OverviewScreen.swiper;
+    }
+
+    static setSwiper(swiper) {
+        OverviewScreen.swiper = swiper;
+    }
+
+    onMomentumScrollEnd = (event, state) => {
+        const swiper = OverviewScreen.getSwiper();
+        if (typeof swiper !== 'undefined') {
+            this.setState({page: state.index});
+        }
+    };
+
+    render() {
+        const {
+            newRefundCasesList,
+            pendingRefundCasesList,
+            approvedRefundCasesList,
+            rejectedRefundCasesList,
+            page
+        } = this.state;
         return (
             <View style={styles.container}>
-                {
-                    this.renderHeader()
+                {OverviewScreen.renderHeader(page)}
+                {newRefundCasesList && pendingRefundCasesList && approvedRefundCasesList && rejectedRefundCasesList &&
+                <Swiper
+                    ref={OverviewScreen.setSwiper}
+                    loop={false}
+                    autoplay={false}
+                    showsButtons={false}
+                    showsPagination={false}
+                    index={page}
+                    onMomentumScrollEnd={this.onMomentumScrollEnd}>
+                    {newRefundCasesList}
+                    {pendingRefundCasesList}
+                    {approvedRefundCasesList}
+                    {rejectedRefundCasesList}
+                </Swiper>
                 }
-                <FlatList
-                    style={styles.flatListContainer}
-                    contentContainerStyle={[styles.scrollContainer, filteredRefundCases.length === 0 ? styles.emptyContainer : styles.nonEmptyContainer]}
-                    refreshControl={
-                        <RefreshControl
-                            tintColor={colors.activeTabColor}
-                            refreshing={fetching}
-                            onRefresh={actions.getRefundCases}
-                        />
-                    }
-                    data={filteredRefundCases}
-                    keyExtractor={this._keyExtractor}
-                    renderItem={this._renderRefundCase}
-                    ListEmptyComponent={!fetchingRefundCases && (!filteredRefundCases || !filteredRefundCases.length > 0) ?
-                        this.emptyListScreen() : undefined}
-                />
             </View>
         );
     }

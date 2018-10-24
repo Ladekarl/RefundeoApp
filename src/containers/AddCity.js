@@ -47,7 +47,7 @@ class AddCity extends Component {
                     autoFocus={true}
                     listViewDisplayed='auto'
                     enablePoweredByContainer={true}
-                    listUnderlayColor={colors.activeTabColor}
+                    listUnderlayColor={colors.backgroundColor}
                     debounce={200}
                     onPress={this.addCity}
                     getDefaultValue={() => ''}
@@ -63,7 +63,7 @@ class AddCity extends Component {
                 }
                 {fetching &&
                 <View style={styles.loadingContainer}>
-                    <ActivityIndicator size='large' color={colors.whiteColor} style={styles.activityIndicator}/>
+                    <ActivityIndicator size='large' color={colors.activeTabColor} style={styles.activityIndicator}/>
                 </View>
                 }
             </View>
@@ -74,7 +74,7 @@ class AddCity extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.activeTabColor
+        backgroundColor: colors.backgroundColor
     },
     loadingContainer: {
         position: 'absolute',
@@ -115,7 +115,7 @@ const googlePlacesStyles = StyleSheet.flatten({
         paddingLeft: 10
     },
     row: {
-        backgroundColor: 'rgba(0,0,0,0.1)',
+        backgroundColor: colors.listBackgroundColor,
         borderWidth: 2,
         borderColor: colors.addButtonOuterColor,
         borderRadius: 5,

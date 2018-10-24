@@ -63,6 +63,7 @@ export default class StoresList extends Component {
             name={item.companyName}
             openingHours={item.openingHours}
             tags={item.tags}
+            rating={item.rating}
             address={item.addressStreetName + ' ' + item.addressStreetNumber}
             refundPercentage={item.refundPercentage}
             priceLevel={item.priceLevel}

@@ -16,8 +16,18 @@ export default class StoreListItem extends PureComponent {
         name: PropTypes.string.isRequired,
         onPress: PropTypes.func.isRequired,
         tags: PropTypes.array.isRequired,
-        priceLevel: PropTypes.number.isRequired,
+        rating: PropTypes.number,
+        priceLevel: PropTypes.number,
         address: PropTypes.string.isRequired
+    };
+
+    getPriceLevel = () => {
+        const priceLevel = this.props.priceLevel;
+        let priceLevels = Array(priceLevel).fill(0);
+        priceLevels = priceLevels.map(() => {
+            return (<Icon style={styles.priceLevel} key={Math.random()} name='usd'/>);
+        });
+        return priceLevels;
     };
 
 
@@ -27,6 +37,7 @@ export default class StoreListItem extends PureComponent {
             refundPercentage,
             openingHours,
             tags,
+            rating,
             priceLevel,
             name,
             address,
@@ -55,8 +66,6 @@ export default class StoreListItem extends PureComponent {
             oHoursString = oHours.open + ' - ' + oHours.close;
         }
 
-
-
         return (
             <TouchableOpacity
                 activeOpacity={0.7}
@@ -65,28 +74,47 @@ export default class StoreListItem extends PureComponent {
                 <View style={styles.cardContainer}>
                     <View style={styles.leftColumnContainer}>
                         <View style={styles.topLeftRowContainer}>
-                            <CustomText style={styles.merchantName}>{name}</CustomText>
+                            <CustomText
+                                style={styles.merchantName}
+                                numberOfLines={1}>
+                                {name}
+                            </CustomText>
+                            {!!rating &&
+                            <View style={styles.ratingContainer}>
+                                <CustomText
+                                    style={styles.ratingText}>{rating.toFixed(1).replace(/[.,]0$/, '')}</CustomText>
+                            </View>
+                            }
+                            {!!priceLevel &&
+                            <View style={styles.priceLevelContainer}>
+                                {this.getPriceLevel()}
+                            </View>
+                            }
                         </View>
                         <View style={styles.leftRowContainer}>
                             {!!tags &&
                             <View style={styles.leftInnerLeftContainer}>
-                                {tags.map((t, i) => t.displayName + (i !== tags.length - 1 ? ', ' : '')).map(t => {
-                                    return (<CustomText key={t}>{t}</CustomText>);
-                                })}
+                                <Icon style={styles.tagIcon} name='tag'/>
                             </View>
                             }
                             <View style={styles.leftInnerRightContainer}>
+                                {!!tags && tags.map((t, i) => t.displayName + (i !== tags.length - 1 ? ', ' : '')).map(t => {
+                                    return (<CustomText style={styles.tagText} key={t}>{t}</CustomText>);
+                                })}
                                 <Icon name='clock-o' style={styles.clockIcon}/>
-                                <CustomText>{oHoursString}</CustomText>
+                                <CustomText style={styles.oHoursText}>{oHoursString}</CustomText>
                             </View>
                         </View>
                         <View style={styles.leftRowContainer}>
+                            {!!address &&
                             <View style={styles.leftInnerLeftContainer}>
-                                <CustomText>{dist}</CustomText>
+                                <Icon style={styles.addressIcon} name='map-marker'/>
                             </View>
+                            }
                             {!!address &&
                             <View style={styles.leftInnerRightContainer}>
-                                <CustomText>{address}</CustomText>
+                                <CustomText style={styles.addressText}>{address}</CustomText>
+                                <CustomText style={styles.distText}>{'(' + dist + ')'}</CustomText>
                             </View>
                             }
                         </View>
@@ -96,7 +124,7 @@ export default class StoreListItem extends PureComponent {
                             <CustomText style={styles.saveText}>SAVE FROM</CustomText>
                             {!!refundPercentage &&
                             <CustomText
-                                style={styles.refundText}>{refundPercentage.toFixed(2).replace(/[.,]00$/, '') + ' %'}</CustomText>
+                                style={styles.refundText}>{refundPercentage.toFixed(1).replace(/[.,]0$/, '') + ' %'}</CustomText>
                             }
                         </View>
                         <View style={styles.rightInnerRightColumnContainer}>
@@ -117,10 +145,13 @@ const styles = StyleSheet.create({
     cardContainer: {
         flex: 1,
         marginLeft: 10,
-        padding: 5,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingTop: 5,
+        paddingBottom: 5,
         marginRight: 10,
         borderRadius: 5,
-        height: 90,
+        height: 80,
         backgroundColor: colors.whiteColor,
         flexDirection: 'row'
     },
@@ -135,14 +166,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     topLeftRowContainer: {
-        flex: 1.5,
+        flex: 1.33,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'stretch'
     },
     leftRowContainer: {
         flex: 1,
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     rightInnerLeftColumnContainer: {
         flex: 1,
@@ -157,15 +188,22 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     leftInnerLeftContainer: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 17
     },
     leftInnerRightContainer: {
         flex: 1,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     merchantName: {
         fontWeight: 'bold',
-        fontSize: 25
+        textAlign: 'center',
+        height: '100%',
+        fontSize: 22,
+        marginRight: 5
     },
     saveText: {
         fontSize: 13,
@@ -181,15 +219,55 @@ const styles = StyleSheet.create({
         color: colors.inactiveTabColor
     },
     priceLevelContainer: {
-        marginLeft: 10,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: 5
+    },
+    ratingContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 5,
+        height: '100%',
+        marginRight: 5,
+        aspectRatio: 1,
+        padding: 2,
+        backgroundColor: colors.activeTabColor,
+        borderRadius: 4
     },
     priceLevel: {
-        fontSize: 15,
+        fontSize: 12,
         color: colors.darkTextColor
+    },
+    tagIcon: {
+        color: colors.darkTextColor,
+        fontSize: 15,
     },
     clockIcon: {
         color: colors.darkTextColor,
-        textAlign: 'center'
+        fontSize: 15,
+        marginRight: 3,
+        marginLeft: 7
+    },
+    ratingText: {
+        color: colors.whiteColor,
+        fontSize: 15
+    },
+    addressIcon: {
+        color: colors.darkTextColor,
+        fontSize: 15
+    },
+    addressText: {
+        fontSize: 12
+    },
+    distText: {
+        fontSize: 12,
+        marginLeft: 3
+    },
+    oHoursText: {
+        fontSize: 12
+    },
+    tagText: {
+        minWidth: '45%',
+        fontSize: 12
     }
 });

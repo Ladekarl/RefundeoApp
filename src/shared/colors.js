@@ -5,7 +5,7 @@ export default new ThemeManager({
         backgroundColor: '#000125',
         slightlyDarkerColor: '#f0eded',
         inactiveTabColor: '#b5b5b5',
-        activeTabColor: '#1785FB',
+        activeTabColor: '#1985FB',
         activeTabColorOpaque: 'rgba(48,56,128, 0.6)',
         gradientColor: '#587cd6',
         logoutIconColor: '#dd1d00',
@@ -18,10 +18,11 @@ export default new ThemeManager({
         greenButtonColor: '#3aac66',
         facebookColor: '#3B5998',
         errorColor: 'red',
-        whiteColor: 'white',
-        separatorColor: '#CED0CE',
+        whiteColor: '#eaf6ff',
+        separatorColor: '#eef2ff',
         blackColor: 'black',
         darkTextColor: '#5a5a5a',
-        linkColor: 'blue'
+        linkColor: 'blue',
+        listBackgroundColor: 'rgba(255,255,255,0.1)',
     }
 });

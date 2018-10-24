@@ -4,6 +4,7 @@ export type Merchant = {
     companyName: string,
     cvrNumber: string,
     refundPercentage: number,
+    rating: number,
     priceLevel: number,
     addressCity: string,
     addressStreetNumber: string,
