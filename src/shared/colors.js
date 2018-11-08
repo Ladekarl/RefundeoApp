@@ -18,7 +18,7 @@ export default new ThemeManager({
         greenButtonColor: '#3aac66',
         facebookColor: '#3B5998',
         errorColor: 'red',
-        whiteColor: '#eaf6ff',
+        whiteColor: '#fffbfd',
         separatorColor: '#eef2ff',
         blackColor: 'black',
         darkTextColor: '#5a5a5a',
