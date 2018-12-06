@@ -6,10 +6,12 @@ import Actions from '../actions/Actions';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {strings} from '../shared/i18n';
+import Location from '../shared/Location';
 import CustomText from '../components/CustomText';
 import FastImage from 'react-native-fast-image';
 import {SafeAreaView} from 'react-navigation';
 import PlaceHolderFastImage from '../components/PlaceHolderFastImage';
+import MapView, {Marker} from 'react-native-maps';
 
 class StoreProfile extends Component {
 
@@ -30,6 +32,8 @@ class StoreProfile extends Component {
         const {selectedMerchant} = this.props.state;
         const openingHours = selectedMerchant.openingHours.find(o => o.day === (new Date).getDay());
 
+        let distance = Location.calculateDistance(selectedMerchant.distance);
+
         let oHoursString =
             openingHours && openingHours.open && openingHours.close ?
                 openingHours.open + ' - ' + openingHours.close : strings('stores.closed');
@@ -43,14 +47,30 @@ class StoreProfile extends Component {
                         <CustomText style={styles.aboutText}>ABOUT STORE</CustomText>
                     </View>
                     <View style={styles.rightContainer}>
-                        <View style={styles.imageContainer}>
-                            <PlaceHolderFastImage
-                                resizeMode={FastImage.resizeMode.contain}
-                                source={storeImage}
-                                style={styles.storeImage}
-                            />
-                        </View>
+                        <PlaceHolderFastImage
+                            contentContainerStyle={styles.imageContainer}
+                            resizeMode={FastImage.resizeMode.cover}
+                            source={storeImage}
+                            style={styles.storeImage}
+                        />
                         <View style={styles.mapContainer}>
+                            <MapView
+                                style={styles.map}
+                                region={{
+                                    latitude: selectedMerchant.latitude,
+                                    longitude: selectedMerchant.longitude,
+                                    latitudeDelta: 0.002,
+                                    longitudeDelta: 0.002
+                                }}>
+                                <Marker
+                                    coordinate={{
+                                        latitude: selectedMerchant.latitude,
+                                        longitude: selectedMerchant.longitude
+                                    }}
+                                    title={selectedMerchant.companyName}
+                                    description={distance}
+                                />
+                            </MapView>
                         </View>
                     </View>
                 </View>
@@ -91,22 +111,26 @@ const styles = StyleSheet.create({
     },
     rightContainer: {
         flex: 1,
-        flexDirection: 'column'
+        flexDirection: 'column',
+        marginRight: 6
     },
     imageContainer: {
         flex: 1.3,
         borderRadius: 4,
-        marginRight: 6,
         marginLeft: 3,
         marginBottom: 3,
         backgroundColor: colors.whiteColor
+    },
+    storeImage: {
+        flex: 1,
+        height: undefined,
+        width: undefined
     },
     mapContainer: {
         flex: 2,
         borderRadius: 4,
         marginLeft: 3,
         marginBottom: 3,
-        marginRight: 6,
         marginTop: 3,
         backgroundColor: colors.whiteColor
     },
@@ -122,8 +146,9 @@ const styles = StyleSheet.create({
         margin: 5,
         color: colors.backgroundColor
     },
-    storeImage: {
-        flex: 1
+    map: {
+        flex: 1,
+        borderRadius: 4
     }
 });
 

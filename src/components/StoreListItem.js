@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
-import geolib from 'geolib';
+import Location from '../shared/Location';
 import {strings} from '../shared/i18n';
 import CustomText from './CustomText';
 import Icon from 'react-native-fa-icons';
@@ -44,19 +44,7 @@ export default class StoreListItem extends PureComponent {
             onPress
         } = this.props;
 
-        let distFirst = `${distance}`;
-        let distSecond = 'm';
-
-        if (distance >= 1000) {
-            if (distance >= 10000) {
-                distFirst = geolib.convertUnit('km', distance, 0);
-            } else {
-                distFirst = geolib.convertUnit('km', distance, 1);
-            }
-            distSecond = 'km';
-        }
-
-        let dist = distFirst + ' ' + distSecond;
+        const dist = Location.calculateDistance(distance);
 
         const oHours = openingHours.find(o => o.day === (new Date).getDay());
 
@@ -241,6 +229,7 @@ const styles = StyleSheet.create({
     tagIcon: {
         color: colors.darkTextColor,
         fontSize: 15,
+        marginRight: 3
     },
     clockIcon: {
         color: colors.darkTextColor,
@@ -254,7 +243,8 @@ const styles = StyleSheet.create({
     },
     addressIcon: {
         color: colors.darkTextColor,
-        fontSize: 15
+        fontSize: 15,
+        marginRight: 3
     },
     addressText: {
         fontSize: 12

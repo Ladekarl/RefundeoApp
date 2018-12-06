@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
         paddingLeft: 25,
         paddingRight: 25,
         paddingTop: Platform.OS === 'ios' ? 0 : 11,
-        paddingBottom: Platform.OS === 'ios' ? 9 : 11,
+        paddingBottom: 12,
         elevation: 1,
         zIndex: 9999
     },
@@ -193,9 +193,9 @@ const styles = StyleSheet.create({
     noDrawerHeader: {
         marginLeft: 7,
         marginRight: 7,
-        marginTop: 3,
-        marginBottom: 3,
+        marginBottom: Platform.OS === 'ios' ? 7 : 0,
         justifyContent: 'center',
+        alignSelf: 'center',
         alignItems: 'center',
         textAlign: 'center'
     },
@@ -226,7 +226,9 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     navigateBackIcon: {
-        fontSize: 25,
+        fontSize: 30,
+        textAlign: 'center',
+        alignSelf: 'center',
         color: colors.activeTabColor
     },
     overlayContainer: {

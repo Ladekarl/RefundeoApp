@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ActivityIndicator, View, StyleSheet, Dimensions} from 'react-native';
+import {ActivityIndicator, View, StyleSheet, Dimensions, ViewPropTypes} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
@@ -11,8 +11,11 @@ export default class PlaceHolderFastImage extends Component {
 
     static propTypes = {
         ...FastImage.propTypes,
+        contentContainerStyle: ViewPropTypes.style,
         placeHolder: PropTypes.string
     };
+
+    disallowedProps = ['style', 'source', 'onLoadEnd', 'onError'];
 
     constructor(props) {
         super(props);
@@ -36,54 +39,65 @@ export default class PlaceHolderFastImage extends Component {
         const {
             placeHolder,
             style,
+            contentContainerStyle,
             source
         } = this.props;
-
-        const height = this.state.style && this.state.style.height ?
-            this.state.style.height : 30;
-
-        const top = (height / 2) - 15;
-
-        const left = this.state.style && this.state.style.width === 'auto' ?
-            (windowWidth / 2 - 30) : this.state.style && this.state.style.width ?
-                (this.state.style.width / 2 - 15) : 0;
 
         const placeHolderImage = placeHolder ?
             placeHolder : require('../../assets/refundeo_logo.png');
 
-        return <View style={style}>
-            {!this.state.loaded || this.state.error &&
-            <View>
-                <FastImage
-                    source={placeHolderImage}
-                    style={style}
-                />
-                {!this.state.error &&
-                <View style={[
-                    styles.loading, {
-                        top: top,
-                        left: left
-                    }]}>
-                    <ActivityIndicator size='large' color={colors.backgroundColor}/>
+        const propsToPass = Object.keys(this.props)
+            .filter(k => this.disallowedProps.indexOf(k) === -1)
+            .reduce((obj, key) => {
+                obj[key] = this.props[key];
+                return obj;
+            }, {});
+
+        return (
+            <View style={contentContainerStyle ? contentContainerStyle : styles.container}>
+                {!this.state.loaded || this.state.error &&
+                <View style={styles.container}>
+                    {!this.state.error &&
+                    <View style={styles.loading}>
+                        <ActivityIndicator color={colors.backgroundColor}/>
+                    </View>
+                    }
+                    {this.state.error &&
+                    <FastImage
+                        source={placeHolderImage}
+                        style={style}
+                        {...propsToPass}
+                    />
+                    }
                 </View>
                 }
+                <FastImage
+                    source={source}
+                    style={this.state.loaded && !this.state.error ? style : styles.imageNotLoaded}
+                    onLoadEnd={this.onLoadEnd.bind(this)}
+                    onError={this.onError.bind(this)}
+                    {...propsToPass}
+                />
             </View>
-            }
-            <FastImage
-                source={source}
-                style={this.state.loaded && !this.state.error ? style : styles.imageNotLoaded}
-                onLoadEnd={this.onLoadEnd.bind(this)}
-                onError={this.onError.bind(this)}
-            />
-        </View>;
+        );
     }
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    },
     loading: {
-        position: 'absolute'
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     imageNotLoaded: {
+        flex: 0,
         width: 0,
         height: 0
     }
