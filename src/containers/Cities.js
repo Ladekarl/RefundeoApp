@@ -33,22 +33,20 @@ class Cities extends Component {
         />;
     };
 
-    renderCity = ({item}) => {
-        return (
-            <TouchableOpacity
-                activeOpacity={0.7}
-                onPress={() => this.props.actions.selectCity(item.googlePlaceId)}
-                style={styles.cityContainer}>
-                <FastImage
-                    style={styles.cityImage}
-                    source={{uri: item.image}}>
-                    <View style={styles.bannerTextBarContainer}>
-                        <CustomText style={styles.cityText}>{item.name}</CustomText>
-                    </View>
-                </FastImage>
-            </TouchableOpacity>
-        );
-    };
+    renderCity = ({item}) => (
+        <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => this.props.actions.selectCity(item.googlePlaceId)}
+            style={styles.cityContainer}>
+            <FastImage
+                style={styles.cityImage}
+                source={{uri: item.image}}>
+                <View style={styles.bannerTextBarContainer}>
+                    <CustomText style={styles.cityText}>{item.name}</CustomText>
+                </View>
+            </FastImage>
+        </TouchableOpacity>
+    );
 
     render() {
         const {actions, state} = this.props;
@@ -134,7 +132,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         opacity: 0.9,
         height: 80,
-        backgroundColor: colors.backgroundColor,
+        backgroundColor: colors.backgroundColor
     },
     addButtonInnerContainer: {
         backgroundColor: colors.addButtonInnerColor,
@@ -142,7 +140,7 @@ const styles = StyleSheet.create({
         margin: 5,
         justifyContent: 'center',
         alignItems: 'stretch',
-        borderRadius: 50,
+        borderRadius: 50
     },
     addButton: {
         backgroundColor: colors.activeTabColor,
@@ -194,7 +192,7 @@ const styles = StyleSheet.create({
         height: 40,
         backgroundColor: 'rgba(0,0,0,0.6)',
         borderBottomLeftRadius: 5,
-        borderBottomRightRadius: 5,
+        borderBottomRightRadius: 5
     },
     cityText: {
         color: colors.whiteColor,
