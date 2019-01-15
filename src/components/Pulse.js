@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import {View, StyleSheet, Animated, Easing, Dimensions} from 'react-native';
 import PropTypes from 'prop-types';
 import FastImage from 'react-native-fast-image';
 
 const {height, width} = Dimensions.get('window');
 
-export default class Pulse extends React.PureComponent {
+export default class Pulse extends PureComponent {
 
     static propTypes = {
         size: PropTypes.number.isRequired,

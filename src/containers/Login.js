@@ -22,7 +22,7 @@ import CustomTextInput from '../components/CustomTextInput';
 import ModalScreen from '../components/Modal';
 
 const window = Dimensions.get('window');
-const IMAGE_HEIGHT = 100;
+const IMAGE_HEIGHT = window.width / 3;
 const CONTAINER_HEIGHT = window.height / 2;
 const CONTAINER_HEIGHT_SMALL = 0;
 const IMAGE_HEIGHT_SMALL = 0;
@@ -125,7 +125,9 @@ class LoginScreen extends Component {
         if (forgotPasswordEmail) {
             this.closeForgotPasswordModal();
         }
-        this.props.actions.forgotPassword(this.state.username);
+        if (username) {
+            this.props.actions.forgotPassword(username);
+        }
     };
 
     render() {
@@ -139,7 +141,7 @@ class LoginScreen extends Component {
                         <Animated.View style={[styles.topContainer, {height: this.state.containerHeight}]}>
                             <Animated.Image
                                 style={[styles.image, {height: this.state.imageHeight}]}
-                                source={require('../../assets/refundeo_logo.png')}
+                                source={require('../../assets/refundeo_banner_top_small.png')}
                             />
                         </Animated.View>
                         <View style={styles.inputContainer}>
@@ -270,7 +272,7 @@ const styles = StyleSheet.create({
     },
     elevatedInputContainer: {
         backgroundColor: colors.whiteColor,
-        borderRadius: 50,
+        borderRadius: 10,
         elevation: 5,
         paddingLeft: 10,
         paddingRight: 10,
@@ -280,8 +282,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
-        borderWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0,
-        borderColor: colors.activeTabColor,
+        borderColor: colors.activeTabColor
     },
     firstInput: {
         marginBottom: 20
@@ -303,7 +304,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        color: colors.submitButtonColor
+        fontWeight: 'bold',
+        color: colors.activeTabColor
     },
     forgotPasswordModalContainer: {
         justifyContent: 'center',
@@ -364,7 +366,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         fontWeight: 'bold',
-        color: colors.cancelButtonColor
+        color: colors.activeTabColor
     },
     forgotPasswordEmailText: {
         textAlign: 'center',
@@ -376,13 +378,13 @@ const styles = StyleSheet.create({
         alignItems: 'stretch'
     },
     loginButton: {
-        borderRadius: 50,
+        borderRadius: 10,
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 18,
         elevation: 5,
-        backgroundColor: colors.submitButtonColor
+        backgroundColor: colors.activeTabColor
     },
     buttonText: {
         color: colors.whiteColor,
@@ -396,7 +398,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignSelf: 'center',
         marginRight: 5,
-        color: colors.activeTabColor
+        color: colors.darkTextColor
     },
     activityIndicator: {
         elevation: 10

@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     offlineContainer: {
-        backgroundColor: colors.activeTabColor,
+        backgroundColor: colors.backgroundColor,
         height: Platform.OS === 'ios' ? 20 : 30,
         justifyContent: 'center',
         alignItems: Platform.OS === 'ios' ? 'flex-end' : 'center',
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         top: 0
     },
     offlineText: {
-        color: colors.backgroundColor
+        color: colors.whiteColor
     }
 });
 

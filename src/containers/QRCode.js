@@ -16,16 +16,18 @@ class QRCode extends Component {
 
     static navigationOptions = {
         tabBarIcon: ({tintColor}) => {
-            let newTintColor = tintColor === colors.activeTabColor ? colors.inactiveTabColor : colors.backgroundColor;
+            let newTintColor = tintColor === colors.activeTabColor ? colors.activeTabColor : colors.backgroundColor;
             if (Platform.OS === 'ios') {
                 return (
                     <View style={styles.tabBarContainerIOs}>
-                        <CustomText style={[styles.tabBarIconIOs, {color: newTintColor}]}>{strings('qr_code.id')}</CustomText>
+                        <CustomText
+                            style={[styles.tabBarIconIOs, {color: newTintColor}]}>{strings('qr_code.id')}</CustomText>
                     </View>
                 );
             } else {
                 return (
-                    <CustomText style={[styles.tabBarIconAndroid, {color: tintColor}]}>{strings('qr_code.id')}</CustomText>
+                    <CustomText
+                        style={[styles.tabBarIconAndroid, {color: tintColor}]}>{strings('qr_code.id')}</CustomText>
                 );
             }
         }
@@ -38,8 +40,10 @@ class QRCode extends Component {
                 <View style={styles.topContainer}>
                     <CustomText style={styles.topText}>{strings('qr_code.my_id')}</CustomText>
                 </View>
-                <View style={styles.imageContainer}>
-                    <Image style={styles.qrCode} source={{uri: 'data:image/png;base64,' + user.qrCode}}/>
+                <View style={styles.outerContainer}>
+                    <View style={styles.imageContainer}>
+                        <Image style={styles.qrCode} source={{uri: 'data:image/png;base64,' + user.qrCode}}/>
+                    </View>
                 </View>
                 <View style={styles.bottomContainer}>
                     <CustomText style={styles.bottomText}>{strings('qr_code.show_this')}</CustomText>
@@ -52,7 +56,7 @@ class QRCode extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.slightlyDarkerColor,
+        backgroundColor: colors.backgroundColor,
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -71,18 +75,20 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontWeight: 'bold',
         fontSize: 35,
-        color: colors.darkTextColor
+        color: colors.whiteColor
     },
     bottomText: {
         textAlign: 'center',
         fontSize: 20,
-        color: colors.darkTextColor
+        color: colors.inactiveTabColor
     },
     tabBarContainerIOs: {
-        height: 60,
-        width: 60,
+        height: 70,
+        width: 70,
         borderRadius: 100,
-        backgroundColor: colors.activeTabColor,
+        backgroundColor: colors.whiteColor,
+        borderWidth: 4,
+        borderColor: colors.backgroundColor,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -97,16 +103,25 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontWeight: 'bold'
     },
+    outerContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderColor: colors.addButtonOuterColor,
+        borderWidth: 4,
+        borderRadius: 200
+    },
     imageContainer: {
-        elevation: 5,
-        borderRadius: 40,
-        borderColor: colors.separatorColor,
-        borderWidth: Platform.OS === 'ios' ? 1 : 0
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderColor: colors.addButtonInnerColor,
+        borderWidth: 4,
+        borderRadius: 200,
+        backgroundColor: colors.completelyWhite,
+        padding: 42
     },
     qrCode: {
         height: 200,
-        width: 200,
-        borderRadius: 40
+        width: 200
     }
 });
 

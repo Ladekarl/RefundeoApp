@@ -2,48 +2,49 @@ import React, {PureComponent} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
-import geolib from 'geolib';
+import Location from '../shared/Location';
 import {strings} from '../shared/i18n';
 import CustomText from './CustomText';
-import FastImage from 'react-native-fast-image';
+import Icon from 'react-native-fa-icons';
 
 export default class StoreListItem extends PureComponent {
 
     static propTypes = {
         distance: PropTypes.number.isRequired,
-        logo: PropTypes.string.isRequired,
-        banner: PropTypes.string.isRequired,
         refundPercentage: PropTypes.number,
         openingHours: PropTypes.array.isRequired,
         name: PropTypes.string.isRequired,
-        city: PropTypes.string.isRequired,
-        onPress: PropTypes.func.isRequired
+        onPress: PropTypes.func.isRequired,
+        tags: PropTypes.array.isRequired,
+        rating: PropTypes.number,
+        priceLevel: PropTypes.number,
+        address: PropTypes.string.isRequired
     };
+
+    getPriceLevel = () => {
+        const priceLevel = this.props.priceLevel;
+        let priceLevels = Array(priceLevel).fill(0);
+        priceLevels = priceLevels.map(() => {
+            return (<Icon style={styles.priceLevel} key={Math.random()} name='usd'/>);
+        });
+        return priceLevels;
+    };
+
 
     render() {
         const {
             distance,
-            logo,
-            banner,
             refundPercentage,
             openingHours,
+            tags,
+            rating,
+            priceLevel,
             name,
+            address,
             onPress
         } = this.props;
 
-        let distFirst = `${distance}`;
-        let distSecond = 'm';
-
-        if (distance >= 1000) {
-            if (distance >= 10000) {
-                distFirst = geolib.convertUnit('km', distance, 0);
-            } else {
-                distFirst = geolib.convertUnit('km', distance, 1);
-            }
-            distSecond = 'km';
-        }
-
-        let dist = distFirst + ' ' + distSecond;
+        const dist = Location.calculateDistance(distance);
 
         const oHours = openingHours.find(o => o.day === (new Date).getDay());
 
@@ -59,41 +60,63 @@ export default class StoreListItem extends PureComponent {
                 style={styles.container}
                 onPress={onPress}>
                 <View style={styles.cardContainer}>
-                    {banner &&
-                    <FastImage
-                        style={styles.bannerImage}
-                        source={{uri: banner}}>
-                        <View style={styles.bannerTextBarContainer}>
-                            <View style={styles.iconContainer}>
-                                {logo &&
-                                <FastImage
-                                    style={styles.logoImage}
-                                    resizeMode={FastImage.resizeMode.contain}
-                                    source={{uri: logo}}/>
-                                }
+                    <View style={styles.leftColumnContainer}>
+                        <View style={styles.topLeftRowContainer}>
+                            <CustomText
+                                style={styles.merchantName}
+                                numberOfLines={1}>
+                                {name}
+                            </CustomText>
+                            {!!rating &&
+                            <View style={styles.ratingContainer}>
+                                <CustomText
+                                    style={styles.ratingText}>{rating.toFixed(1).replace(/[.,]0$/, '')}</CustomText>
+                            </View>
+                            }
+                            {!!priceLevel &&
+                            <View style={styles.priceLevelContainer}>
+                                {this.getPriceLevel()}
+                            </View>
+                            }
+                        </View>
+                        <View style={styles.leftRowContainer}>
+                            {!!tags &&
+                            <View style={styles.leftInnerLeftContainer}>
+                                <Icon style={styles.tagIcon} name='tag'/>
+                            </View>
+                            }
+                            <View style={styles.leftInnerRightContainer}>
+                                {!!tags && tags.map((t, i) => t.displayName + (i !== tags.length - 1 ? ', ' : '')).map(t => {
+                                    return (<CustomText style={styles.tagText} key={t}>{t}</CustomText>);
+                                })}
+                                <Icon name='clock-o' style={styles.clockIcon}/>
+                                <CustomText style={styles.oHoursText}>{oHoursString}</CustomText>
                             </View>
                         </View>
-                    </FastImage>
-                    }
-                    <View style={styles.contentContainer}>
-                        <View style={styles.leftContainer}>
-                            <CustomText style={styles.leftText}>{dist}</CustomText>
-                        </View>
-                        <View style={styles.contentTextContainer}>
-                            <CustomText
-                                style={styles.mainText}>{name}</CustomText>
-                            <CustomText
-                                style={styles.subText}>{oHoursString}</CustomText>
-                        </View>
-                        <View style={styles.rightContainer}>
-                            {refundPercentage &&
-                            <CustomText
-                                style={styles.rightText}>{strings('stores.refund') + '\n' + (refundPercentage.toFixed(2).replace(/[.,]00$/, '')) + ' %'}</CustomText>
+                        <View style={styles.leftRowContainer}>
+                            {!!address &&
+                            <View style={styles.leftInnerLeftContainer}>
+                                <Icon style={styles.addressIcon} name='map-marker'/>
+                            </View>
                             }
-                            {!refundPercentage &&
-                            <CustomText
-                                style={styles.rightText}>{strings('stores.no_refund')}</CustomText>
+                            {!!address &&
+                            <View style={styles.leftInnerRightContainer}>
+                                <CustomText style={styles.addressText}>{address}</CustomText>
+                                <CustomText style={styles.distText}>{'(' + dist + ')'}</CustomText>
+                            </View>
                             }
+                        </View>
+                    </View>
+                    <View style={styles.rightColumnContainer}>
+                        <View style={styles.rightInnerLeftColumnContainer}>
+                            <CustomText style={styles.saveText}>SAVE FROM</CustomText>
+                            {!!refundPercentage &&
+                            <CustomText
+                                style={styles.refundText}>{refundPercentage.toFixed(1).replace(/[.,]0$/, '') + ' %'}</CustomText>
+                            }
+                        </View>
+                        <View style={styles.rightInnerRightColumnContainer}>
+                            <Icon style={styles.angleRight} name='angle-right'/>
                         </View>
                     </View>
                 </View>
@@ -105,77 +128,136 @@ export default class StoreListItem extends PureComponent {
 const styles = StyleSheet.create({
     container: {
         justifyContent: 'flex-start',
-        backgroundColor: colors.slightlyDarkerColor
+        backgroundColor: colors.backgroundColor
     },
-    iconContainer: {
-        height: 70,
+    cardContainer: {
+        flex: 1,
+        marginLeft: 10,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingTop: 5,
+        paddingBottom: 5,
+        marginRight: 10,
+        borderRadius: 5,
+        height: 80,
+        backgroundColor: colors.whiteColor,
+        flexDirection: 'row'
+    },
+    leftColumnContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center'
+    },
+    rightColumnContainer: {
+        width: 100,
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    topLeftRowContainer: {
+        flex: 1.33,
+        flexDirection: 'row',
+        alignItems: 'stretch'
+    },
+    leftRowContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    rightInnerLeftColumnContainer: {
+        flex: 1,
+        flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: colors.backgroundColor,
-        borderRadius: 40,
-        padding: 10,
-        borderWidth: StyleSheet.hairlineWidth,
-        borderColor: colors.separatorColor
+        alignItems: 'flex-end'
     },
-    logoImage: {
-        height: 40,
-        width: 40,
-        margin: 5,
+    rightInnerRightColumnContainer: {
+        width: 20,
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center'
     },
-    cardContainer: {
-        height: 170,
-        backgroundColor: colors.backgroundColor,
-        borderWidth: StyleSheet.hairlineWidth,
-        borderColor: colors.separatorColor
-    },
-    bannerImage: {
-        justifyContent: 'center',
-        width: '100%',
-        height: 120
-    },
-    bannerTextBarContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        flex: 1
-    },
-    leftContainer: {
-        flex: 1,
-        marginLeft: 20,
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-    },
-    rightContainer: {
-        flex: 1,
-        marginRight: 20,
-        justifyContent: 'flex-end',
-        alignItems: 'flex-end',
-    },
-    leftText: {
-        fontSize: 12,
-        textAlign: 'left'
-    },
-    rightText: {
-        fontSize: 12,
-        textAlign: 'right'
-    },
-    contentContainer: {
-        flex: 2,
-        justifyContent: 'space-between',
-        alignItems: 'center',
+    leftInnerLeftContainer: {
         flexDirection: 'row',
-    },
-    contentTextContainer: {
         alignItems: 'center',
         justifyContent: 'center',
+        width: 17
     },
-    mainText: {
-        color: colors.darkTextColor,
-        fontSize: 16,
+    leftInnerRightContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    merchantName: {
+        fontWeight: 'bold',
+        textAlign: 'center',
+        height: '100%',
+        fontSize: 22,
+        marginRight: 5
+    },
+    saveText: {
+        fontSize: 13,
+        color: colors.darkTextColor
+    },
+    refundText: {
+        fontSize: 22,
         fontWeight: 'bold'
     },
-    subText: {
-        fontSize: 13
+    angleRight: {
+        marginLeft: 5,
+        fontSize: 30,
+        color: colors.inactiveTabColor
+    },
+    priceLevelContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: 5
+    },
+    ratingContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 5,
+        height: '100%',
+        marginRight: 5,
+        aspectRatio: 1,
+        padding: 2,
+        backgroundColor: colors.activeTabColor,
+        borderRadius: 4
+    },
+    priceLevel: {
+        fontSize: 12,
+        color: colors.darkTextColor
+    },
+    tagIcon: {
+        color: colors.darkTextColor,
+        fontSize: 15,
+        marginRight: 3
+    },
+    clockIcon: {
+        color: colors.darkTextColor,
+        fontSize: 15,
+        marginRight: 3,
+        marginLeft: 7
+    },
+    ratingText: {
+        color: colors.whiteColor,
+        fontSize: 15
+    },
+    addressIcon: {
+        color: colors.darkTextColor,
+        fontSize: 15,
+        marginRight: 3
+    },
+    addressText: {
+        fontSize: 12
+    },
+    distText: {
+        fontSize: 12,
+        marginLeft: 3
+    },
+    oHoursText: {
+        fontSize: 12
+    },
+    tagText: {
+        minWidth: '45%',
+        fontSize: 12
     }
 });

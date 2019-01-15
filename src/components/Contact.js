@@ -5,6 +5,7 @@ import {strings} from '../shared/i18n';
 import Icon from 'react-native-fa-icons';
 import CustomText from '../components/CustomText';
 import FastImage from 'react-native-fast-image';
+import {SafeAreaView} from 'react-navigation';
 
 export default class Contact extends PureComponent {
 
@@ -17,11 +18,11 @@ export default class Contact extends PureComponent {
 
     render() {
         return (
-            <View style={styles.container}>
+            <SafeAreaView style={styles.container}>
                 <View style={styles.topContainer}>
                     <FastImage
                         resizeMode={FastImage.resizeMode.contain}
-                        source={require('../../assets/refundeo_logo.png')}
+                        source={require('../../assets/refundeo_banner_top_small.png')}
                         style={styles.image}
                     />
                 </View>
@@ -38,7 +39,7 @@ export default class Contact extends PureComponent {
                         <CustomText style={styles.rightText}>contact@refundeo.com</CustomText>
                     </View>
                 </View>
-            </View>
+            </SafeAreaView>
         );
     }
 }
@@ -49,12 +50,13 @@ const styles = StyleSheet.create({
         backgroundColor: colors.backgroundColor
     },
     topContainer: {
-        padding: '10%',
+        flex: 1,
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'stretch'
+        alignItems: 'center'
     },
     bottomContainer: {
+        flex: 0.8,
         justifyContent: 'flex-start',
         alignItems: 'stretch'
     },
@@ -91,7 +93,7 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         marginRight: 10,
         fontSize: 15,
-        color: colors.submitButtonColor
+        color: colors.backgroundColor
     },
     sectionHeaderText: {
         fontSize: 18,

@@ -39,7 +39,6 @@ class ScannerScreen extends Component {
     };
 
     qrCodeScanner;
-    modalTextInput;
     secondTextInput;
 
     initialState = {
@@ -287,7 +286,6 @@ class ScannerScreen extends Component {
                         <CustomText style={styles.modalInput}>{state.otherUser.email}</CustomText>
                         <CustomText style={styles.headlineText}>{strings('scanner.amount')}</CustomText>
                         <CustomTextInput
-                            ref={(input) => this.modalTextInput = input}
                             style={styles.modalInput}
                             value={this.state.amount}
                             onChangeText={this.changeAmount}

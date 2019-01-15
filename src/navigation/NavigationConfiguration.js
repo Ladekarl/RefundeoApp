@@ -20,7 +20,17 @@ import UploadDocumentation from '../containers/UploadDocumentation';
 import Contact from '../components/Contact';
 
 const {width, height} = Dimensions.get('screen');
-const noHeaderNavigationOptions = {headerMode: 'none', gesturesEnabled: false};
+const noHeaderNavigationOptions = {
+    headerMode: 'none',
+    gesturesEnabled: false,
+    headerStyle: {
+        elevation: 0,
+        backgroundColor: colors.backgroundColor,
+        margin: 0,
+        borderBottomWidth: 0,
+        paddingBottom: Platform.OS === 'ios' ? 10 : 0
+    }
+};
 const hasDrawer = false;
 
 const headerBackNavigationOptions = ({navigation}) => ({
@@ -31,7 +41,7 @@ const headerBackNavigationOptions = ({navigation}) => ({
         </TouchableOpacity>,
     headerTitleStyle: {
         fontSize: 18,
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
+        color: colors.whiteColor
     },
     gesturesEnabled: false,
     headerStyle: styles.defaultHeaderStyle,
@@ -147,12 +157,13 @@ const styles = StyleSheet.create({
         fontSize: Platform.OS === 'ios' ? 25 : 20,
         height: undefined,
         width: undefined,
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
+        color: colors.whiteColor
     },
     defaultHeaderStyle: {
-        elevation: 1,
-        backgroundColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor,
+        elevation: 0,
+        backgroundColor: colors.backgroundColor,
         margin: 0,
+        borderBottomWidth: 0,
         paddingBottom: Platform.OS === 'ios' ? 10 : 0
     }
 });

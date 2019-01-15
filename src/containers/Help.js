@@ -10,6 +10,7 @@ import {strings} from '../shared/i18n';
 import ModalScreen from '../components/Modal';
 import CustomText from '../components/CustomText';
 import FastImage from 'react-native-fast-image';
+import {SafeAreaView} from 'react-navigation';
 
 class Help extends Component {
 
@@ -51,65 +52,70 @@ class Help extends Component {
 
     render() {
         return (
-            <ScrollView
-                style={styles.container}
-                contentContainerStyle={styles.contentContainer}>
-                <View style={styles.topContainer}>
-                    <FastImage
-                        resizeMode={FastImage.resizeMode.contain}
-                        source={require('../../assets/help.png')}
-                        style={styles.image}
-                    />
-                </View>
-                <View style={styles.bottomContainer}>
-                    <View style={styles.sectionHeaderTopContainer}>
-                        <CustomText style={styles.sectionHeaderText}>{strings('help.help')}</CustomText>
+            <SafeAreaView style={styles.container}>
+                <ScrollView
+                    style={styles.container}
+                    contentContainerStyle={styles.contentContainer}>
+                    <View style={styles.topContainer}>
+                        <FastImage
+                            resizeMode={FastImage.resizeMode.contain}
+                            source={require('../../assets/help.png')}
+                            style={styles.image}
+                        />
                     </View>
-                    <TouchableOpacity style={styles.rowContainer} onPress={this.onContactPress}>
-                        <CustomText style={styles.leftText}>{strings('help.contact')}</CustomText>
-                        <Icon name='angle-right' style={styles.rightText}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.rowContainer} onPress={this.onGuidePress}>
-                        <CustomText style={styles.leftText}>{strings('help.guide')}</CustomText>
-                        <Icon name='angle-right' style={styles.rightText}/>
-                    </TouchableOpacity>
-                    <View style={styles.sectionHeaderContainer}>
-                        <CustomText style={styles.sectionHeaderText}>{strings('settings.legal_privacy')}</CustomText>
+                    <View style={styles.bottomContainer}>
+                        <View style={styles.sectionHeaderTopContainer}>
+                            <CustomText style={styles.sectionHeaderText}>{strings('help.help')}</CustomText>
+                        </View>
+                        <TouchableOpacity style={styles.rowContainer} onPress={this.onContactPress}>
+                            <CustomText style={styles.leftText}>{strings('help.contact')}</CustomText>
+                            <Icon name='angle-right' style={styles.rightText}/>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.rowContainer} onPress={this.onGuidePress}>
+                            <CustomText style={styles.leftText}>{strings('help.guide')}</CustomText>
+                            <Icon name='angle-right' style={styles.rightText}/>
+                        </TouchableOpacity>
+                        <View style={styles.sectionHeaderContainer}>
+                            <CustomText
+                                style={styles.sectionHeaderText}>{strings('settings.legal_privacy')}</CustomText>
+                        </View>
+                        <TouchableOpacity style={styles.rowContainer} onPress={this.openTermsOfServiceModal}>
+                            <CustomText style={styles.leftText}>{strings('register.terms_of_service_2')}</CustomText>
+                            <Icon name='angle-right' style={styles.rightText}/>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.rowContainer} onPress={this.openPrivacyPolicyModal}>
+                            <CustomText style={styles.leftText}>{strings('register.privacy_policy_2')}</CustomText>
+                            <Icon name='angle-right' style={styles.rightText}/>
+                        </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.rowContainer} onPress={this.openTermsOfServiceModal}>
-                        <CustomText style={styles.leftText}>{strings('register.terms_of_service_2')}</CustomText>
-                        <Icon name='angle-right' style={styles.rightText}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.rowContainer} onPress={this.openPrivacyPolicyModal}>
-                        <CustomText style={styles.leftText}>{strings('register.privacy_policy_2')}</CustomText>
-                        <Icon name='angle-right' style={styles.rightText}/>
-                    </TouchableOpacity>
-                </View>
-                <ModalScreen
-                    modalTitle={strings('register.terms_of_service_title')}
-                    onSubmit={this.closeTermsOfServiceModal}
-                    onBack={this.closeTermsOfServiceModal}
-                    onCancel={this.closeTermsOfServiceModal}
-                    fullScreen={true}
-                    contentContainerStyle={styles.policyContainer}
-                    visible={this.props.state.navigation.modal['termsOfServiceModal'] || false}>
-                    <View style={styles.policyContainer}>
-                        <WebView originWhitelist={['*']} style={styles.policyContainer} source={{html: strings('register.terms_of_service')}}/>
-                    </View>
-                </ModalScreen>
-                <ModalScreen
-                    modalTitle={strings('register.privacy_policy_title')}
-                    onSubmit={this.closePrivacyPolicyModal}
-                    onBack={this.closePrivacyPolicyModal}
-                    onCancel={this.closePrivacyPolicyModal}
-                    contentContainerStyle={styles.policyContainer}
-                    fullScreen={true}
-                    visible={this.props.state.navigation.modal['privacyPolicyModal'] || false}>
-                    <View style={styles.policyContainer}>
-                        <WebView originWhitelist={['*']} style={styles.policyContainer} source={{html: strings('register.privacy_policy')}}/>
-                    </View>
-                </ModalScreen>
-            </ScrollView>
+                    <ModalScreen
+                        modalTitle={strings('register.terms_of_service_title')}
+                        onSubmit={this.closeTermsOfServiceModal}
+                        onBack={this.closeTermsOfServiceModal}
+                        onCancel={this.closeTermsOfServiceModal}
+                        fullScreen={true}
+                        contentContainerStyle={styles.policyContainer}
+                        visible={this.props.state.navigation.modal['termsOfServiceModal'] || false}>
+                        <View style={styles.policyContainer}>
+                            <WebView originWhitelist={['*']} style={styles.policyContainer}
+                                     source={{html: strings('register.terms_of_service')}}/>
+                        </View>
+                    </ModalScreen>
+                    <ModalScreen
+                        modalTitle={strings('register.privacy_policy_title')}
+                        onSubmit={this.closePrivacyPolicyModal}
+                        onBack={this.closePrivacyPolicyModal}
+                        onCancel={this.closePrivacyPolicyModal}
+                        contentContainerStyle={styles.policyContainer}
+                        fullScreen={true}
+                        visible={this.props.state.navigation.modal['privacyPolicyModal'] || false}>
+                        <View style={styles.policyContainer}>
+                            <WebView originWhitelist={['*']} style={styles.policyContainer}
+                                     source={{html: strings('register.privacy_policy')}}/>
+                        </View>
+                    </ModalScreen>
+                </ScrollView>
+            </SafeAreaView>
         );
     }
 }
@@ -126,12 +132,12 @@ const styles = StyleSheet.create({
     },
     topContainer: {
         flex: 1,
-        padding: '10%',
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'stretch'
+        alignItems: 'center'
     },
     bottomContainer: {
+        flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'stretch'
     },
@@ -159,32 +165,33 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         marginTop: 5,
         backgroundColor: colors.whiteColor,
-        padding: 15,
+        padding: 15
     },
     image: {
         flex: 1,
-        height: undefined,
-        width: undefined,
+        height: 150,
+        width: 150,
+        tintColor: colors.whiteColor
     },
     leftText: {
-        color: colors.activeTabColor,
+        color: colors.backgroundColor,
         fontSize: 15,
-        marginLeft: 10,
-        alignSelf: 'stretch',
+        marginLeft: 10
     },
     rightText: {
         marginRight: 10,
-        fontSize: 25,
-        color: colors.submitButtonColor
+        fontSize: 20,
+        color: colors.backgroundColor
     },
     sectionHeaderText: {
         fontSize: 18,
         marginLeft: 10,
+        color: colors.whiteColor,
         textAlign: 'center'
     },
     policyContainer: {
         flex: 1,
-        backgroundColor: colors.backgroundColor,
+        backgroundColor: colors.transparent
     }
 });
 

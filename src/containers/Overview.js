@@ -15,8 +15,12 @@ class OverviewScreen extends Component {
 
     // noinspection JSUnusedGlobalSymbols
     static navigationOptions = {
-        tabBarIcon: ({tintColor}) => (
-            <Icon name='list' style={[styles.tabBarIcon, {color: tintColor}]}/>),
+        tabBarIcon: ({tintColor}) => {
+            if (tintColor === colors.activeTabColor) return (
+                <View style={styles.outerContainer}><Icon name='list' style={[styles.tabBarIcon, {color: tintColor}]}/></View>);
+            else return (
+                <Icon name='list' style={[styles.tabBarIcon, {color: tintColor}]}/>);
+        },
     };
 
     static propTypes = {
@@ -212,6 +216,13 @@ const styles = StyleSheet.create({
     nonEmptyContainer: {
         paddingTop: 4,
         backgroundColor: colors.slightlyDarkerColor
+    },
+    outerContainer: {
+        borderColor: colors.addButtonOuterColor,
+        borderWidth: 4,
+        padding: 4,
+        backgroundColor: colors.addButtonInnerColor,
+        borderRadius: 20
     },
     tabBarIcon: {
         fontSize: 20

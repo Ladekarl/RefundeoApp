@@ -121,7 +121,7 @@ export default class ModalScreen extends PureComponent {
                             {!noChildren && children}
                         </View>
                         {(!noCancelButton || !noSubmitButton) &&
-                        <View style={styles.modalBottomContainer}>
+                        <SafeAreaView style={styles.modalBottomContainer} forceInset={{'bottom': fullScreen ? 'always' : 'never'}}>
                             {!noSubmitButton &&
                             <TouchableOpacity
                                 style={styles.modalSubmitButton}
@@ -129,7 +129,7 @@ export default class ModalScreen extends PureComponent {
                                 onPress={onSubmit}>
                                 <CustomText style={styles.modalButtonText}>{strings('modal.ok')}</CustomText>
                             </TouchableOpacity>}
-                        </View>
+                        </SafeAreaView>
                         }
                     </View>
                 </KeyboardAvoidingView>
@@ -153,12 +153,12 @@ const styles = StyleSheet.create({
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'rgba(0,0,0,0.3)'
+        backgroundColor: 'rgba(255,255,255,0.1)'
     },
     modalInnerContainer: {
         maxHeight: '100%',
         width: '90%',
-        borderRadius: 2,
+        borderRadius: 4,
         alignItems: 'center',
         justifyContent: 'center',
         elevation: 5,
@@ -169,9 +169,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'row',
         width: '100%',
-        backgroundColor: colors.activeTabColor,
-        borderTopRightRadius: 2,
-        borderTopLeftRadius: 2
+        backgroundColor: colors.backgroundColor,
+        borderTopRightRadius: 4,
+        borderTopLeftRadius: 4
     },
     fullSafeContainer: {
         borderTopRightRadius: 0,
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 2,
         borderTopLeftRadius: 2,
         padding: 12,
-        backgroundColor: colors.activeTabColor
+        backgroundColor: colors.backgroundColor
     },
     modalCenterContainer: {
         width: '100%',
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         marginTop: 10,
         marginBottom: 10,
-        color: colors.backgroundColor,
+        color: colors.whiteColor,
         fontWeight: 'bold'
     },
     modalTitleText: {
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center',
-        color: colors.backgroundColor
+        color: colors.whiteColor
     },
     emptyContainer: {
         flex: 1,
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     },
     cancelIcon: {
         fontSize: 20,
-        color: colors.backgroundColor
+        color: colors.whiteColor
     },
     fullCenterContainer: {
         flex: 1,

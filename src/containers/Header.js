@@ -12,6 +12,7 @@ import ModalScreen from '../components/Modal';
 import {strings} from '../shared/i18n';
 import StoreFilter from '../components/StoreFilter';
 import CustomText from '../components/CustomText';
+import FastImage from 'react-native-fast-image';
 
 class HeaderScreen extends Component {
 
@@ -80,7 +81,10 @@ class HeaderScreen extends Component {
                     </TouchableOpacity>
                     }
                     {navigation.currentRoute !== 'Stores' &&
-                    <CustomText style={styles.headerText}>Refundeo</CustomText>
+                    <FastImage
+                        source={require('../../assets/refundeo_banner_white_small.png')}
+                        style={styles.headerText}
+                    />
                     }
                     {navigation.currentRoute === 'Stores' &&
                     <View style={styles.overlayContainer}>
@@ -154,7 +158,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor,
+        backgroundColor: colors.backgroundColor,
         paddingLeft: 25,
         paddingRight: 25,
         paddingTop: Platform.OS === 'ios' ? 0 : 11,
@@ -164,15 +168,17 @@ const styles = StyleSheet.create({
     },
     safeContainer: {
         flex: 1,
-        backgroundColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor,
+        backgroundColor: colors.backgroundColor,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
     },
     headerText: {
-        fontSize: Platform.OS === 'ios' ? 17 : 18,
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor,
-        fontWeight: 'bold'
+        height: 20,
+        width: 80,
+        margin: 5,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     headerButton: {
         height: 35,
@@ -181,7 +187,7 @@ const styles = StyleSheet.create({
         elevation: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: colors.activeTabColor
+        backgroundColor: colors.whiteColor
     },
     noDrawerHeader: {
         height: 35,
@@ -200,7 +206,7 @@ const styles = StyleSheet.create({
     },
     noDrawerIcon: {
         fontSize: Platform.OS === 'ios' ? 20 : 25,
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
+        color: colors.whiteColor
     },
     overlayContainer: {
         alignSelf: 'center',
@@ -218,8 +224,8 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 5,
         borderBottomLeftRadius: 5,
         borderWidth: Platform.OS === 'ios' ? 2 : StyleSheet.hairlineWidth,
-        borderColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.blackColor,
-        backgroundColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor
+        borderColor: colors.whiteColor,
+        backgroundColor: colors.backgroundColor
     },
     rightOverlayButton: {
         paddingTop: 7,
@@ -229,18 +235,18 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 5,
         borderBottomRightRadius: 5,
         borderWidth: Platform.OS === 'ios' ? 2 : StyleSheet.hairlineWidth,
-        borderColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.blackColor,
-        backgroundColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor
+        borderColor: colors.whiteColor,
+        backgroundColor: colors.backgroundColor
     },
     activeButton: {
-        backgroundColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
+        backgroundColor: colors.whiteColor
     },
     overlayButtonText: {
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor,
+        color: colors.whiteColor,
         fontSize: 15
     },
     activeOverlayButtonText: {
-        color: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor
+        color: colors.backgroundColor
     }
 });
 

@@ -3,7 +3,6 @@ import {createBottomTabNavigator} from 'react-navigation';
 import OverviewScreen from '../containers/Overview';
 import colors from '../shared/colors';
 import StoresScreen from '../containers/Stores';
-import {StyleSheet} from 'react-native';
 import QRCode from '../containers/QRCode';
 
 const HomeTab = createBottomTabNavigator({
@@ -30,9 +29,7 @@ const HomeTab = createBottomTabNavigator({
         style: {
             height: 50,
             backgroundColor: colors.backgroundColor,
-            borderTopWidth: StyleSheet.hairlineWidth,
-            borderTopColor: Platform.OS === 'ios' ? colors.darkTextColor: colors.separatorColor,
-            elevation: 1,
+            elevation: 0,
             paddingTop: Platform.OS === 'ios' ? 0 : 4
         },
         labelStyle: {

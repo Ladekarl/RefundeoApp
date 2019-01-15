@@ -25,7 +25,7 @@ import CustomText from '../components/CustomText';
 import CustomTextInput from '../components/CustomTextInput';
 
 const window = Dimensions.get('window');
-const IMAGE_HEIGHT = window.width / 4;
+const IMAGE_HEIGHT = window.width / 3;
 const CONTAINER_HEIGHT = window.height / 4;
 const CONTAINER_HEIGHT_SMALL = 10;
 const IMAGE_HEIGHT_SMALL = 0;
@@ -132,7 +132,7 @@ class RegisterScreen extends Component {
                         <Animated.View style={[styles.topContainer, {height: this.state.containerHeight}]}>
                             <Animated.Image
                                 style={[styles.image, {height: this.state.imageHeight}]}
-                                source={require('../../assets/refundeo_logo.png')}
+                                source={require('../../assets/refundeo_banner_top_small.png')}
                             />
                         </Animated.View>
                         <View style={styles.inputContainer}>
@@ -189,7 +189,7 @@ class RegisterScreen extends Component {
                             <View style={styles.eulaContainer}>
                                 <Switch disabled={fetching}
                                         value={this.state.acceptedTermsOfService}
-                                        tintColor={Platform.OS === 'ios' ? colors.activeTabColor : undefined}
+                                        tintColor={colors.whiteColor}
                                         thumbTintColor={colors.activeTabColor}
                                         onValueChange={acceptedTermsOfService => this.setState({acceptedTermsOfService})}>
                                 </Switch>
@@ -206,7 +206,7 @@ class RegisterScreen extends Component {
                             </View>
                             <View style={styles.eulaContainer}>
                                 <Switch disabled={fetching}
-                                        tintColor={Platform.OS === 'ios' ? colors.activeTabColor : undefined}
+                                        tintColor={colors.whiteColor}
                                         thumbTintColor={colors.activeTabColor}
                                         value={this.state.acceptedPrivacyPolicy}
                                         onValueChange={acceptedPrivacyPolicy => this.setState({acceptedPrivacyPolicy})}>
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
     },
     policyContainer: {
         flex: 1,
-        backgroundColor: colors.backgroundColor,
+        backgroundColor: colors.transparent
     },
     innerContainer: {
         backgroundColor: colors.backgroundColor,
@@ -312,7 +312,7 @@ const styles = StyleSheet.create({
     },
     elevatedInputContainer: {
         backgroundColor: colors.whiteColor,
-        borderRadius: 50,
+        borderRadius: 10,
         elevation: 5,
         paddingLeft: 10,
         paddingRight: 10,
@@ -376,13 +376,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         fontWeight: 'bold',
-        color: colors.submitButtonColor
+        color: colors.activeTabColor
     },
     buttonContainer: {
         alignItems: 'stretch'
     },
     registerButton: {
-        borderRadius: 50,
+        borderRadius: 10,
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
@@ -402,7 +402,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignSelf: 'center',
         marginRight: 5,
-        color: colors.activeTabColor
+        color: colors.darkTextColor
     },
     activityIndicator: {
         elevation: 10
@@ -423,22 +423,23 @@ const styles = StyleSheet.create({
     },
     eulaContainerText: {
         fontWeight: 'bold',
+        color: colors.inactiveTabColor
     },
     eulaButton: {
         marginLeft: 10,
         borderRadius: 2,
-        borderWidth: StyleSheet.hairlineWidth,
+        borderWidth: 1,
         borderColor: colors.activeTabColor,
         height: 30,
         paddingLeft: 10,
         paddingRight: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: colors.white
+        backgroundColor: colors.backgroundColor
     },
     eulaButtonText: {
-        color: colors.submitButtonColor,
-        fontWeight: 'bold'
+        color: colors.whiteColor,
+        fontWeight: 'bold',
     }
 });
 

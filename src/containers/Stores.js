@@ -25,8 +25,13 @@ class StoresScreen extends Component {
         headerTitleStyle: {
             fontSize: 18
         },
-        tabBarIcon: ({tintColor}) => (
-            <Icon name='map' style={[styles.tabBarIcon, {color: tintColor}]}/>),
+        tabBarIcon: ({tintColor}) => {
+            if (tintColor === colors.activeTabColor) return (
+                <View style={styles.outerContainer}><Icon name='map'
+                                                          style={[styles.tabBarIcon, {color: tintColor}]}/></View>);
+            else return (
+                <Icon name='map' style={[styles.tabBarIcon, {color: tintColor}]}/>);
+        },
     };
 
     constructor(props) {
@@ -165,7 +170,7 @@ const styles = StyleSheet.create({
     },
     clusterText: {
         fontSize: 18,
-        color: colors.activeTabColor,
+        color: colors.whiteColor,
         fontWeight: 'bold',
         textAlign: 'center',
     },
@@ -183,14 +188,21 @@ const styles = StyleSheet.create({
         padding: 5
     },
     calloutText: {
-        color: colors.activeTabColor,
+        color: colors.backgroundColor,
         fontSize: 15
     },
     calloutIcon: {
         fontSize: 20,
         alignSelf: 'center',
         marginLeft: 10,
-        color: colors.activeTabColor
+        color: colors.backgroundColor
+    },
+    outerContainer: {
+        borderColor: colors.addButtonOuterColor,
+        borderWidth: 4,
+        padding: 4,
+        backgroundColor: colors.addButtonInnerColor,
+        borderRadius: 20
     }
 });
 

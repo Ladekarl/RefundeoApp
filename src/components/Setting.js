@@ -45,15 +45,17 @@ export default class Setting extends PureComponent {
 
         return (
             <TouchableOpacity disabled={!onPress} style={[styles.rowContainer, containerStyle]} onPress={onPress}>
-                <View style={[styles.rowInnerContainer, contentContainerStyle]}>
-                    {required && !value &&
-                    <Icon name='exclamation-circle' style={styles.requiredIcon}/>
+                <View style={styles.innerContainer}>
+                    <View style={[styles.rowInnerContainer, contentContainerStyle]}>
+                        {required && !value &&
+                        <Icon name='exclamation-circle' style={styles.requiredIcon}/>
+                        }
+                        <CustomText style={[styles.leftText, labelStyle]}>{label}</CustomText>
+                    </View>
+                    {value &&
+                    <CustomText style={styles.rightText}>{value}</CustomText>
                     }
-                    <CustomText style={[styles.leftText, labelStyle]}>{label}</CustomText>
                 </View>
-                {value &&
-                <CustomText style={styles.rightText}>{value}</CustomText>
-                }
             </TouchableOpacity>
         );
     }
@@ -61,18 +63,28 @@ export default class Setting extends PureComponent {
 
 const styles = StyleSheet.create({
     rowContainer: {
+        marginLeft: 10,
+        marginRight: 10,
+        marginTop: 5,
+        marginBottom: 5,
+        //borderWidth: 2,
+        borderColor: colors.addButtonOuterColor,
+        borderRadius: 12,
+    },
+    innerContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 5,
-        marginTop: 5,
-        backgroundColor: colors.whiteColor,
+        backgroundColor: colors.backgroundColor,
+        //borderWidth: 2,
+        borderColor: colors.addButtonInnerColor,
+        borderRadius: 10,
         padding: 15,
     },
     rowInnerContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     requiredIcon: {
         fontSize: 15,
@@ -81,10 +93,11 @@ const styles = StyleSheet.create({
         color: colors.cancelButtonColor
     },
     leftText: {
-        marginLeft: 10
+        marginLeft: 10,
+        color: colors.inactiveTabColor
     },
     rightText: {
         marginRight: 10,
-        color: colors.submitButtonColor
+        color: colors.whiteColor
     }
 });

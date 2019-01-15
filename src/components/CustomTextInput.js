@@ -7,10 +7,16 @@ export default class CustomTextInput extends PureComponent {
 
     static defaultProps = TextInput.defaultProps;
 
+    textInput;
+
+    focus() {
+        this.textInput.focus();
+    }
+
     render() {
         const props = this.props;
         return (
-            <TextInput {...props} style={[styles.textStyle, this.props.style]}/>
+            <TextInput ref={(input) => this.textInput = input} {...props} style={[styles.textStyle, this.props.style]}/>
         );
     }
 }

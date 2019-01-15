@@ -14,10 +14,10 @@ import Orientation from 'react-native-orientation';
 import FastImage from 'react-native-fast-image';
 
 const window = Dimensions.get('window');
-const IMAGE_HEIGHT = 100;
+const IMAGE_HEIGHT = window.width / 3;
 const CONTAINER_HEIGHT = window.height / 2;
 const CONTAINER_HEIGHT_SMALL = window.height / 6;
-const IMAGE_HEIGHT_SMALL = 100;
+const IMAGE_HEIGHT_SMALL = window.width / 3;
 
 class InitialScreen extends Component {
 
@@ -119,7 +119,7 @@ class InitialScreen extends Component {
                 <Animated.View style={[styles.topContainer, {height: this.state.containerHeight}]}>
                     <Animated.Image
                         style={[styles.image, {height: this.state.imageHeight}]}
-                        source={require('../../assets/refundeo_logo.png')}
+                        source={require('../../assets/refundeo_banner_top_small.png')}
                     />
                 </Animated.View>
                 }
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain'
     },
     facebookButton: {
-        borderRadius: 50,
+        borderRadius: 10,
         height: 50,
         justifyContent: 'flex-start',
         alignItems: 'center',
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.facebookColor
     },
     signUpButton: {
-        borderRadius: 50,
+        borderRadius: 10,
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
@@ -211,14 +211,14 @@ const styles = StyleSheet.create({
     loginButton: {
         marginLeft: 10,
         borderRadius: 2,
-        borderWidth: StyleSheet.hairlineWidth,
+        borderWidth: 2,
         borderColor: colors.activeTabColor,
         height: 30,
         paddingLeft: 10,
         paddingRight: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: colors.white
+        backgroundColor: colors.backgroundColor
     },
     facebookIconContainer: {
         flex: 1,
@@ -246,9 +246,10 @@ const styles = StyleSheet.create({
     },
     alreadyCustomerText: {
         fontWeight: 'bold',
+        color: colors.inactiveTabColor
     },
     loginButtonText: {
-        color: colors.submitButtonColor,
+        color: colors.whiteColor,
         fontWeight: 'bold'
     },
     alreadyCustomerContainer: {
@@ -269,7 +270,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         fontWeight: 'bold',
-        color: colors.submitButtonColor
+        color: colors.activeTabColor
     },
     loadingContainer: {
         position: 'absolute',

@@ -23,6 +23,7 @@ import Validation from '../shared/Validation';
 import Helpers from '../api/Helpers';
 import CustomText from '../components/CustomText';
 import CustomTextInput from '../components/CustomTextInput';
+import {SafeAreaView} from 'react-navigation';
 
 class SettingsScreen extends Component {
 
@@ -293,220 +294,221 @@ class SettingsScreen extends Component {
         const {state, requiredOnly} = this.props;
 
         return (
-            <ScrollView
-                style={styles.container}
-                keyboardShouldPersistTaps={'always'}
-            >
-                <View style={[styles.sectionHeaderContainer, styles.sectionTopContainer]}>
-                    <CustomText style={styles.sectionHeaderText}>{strings('settings.profile')}</CustomText>
-                </View>
-                {!state.user.isOauth &&
-                <Setting label={strings('settings.username')} required={true} value={state.user.username}/>
-                }
-                <Setting label={strings('settings.email')} required={true} value={state.user.email}
-                         onPress={this.showChangeEmail}/>
-                <Setting label={strings('settings.first_name')} required={true} onPress={this.showChangeFirstName}
-                         value={state.user.firstName}/>
-                <Setting label={strings('settings.last_name')} required={true} onPress={this.showChangeLastName}
-                         value={state.user.lastName}/>
-                <View style={styles.countryContainer}>
-                    <CountryPicker
-                        onChange={this.countryChanged}
-                        cca2={this.state.cca2}
-                        translation='eng'
-                        closeable={true}
-                        filterable={true}>
-                        <View style={styles.countryRowContainer}>
-                            <View style={styles.rowInnerContainer}>
-                                {!state.user.country &&
-                                <Icon name='exclamation-circle' style={styles.requiredIcon}/>
+            <SafeAreaView style={styles.container}>
+                <ScrollView
+                    style={styles.container}
+                    keyboardShouldPersistTaps={'always'}>
+                    <View style={[styles.sectionHeaderContainer, styles.sectionTopContainer]}>
+                        <CustomText style={styles.sectionHeaderText}>{strings('settings.profile')}</CustomText>
+                    </View>
+                    {!state.user.isOauth &&
+                    <Setting label={strings('settings.username')} required={true} value={state.user.username}/>
+                    }
+                    <Setting label={strings('settings.email')} required={true} value={state.user.email}
+                             onPress={this.showChangeEmail}/>
+                    <Setting label={strings('settings.first_name')} required={true} onPress={this.showChangeFirstName}
+                             value={state.user.firstName}/>
+                    <Setting label={strings('settings.last_name')} required={true} onPress={this.showChangeLastName}
+                             value={state.user.lastName}/>
+                    <View style={styles.countryContainer}>
+                        <CountryPicker
+                            onChange={this.countryChanged}
+                            cca2={this.state.cca2}
+                            translation='eng'
+                            closeable={true}
+                            filterable={true}>
+                            <View style={styles.countryRowContainer}>
+                                <View style={styles.rowInnerContainer}>
+                                    {!state.user.country &&
+                                    <Icon name='exclamation-circle' style={styles.requiredIcon}/>
+                                    }
+                                    <CustomText style={styles.leftText}>{strings('settings.country')}</CustomText>
+                                </View>
+                                {!!state.user.country &&
+                                <CustomText style={styles.rightText}>{state.user.country}</CustomText>
                                 }
-                                <CustomText style={styles.leftText}>{strings('settings.country')}</CustomText>
                             </View>
-                            {!!state.user.country &&
-                            <CustomText style={styles.rightText}>{state.user.country}</CustomText>
+                        </CountryPicker>
+                    </View>
+                    {!requiredOnly &&
+                    <Setting label={strings('settings.passport')} onPress={this.showPassportModal}
+                             value={state.user.passport}/>
+                    }
+                    <Setting label={strings('settings.phone')} onPress={this.showPhoneModal}
+                             value={state.user.phone} required={true}/>
+                    {!requiredOnly && !state.user.isOauth &&
+                    <Setting label={strings('settings.change_password')} onPress={this.showChangePassword}/>
+                    }
+                    {!requiredOnly &&
+                    <View style={styles.sectionHeaderContainer}>
+                        <CustomText style={styles.sectionHeaderText}>{strings('settings.payment')}</CustomText>
+                    </View>
+                    }
+                    {!requiredOnly &&
+                    <Setting
+                        label={strings('settings.swift')} onPress={this.showSwiftModal}
+                        value={state.user.swift}/>
+                    }
+                    {!requiredOnly &&
+                    <Setting
+                        label={strings('settings.account_number')} onPress={this.showAccountNumberModal}
+                        value={state.user.accountNumber}/>
+                    }
+                    <View style={styles.sectionHeaderContainer}>
+                        <CustomText style={styles.sectionHeaderText}>{strings('settings.address')}</CustomText>
+                    </View>
+                    <Setting label={strings('settings.address_street_name')} onPress={this.showStreetNameModal}
+                             value={state.user.addressStreetName} required={true}/>
+                    <Setting label={strings('settings.address_street_number')} onPress={this.showStreetNumberModal}
+                             value={state.user.addressStreetNumber} required={true}/>
+                    <Setting label={strings('settings.address_postal_code')} onPress={this.showPostalCodeModal}
+                             value={state.user.addressPostalCode} required={true}/>
+                    <Setting label={strings('settings.address_city')} onPress={this.showCityModal}
+                             value={state.user.addressCity} required={true}/>
+                    <Setting label={strings('settings.address_country')} onPress={this.showCountryModal}
+                             value={state.user.addressCountry} required={true}/>
+                    {requiredOnly &&
+                    <View style={styles.sectionHeaderContainer}>
+                        <CustomText style={styles.sectionHeaderText}>{strings('settings.legal_privacy')}</CustomText>
+                    </View>
+                    }
+                    {requiredOnly &&
+                    <TouchableOpacity style={styles.rowContainer} onPress={this.openTermsOfServiceModal}>
+                        <View style={styles.rowInnerContainer}>
+                            {!state.user.acceptedTermsOfService &&
+                            <Icon name='exclamation-circle' style={styles.requiredIcon}/>
                             }
+                            <CustomText style={styles.leftText}>{strings('register.terms_of_service_1')}</CustomText>
+                            <CustomText
+                                style={styles.leftButtonText}>{strings('register.terms_of_service_2')}</CustomText>
                         </View>
-                    </CountryPicker>
-                </View>
-                {!requiredOnly &&
-                <Setting label={strings('settings.passport')} onPress={this.showPassportModal}
-                         value={state.user.passport}/>
-                }
-                <Setting label={strings('settings.phone')} onPress={this.showPhoneModal}
-                         value={state.user.phone} required={true}/>
-                {!requiredOnly && !state.user.isOauth &&
-                <Setting label={strings('settings.change_password')} onPress={this.showChangePassword}/>
-                }
-                {!requiredOnly &&
-                <View style={styles.sectionHeaderContainer}>
-                    <CustomText style={styles.sectionHeaderText}>{strings('settings.payment')}</CustomText>
-                </View>
-                }
-                {!requiredOnly &&
-                <Setting
-                    label={strings('settings.swift')} onPress={this.showSwiftModal}
-                    value={state.user.swift}/>
-                }
-                {!requiredOnly &&
-                <Setting
-                    label={strings('settings.account_number')} onPress={this.showAccountNumberModal}
-                    value={state.user.accountNumber}/>
-                }
-                <View style={styles.sectionHeaderContainer}>
-                    <CustomText style={styles.sectionHeaderText}>{strings('settings.address')}</CustomText>
-                </View>
-                <Setting label={strings('settings.address_street_name')} onPress={this.showStreetNameModal}
-                         value={state.user.addressStreetName} required={true}/>
-                <Setting label={strings('settings.address_street_number')} onPress={this.showStreetNumberModal}
-                         value={state.user.addressStreetNumber} required={true}/>
-                <Setting label={strings('settings.address_postal_code')} onPress={this.showPostalCodeModal}
-                         value={state.user.addressPostalCode} required={true}/>
-                <Setting label={strings('settings.address_city')} onPress={this.showCityModal}
-                         value={state.user.addressCity} required={true}/>
-                <Setting label={strings('settings.address_country')} onPress={this.showCountryModal}
-                         value={state.user.addressCountry} required={true}/>
-                {requiredOnly &&
-                <View style={styles.sectionHeaderContainer}>
-                    <CustomText style={styles.sectionHeaderText}>{strings('settings.legal_privacy')}</CustomText>
-                </View>
-                }
-                {requiredOnly &&
-                <TouchableOpacity style={styles.rowContainer} onPress={this.openTermsOfServiceModal}>
-                    <View style={styles.rowInnerContainer}>
-                        {!state.user.acceptedTermsOfService &&
-                        <Icon name='exclamation-circle' style={styles.requiredIcon}/>
-                        }
-                        <CustomText style={styles.leftText}>{strings('register.terms_of_service_1')}</CustomText>
-                        <CustomText style={styles.leftButtonText}>{strings('register.terms_of_service_2')}</CustomText>
-                    </View>
-                    <Switch value={state.user.acceptedTermsOfService}
-                            tintColor={Platform.OS === 'ios' ? colors.activeTabColor : undefined}
-                            thumbTintColor={colors.activeTabColor}
-                            onValueChange={this.acceptTermsOfService}/>
-                </TouchableOpacity>
-                }
-                {requiredOnly &&
-                <TouchableOpacity style={styles.rowContainer} onPress={this.openPrivacyPolicyModal}>
-                    <View style={styles.rowInnerContainer}>
-                        {!state.user.acceptedPrivacyPolicy &&
-                        <Icon name='exclamation-circle' style={styles.requiredIcon}/>
-                        }
-                        <CustomText style={styles.leftText}>{strings('register.privacy_policy_1')}</CustomText>
-                        <CustomText style={styles.leftButtonText}>{strings('register.privacy_policy_2')}</CustomText>
-                    </View>
-                    <Switch value={state.user.acceptedPrivacyPolicy}
-                            tintColor={Platform.OS === 'ios' ? colors.activeTabColor : undefined}
-                            thumbTintColor={colors.activeTabColor}
-                            onValueChange={this.acceptPrivacyPolicy}/>
-                </TouchableOpacity>
-                }
-                {!requiredOnly &&
-                <View style={styles.sectionHeaderContainer}>
-                </View>
-                }
-                {!requiredOnly &&
-                <Setting label={strings('settings.sign_out')} containerStyle={styles.rowCenterContainer}
-                         labelStyle={styles.redText} onPress={this.showSignOut}/>
-                }
-                <ModalScreen
-                    modalTitle={this.state.modalTitle}
-                    visible={state.navigation.modal['settingsModal'] || false}
-                    onCancel={this.closeModal}
-                    noChildren={!this.state.modalShowInput}
-                    onSubmit={this.submitFunction}
-                    onBack={this.closeModal}>
-                    <View style={styles.modalContainer}>
-                        <CustomTextInput
-                            ref={(input) => this.modalTextInput = input}
-                            style={styles.modalInput}
-                            value={this.state.modalValue}
-                            secureTextEntry={this.state.isChangePassword}
-                            onChangeText={this.changeModalValue}
-                            autoFocus={true}
-                            maxLength={64}
-                            placeholder={this.state.modalPlaceholder}
-                            selectionColor={colors.inactiveTabColor}
-                            underlineColorAndroid={colors.activeTabColor}
-                            tintColor={colors.activeTabColor}
-                            numberOfLines={1}
-                            keyboardType={this.state.modalInputType}
-                            editable={true}
-                            returnKeyType={this.state.isChangePassword ? 'next' : 'done'}
-                            autoCapitalize={this.state.isChangePassword ? 'none' : 'words'}
-                            autoCorrect={!this.state.isChangePassword}
-                            onSubmitEditing={this.focusSecondTextInput}
-                            blurOnSubmit={false}
-                        />
-                        {this.state.isChangePassword &&
-                        <CustomTextInput
-                            ref={(input) => this.secondTextInput = input}
-                            style={styles.modalInput}
-                            value={this.state.change}
-                            maxLength={64}
-                            onChangeText={this.changeNewPasswordValue}
-                            placeholder={strings('settings.change_password_new_password_placeholder')}
-                            selectionColor={colors.inactiveTabColor}
-                            secureTextEntry={true}
-                            autoCapitalize={'none'}
-                            underlineColorAndroid={colors.activeTabColor}
-                            tintColor={colors.activeTabColor}
-                            numberOfLines={1}
-                            keyboardType={this.state.modalInputType}
-                            autoCorrect={false}
-                            editable={true}
-                            returnKeyType='next'
-                            onSubmitEditing={this.focusThirdTextInput}
-                        />}
-                        {this.state.isChangePassword &&
-                        <CustomTextInput
-                            ref={(input) => this.thirdTextInput = input}
-                            style={styles.modalInput}
-                            value={this.state.change}
-                            maxLength={64}
-                            onChangeText={this.changeConfPasswordValue}
-                            placeholder={strings('settings.change_password_conf_password_placeholder')}
-                            selectionColor={colors.inactiveTabColor}
-                            secureTextEntry={true}
-                            keyboardType={this.state.modalInputType}
-                            autoCapitalize='none'
-                            autoCorrect={false}
-                            underlineColorAndroid={colors.activeTabColor}
-                            tintColor={colors.activeTabColor}
-                            numberOfLines={1}
-                            editable={true}
-                        />}
-                        <CustomText
-                            style={this.state.modalInputError ? styles.modalInputErrorText : styles.hidden}>{this.state.modalInputError}</CustomText>
-                    </View>
-                </ModalScreen>
-                <ModalScreen
-                    modalTitle={strings('register.terms_of_service_title')}
-                    noCancelButton={true}
-                    onSubmit={this.closeTermsOfServiceModal}
-                    onBack={this.closeTermsOfServiceModal}
-                    onCancel={this.closeTermsOfServiceModal}
-                    fullScreen={true}
-                    contentContainerStyle={styles.policyContainer}
-                    visible={this.props.state.navigation.modal['termsOfServiceModal'] || false}>
-                    <View style={styles.policyContainer}>
-                        <WebView originWhitelist={['*']} style={styles.policyContainer} source={{html: strings('register.terms_of_service')}}/>
-                    </View>
-                </ModalScreen>
-                <ModalScreen
-                    modalTitle={strings('register.privacy_policy_title')}
-                    noCancelButton={true}
-                    onSubmit={this.closePrivacyPolicyModal}
-                    onBack={this.closePrivacyPolicyModal}
-                    onCancel={this.closePrivacyPolicyModal}
-                    contentContainerStyle={styles.policyContainer}
-                    fullScreen={true}
-                    visible={this.props.state.navigation.modal['privacyPolicyModal'] || false}>
-                    <View style={styles.policyContainer}>
-                        <WebView originWhitelist={['*']} style={styles.policyContainer} source={{html: strings('register.privacy_policy')}}/>
-                    </View>
-                </ModalScreen>
-            </ScrollView>
+                        <Switch value={state.user.acceptedTermsOfService}
+                                tintColor={Platform.OS === 'ios' ? colors.activeTabColor : undefined}
+                                thumbTintColor={colors.activeTabColor}
+                                onValueChange={this.acceptTermsOfService}/>
+                    </TouchableOpacity>
+                    }
+                    {requiredOnly &&
+                    <TouchableOpacity style={styles.rowContainer} onPress={this.openPrivacyPolicyModal}>
+                        <View style={styles.rowInnerContainer}>
+                            {!state.user.acceptedPrivacyPolicy &&
+                            <Icon name='exclamation-circle' style={styles.requiredIcon}/>
+                            }
+                            <CustomText style={styles.leftText}>{strings('register.privacy_policy_1')}</CustomText>
+                            <CustomText
+                                style={styles.leftButtonText}>{strings('register.privacy_policy_2')}</CustomText>
+                        </View>
+                        <Switch value={state.user.acceptedPrivacyPolicy}
+                                tintColor={Platform.OS === 'ios' ? colors.activeTabColor : undefined}
+                                thumbTintColor={colors.activeTabColor}
+                                onValueChange={this.acceptPrivacyPolicy}/>
+                    </TouchableOpacity>
+                    }
+                    {!requiredOnly &&
+                    <Setting label={strings('settings.sign_out')} containerStyle={styles.rowCenterContainer}
+                             labelStyle={styles.redText} onPress={this.showSignOut}/>
+                    }
+                    <ModalScreen
+                        modalTitle={this.state.modalTitle}
+                        visible={state.navigation.modal['settingsModal'] || false}
+                        onCancel={this.closeModal}
+                        noChildren={!this.state.modalShowInput}
+                        onSubmit={this.submitFunction}
+                        onBack={this.closeModal}>
+                        <View style={styles.modalContainer}>
+                            <CustomTextInput
+                                ref={(input) => this.modalTextInput = input}
+                                style={styles.modalInput}
+                                value={this.state.modalValue}
+                                secureTextEntry={this.state.isChangePassword}
+                                onChangeText={this.changeModalValue}
+                                autoFocus={true}
+                                maxLength={64}
+                                placeholder={this.state.modalPlaceholder}
+                                selectionColor={colors.inactiveTabColor}
+                                underlineColorAndroid={colors.activeTabColor}
+                                tintColor={colors.activeTabColor}
+                                numberOfLines={1}
+                                keyboardType={this.state.modalInputType}
+                                editable={true}
+                                returnKeyType={this.state.isChangePassword ? 'next' : 'done'}
+                                autoCapitalize={this.state.isChangePassword ? 'none' : 'words'}
+                                autoCorrect={!this.state.isChangePassword}
+                                onSubmitEditing={this.focusSecondTextInput}
+                                blurOnSubmit={false}
+                            />
+                            {this.state.isChangePassword &&
+                            <CustomTextInput
+                                ref={(input) => this.secondTextInput = input}
+                                style={styles.modalInput}
+                                value={this.state.change}
+                                maxLength={64}
+                                onChangeText={this.changeNewPasswordValue}
+                                placeholder={strings('settings.change_password_new_password_placeholder')}
+                                selectionColor={colors.inactiveTabColor}
+                                secureTextEntry={true}
+                                autoCapitalize={'none'}
+                                underlineColorAndroid={colors.activeTabColor}
+                                tintColor={colors.activeTabColor}
+                                numberOfLines={1}
+                                keyboardType={this.state.modalInputType}
+                                autoCorrect={false}
+                                editable={true}
+                                returnKeyType='next'
+                                onSubmitEditing={this.focusThirdTextInput}
+                            />}
+                            {this.state.isChangePassword &&
+                            <CustomTextInput
+                                ref={(input) => this.thirdTextInput = input}
+                                style={styles.modalInput}
+                                value={this.state.change}
+                                maxLength={64}
+                                onChangeText={this.changeConfPasswordValue}
+                                placeholder={strings('settings.change_password_conf_password_placeholder')}
+                                selectionColor={colors.inactiveTabColor}
+                                secureTextEntry={true}
+                                keyboardType={this.state.modalInputType}
+                                autoCapitalize='none'
+                                autoCorrect={false}
+                                underlineColorAndroid={colors.activeTabColor}
+                                tintColor={colors.activeTabColor}
+                                numberOfLines={1}
+                                editable={true}
+                            />}
+                            <CustomText
+                                style={this.state.modalInputError ? styles.modalInputErrorText : styles.hidden}>{this.state.modalInputError}</CustomText>
+                        </View>
+                    </ModalScreen>
+                    <ModalScreen
+                        modalTitle={strings('register.terms_of_service_title')}
+                        noCancelButton={true}
+                        onSubmit={this.closeTermsOfServiceModal}
+                        onBack={this.closeTermsOfServiceModal}
+                        onCancel={this.closeTermsOfServiceModal}
+                        fullScreen={true}
+                        contentContainerStyle={styles.policyContainer}
+                        visible={this.props.state.navigation.modal['termsOfServiceModal'] || false}>
+                        <View style={styles.policyContainer}>
+                            <WebView originWhitelist={['*']} style={styles.policyContainer}
+                                     source={{html: strings('register.terms_of_service')}}/>
+                        </View>
+                    </ModalScreen>
+                    <ModalScreen
+                        modalTitle={strings('register.privacy_policy_title')}
+                        noCancelButton={true}
+                        onSubmit={this.closePrivacyPolicyModal}
+                        onBack={this.closePrivacyPolicyModal}
+                        onCancel={this.closePrivacyPolicyModal}
+                        contentContainerStyle={styles.policyContainer}
+                        fullScreen={true}
+                        visible={this.props.state.navigation.modal['privacyPolicyModal'] || false}>
+                        <View style={styles.policyContainer}>
+                            <WebView originWhitelist={['*']} style={styles.policyContainer}
+                                     source={{html: strings('register.privacy_policy')}}/>
+                        </View>
+                    </ModalScreen>
+                </ScrollView>
+            </SafeAreaView>
         );
     }
 }
@@ -539,10 +541,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 10,
         marginTop: 10,
-        backgroundColor: colors.whiteColor,
-        padding: 15,
+        marginLeft: 20,
+        marginRight: 20,
+        borderWidth: 4,
+        borderColor: colors.activeTabColorOpaque,
+        backgroundColor: colors.backgroundColor
     },
     rowInnerContainer: {
         flexDirection: 'row',
@@ -557,39 +561,47 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: colors.whiteColor,
+        backgroundColor: colors.backgroundColor,
         padding: 15,
+        marginLeft: 10,
+        marginRight: 10
     },
     sectionTopContainer: {
         marginTop: Platform.OS === 'ios' ? 15 : 20
     },
     sectionHeaderContainer: {
-        backgroundColor: colors.backgroundColor,
+        backgroundColor: colors.activeTabColorOpaque,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: 10,
-        marginBottom: 10,
-        marginLeft: 15
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 15,
+        marginTop: 5,
+        marginBottom: 5
     },
     leftText: {
-        marginLeft: 10
+        marginLeft: 10,
+        color: colors.inactiveTabColor
     },
     leftButtonText: {
         marginLeft: 10,
         color: colors.submitButtonColor
     },
     redText: {
-        color: colors.cancelButtonColor
+        color: colors.cancelButtonColor,
+        fontWeight: 'bold',
+        fontSize: 15
     },
     sectionHeaderText: {
         fontSize: 18,
         marginLeft: 10,
-        textAlign: 'center'
+        textAlign: 'center',
+        color: colors.whiteColor
     },
     rightText: {
         marginRight: 10,
-        color: colors.submitButtonColor
+        color: colors.whiteColor
     },
     modalContainer: {
         justifyContent: 'center',
@@ -601,6 +613,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         minWidth: '80%',
         fontSize: 15,
+        color: colors.whiteColor,
         marginTop: Platform.OS === 'ios' ? 10 : 0
     },
     modalInputErrorText: {
