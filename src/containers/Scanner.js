@@ -290,6 +290,7 @@ class ScannerScreen extends Component {
                             value={this.state.amount}
                             onChangeText={this.changeAmount}
                             autoFocus={true}
+                            placeholderTextColor={colors.darkTextColor}
                             maxLength={64}
                             placeholder={'Amount'}
                             selectionColor={colors.inactiveTabColor}
@@ -307,6 +308,7 @@ class ScannerScreen extends Component {
                             ref={(input) => this.secondTextInput = input}
                             style={styles.modalInput}
                             value={this.state.receiptNumber}
+                            placeholderTextColor={colors.darkTextColor}
                             maxLength={64}
                             onChangeText={this.changeReceiptNumber}
                             placeholder={strings('scanner.receipt_number')}
@@ -341,12 +343,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent'
     },
     centerTopText: {
-        fontSize: 17,
+        fontSize: 18,
         fontWeight: 'bold',
-        color: colors.activeTabColor
+        color: colors.whiteColor
     },
     centerBottomText: {
-        fontSize: 17,
+        fontSize: 18,
         fontWeight: 'bold',
         color: colors.cancelButtonColor
     },
@@ -390,9 +392,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         minWidth: '80%',
         fontSize: 16,
+        color: colors.inactiveTabColor,
         marginTop: Platform.OS === 'ios' ? 10 : 0
     },
     headlineText: {
+        color: colors.whiteColor,
         textAlign: 'center',
         marginLeft: 10,
         marginTop: 20,
@@ -420,7 +424,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
-        color: colors.activeTabColor,
+        color: colors.backgroundColor,
         fontSize: 20,
         margin: 10,
         backgroundColor: colors.whiteColor
@@ -433,12 +437,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         height: 50,
-        backgroundColor: colors.activeTabColor,
+        backgroundColor: colors.backgroundColor,
+        borderRadius: 10,
         margin: 10,
         marginBottom: Platform.OS === 'ios' ? 10 : 30
     },
     buttonText: {
-        color: colors.backgroundColor
+        color: colors.whiteColor
     },
     signRotate: {
         position: 'absolute',

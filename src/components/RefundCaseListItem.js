@@ -61,9 +61,6 @@ export default class RefundCaseListItem extends Component {
                 style={styles.container}
                 onPress={this._handlePress}>
                 <View style={styles.contentContainer}>
-                    <View style={styles.iconContainer}>
-                        {this.refundCaseIcon}
-                    </View>
                     <View style={styles.detailContentContainer}>
                         <View style={styles.firstDetailsContainer}>
                             <CustomText style={styles.detailSmallText}>{this.state.dateCreatedFormatted}</CustomText>
@@ -84,23 +81,24 @@ export default class RefundCaseListItem extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: colors.backgroundColor,
+        backgroundColor: colors.whiteColor,
         alignSelf: 'center',
         paddingBottom: 10,
         paddingTop: 10,
-        marginLeft: 4,
-        marginRight: 4,
-        marginTop: 2,
-        marginBottom: 2,
-        elevation: 1,
-        borderWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0,
-        borderColor: Platform.OS === 'ios' ? colors.separatorColor : 0,
-        borderRadius: 2
+        marginLeft: 10,
+        marginRight: 10,
+        marginTop: 4,
+        marginBottom: 4,
+        borderWidth: 1,
+        borderRadius: 10
     },
     contentContainer: {
         justifyContent: 'space-between',
         flexDirection: 'row',
-        padding: 5,
+        paddingLeft: 20,
+        paddingRight: 5,
+        paddingBottom: 5,
+        paddingTop: 5,
         width: '100%'
     },
     detailContentContainer: {
@@ -113,9 +111,9 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: colors.slightlyDarkerColor,
-        borderColor: colors.separatorColor,
-        borderWidth: 1,
+        backgroundColor: colors.backgroundColor,
+        borderColor: colors.addButtonInnerColor,
+        borderWidth: 2,
         padding: 5,
         marginRight: 15,
         borderRadius: 40,
@@ -139,17 +137,19 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         alignSelf: 'center',
         textAlign: 'center',
+        color: colors.backgroundColor
     },
     detailText: {
         fontSize: 18,
-        color: colors.darkTextColor,
+        color: colors.backgroundColor,
         alignSelf: 'flex-start'
     },
     detailSmallText: {
         fontSize: 10,
         color: colors.darkTextColor,
         alignSelf: 'flex-start',
-        textAlign: 'center'
+        textAlign: 'center',
+        marginBottom: 5
     },
     documentationIcon: {
         height: 40,
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
         height: undefined,
         width: undefined,
         fontSize: 25,
-        color: colors.activeTabColor,
+        color: colors.backgroundColor,
         alignSelf: 'flex-end',
         marginRight: 15
     }

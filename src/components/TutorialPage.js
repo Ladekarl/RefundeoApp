@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {StyleSheet, TouchableOpacity, View, Platform} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 import CustomText from './CustomText';
@@ -76,20 +76,17 @@ const styles = StyleSheet.create({
     outerContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 60,
         borderWidth: 4,
         borderColor: colors.addButtonOuterColor,
         borderRadius: 200
     },
     logoButtonContainer: {
         justifyContent: 'center',
-        zIndex: 9999,
         alignItems: 'center',
         backgroundColor: colors.backgroundColor,
         borderColor: colors.addButtonInnerColor,
         borderWidth: 4,
         borderRadius: 200,
-        elevation: 10,
         height: 120,
         width: 120
     },
@@ -99,7 +96,6 @@ const styles = StyleSheet.create({
         fontSize: 30,
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: 20,
         color: colors.whiteColor
     },
     topTextContainer: {
@@ -123,6 +119,7 @@ const styles = StyleSheet.create({
     },
     bottomContainer: {
         paddingTop: 20,
+        paddingBottom: 20,
         flex: 2,
         justifyContent: 'center',
         alignItems: 'center',

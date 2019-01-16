@@ -544,9 +544,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginLeft: 20,
         marginRight: 20,
-        borderWidth: 4,
-        borderColor: colors.activeTabColorOpaque,
-        backgroundColor: colors.backgroundColor
+        backgroundColor: colors.logoutTextColor
     },
     rowInnerContainer: {
         flexDirection: 'row',
@@ -589,7 +587,7 @@ const styles = StyleSheet.create({
         color: colors.submitButtonColor
     },
     redText: {
-        color: colors.cancelButtonColor,
+        color: colors.backgroundColor,
         fontWeight: 'bold',
         fontSize: 15
     },

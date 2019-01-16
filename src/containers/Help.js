@@ -53,16 +53,16 @@ class Help extends Component {
     render() {
         return (
             <SafeAreaView style={styles.container}>
+                <View style={styles.topContainer}>
+                    <FastImage
+                        resizeMode={FastImage.resizeMode.contain}
+                        source={require('../../assets/help.png')}
+                        style={styles.image}
+                    />
+                </View>
                 <ScrollView
                     style={styles.container}
                     contentContainerStyle={styles.contentContainer}>
-                    <View style={styles.topContainer}>
-                        <FastImage
-                            resizeMode={FastImage.resizeMode.contain}
-                            source={require('../../assets/help.png')}
-                            style={styles.image}
-                        />
-                    </View>
                     <View style={styles.bottomContainer}>
                         <View style={styles.sectionHeaderTopContainer}>
                             <CustomText style={styles.sectionHeaderText}>{strings('help.help')}</CustomText>
@@ -126,18 +126,16 @@ const styles = StyleSheet.create({
         backgroundColor: colors.backgroundColor
     },
     contentContainer: {
-        flex: 1,
         backgroundColor: colors.backgroundColor,
         paddingBottom: 10
     },
     topContainer: {
-        flex: 1,
+        flex: 0.75,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center'
     },
     bottomContainer: {
-        flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'stretch'
     },

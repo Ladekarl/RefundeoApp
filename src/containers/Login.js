@@ -366,7 +366,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         fontWeight: 'bold',
-        color: colors.activeTabColor
+        color: colors.logoutTextColor
     },
     forgotPasswordEmailText: {
         textAlign: 'center',

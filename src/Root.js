@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {AppNavigator} from './navigation/AppNavigator';
-import {View, StyleSheet, NetInfo, Dimensions, Platform} from 'react-native';
+import {View, StyleSheet, NetInfo, Dimensions, Platform, StatusBar} from 'react-native';
 import colors from './shared/colors';
 import NetworkConnection from './shared/NetworkConnection';
 import {strings} from './shared/i18n';
 import CustomText from './components/CustomText';
 import {SafeAreaView} from 'react-navigation';
+import Provider from 'react-redux/es/components/Provider';
 
 const {width} = Dimensions.get('window');
 
@@ -37,6 +38,9 @@ export default class Root extends Component {
         const isConnected = this.state.isConnected;
         return (
             <View style={styles.container}>
+                <StatusBar
+                    backgroundColor={colors.backgroundColor}
+                    barStyle='light-content'/>
                 <View style={[styles.content, {marginTop: isConnected ? 0 : 30}]}>
                     <AppNavigator/>
                 </View>

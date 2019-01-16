@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
         height: 50,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        backgroundColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor,
+        backgroundColor:  colors.backgroundColor,
         marginTop: -10,
         elevation: 1
     },
@@ -185,37 +185,37 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flex: 1,
         borderBottomWidth: 2,
-        borderBottomColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor,
+        borderBottomColor: colors.backgroundColor,
     },
     activeButton: {
         borderBottomWidth: 2,
-        borderBottomColor: Platform.OS === 'ios' ? colors.whiteColor : colors.activeTabColor,
+        borderBottomColor: colors.activeTabColor,
     },
     headerButtonText: {
         fontSize: 11,
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.darkTextColor,
+        color: colors.inactiveTabColor,
         fontWeight: 'bold'
     },
     activeButtonText: {
         fontSize: 12,
-        color: Platform.OS === 'ios' ? colors.whiteColor : colors.activeTabColor,
+        color: colors.whiteColor,
         fontWeight: 'bold'
     },
     flatListContainer: {
-        backgroundColor: colors.slightlyDarkerColor,
+        backgroundColor: colors.backgroundColor,
     },
     scrollContainer: {
-        backgroundColor: colors.slightlyDarkerColor,
+        backgroundColor: colors.backgroundColor,
         justifyContent: 'flex-start',
         alignItems: 'center',
     },
     emptyContainer: {
         flex: 1,
-        backgroundColor: colors.slightlyDarkerColor,
+        backgroundColor: colors.backgroundColor,
     },
     nonEmptyContainer: {
         paddingTop: 4,
-        backgroundColor: colors.slightlyDarkerColor
+        backgroundColor: colors.backgroundColor
     },
     outerContainer: {
         borderColor: colors.addButtonOuterColor,
@@ -231,11 +231,12 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: colors.slightlyDarkerColor
+        backgroundColor: colors.backgroundColor
     },
     emptyText: {
         alignSelf: 'center',
-        color: colors.activeTabColor,
+        fontWeight: 'bold',
+        color: colors.whiteColor,
         fontSize: 20
     }
 });

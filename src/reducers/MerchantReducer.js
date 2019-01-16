@@ -14,7 +14,6 @@ export type Merchant = {
     logo: string,
     banner: string,
     description: string,
-    openingHours: string,
     latitude: number,
     longitude: number,
     distance: number,

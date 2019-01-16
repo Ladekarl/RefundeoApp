@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Platform, StatusBar} from 'react-native';
 import {Provider} from 'react-redux';
 import {configureStore} from './navigation/AppNavigator';
 import Orientation from 'react-native-orientation';
@@ -7,18 +6,23 @@ import Root from './Root';
 
 const store = configureStore();
 
-if((process.env.NODE_ENV || '').toLowerCase() === 'production'){
+if ((process.env.NODE_ENV || '').toLowerCase() === 'production') {
     // disable console. log in production
 // eslint-disable-next-line no-console
-    console.log = function () {};
+    console.log = function () {
+    };
 // eslint-disable-next-line no-console
-    console.info = function () {};
+    console.info = function () {
+    };
 // eslint-disable-next-line no-console
-    console.warn = function () {};
+    console.warn = function () {
+    };
 // eslint-disable-next-line no-console
-    console.error = function () {};
+    console.error = function () {
+    };
 // eslint-disable-next-line no-console
-    console.debug = function () {};
+    console.debug = function () {
+    };
 }
 
 export default class App extends Component {
@@ -34,9 +38,6 @@ export default class App extends Component {
     function;
 
     render() {
-        if (Platform.OS === 'ios') {
-            StatusBar.setBarStyle('light-content', true);
-        }
         return (
             <Provider store={store}>
                 <Root/>

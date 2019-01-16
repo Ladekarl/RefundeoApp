@@ -7,6 +7,7 @@ import colors from '../shared/colors';
 import PropTypes from 'prop-types';
 import {strings} from '../shared/i18n';
 import CustomText from '../components/CustomText';
+import Icon from 'react-native-fa-icons';
 
 class QRCode extends Component {
 
@@ -25,10 +26,15 @@ class QRCode extends Component {
                     </View>
                 );
             } else {
-                return (
+                if (tintColor === colors.activeTabColor)
+                    return (
+                        <View style={styles.outerIconContainer}>
+                            <CustomText
+                                style={[styles.tabBarIconAndroid, {color: tintColor}]}>{strings('qr_code.id')}</CustomText>
+                        </View>);
+                else return (
                     <CustomText
-                        style={[styles.tabBarIconAndroid, {color: tintColor}]}>{strings('qr_code.id')}</CustomText>
-                );
+                        style={[styles.tabBarIconAndroid, {color: tintColor}]}>{strings('qr_code.id')}</CustomText>);
             }
         }
     };
@@ -59,6 +65,14 @@ const styles = StyleSheet.create({
         backgroundColor: colors.backgroundColor,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    outerIconContainer: {
+        borderColor: colors.addButtonOuterColor,
+        borderWidth: 4,
+        backgroundColor: colors.addButtonInnerColor,
+        borderRadius: 50,
+        paddingLeft: 5,
+        paddingRight: 5
     },
     topContainer: {
         flex: 1,
