@@ -3,6 +3,7 @@ import ThemeManager from 'react-native-color-theme';
 export default new ThemeManager({
     refundeoTheme: {
         backgroundColor: '#000125',
+        backgroundColorOpaque: 'rgba(0,1,37, 0.7)',
         slightlyDarkerColor: '#f0eded',
         inactiveTabColor: '#b5b5b5',
         activeTabColor: '#1985FB',

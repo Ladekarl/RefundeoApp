@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     centerText: {
-        color: colors.activeTabColor,
+        color: colors.whiteColor,
         textAlign: 'center',
         fontSize: 20
     }

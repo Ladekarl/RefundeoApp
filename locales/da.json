@@ -205,7 +205,8 @@
     "tag_children": "Børn",
     "tag_books": "Bøger",
     "tag_menswear": "Herretøj",
-    "tag_womenswear": "Dametøj"
+    "tag_womenswear": "Dametøj",
+    "filter_on": "FILTER SLÅET TIL"
   },
   "tutorial": {
     "welcome_title": "Velkommen til Refundeo",

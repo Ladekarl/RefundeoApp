@@ -56,6 +56,40 @@ class StoresScreen extends Component {
             });
     }
 
+    filterMerchants = (merchants, distance, minRefund, onlyOpen, tag) => {
+        let filteredMerchants = [];
+        const currentDate = new Date();
+        const currentHours = currentDate.getHours();
+        const currentMinutes = currentDate.getMinutes();
+        const currentDay = currentDate.getDay();
+        merchants.forEach((merchant) => {
+            const dist = merchant.distance;
+            if ((dist <= distance || distance === 10000) && (minRefund === 0 || merchant.refundPercentage >= minRefund) && (!tag.value || merchant.tags.findIndex(t => t.value === tag.value) > -1)) {
+                if (onlyOpen) {
+                    const openingHours = merchant.openingHours.find(o => o.day === currentDay);
+                    if (openingHours && openingHours.open && openingHours.close) {
+                        const openStrSplit = openingHours.open.split(':');
+                        const closeStrSplit = openingHours.close.split(':');
+                        const openHours = parseInt(openStrSplit[0]);
+                        const openMinutes = parseInt(openStrSplit[1]);
+                        const closeHours = parseInt(closeStrSplit[0]);
+                        const closeMinutes = parseInt(closeStrSplit[1]);
+
+                        const isOpenHours = currentHours > openHours || (currentHours === openHours && currentMinutes >= openMinutes);
+                        const isCloseHours = currentHours < closeHours || (currentHours === closeHours && currentMinutes <= closeMinutes);
+
+                        if (isOpenHours && isCloseHours) {
+                            filteredMerchants.push(merchant);
+                        }
+                    }
+                } else {
+                    filteredMerchants.push(merchant);
+                }
+            }
+        });
+        return filteredMerchants;
+    };
+
     setLocation = (location) => {
         this.initRegion = {
             latitudeDelta: 0.1,
@@ -110,12 +144,30 @@ class StoresScreen extends Component {
     };
 
     render() {
-        const {navigation, merchants, fetchingMerchants, filterDistanceSliderValue, filterRefundSliderValue, filterOnlyOpenValue, filterTag} = this.props.state;
+        const {
+            navigation,
+            merchants,
+            fetchingMerchants,
+            filterDistanceSliderValue,
+            filterRefundSliderValue,
+            filterOnlyOpenValue,
+            filterTag,
+            isFilterActive
+        } = this.props.state;
 
         let clusteredMapData = [];
 
+        let filteredMerchants = [];
+
         if (merchants) {
-            clusteredMapData = this.getClusteredMapData(merchants);
+            filteredMerchants = this.filterMerchants(
+                merchants,
+                filterDistanceSliderValue,
+                filterRefundSliderValue,
+                filterOnlyOpenValue,
+                filterTag
+            );
+            clusteredMapData = this.getClusteredMapData(filteredMerchants);
         }
 
         return (
@@ -144,6 +196,11 @@ class StoresScreen extends Component {
                     tag={filterTag}
                     fetching={fetchingMerchants}
                 />
+                }
+                {isFilterActive &&
+                <View style={styles.filterActiveContainer}>
+                    <CustomText style={styles.filterActiveText}>{strings('stores.filter_on')}</CustomText>
+                </View>
                 }
             </View>
         );
@@ -203,6 +260,21 @@ const styles = StyleSheet.create({
         padding: 4,
         backgroundColor: colors.addButtonInnerColor,
         borderRadius: 20
+    },
+    filterActiveContainer: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        paddingTop: 2,
+        paddingBottom: 3,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.backgroundColorOpaque
+    },
+    filterActiveText: {
+        fontSize: 11,
+        color: colors.whiteColor
     }
 });
 

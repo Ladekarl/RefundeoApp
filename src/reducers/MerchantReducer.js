@@ -38,7 +38,8 @@ type MerchantReducer = {
     filterRefundSliderValue: number,
     filterOnlyOpenValue: boolean,
     filterTag: Tag,
-    tags: Array<Tag>
+    tags: Array<Tag>,
+    isFilterActive: boolean
 }
 
 type Tag = {
@@ -100,7 +101,13 @@ export default function merchantReducer(state = initialState, action = {}) {
                 filterDistanceSliderValue: action.distanceSliderValue,
                 filterRefundSliderValue: action.refundSliderValue,
                 filterOnlyOpenValue: action.onlyOpenValue,
-                filterTag: action.tagValue
+                filterTag: action.tagValue,
+                isFilterActive: isFilterActive(
+                    action.distanceSliderValue,
+                    action.refundSliderValue,
+                    action.onlyOpenValue,
+                    action.tagValue
+                )
             };
             break;
         }
@@ -123,3 +130,10 @@ export default function merchantReducer(state = initialState, action = {}) {
     }
     return nextState || state;
 }
+
+const isFilterActive = (filterDistanceSliderValue, filterRefundSliderValue, filterOnlyOpenValue, filterTag) => {
+    return initialState.filterDistanceSliderValue !== filterDistanceSliderValue ||
+        initialState.filterRefundSliderValue !== filterRefundSliderValue ||
+        initialState.filterOnlyOpenValue !== filterOnlyOpenValue ||
+        JSON.stringify(initialState.filterTag) != JSON.stringify(filterTag);
+};

@@ -207,7 +207,8 @@
     "tag_children": "Children",
     "tag_books": "Books and Stationary",
     "tag_menswear": "Menswear",
-    "tag_womenswear": "Womenswear"
+    "tag_womenswear": "Womenswear",
+    "filter_on": "FILTER IS ON"
   },
   "tutorial": {
     "welcome_title": "Welcome to Refundeo",

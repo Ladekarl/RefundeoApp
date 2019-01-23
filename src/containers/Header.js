@@ -11,7 +11,6 @@ import {hasDrawer} from '../navigation/NavigationConfiguration';
 import ModalScreen from '../components/Modal';
 import {strings} from '../shared/i18n';
 import StoreFilter from '../components/StoreFilter';
-import CustomText from '../components/CustomText';
 import FastImage from 'react-native-fast-image';
 
 class HeaderScreen extends Component {
@@ -52,12 +51,10 @@ class HeaderScreen extends Component {
     };
 
     render() {
-        const {navigation, refundCases, user} = this.props.state;
+        const {navigation, refundCases, user, isFilterActive} = this.props.state;
         const isMerchant = user.isMerchant;
 
-        // TODO display filter
-        // let displayFilter = navigation.currentRoute === 'Stores' && !navigation.isMap;
-        let displayFilter = false;
+        let displayFilter = navigation.currentRoute === 'Stores';
         let isOverview = navigation.currentRoute === 'Overview';
         let displayHelp = !displayFilter && !isMerchant;
         let isRefundCaseView = isOverview && refundCases && refundCases.length > 0;
@@ -106,8 +103,10 @@ class HeaderScreen extends Component {
                     }
                     {displayFilter &&
                     <TouchableOpacity onPress={this.onFilterPress}
-                                      style={hasDrawer ? styles.headerButton : styles.noDrawerHeader}>
-                        <Icon name='filter' style={hasDrawer ? styles.drawerIcon : styles.noDrawerIcon}/>
+                                      style={hasDrawer ? styles.headerButton :
+                                          isFilterActive ? styles.filterActiveContainer : styles.noDrawerHeader}>
+                        <Icon name='filter' style={hasDrawer ? styles.drawerIcon :
+                            isFilterActive ? styles.filterActiveIcon : styles.noDrawerIcon}/>
                     </TouchableOpacity>
                     }
                     {displayHelp &&
@@ -195,6 +194,22 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    filterActiveContainer: {
+        height: 35,
+        width: 35,
+        borderRadius: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.activeTabColor
+    },
+    filterActiveIcon: {
+        fontSize: Platform.OS === 'ios' ? 20 : 15,
+        height: undefined,
+        width: undefined,
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: colors.whiteColor
     },
     drawerIcon: {
         fontSize: Platform.OS === 'ios' ? 20 : 15,

@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import {strings} from '../shared/i18n';
 import CustomText from '../components/CustomText';
 import FastImage from 'react-native-fast-image';
+import PlaceHolderFastImage from '../components/PlaceHolderFastImage';
 
 class StoreProfile extends Component {
 
@@ -37,21 +38,17 @@ class StoreProfile extends Component {
         return (
             <View style={styles.container}>
                 <ScrollView styles={styles.scrollContainer} contentContainerStyle={styles.scrollContent}>
-                    {selectedMerchant.banner &&
-                    <FastImage
+                    <PlaceHolderFastImage
                         style={styles.bannerImage}
+                        placeholder={
+                            <FastImage
+                                resizeMode={FastImage.resizeMode.contain}
+                                style={styles.placeHolderImage}
+                                source={require('../../assets/refundeo_banner_medium.png')}/>
+                        }
                         source={{uri: selectedMerchant.banner}}
                         borderRadius={2}>
-                        <View style={styles.flexIconContainer}>
-                            <View style={styles.iconContainer}>
-                                {selectedMerchant.logo &&
-                                <FastImage style={styles.logoImage} resizeMode={FastImage.resizeMode.contain}
-                                           source={{uri: selectedMerchant.logo}}/>
-                                }
-                            </View>
-                        </View>
-                    </FastImage>
-                    }
+                    </PlaceHolderFastImage>
                     <View style={styles.bannerTextBarContainer}>
                         <View style={styles.bannerColumnContainer}>
                             <CustomText style={styles.leftText}>{strings('stores.opening_hours')}</CustomText>
@@ -71,21 +68,23 @@ class StoreProfile extends Component {
                         </View>
                     </View>
                     <View style={styles.descriptionContainer}>
-                        <CustomText>
+                        <CustomText style={styles.descriptionText}>
                             {selectedMerchant.description}
                         </CustomText>
                     </View>
-                    <View style={styles.bottomContainer}>
-                        <CustomText style={styles.bottomTitleText}>{strings('stores.address')}</CustomText>
-                        <CustomText style={styles.bottomText}>
-                            {`${selectedMerchant.addressStreetName} ${selectedMerchant.addressStreetNumber}, ${selectedMerchant.addressPostalCode} ${selectedMerchant.addressCity}, ${selectedMerchant.addressCountry}`}
-                        </CustomText>
-                    </View>
-                    <View style={styles.bottomContainer}>
-                        <CustomText style={styles.bottomTitleText}>{strings('stores.vat_number')}</CustomText>
-                        <CustomText style={styles.bottomText}>
-                            {selectedMerchant.vatNumber}
-                        </CustomText>
+                    <View style={styles.bottomContentContainer}>
+                        <View style={styles.bottomContainer}>
+                            <CustomText style={styles.bottomTitleText}>{strings('stores.address')}</CustomText>
+                            <CustomText style={styles.bottomText}>
+                                {`${selectedMerchant.addressStreetName} ${selectedMerchant.addressStreetNumber}, ${selectedMerchant.addressPostalCode} ${selectedMerchant.addressCity}, ${selectedMerchant.addressCountry}`}
+                            </CustomText>
+                        </View>
+                        <View style={styles.bottomContainer}>
+                            <CustomText style={styles.bottomTitleText}>{strings('stores.vat_number')}</CustomText>
+                            <CustomText style={styles.bottomText}>
+                                {selectedMerchant.vatNumber}
+                            </CustomText>
+                        </View>
                     </View>
                 </ScrollView>
             </View>
@@ -108,35 +107,17 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 180
     },
-    flexIconContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    iconContainer: {
-        height: 80,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: colors.backgroundColor,
-        borderRadius: 40,
-        padding: 6,
-        elevation: 2,
-        borderWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0,
-        borderColor: colors.separatorColor
-    },
-    logoImage: {
-        height: 60,
-        width: 60,
-        margin: 5,
-        justifyContent: 'center',
-        alignItems: 'center'
+    placeHolderImage: {
+        width: '90%',
+        height: 160,
+        alignSelf: 'center'
     },
     bannerTextBarContainer: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
         width: '100%',
-        backgroundColor: colors.activeTabColor,
+        backgroundColor: colors.whiteColor,
         padding: 10
     },
     bannerColumnContainer: {
@@ -145,8 +126,11 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start'
     },
     leftText: {
-        margin: 5,
-        color: colors.separatorColor
+        marginLeft: 10,
+        marginTop: 5,
+        marginBottom: 5,
+        marginRight: 5,
+        color: colors.darkTextColor
     },
     contentText: {
         margin: 5,
@@ -158,10 +142,16 @@ const styles = StyleSheet.create({
         paddingRight: 20,
         backgroundColor: colors.backgroundColor
     },
+    bottomContentContainer: {
+        margin: 15,
+        borderWidth: 2,
+        borderColor: colors.addButtonOuterColor,
+        backgroundColor: colors.addButtonInnerColor,
+        padding: 2,
+        borderRadius: 4
+    },
     bottomContainer: {
-        paddingTop: 15,
-        paddingLeft: 20,
-        paddingRight: 20,
+        padding: 10,
         backgroundColor: colors.backgroundColor
     },
     bottomTitleText: {
@@ -169,9 +159,12 @@ const styles = StyleSheet.create({
         fontSize: 15
     },
     bottomText: {
-        color: colors.darkTextColor,
+        color: colors.whiteColor,
         marginTop: 10,
         fontSize: 15
+    },
+    descriptionText: {
+        color: colors.whiteColor
     }
 });
 
