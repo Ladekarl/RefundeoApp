@@ -167,7 +167,10 @@ export default class StoreFilter extends React.PureComponent {
                         <CustomText style={styles.filterSwitchText}>{strings('stores.open_stores_filter')}</CustomText>
                         <Switch
                             value={this.state.filterOnlyOpenValue}
-                            tintColor={Platform.OS === 'ios' ? colors.activeTabColor : undefined}
+                            tintColor={Platform.OS === 'ios' ? colors.separatorColor : colors.darkTextColor}
+                            thumbColor={colors.activeTabColor}
+                            ios_backgroundColor={colors.activeTabColor}
+                            trackColor={colors.whiteColor}
                             thumbTintColor={colors.activeTabColor}
                             onValueChange={this.onlyOpenValueChange}
                         />
@@ -189,6 +192,7 @@ export default class StoreFilter extends React.PureComponent {
                             step={100}
                             thumbTintColor={colors.activeTabColor}
                             minimumTrackTintColor={colors.activeTabColor}
+                            maximumTrackTintColor={colors.whiteColor}
                             style={styles.filterSlider}
                             selectedStyle={styles.filterTrackStyle}
                             onValueChange={this.distanceSliderValuesChange}
@@ -210,6 +214,7 @@ export default class StoreFilter extends React.PureComponent {
                             step={1}
                             thumbTintColor={colors.activeTabColor}
                             minimumTrackTintColor={colors.activeTabColor}
+                            maximumTrackTintColor={colors.whiteColor}
                             style={styles.filterSlider}
                             selectedStyle={styles.filterTrackStyle}
                             onValueChange={this.refundSliderValuesChange}
@@ -254,7 +259,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     filterTitle: {
-        color: colors.darkTextColor
+        color: colors.separatorColor
     },
     filterSliderContainer: {
         flexDirection: 'row',
@@ -280,7 +285,8 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginBottom: 5,
         marginTop: 5,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        color: colors.whiteColor
     },
     filterTrackStyle: {
         backgroundColor: colors.activeTabColor,
@@ -291,11 +297,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginBottom: 10,
         marginRight: 10,
-        color: colors.darkTextColor
+        color: colors.whiteColor
     },
     filterSwitchText: {
         fontWeight: 'bold',
-        color: colors.darkTextColor,
+        color: colors.separatorColor,
         marginBottom: 5,
         marginLeft: 20,
         marginTop: 5,
@@ -321,12 +327,12 @@ const styles = StyleSheet.create({
         padding: 2,
         marginTop: 10,
         minHeight: 40,
-        borderColor: colors.activeTabColor,
+        borderColor: colors.whiteColor,
         borderRadius: 2,
         borderWidth: 1,
         marginLeft: 1,
         marginRight: 1,
-        backgroundColor: colors.activeTabColor,
+        backgroundColor: colors.whiteColor,
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -334,12 +340,12 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         alignSelf: 'center',
         fontSize: 10,
-        color: colors.activeTabColor
+        color: colors.whiteColor
     },
     selectedFilterTagText: {
         textAlign: 'center',
         alignSelf: 'center',
         fontSize: 10,
-        color: colors.whiteColor
+        color: colors.backgroundColor
     }
 });
