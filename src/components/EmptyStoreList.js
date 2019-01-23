@@ -23,8 +23,10 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     centerText: {
-        color: colors.whiteColor,
+        alignSelf: 'center',
+        fontWeight: 'bold',
         textAlign: 'center',
+        color: colors.whiteColor,
         fontSize: 20
     }
 });

@@ -185,7 +185,7 @@ class UploadDocumentation extends Component {
                 </RNCamera>
                 {takingPicture &&
                 <View style={styles.loadingContainer}>
-                    <ActivityIndicator size='large' color={colors.activeTabColor} style={styles.activityIndicator}/>
+                    <ActivityIndicator size='large' color={colors.activeTabColor}/>
                 </View>
                 }
                 <ModalScreen
@@ -258,7 +258,6 @@ const styles = StyleSheet.create({
         borderRadius: 40,
         padding: 20,
         marginBottom: 30,
-        elevation: 2,
         borderColor: colors.separatorColor
     },
     leftContainer: {
@@ -276,7 +275,7 @@ const styles = StyleSheet.create({
     },
     pictureIcon: {
         fontSize: 25,
-        color: colors.backgroundColor
+        color: colors.whiteColor
     },
     hiddenButton: {
         display: 'none'
@@ -291,23 +290,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: colors.transparent
     },
-    activityIndicator: {
-        elevation: 10,
-        backgroundColor: colors.transparent
-    },
     skipButton: {
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: colors.backgroundColor,
-        borderWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0,
+        backgroundColor: colors.whiteColor,
+        borderColor: colors.activeTabColor,
+        borderWidth: 2,
         borderRadius: 5,
         padding: 10,
-        marginBottom: 30,
-        elevation: 2,
-        borderColor: colors.activeTabColor
+        marginBottom: 30
     },
     skipText: {
-        fontSize: 18,
+        fontSize: 15,
         color: colors.activeTabColor,
         textAlign: 'center'
     },

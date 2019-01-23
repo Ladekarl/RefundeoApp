@@ -425,6 +425,7 @@ class SettingsScreen extends Component {
                                 autoFocus={true}
                                 maxLength={64}
                                 placeholder={this.state.modalPlaceholder}
+                                placeholderTextColor={colors.darkTextColor}
                                 selectionColor={colors.inactiveTabColor}
                                 underlineColorAndroid={colors.activeTabColor}
                                 tintColor={colors.activeTabColor}
@@ -445,6 +446,7 @@ class SettingsScreen extends Component {
                                 maxLength={64}
                                 onChangeText={this.changeNewPasswordValue}
                                 placeholder={strings('settings.change_password_new_password_placeholder')}
+                                placeholderTextColor={colors.darkTextColor}
                                 selectionColor={colors.inactiveTabColor}
                                 secureTextEntry={true}
                                 autoCapitalize={'none'}
@@ -465,6 +467,7 @@ class SettingsScreen extends Component {
                                 maxLength={64}
                                 onChangeText={this.changeConfPasswordValue}
                                 placeholder={strings('settings.change_password_conf_password_placeholder')}
+                                placeholderTextColor={colors.darkTextColor}
                                 selectionColor={colors.inactiveTabColor}
                                 secureTextEntry={true}
                                 keyboardType={this.state.modalInputType}

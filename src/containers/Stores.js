@@ -189,7 +189,7 @@ class StoresScreen extends Component {
                 {!navigation.isMap && merchants &&
                 <StoresList
                     actions={this.props.actions}
-                    merchants={merchants}
+                    merchants={filteredMerchants}
                     distance={filterDistanceSliderValue}
                     minRefund={filterRefundSliderValue}
                     onlyOpen={filterOnlyOpenValue}

@@ -195,7 +195,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         padding: 18,
         marginBottom: 10,
-        elevation: 5,
         backgroundColor: colors.facebookColor
     },
     signUpButton: {
@@ -204,7 +203,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 18,
-        elevation: 5,
         marginTop: 10,
         backgroundColor: colors.greenButtonColor
     },

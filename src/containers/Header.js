@@ -162,7 +162,6 @@ const styles = StyleSheet.create({
         paddingRight: 25,
         paddingTop: Platform.OS === 'ios' ? 0 : 11,
         paddingBottom: Platform.OS === 'ios' ? 9 : 11,
-        elevation: 1,
         zIndex: 9999
     },
     safeContainer: {
@@ -183,7 +182,6 @@ const styles = StyleSheet.create({
         height: 35,
         width: 35,
         borderRadius: 100,
-        elevation: 10,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: colors.whiteColor

@@ -96,7 +96,6 @@ const styles = StyleSheet.create({
         marginRight: 10,
         marginLeft: 20,
         borderRadius: 100,
-        elevation: 10,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor

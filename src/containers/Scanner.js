@@ -382,11 +382,10 @@ const styles = StyleSheet.create({
         bottom: 0,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'transparent'
+        backgroundColor: colors.transparent
     },
     activityIndicator: {
-        elevation: 10,
-        backgroundColor: 'transparent'
+        backgroundColor: colors.transparent
     },
     modalInput: {
         textAlign: 'center',

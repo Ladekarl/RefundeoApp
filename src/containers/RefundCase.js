@@ -325,7 +325,11 @@ class RefundCase extends Component {
                     }
                     {refundCase.isRequested &&
                     <View style={styles.requestedContainer}>
-                        {refundCaseIcon}
+                        <View style={styles.topContainer}>
+                            <View style={styles.outerContainer}>
+                                {refundCaseIcon}
+                            </View>
+                        </View>
                         {refundCaseText}
                     </View>
                     }
@@ -370,7 +374,7 @@ class RefundCase extends Component {
                     </ModalScreen>
                     {(fetchingRequestRefund || fetchingDocumentation || fetchingSendEmail) &&
                     <View style={styles.loadingContainer}>
-                        <ActivityIndicator size='large' color={colors.activeTabColor} style={styles.activityIndicator}/>
+                        <ActivityIndicator size='large' color={colors.activeTabColor}/>
                     </View>
                     }
                 </ScrollView>
@@ -525,26 +529,29 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     approvedText: {
-        color: colors.greenButtonColor,
-        fontSize: 20
+        color: colors.whiteColor,
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
+    rejectedText: {
+        color: colors.whiteColor,
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
+    requestedText: {
+        color: colors.whiteColor,
+        fontSize: 20,
+        fontWeight: 'bold'
     },
     approvedIcon: {
         color: colors.greenButtonColor,
         fontSize: 45,
         marginBottom: 10,
     },
-    rejectedText: {
-        color: colors.cancelButtonColor,
-        fontSize: 20
-    },
     rejectedIcon: {
         color: colors.cancelButtonColor,
         fontSize: 45,
         marginBottom: 10
-    },
-    requestedText: {
-        color: colors.activeTabColor,
-        fontSize: 20
     },
     requestedIcon: {
         color: colors.activeTabColor,
@@ -572,15 +579,27 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: colors.transparent
     },
-    activityIndicator: {
-        elevation: 10,
-        backgroundColor: colors.transparent
-    },
     sendText: {
         color: colors.backgroundColor,
         marginTop: 5,
         fontSize: 12,
         textAlign: 'center'
+    },
+    topContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 15
+    },
+    outerContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 4,
+        paddingTop: 5,
+        borderColor: colors.addButtonOuterColor,
+        backgroundColor: colors.whiteColor,
+        borderRadius: 200,
+        height: 120,
+        width: 120
     }
 });
 

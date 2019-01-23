@@ -194,7 +194,7 @@
     "filter": "Filter",
     "refund": "Min. refund",
     "no_refund": "No refund available",
-    "empty": "No stores available.\n\nPlease adjust filter settings.",
+    "empty": "No stores available\n\nPlease adjust filter settings",
     "vat_number": "Vat no.",
     "open_hours_filter": "Open now",
     "open_stores_filter": "Only show open stores",

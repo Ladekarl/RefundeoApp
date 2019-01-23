@@ -135,7 +135,7 @@ export default class ModalScreen extends PureComponent {
                 </KeyboardAvoidingView>
                 {fetching &&
                 <View style={styles.loadingContainer}>
-                    <ActivityIndicator size='large' color={colors.activeTabColor} style={styles.activityIndicator}/>
+                    <ActivityIndicator size='large' color={colors.activeTabColor}/>
                 </View>
                 }
             </Modal>
@@ -161,7 +161,6 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         alignItems: 'center',
         justifyContent: 'center',
-        elevation: 5,
         backgroundColor: colors.backgroundColor
     },
     safeContainer: {
@@ -250,8 +249,5 @@ const styles = StyleSheet.create({
         bottom: 0,
         alignItems: 'center',
         justifyContent: 'center'
-    },
-    activityIndicator: {
-        elevation: 10
     }
 });

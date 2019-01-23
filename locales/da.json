@@ -192,7 +192,7 @@
     "filter": "Filter",
     "refund": "Min. refusion",
     "no_refund": "Ingen refusion mulig",
-    "empty": "Ingen butikker tilgængelige.\n\nJustér filterindstillingerne.",
+    "empty": "Ingen butikker tilgængelige\n\nJustér filterindstillingerne",
     "vat_number": "Vat no.",
     "open_hours_filter": "Åbent",
     "open_stores_filter": "Vis kun åbne butikker",

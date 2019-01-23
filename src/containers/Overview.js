@@ -178,7 +178,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         backgroundColor:  colors.backgroundColor,
         marginTop: -10,
-        elevation: 1
     },
     headerButton: {
         alignItems: 'center',
@@ -237,7 +236,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontWeight: 'bold',
         color: colors.whiteColor,
-        fontSize: 20
+        fontSize: 20,
+        textAlign: 'center'
     }
 });
 

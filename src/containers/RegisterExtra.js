@@ -109,7 +109,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 18,
-        elevation: 5,
         backgroundColor: colors.submitButtonColor
     },
     settingsContainer: {

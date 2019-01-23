@@ -234,7 +234,7 @@ class LoginScreen extends Component {
                     </ModalScreen>
                     {fetching &&
                     <View style={styles.loadingContainer}>
-                        <ActivityIndicator size='large' color={colors.activeTabColor} style={styles.activityIndicator}/>
+                        <ActivityIndicator size='large' color={colors.activeTabColor}/>
                     </View>
                     }
                 </View>
@@ -273,7 +273,6 @@ const styles = StyleSheet.create({
     elevatedInputContainer: {
         backgroundColor: colors.whiteColor,
         borderRadius: 10,
-        elevation: 5,
         paddingLeft: 10,
         paddingRight: 10,
         paddingTop: 3,
@@ -383,7 +382,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 18,
-        elevation: 5,
         backgroundColor: colors.activeTabColor
     },
     buttonText: {
@@ -400,9 +398,6 @@ const styles = StyleSheet.create({
         marginRight: 5,
         color: colors.darkTextColor
     },
-    activityIndicator: {
-        elevation: 10
-    }
 });
 
 const mapStateToProps = state => {

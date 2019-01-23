@@ -18,7 +18,7 @@ const HomeTab = createBottomTabNavigator({
 }, {
     tabBarOptions: {
         activeTintColor: colors.activeTabColor,
-        inactiveTintColor: colors.inactiveTabColor,
+        inactiveTintColor: colors.whiteColor,
         lazy: false,
         tabStyle: {
             backgroundColor: colors.backgroundColor,
@@ -29,7 +29,6 @@ const HomeTab = createBottomTabNavigator({
         style: {
             height: 50,
             backgroundColor: colors.backgroundColor,
-            elevation: 0,
             paddingTop: Platform.OS === 'ios' ? 0 : 4
         },
         labelStyle: {
