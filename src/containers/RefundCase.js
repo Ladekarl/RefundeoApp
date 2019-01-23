@@ -3,9 +3,7 @@ import {
     View,
     StyleSheet,
     ScrollView,
-    ImageBackground,
     Image,
-    Platform,
     TouchableOpacity,
     RefreshControl,
     ActivityIndicator
@@ -22,7 +20,9 @@ import Validation from '../shared/Validation';
 import LocalStorage from '../storage';
 import CustomText from '../components/CustomText';
 import CustomTextInput from '../components/CustomTextInput';
-import FastImage from 'react-native-fast-image'
+import FastImage from 'react-native-fast-image';
+import PlaceHolderFastImage from '../components/PlaceHolderFastImage';
+import {SafeAreaView} from 'react-navigation';
 
 class RefundCase extends Component {
 
@@ -108,7 +108,8 @@ class RefundCase extends Component {
             return <Image style={styles.uploadImage}
                           source={{uri: 'data:image/png;base64,' + this.state.tempReceiptImage}}/>;
         }
-        return <FastImage style={styles.uploadImage}
+        return <FastImage style={styles.receiptImage}
+                          resizeMode={FastImage.resizeMode.contain}
                           source={require('../../assets/receipt.png')}/>;
     };
 
@@ -203,11 +204,9 @@ class RefundCase extends Component {
 
         if (isAccepted) {
             return <CustomText style={styles.approvedText}>{strings('refund_case.approved')}</CustomText>;
-        }
-        else if (isRejected) {
+        } else if (isRejected) {
             return <CustomText style={styles.rejectedText}>{strings('refund_case.denied')}</CustomText>;
-        }
-        else if (isRequested) {
+        } else if (isRequested) {
             return <CustomText
                 style={styles.requestedText}>{strings('refund_case.pending_approval')}</CustomText>;
         }
@@ -220,11 +219,9 @@ class RefundCase extends Component {
 
         if (isAccepted) {
             return <Icon style={styles.approvedIcon} name='check-circle'/>;
-        }
-        else if (isRejected) {
+        } else if (isRejected) {
             return <Icon style={styles.rejectedIcon} name='times-circle'/>;
-        }
-        else if (isRequested) {
+        } else if (isRequested) {
             return <Icon style={styles.requestedIcon} name='thumbs-up'/>;
         }
     };
@@ -252,131 +249,132 @@ class RefundCase extends Component {
         const refundCaseText = this.getRefundCaseText(refundCase);
         const refundCaseIcon = this.getRefundCaseIcon(refundCase);
         return (
-            <ScrollView
-                style={styles.container}
-                contentContainerStyle={styles.container}
-                refreshControl={
-                    <RefreshControl
-                        tintColor={colors.activeTabColor}
-                        refreshing={fetchingRefundCases}
-                        onRefresh={() => actions.getSelectedRefundCase(refundCase.id)}
-                    />
-                }>
-                {merchant.banner &&
-                <FastImage
-                    style={styles.bannerImage}
-                    source={{uri: merchant.banner}}
-                    borderRadius={2}>
-                    <View style={styles.flexIconContainer}>
-                        <View style={styles.iconContainer}>
-                            {merchant.logo &&
-                            <FastImage style={styles.logoImage} resizeMode='contain'
-                                       source={{uri: merchant.logo}}/>
-                            }
+            <SafeAreaView style={styles.container} forceInset={{'bottom': 'always'}}>
+                <ScrollView
+                    style={styles.container}
+                    contentContainerStyle={styles.container}
+                    refreshControl={
+                        <RefreshControl
+                            tintColor={colors.activeTabColor}
+                            refreshing={fetchingRefundCases}
+                            onRefresh={() => actions.getSelectedRefundCase(refundCase.id)}
+                        />
+                    }>
+                    <PlaceHolderFastImage
+                        style={styles.bannerImage}
+                        placeholder={
+                            <FastImage
+                                resizeMode={FastImage.resizeMode.contain}
+                                style={styles.placeHolderImage}
+                                source={require('../../assets/refundeo_banner_medium.png')}/>
+                        }
+                        source={{uri: merchant.banner}}
+                        borderRadius={2}>
+                    </PlaceHolderFastImage>
+                    <View style={styles.bannerTextBarContainer}>
+                        <View style={styles.bannerContentContainer}>
+                            <View style={styles.bannerColumnContainer}>
+                                <CustomText style={styles.leftText}>{strings('refund_case.amount')}</CustomText>
+                                <CustomText style={styles.leftText}>{strings('refund_case.refund_amount')}</CustomText>
+                                <CustomText style={styles.leftText}>{strings('refund_case.receipt_number')}</CustomText>
+                            </View>
+                            <View style={styles.bannerColumnContainer}>
+                                <CustomText
+                                    style={styles.contentText}>{refundCase.merchant.currency + ' ' + refundCase.amount.toFixed(2).replace(/[.,]00$/, '')}</CustomText>
+                                <CustomText
+                                    style={styles.contentText}>{refundCase.merchant.currency + ' ' + refundCase.refundAmount.toFixed(2).replace(/[.,]00$/, '')}</CustomText>
+                                <CustomText style={styles.contentText}>{refundCase.receiptNumber}</CustomText>
+                            </View>
                         </View>
-                    </View>
-                </FastImage>
-                }
-                <View style={styles.bannerTextBarContainer}>
-                    <View style={styles.bannerContentContainer}>
-                        <View style={styles.bannerColumnContainer}>
-                            <CustomText style={styles.leftText}>{strings('refund_case.amount')}</CustomText>
-                            <CustomText style={styles.leftText}>{strings('refund_case.refund_amount')}</CustomText>
-                            <CustomText style={styles.leftText}>{strings('refund_case.receipt_number')}</CustomText>
+                        {!refundCase.isRequested &&
+                        <View style={styles.emailContainer}>
+                            <TouchableOpacity style={styles.emailButtonContainer} onPress={this.onEmailPress}>
+                                <Icon style={styles.emailIcon} name='share-square'/>
+                                <CustomText style={styles.sendText}>{strings('refund_case.send_form')}</CustomText>
+                            </TouchableOpacity>
                         </View>
-                        <View style={styles.bannerColumnContainer}>
-                            <CustomText
-                                style={styles.contentText}>{refundCase.merchant.currency + ' ' + refundCase.amount.toFixed(2).replace(/[.,]00$/, '')}</CustomText>
-                            <CustomText
-                                style={styles.contentText}>{refundCase.merchant.currency + ' ' + refundCase.refundAmount.toFixed(2).replace(/[.,]00$/, '')}</CustomText>
-                            <CustomText style={styles.contentText}>{refundCase.receiptNumber}</CustomText>
-                        </View>
+                        }
                     </View>
                     {!refundCase.isRequested &&
-                    <View style={styles.emailContainer}>
-                        <TouchableOpacity style={styles.emailButtonContainer} onPress={this.onEmailPress}>
-                            <Icon style={styles.emailIcon} name='share-square'/>
-                            <CustomText style={styles.sendText}>{strings('refund_case.send_form')}</CustomText>
+                    <View style={styles.notRequestedContainer}>
+                        <TouchableOpacity style={styles.descriptionContainer} onPress={this.onUploadVatPress}>
+                            <View style={styles.uploadImageContainer}>
+                                {vatImage}
+                            </View>
+                            <CustomText
+                                style={styles.buttonText}>{strings('refund_case.upload_tax_free_form')}</CustomText>
+                            <Icon style={styles.angleRightIcon} name='angle-right'/>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.descriptionContainer} onPress={this.onUploadReceiptPress}>
+                            <View style={styles.uploadImageContainer}>
+                                {receiptImage}
+                            </View>
+                            <CustomText style={styles.buttonText}>{strings('refund_case.upload_receipt')}</CustomText>
+                            <Icon style={styles.angleRightIcon} name='angle-right'/>
                         </TouchableOpacity>
                     </View>
                     }
-                </View>
-                {!refundCase.isRequested &&
-                <TouchableOpacity style={styles.descriptionContainer} onPress={this.onUploadVatPress}>
-                    <View style={styles.uploadImageContainer}>
-                        {vatImage}
-                    </View>
-                    <CustomText style={styles.buttonText}>{strings('refund_case.upload_tax_free_form')}</CustomText>
-                    <Icon style={styles.angleRightIcon} name='angle-right'/>
-                </TouchableOpacity>
-                }
-                {!refundCase.isRequested &&
-                <TouchableOpacity style={styles.descriptionContainer} onPress={this.onUploadReceiptPress}>
-                    <View style={styles.uploadImageContainer}>
-                        {receiptImage}
-                    </View>
-                    <CustomText style={styles.buttonText}>{strings('refund_case.upload_receipt')}</CustomText>
-                    <Icon style={styles.angleRightIcon} name='angle-right'/>
-                </TouchableOpacity>
-                }
-                {!refundCase.isRequested &&
-                <TouchableOpacity disabled={fetchingRequestRefund || fetchingDocumentation || fetchingRefundCases}
-                                  style={styles.submitButton}
-                                  onPress={this.onRequestRefundPress}>
-                    <CustomText style={styles.submitButtonText}>{strings('refund_case.send_documentation')}</CustomText>
-                </TouchableOpacity>
-                }
-                {refundCase.isRequested &&
-                <View style={styles.requestedContainer}>
-                    {refundCaseIcon}
-                    {refundCaseText}
-                </View>
-                }
-                <ModalScreen
-                    modalTitle={this.state.modalTitle}
-                    onBack={this.closeRefundCaseModal}
-                    onCancel={this.closeRefundCaseModal}
-                    onSubmit={this.onModalSubmit}
-                    visible={navigation.modal['refundCaseModal'] || false}>
-                    <View style={styles.modalContainer}>
-                        <CustomText style={styles.modalText}>{this.state.modalText}</CustomText>
-                    </View>
-                </ModalScreen>
-                <ModalScreen
-                    modalTitle={strings('refund_case.send_modal_title')}
-                    onBack={this.closeEmailModal}
-                    onCancel={this.closeEmailModal}
-                    onSubmit={this.onEmailModalSubmit}
-                    visible={navigation.modal['emailModal'] || false}>
-                    <View style={styles.modalContainer}>
-                        <CustomTextInput
-                            style={styles.modalInput}
-                            value={this.state.email}
-                            onChangeText={this.changeEmail}
-                            autoFocus={true}
-                            maxLength={64}
-                            placeholder={strings('settings.email_placeholder')}
-                            selectionColor={colors.inactiveTabColor}
-                            underlineColorAndroid={colors.activeTabColor}
-                            tintColor={colors.activeTabColor}
-                            numberOfLines={1}
-                            keyboardType='email-address'
-                            editable={true}
-                            returnKeyType='done'
-                            autoCapitalize='none'
-                            autoCorrect={false}
-                            blurOnSubmit={false}
-                        />
+                    {!refundCase.isRequested &&
+                    <TouchableOpacity
+                        disabled={fetchingRequestRefund || fetchingDocumentation || fetchingRefundCases}
+                        style={styles.submitButton}
+                        onPress={this.onRequestRefundPress}>
                         <CustomText
-                            style={!this.state.email || !this.state.isValidEmail ? styles.modalInputErrorText : styles.hidden}>{strings('refund_case.invalid_email')}</CustomText>
+                            style={styles.submitButtonText}>{strings('refund_case.send_documentation')}</CustomText>
+                    </TouchableOpacity>
+                    }
+                    {refundCase.isRequested &&
+                    <View style={styles.requestedContainer}>
+                        {refundCaseIcon}
+                        {refundCaseText}
                     </View>
-                </ModalScreen>
-                {(fetchingRequestRefund || fetchingDocumentation || fetchingSendEmail) &&
-                <View style={styles.loadingContainer}>
-                    <ActivityIndicator size='large' color={colors.activeTabColor} style={styles.activityIndicator}/>
-                </View>
-                }
-            </ScrollView>
+                    }
+                    <ModalScreen
+                        modalTitle={this.state.modalTitle}
+                        onBack={this.closeRefundCaseModal}
+                        onCancel={this.closeRefundCaseModal}
+                        onSubmit={this.onModalSubmit}
+                        visible={navigation.modal['refundCaseModal'] || false}>
+                        <View style={styles.modalContainer}>
+                            <CustomText style={styles.modalText}>{this.state.modalText}</CustomText>
+                        </View>
+                    </ModalScreen>
+                    <ModalScreen
+                        modalTitle={strings('refund_case.send_modal_title')}
+                        onBack={this.closeEmailModal}
+                        onCancel={this.closeEmailModal}
+                        onSubmit={this.onEmailModalSubmit}
+                        visible={navigation.modal['emailModal'] || false}>
+                        <View style={styles.modalContainer}>
+                            <CustomTextInput
+                                style={styles.modalInput}
+                                value={this.state.email}
+                                onChangeText={this.changeEmail}
+                                autoFocus={true}
+                                maxLength={64}
+                                placeholder={strings('settings.email_placeholder')}
+                                selectionColor={colors.inactiveTabColor}
+                                underlineColorAndroid={colors.activeTabColor}
+                                tintColor={colors.activeTabColor}
+                                numberOfLines={1}
+                                keyboardType='email-address'
+                                editable={true}
+                                returnKeyType='done'
+                                autoCapitalize='none'
+                                autoCorrect={false}
+                                blurOnSubmit={false}
+                            />
+                            <CustomText
+                                style={!this.state.email || !this.state.isValidEmail ? styles.modalInputErrorText : styles.hidden}>{strings('refund_case.invalid_email')}</CustomText>
+                        </View>
+                    </ModalScreen>
+                    {(fetchingRequestRefund || fetchingDocumentation || fetchingSendEmail) &&
+                    <View style={styles.loadingContainer}>
+                        <ActivityIndicator size='large' color={colors.activeTabColor} style={styles.activityIndicator}/>
+                    </View>
+                    }
+                </ScrollView>
+            </SafeAreaView>
         );
     }
 }
@@ -387,61 +385,49 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: colors.slightlyDarkerColor,
+        backgroundColor: colors.backgroundColor,
     },
     bannerImage: {
         width: '100%',
         height: 180
     },
-    flexIconContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    iconContainer: {
-        height: 80,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: colors.backgroundColor,
-        borderRadius: 40,
-        padding: 6,
-        elevation: 2,
-        borderWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0,
-        borderColor: colors.separatorColor
-    },
-    logoImage: {
-        height: 60,
-        width: 60,
-        margin: 5,
-        justifyContent: 'center',
-        alignItems: 'center'
+    placeHolderImage: {
+        width: '90%',
+        height: 160,
+        alignSelf: 'center'
     },
     bannerTextBarContainer: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
         width: '100%',
-        backgroundColor: colors.activeTabColor,
+        backgroundColor: colors.whiteColor,
         padding: 10
     },
     bannerContentContainer: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        alignItems: 'center',
-        backgroundColor: colors.activeTabColor,
+        alignItems: 'center'
     },
     bannerColumnContainer: {
         flexDirection: 'column',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-between',
         alignItems: 'flex-start'
     },
     leftText: {
-        margin: 5,
-        color: colors.separatorColor
+        marginLeft: 10,
+        marginTop: 5,
+        marginBottom: 5,
+        marginRight: 5,
+        color: colors.darkTextColor
     },
     contentText: {
         margin: 5,
         color: colors.backgroundColor
+    },
+    notRequestedContainer: {
+        flex: 1,
+        justifyContent: 'space-evenly',
     },
     descriptionContainer: {
         flexDirection: 'row',
@@ -449,23 +435,19 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         padding: 10,
-        elevation: 1,
-        flex: 1,
         borderColor: colors.activeTabColor,
         borderRadius: 4,
-        borderWidth: StyleSheet.hairlineWidth,
+        borderWidth: 2,
         backgroundColor: colors.backgroundColor,
         alignItems: 'center',
         justifyContent: 'space-between'
     },
     emailContainer: {
         flex: 1,
-        backgroundColor: colors.activeTabColor,
         alignItems: 'center',
         justifyContent: 'center',
     },
     emailButtonContainer: {
-        backgroundColor: colors.activeTabColor,
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -481,19 +463,23 @@ const styles = StyleSheet.create({
         color: colors.backgroundColor
     },
     uploadImage: {
-        flex: 1,
-        height: undefined,
+        height: 70,
         width: undefined,
         borderRadius: 5
+    },
+    receiptImage: {
+        height: 70,
+        width: undefined,
+        borderRadius: 5,
+        tintColor: colors.whiteColor
     },
     submitButton: {
         padding: 15,
         margin: 20,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: colors.submitButtonColor,
+        backgroundColor: colors.whiteColor,
         borderRadius: 4,
-        elevation: 1,
         height: 50,
     },
     submitButtonText: {
@@ -508,9 +494,9 @@ const styles = StyleSheet.create({
         flex: 3,
         marginLeft: 10,
         textAlign: 'center',
-        fontSize: 18,
+        fontSize: 15,
         fontWeight: 'bold',
-        color: colors.darkTextcolor
+        color: colors.whiteColor
     },
     angleRightIcon: {
         height: undefined,
@@ -527,7 +513,7 @@ const styles = StyleSheet.create({
     },
     modalText: {
         fontSize: 18,
-        color: colors.darkTextcolor,
+        color: colors.whiteColor,
         textAlign: 'center',
         margin: 5
     },
@@ -568,7 +554,8 @@ const styles = StyleSheet.create({
     modalInput: {
         textAlign: 'center',
         minWidth: '80%',
-        fontSize: 15
+        fontSize: 15,
+        color: colors.whiteColor
     },
     modalInputErrorText: {
         marginTop: 10,
@@ -583,11 +570,11 @@ const styles = StyleSheet.create({
         bottom: 0,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'transparent'
+        backgroundColor: colors.transparent
     },
     activityIndicator: {
         elevation: 10,
-        backgroundColor: 'transparent'
+        backgroundColor: colors.transparent
     },
     sendText: {
         color: colors.backgroundColor,
