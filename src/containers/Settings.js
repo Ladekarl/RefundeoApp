@@ -544,7 +544,10 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginLeft: 20,
         marginRight: 20,
-        backgroundColor: colors.logoutTextColor
+        borderWidth: 2,
+        borderRadius: 4,
+        borderColor: colors.logoutTextColor,
+        backgroundColor: colors.backgroundColor
     },
     rowInnerContainer: {
         flexDirection: 'row',
@@ -587,7 +590,7 @@ const styles = StyleSheet.create({
         color: colors.submitButtonColor
     },
     redText: {
-        color: colors.backgroundColor,
+        color: colors.logoutTextColor,
         fontWeight: 'bold',
         fontSize: 15
     },

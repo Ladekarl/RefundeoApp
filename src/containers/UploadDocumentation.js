@@ -50,8 +50,7 @@ class UploadDocumentation extends Component {
                 this.setState({
                     takingPicture: false
                 });
-            }
-            catch (error) {
+            } catch (error) {
                 this.setState({
                     takingPicture: false
                 });
@@ -213,7 +212,7 @@ const styles = StyleSheet.create({
         flex: 0,
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: 'transparent',
+        backgroundColor: colors.transparent,
         height: '100%',
         width: '100%'
     },
@@ -230,7 +229,7 @@ const styles = StyleSheet.create({
         marginTop: 20
     },
     topText: {
-        color: colors.activeTabColor
+        color: colors.whiteColor
     },
     bottomContainer: {
         flexDirection: 'row',
@@ -241,7 +240,7 @@ const styles = StyleSheet.create({
     centerContainer: {
         height: 250,
         width: 250,
-        backgroundColor: 'transparent',
+        backgroundColor: colors.transparent,
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -251,7 +250,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         alignSelf: 'center',
         borderColor: colors.activeTabColor,
-        backgroundColor: 'transparent',
+        backgroundColor: colors.transparent
     },
     pictureButton: {
         backgroundColor: colors.activeTabColor,
@@ -290,11 +289,11 @@ const styles = StyleSheet.create({
         bottom: 0,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'transparent'
+        backgroundColor: colors.transparent
     },
     activityIndicator: {
         elevation: 10,
-        backgroundColor: 'transparent'
+        backgroundColor: colors.transparent
     },
     skipButton: {
         justifyContent: 'center',
@@ -320,7 +319,7 @@ const styles = StyleSheet.create({
     },
     modalText: {
         fontSize: 18,
-        color: colors.darkTextcolor,
+        color: colors.whiteColor,
         textAlign: 'center',
         margin: 5
     }

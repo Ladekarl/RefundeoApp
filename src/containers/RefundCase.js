@@ -436,7 +436,7 @@ const styles = StyleSheet.create({
         marginRight: 10,
         padding: 10,
         borderColor: colors.activeTabColor,
-        borderRadius: 4,
+        borderRadius: 5,
         borderWidth: 2,
         backgroundColor: colors.backgroundColor,
         alignItems: 'center',
@@ -503,7 +503,7 @@ const styles = StyleSheet.create({
         width: undefined,
         fontSize: 30,
         marginLeft: 5,
-        color: colors.activeTabColor
+        color: colors.whiteColor
     },
     modalContainer: {
         paddingTop: 20,
