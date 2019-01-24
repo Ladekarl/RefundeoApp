@@ -6,6 +6,7 @@ import {
     Image,
     TouchableOpacity,
     RefreshControl,
+    Platform,
     ActivityIndicator
 } from 'react-native';
 import {strings} from '../shared/i18n';
@@ -545,18 +546,15 @@ const styles = StyleSheet.create({
     },
     approvedIcon: {
         color: colors.greenButtonColor,
-        fontSize: 45,
-        marginBottom: 10,
+        fontSize: 100
     },
     rejectedIcon: {
         color: colors.cancelButtonColor,
-        fontSize: 45,
-        marginBottom: 10
+        fontSize: 100
     },
     requestedIcon: {
-        color: colors.activeTabColor,
-        fontSize: 45,
-        marginBottom: 10
+        color: colors.whiteColor,
+        fontSize: 70
     },
     modalInput: {
         textAlign: 'center',
@@ -594,12 +592,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 4,
-        paddingTop: 5,
         borderColor: colors.addButtonOuterColor,
-        backgroundColor: colors.whiteColor,
+        backgroundColor: colors.addButtonInnerColor,
         borderRadius: 200,
-        height: 120,
-        width: 120
+        height: 110,
+        width: 110
     }
 });
 

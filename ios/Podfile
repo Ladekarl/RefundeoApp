@@ -43,8 +43,8 @@ target 'Refundeo' do
   pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
   pod 'FBSDKLoginKit'
   pod 'FBSDKShareKit'
-  pod 'Firebase/Core', '~> 5.3.0'
-  pod 'Firebase/Messaging', '~> 5.3.0'
+  pod 'Firebase/Core', '~> 5.15.0'
+  pod 'Firebase/Messaging', '~> 5.15.0'
 
   # react-native-maps dependencies
   pod 'react-native-maps', path: rn_maps_path

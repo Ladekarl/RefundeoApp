@@ -150,6 +150,7 @@ class UploadDocumentation extends Component {
                     }}
                     style={styles.camera}
                     captureAudio={false}
+                    barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
                     type={RNCamera.Constants.Type.back}
                     onBarCodeRead={page === 0 ? this.onQrCodeScan : undefined}
                     permissionDialogTitle={strings('refund_case.permission_title')}

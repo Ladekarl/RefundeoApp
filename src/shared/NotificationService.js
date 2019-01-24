@@ -1,6 +1,6 @@
 import LocalStorage from '../storage';
 import firebase from 'react-native-firebase';
-import type {RemoteMessage} from 'react-native-firebase';
+import type {RemoteMessage} from 'react-native-firebase/messaging';
 
 export default class NotificationService {
 
