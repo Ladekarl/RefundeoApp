@@ -316,6 +316,9 @@ class SettingsScreen extends Component {
                             cca2={this.state.cca2}
                             translation='eng'
                             closeable={true}
+                            filterPlaceholderTextColor={colors.inactiveTabColor}
+                            closeButtonImage={require('../../assets/close_button.png')}
+                            styles={countryPicker}
                             filterable={true}>
                             <View style={styles.countryRowContainer}>
                                 <View style={styles.rowInnerContainer}>
@@ -639,7 +642,33 @@ const styles = StyleSheet.create({
         height: undefined,
         width: undefined,
         color: colors.cancelButtonColor
+    }
+});
+
+const countryPicker = StyleSheet.create({
+    modalContainer: {
+        backgroundColor: colors.backgroundColor
     },
+    contentContainer: {
+        backgroundColor: colors.backgroundColor
+    },
+    header: {
+        backgroundColor: colors.backgroundColor
+    },
+    itemCountryName: {
+        borderBottomWidth: 0
+    },
+    countryName: {
+        color: colors.whiteColor
+    },
+    letterText: {
+        color: colors.whiteColor
+    },
+    input: {
+        color: colors.whiteColor,
+        borderBottomWidth: 1,
+        borderColor: colors.whiteColor
+    }
 });
 
 const mapStateToProps = state => {

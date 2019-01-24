@@ -85,12 +85,16 @@ export default class StoreListItem extends PureComponent {
                                 <Icon style={styles.tagIcon} name='tag'/>
                             </View>
                             }
-                            <View style={styles.leftInnerRightContainer}>
-                                {!!tags && tags.map((t, i) => t.displayName + (i !== tags.length - 1 ? ', ' : '')).map(t => {
-                                    return (<CustomText style={styles.tagText} key={t}>{t}</CustomText>);
-                                })}
-                                <Icon name='clock-o' style={styles.clockIcon}/>
-                                <CustomText style={styles.oHoursText}>{oHoursString}</CustomText>
+                            <View style={styles.leftInnerTopRightContainer}>
+                                {!!tags &&
+                                <CustomText style={styles.tagText}>
+                                    {
+                                        tags.map((t, i) => t.displayName + (i !== tags.length - 1 ? ', ' : '')).map(t => {
+                                            return t;
+                                        })
+                                    }
+                                </CustomText>
+                                }
                             </View>
                         </View>
                         <View style={styles.leftRowContainer}>
@@ -103,6 +107,8 @@ export default class StoreListItem extends PureComponent {
                             <View style={styles.leftInnerRightContainer}>
                                 <CustomText style={styles.addressText}>{address}</CustomText>
                                 <CustomText style={styles.distText}>{'(' + dist + ')'}</CustomText>
+                                <Icon name='clock-o' style={styles.clockIcon}/>
+                                <CustomText style={styles.oHoursText}>{oHoursString}</CustomText>
                             </View>
                             }
                         </View>
@@ -139,24 +145,24 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
         marginRight: 10,
         borderRadius: 5,
-        height: 80,
+        minHeight: 90,
         backgroundColor: colors.whiteColor,
         flexDirection: 'row'
     },
     leftColumnContainer: {
-        flex: 1,
+        flex: 1.5,
         flexDirection: 'column',
         justifyContent: 'center'
     },
     rightColumnContainer: {
-        width: 100,
+        flex: 1,
         flexDirection: 'row',
         justifyContent: 'center'
     },
     topLeftRowContainer: {
         flex: 1.33,
         flexDirection: 'row',
-        alignItems: 'stretch'
+        alignItems: 'center',
     },
     leftRowContainer: {
         flex: 1,
@@ -181,16 +187,22 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: 17
     },
+    leftInnerTopRightContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center'
+    },
     leftInnerRightContainer: {
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center'
     },
     merchantName: {
+        alignSelf: 'center',
         fontWeight: 'bold',
+        color: colors.darkTextColor,
+        fontSize: 18,
         textAlign: 'center',
-        height: '100%',
-        fontSize: 22,
         marginRight: 5
     },
     saveText: {
@@ -215,10 +227,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginLeft: 5,
-        height: '100%',
         marginRight: 5,
         aspectRatio: 1,
-        padding: 2,
         backgroundColor: colors.activeTabColor,
         borderRadius: 4
     },
@@ -235,7 +245,7 @@ const styles = StyleSheet.create({
         color: colors.darkTextColor,
         fontSize: 15,
         marginRight: 3,
-        marginLeft: 7
+        marginLeft: 10
     },
     ratingText: {
         color: colors.whiteColor,

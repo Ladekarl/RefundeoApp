@@ -143,7 +143,9 @@ const styles = StyleSheet.create({
         backgroundColor: colors.backgroundColor
     },
     bottomContentContainer: {
-        margin: 15,
+        marginTop: 15,
+        marginLeft: 15,
+        marginRight: 15,
         borderWidth: 2,
         borderColor: colors.addButtonOuterColor,
         backgroundColor: colors.addButtonInnerColor,
