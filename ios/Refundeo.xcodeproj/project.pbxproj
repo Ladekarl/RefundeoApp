@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -55,6 +54,15 @@
 		CBA4A82920B62EB800A32902 /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CBA4A81620B62EB800A32902 /* Lato-BoldItalic.ttf */; };
 		CBA4A82A20B62EB800A32902 /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CBA4A81620B62EB800A32902 /* Lato-BoldItalic.ttf */; };
 		CBB70D4B2095E33A0003DF7F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = CBB70D492095E33A0003DF7F /* LaunchScreen.xib */; };
+		FC8BC116274F4D32B8766B5E /* example-store.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 46311148C3284E57BEBAF34A /* example-store.jpg */; };
+		BE468DB7445243A995F9FD3F /* help.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BAC610F402D40C28B6824AB /* help.png */; };
+		45546CBEB7D84D03BFB1ED27 /* receipt.png in Resources */ = {isa = PBXBuildFile; fileRef = 9859D3837CA343A7AC2991DC /* receipt.png */; };
+		396FE4DEEF94414482C679D2 /* refundeo_banner_medium.png in Resources */ = {isa = PBXBuildFile; fileRef = E597BC230FB7449281B59A0C /* refundeo_banner_medium.png */; };
+		A60408148B3C4826BD9A7E29 /* refundeo_banner_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 918DF0A8A5424FA5B944D7CE /* refundeo_banner_small.png */; };
+		9BB5D911FE4744FD8C485649 /* refundeo_banner_top_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 765A7070EE9A498EB9DD4962 /* refundeo_banner_top_small.png */; };
+		91D4EE7739D946EEBAF5D9F2 /* refundeo_banner_white_small.png in Resources */ = {isa = PBXBuildFile; fileRef = D85D920444584E0593AEFDE7 /* refundeo_banner_white_small.png */; };
+		9E09D2DFF30F49E2BF7FF1F3 /* refundeo_logo_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE34C7F854B4794A4606ACB /* refundeo_logo_white.png */; };
+		8060F448DABA41E3A5F91DB4 /* tax_form.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BD62399CA484D2CAFC0D505 /* tax_form.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -411,6 +419,15 @@
 		CCCAB3D084E348138CA63940 /* refundeo_logo.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = refundeo_logo.png; path = ../assets/refundeo_logo.png; sourceTree = "<group>"; };
 		D2C311B1DAD74F2BB7491A9E /* facebook-icon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "facebook-icon.png"; path = "../assets/facebook-icon.png"; sourceTree = "<group>"; };
 		DD836F9644D14EB0327A2346 /* Pods-Refundeo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Refundeo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Refundeo/Pods-Refundeo.release.xcconfig"; sourceTree = "<group>"; };
+		46311148C3284E57BEBAF34A /* example-store.jpg */ = {isa = PBXFileReference; name = "example-store.jpg"; path = "../assets/example-store.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7BAC610F402D40C28B6824AB /* help.png */ = {isa = PBXFileReference; name = "help.png"; path = "../assets/help.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9859D3837CA343A7AC2991DC /* receipt.png */ = {isa = PBXFileReference; name = "receipt.png"; path = "../assets/receipt.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E597BC230FB7449281B59A0C /* refundeo_banner_medium.png */ = {isa = PBXFileReference; name = "refundeo_banner_medium.png"; path = "../assets/refundeo_banner_medium.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		918DF0A8A5424FA5B944D7CE /* refundeo_banner_small.png */ = {isa = PBXFileReference; name = "refundeo_banner_small.png"; path = "../assets/refundeo_banner_small.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		765A7070EE9A498EB9DD4962 /* refundeo_banner_top_small.png */ = {isa = PBXFileReference; name = "refundeo_banner_top_small.png"; path = "../assets/refundeo_banner_top_small.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D85D920444584E0593AEFDE7 /* refundeo_banner_white_small.png */ = {isa = PBXFileReference; name = "refundeo_banner_white_small.png"; path = "../assets/refundeo_banner_white_small.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0EE34C7F854B4794A4606ACB /* refundeo_logo_white.png */ = {isa = PBXFileReference; name = "refundeo_logo_white.png"; path = "../assets/refundeo_logo_white.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6BD62399CA484D2CAFC0D505 /* tax_form.png */ = {isa = PBXFileReference; name = "tax_form.png"; path = "../assets/tax_form.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -694,6 +711,15 @@
 				8C05AAF7D50C46B090AEA1E0 /* FontAwesome.ttf */,
 				D2C311B1DAD74F2BB7491A9E /* facebook-icon.png */,
 				CCCAB3D084E348138CA63940 /* refundeo_logo.png */,
+				46311148C3284E57BEBAF34A /* example-store.jpg */,
+				7BAC610F402D40C28B6824AB /* help.png */,
+				9859D3837CA343A7AC2991DC /* receipt.png */,
+				E597BC230FB7449281B59A0C /* refundeo_banner_medium.png */,
+				918DF0A8A5424FA5B944D7CE /* refundeo_banner_small.png */,
+				765A7070EE9A498EB9DD4962 /* refundeo_banner_top_small.png */,
+				D85D920444584E0593AEFDE7 /* refundeo_banner_white_small.png */,
+				0EE34C7F854B4794A4606ACB /* refundeo_logo_white.png */,
+				6BD62399CA484D2CAFC0D505 /* tax_form.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1214,6 +1240,15 @@
 				CBA4A7D720B6277900A32902 /* GoogleService-Info.plist in Resources */,
 				6E3CC5137AA74C508CB7DE36 /* facebook-icon.png in Resources */,
 				B3358F815B54451390B8BE01 /* refundeo_logo.png in Resources */,
+				FC8BC116274F4D32B8766B5E /* example-store.jpg in Resources */,
+				BE468DB7445243A995F9FD3F /* help.png in Resources */,
+				45546CBEB7D84D03BFB1ED27 /* receipt.png in Resources */,
+				396FE4DEEF94414482C679D2 /* refundeo_banner_medium.png in Resources */,
+				A60408148B3C4826BD9A7E29 /* refundeo_banner_small.png in Resources */,
+				9BB5D911FE4744FD8C485649 /* refundeo_banner_top_small.png in Resources */,
+				91D4EE7739D946EEBAF5D9F2 /* refundeo_banner_white_small.png in Resources */,
+				9E09D2DFF30F49E2BF7FF1F3 /* refundeo_logo_white.png in Resources */,
+				8060F448DABA41E3A5F91DB4 /* tax_form.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

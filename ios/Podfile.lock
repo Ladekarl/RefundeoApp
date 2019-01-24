@@ -6,13 +6,13 @@ PODS:
     - Bolts/Tasks
   - Bolts/Tasks (1.9.0)
   - boost-for-react-native (1.63.0)
-  - DoubleConversion (1.1.5)
-  - FBSDKCoreKit (4.33.0):
-    - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.33.0):
+  - DoubleConversion (1.1.6)
+  - FBSDKCoreKit (4.40.0):
+    - Bolts (~> 1.9)
+  - FBSDKLoginKit (4.40.0):
     - FBSDKCoreKit
-  - FBSDKShareKit (4.33.0):
-    - FBSDKCoreKit (~> 4.33.0)
+  - FBSDKShareKit (4.40.0):
+    - FBSDKCoreKit
   - Firebase/Core (5.3.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 5.0.1)
@@ -40,7 +40,7 @@ PODS:
     - boost-for-react-native
     - DoubleConversion
     - glog
-  - glog (0.3.4)
+  - glog (0.3.5)
   - Google-Maps-iOS-Utils (2.1.0):
     - Google-Maps-iOS-Utils/Clustering (= 2.1.0)
     - Google-Maps-iOS-Utils/Geometry (= 2.1.0)
@@ -62,28 +62,28 @@ PODS:
   - GoogleMaps/Base (2.5.0)
   - GoogleMaps/Maps (2.5.0):
     - GoogleMaps/Base
-  - GoogleToolboxForMac/Defines (2.1.4)
-  - GoogleToolboxForMac/Logger (2.1.4):
-    - GoogleToolboxForMac/Defines (= 2.1.4)
-  - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
-    - GoogleToolboxForMac/Defines (= 2.1.4)
-  - nanopb (0.3.8):
-    - nanopb/decode (= 0.3.8)
-    - nanopb/encode (= 0.3.8)
-  - nanopb/decode (0.3.8)
-  - nanopb/encode (0.3.8)
-  - Protobuf (3.6.0)
-  - React (0.56.0):
-    - React/Core (= 0.56.0)
-  - react-native-camera (1.1.4):
+  - GoogleToolboxForMac/Defines (2.2.0)
+  - GoogleToolboxForMac/Logger (2.2.0):
+    - GoogleToolboxForMac/Defines (= 2.2.0)
+  - "GoogleToolboxForMac/NSData+zlib (2.2.0)":
+    - GoogleToolboxForMac/Defines (= 2.2.0)
+  - nanopb (0.3.901):
+    - nanopb/decode (= 0.3.901)
+    - nanopb/encode (= 0.3.901)
+  - nanopb/decode (0.3.901)
+  - nanopb/encode (0.3.901)
+  - Protobuf (3.6.1)
+  - React (0.57.8):
+    - React/Core (= 0.57.8)
+  - react-native-camera (1.9.1):
     - React
-    - react-native-camera/RCT (= 1.1.4)
-    - react-native-camera/RN (= 1.1.4)
-  - react-native-camera/RCT (1.1.4):
+    - react-native-camera/RCT (= 1.9.1)
+    - react-native-camera/RN (= 1.9.1)
+  - react-native-camera/RCT (1.9.1):
     - React
-  - react-native-camera/RN (1.1.4):
+  - react-native-camera/RN (1.9.1):
     - React
-  - react-native-document-picker (2.1.0):
+  - react-native-document-picker (2.2.0):
     - React
   - react-native-fast-image (4.0.14):
     - FLAnimatedImage
@@ -92,70 +92,72 @@ PODS:
     - SDWebImage/GIF
   - react-native-fetch-blob (0.10.6):
     - React/Core
-  - react-native-google-maps (0.21.0):
+  - react-native-google-maps (0.23.0):
     - Google-Maps-iOS-Utils (= 2.1.0)
     - GoogleMaps (= 2.5.0)
     - React
-  - react-native-image-picker (0.14.3):
+  - react-native-image-picker (0.28.0):
     - React
-  - react-native-maps (0.21.0):
+  - react-native-maps (0.23.0):
     - React
-  - React/Core (0.56.0):
-    - yoga (= 0.56.0.React)
-  - React/CxxBridge (0.56.0):
+  - React/Core (0.57.8):
+    - yoga (= 0.57.8.React)
+  - React/CxxBridge (0.57.8):
     - Folly (= 2016.10.31.00)
     - React/Core
     - React/cxxreact
-  - React/cxxreact (0.56.0):
+  - React/cxxreact (0.57.8):
     - boost-for-react-native (= 1.63.0)
     - Folly (= 2016.10.31.00)
     - React/jschelpers
     - React/jsinspector
-  - React/DevSupport (0.56.0):
+  - React/DevSupport (0.57.8):
     - React/Core
     - React/RCTWebSocket
-  - React/fishhook (0.56.0)
-  - React/jschelpers (0.56.0):
+  - React/fishhook (0.57.8)
+  - React/jschelpers (0.57.8):
     - Folly (= 2016.10.31.00)
     - React/PrivateDatabase
-  - React/jsinspector (0.56.0)
-  - React/PrivateDatabase (0.56.0)
-  - React/RCTActionSheet (0.56.0):
+  - React/jsinspector (0.57.8)
+  - React/PrivateDatabase (0.57.8)
+  - React/RCTActionSheet (0.57.8):
     - React/Core
-  - React/RCTAnimation (0.56.0):
+  - React/RCTAnimation (0.57.8):
     - React/Core
-  - React/RCTBlob (0.56.0):
+  - React/RCTBlob (0.57.8):
     - React/Core
-  - React/RCTGeolocation (0.56.0):
+  - React/RCTGeolocation (0.57.8):
     - React/Core
-  - React/RCTImage (0.56.0):
+  - React/RCTImage (0.57.8):
     - React/Core
     - React/RCTNetwork
-  - React/RCTLinkingIOS (0.56.0):
+  - React/RCTLinkingIOS (0.57.8):
     - React/Core
-  - React/RCTNetwork (0.56.0):
+  - React/RCTNetwork (0.57.8):
     - React/Core
-  - React/RCTSettings (0.56.0):
+  - React/RCTSettings (0.57.8):
     - React/Core
-  - React/RCTText (0.56.0):
+  - React/RCTText (0.57.8):
     - React/Core
-  - React/RCTVibration (0.56.0):
+  - React/RCTVibration (0.57.8):
     - React/Core
-  - React/RCTWebSocket (0.56.0):
+  - React/RCTWebSocket (0.57.8):
     - React/Core
     - React/fishhook
     - React/RCTBlob
   - ReactNativePermissions (1.1.1):
     - React
-  - RNFS (2.10.14):
+  - RNFS (2.13.3):
+    - React
+  - RNGestureHandler (1.0.12):
     - React
   - RNI18n (2.0.15):
     - React
-  - SDWebImage/Core (4.4.2)
-  - SDWebImage/GIF (4.4.2):
+  - SDWebImage/Core (4.4.3)
+  - SDWebImage/GIF (4.4.3):
     - FLAnimatedImage (~> 1.0)
     - SDWebImage/Core
-  - yoga (0.56.0.React)
+  - yoga (0.57.8.React)
 
 DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
@@ -189,6 +191,7 @@ DEPENDENCIES:
   - React/RCTWebSocket (from `../node_modules/react-native`)
   - ReactNativePermissions (from `../node_modules/react-native-permissions`)
   - RNFS (from `../node_modules/react-native-fs`)
+  - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNI18n (from `../node_modules/react-native-i18n`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga/yoga.podspec`)
 
@@ -239,6 +242,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-permissions"
   RNFS:
     :path: "../node_modules/react-native-fs"
+  RNGestureHandler:
+    :path: "../node_modules/react-native-gesture-handler"
   RNI18n:
     :path: "../node_modules/react-native-i18n"
   yoga:
@@ -247,10 +252,10 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
-  DoubleConversion: a9706f16e388b53ff12cca34473428ee29746a26
-  FBSDKCoreKit: 572b047a7e029bc44542bcf8a59414e7ff2b543e
-  FBSDKLoginKit: 88cb456349cfb3b554427ce4f8b43729d85dfb40
-  FBSDKShareKit: 1869cb24db2cea90666a50cb9d568deb38e2d16e
+  DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
+  FBSDKCoreKit: ae214474b25033399c131dc81d258e412582a2ba
+  FBSDKLoginKit: 7a1e411d46acc8834588eca437daf34de42e1d52
+  FBSDKShareKit: 0e45916f4150da485928ae2a17ca021950b194f5
   Firebase: 68afeeb05461db02d7c9e3215cda28068670f4aa
   FirebaseAnalytics: b3628aea54c50464c32c393fb2ea032566e7ecc2
   FirebaseCore: 62f1b792a49bb9e8b4073f24606d2c93ffc352f0
@@ -258,26 +263,27 @@ SPEC CHECKSUMS:
   FirebaseMessaging: 6894b8fe0a0cf26c3b13dad729f1131654ae0bdb
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   Folly: c89ac2d5c6ab169cd7397ef27485c44f35f742c7
-  glog: b3b0330915eccea41c5cc9731a77cf564a9be5ea
+  glog: e8acf0ebbf99759d3ff18c86c292a5898282dcde
   Google-Maps-iOS-Utils: c32891ff472eaaa1fca032beedafa1a013af7875
   GoogleMaps: c087b8e5dfe87ca6ebf59adb9b4894a4146bec4f
-  GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
-  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  Protobuf: 0fc0ad8bec688b2a3017a139953e01374fedbd5f
+  GoogleToolboxForMac: ff31605b7d66400dcec09bed5861689aebadda4d
+  nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
+  Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
-  react-native-camera: ab22041dcf0403d88f2ae4b9ea3ed2644e680423
+  react-native-camera: a8d04ef12749def72cae86b0b8d28c2de891a392
   react-native-document-picker: e7934f6a3c898a1b62fa68b1f09371beef6ac51a
   react-native-fast-image: cba3d9bf9c2cf8ddb643d887a686c53a5dd90a2c
   react-native-fetch-blob: 63394b1d7b0781547b3e4463b3195790177b1222
-  react-native-google-maps: 2cfe3b01f8422c7dae51d8764139fd70f888cfce
-  react-native-image-picker: b303e31c3c4ada1d7cb1342423d328d2efb07fb3
+  react-native-google-maps: b946d62e25dc66097921ed82520e45b0b081768a
+  react-native-image-picker: f42de90075c5b1af53417af927631d909a1a746e
   react-native-maps: 066c2afcc89e18726377bcc685315f989ca22449
   ReactNativePermissions: 9f2d9c45c98800795e6c2ed330e25d11a66a8169
   RNFS: bbb1a64eb245763daf34aea86f97c97c4e85f74c
+  RNGestureHandler: 282af6ea58ed8483612365159c58a3ca5f55e7da
   RNI18n: 46b8694063fbd699f2c06a4dc8e835b3176763b1
-  SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
+  SDWebImage: c5594f1a19c48d526d321e548902b56b479cd508
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: 4c92ba3161d4f0f7b4b8c18be0f808593fc7e0f7
+PODFILE CHECKSUM: 4080c53b584a42770cd38f5e92be000ef44f3569
 
 COCOAPODS: 1.5.2

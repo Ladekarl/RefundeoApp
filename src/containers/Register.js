@@ -189,8 +189,9 @@ class RegisterScreen extends Component {
                             <View style={styles.eulaContainer}>
                                 <Switch disabled={fetching}
                                         value={this.state.acceptedTermsOfService}
-                                        tintColor={colors.whiteColor}
-                                        thumbTintColor={colors.activeTabColor}
+                                        trackColor={colors.activeTabColor}
+                                        thumbColor={colors.activeTabColor}
+                                        tintColor={colors.darkTextColor}
                                         onValueChange={acceptedTermsOfService => this.setState({acceptedTermsOfService})}>
                                 </Switch>
                                 <View style={styles.eulaTextContainer}>
@@ -206,8 +207,9 @@ class RegisterScreen extends Component {
                             </View>
                             <View style={styles.eulaContainer}>
                                 <Switch disabled={fetching}
-                                        tintColor={colors.whiteColor}
-                                        thumbTintColor={colors.activeTabColor}
+                                        trackColor={colors.activeTabColor}
+                                        thumbColor={colors.activeTabColor}
+                                        tintColor={colors.darkTextColor}
                                         value={this.state.acceptedPrivacyPolicy}
                                         onValueChange={acceptedPrivacyPolicy => this.setState({acceptedPrivacyPolicy})}>
                                 </Switch>

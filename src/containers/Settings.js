@@ -298,7 +298,7 @@ class SettingsScreen extends Component {
                 <ScrollView
                     style={styles.container}
                     keyboardShouldPersistTaps={'always'}>
-                    <View style={[styles.sectionHeaderContainer, styles.sectionTopContainer]}>
+                    <View style={styles.sectionTopContainer}>
                         <CustomText style={styles.sectionHeaderText}>{strings('settings.profile')}</CustomText>
                     </View>
                     {!state.user.isOauth &&
@@ -383,8 +383,9 @@ class SettingsScreen extends Component {
                                 style={styles.leftButtonText}>{strings('register.terms_of_service_2')}</CustomText>
                         </View>
                         <Switch value={state.user.acceptedTermsOfService}
-                                tintColor={Platform.OS === 'ios' ? colors.activeTabColor : undefined}
-                                thumbTintColor={colors.activeTabColor}
+                                trackColor={colors.activeTabColor}
+                                thumbColor={colors.activeTabColor}
+                                tintColor={colors.darkTextColor}
                                 onValueChange={this.acceptTermsOfService}/>
                     </TouchableOpacity>
                     }
@@ -399,8 +400,9 @@ class SettingsScreen extends Component {
                                 style={styles.leftButtonText}>{strings('register.privacy_policy_2')}</CustomText>
                         </View>
                         <Switch value={state.user.acceptedPrivacyPolicy}
-                                tintColor={Platform.OS === 'ios' ? colors.activeTabColor : undefined}
-                                thumbTintColor={colors.activeTabColor}
+                                trackColor={colors.activeTabColor}
+                                thumbColor={colors.activeTabColor}
+                                tintColor={colors.darkTextColor}
                                 onValueChange={this.acceptPrivacyPolicy}/>
                     </TouchableOpacity>
                     }
@@ -571,7 +573,14 @@ const styles = StyleSheet.create({
         marginRight: 10
     },
     sectionTopContainer: {
-        marginTop: Platform.OS === 'ios' ? 15 : 20
+        backgroundColor: colors.activeTabColorOpaque,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 15,
+        marginBottom: 5
     },
     sectionHeaderContainer: {
         backgroundColor: colors.activeTabColorOpaque,

@@ -167,11 +167,9 @@ export default class StoreFilter extends React.PureComponent {
                         <CustomText style={styles.filterSwitchText}>{strings('stores.open_stores_filter')}</CustomText>
                         <Switch
                             value={this.state.filterOnlyOpenValue}
-                            tintColor={Platform.OS === 'ios' ? colors.separatorColor : colors.darkTextColor}
+                            trackColor={colors.activeTabColor}
                             thumbColor={colors.activeTabColor}
-                            ios_backgroundColor={colors.activeTabColor}
-                            trackColor={colors.whiteColor}
-                            thumbTintColor={colors.activeTabColor}
+                            tintColor={colors.darkTextColor}
                             onValueChange={this.onlyOpenValueChange}
                         />
                     </View>
