@@ -107,19 +107,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flex: 1
     },
-    iconContainer: {
-        alignSelf: 'center',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: colors.backgroundColor,
-        borderColor: colors.addButtonInnerColor,
-        borderWidth: 2,
-        padding: 5,
-        marginRight: 15,
-        borderRadius: 40,
-        marginLeft: 10,
-        marginBottom: 1
-    },
     firstDetailsContainer: {
         justifyContent: 'center',
         flexDirection: 'column',

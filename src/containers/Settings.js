@@ -542,7 +542,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 5,
         marginTop: 5,
-        backgroundColor: colors.whiteColor,
+        backgroundColor: colors.backgroundColor,
         padding: 15,
     },
     rowCenterContainer: {
@@ -602,7 +602,7 @@ const styles = StyleSheet.create({
     },
     leftButtonText: {
         marginLeft: 10,
-        color: colors.submitButtonColor
+        color: colors.whiteColor
     },
     redText: {
         color: colors.logoutTextColor,

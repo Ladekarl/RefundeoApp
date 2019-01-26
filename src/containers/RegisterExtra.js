@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontWeight: 'bold',
         fontSize: 15,
-        color: colors.activeTabColor
+        color: colors.whiteColor
     },
     buttonContainer: {
         alignItems: 'stretch',

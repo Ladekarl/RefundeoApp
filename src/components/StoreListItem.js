@@ -229,6 +229,7 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         marginRight: 5,
         aspectRatio: 1,
+        padding: 4,
         backgroundColor: colors.activeTabColor,
         borderRadius: 4
     },
