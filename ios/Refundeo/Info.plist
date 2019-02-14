@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.11</string>
+	<string>1.12</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -30,7 +30,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>FacebookAppID</key>
 	<string>618541648483874</string>
 	<key>FacebookDisplayName</key>
@@ -48,19 +48,14 @@
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
+			<key>app.refundeo.com</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
 			<key>refundeo20180331121625.blob.core.windows.net</key>
 			<dict>
 				<key>NSIncludesSubdomains</key>
-				<true/>
-			</dict>
-			<key>refundeodev.azurewebsites.net</key>
-			<dict>
-				<key>NSIncludesSubdomains</key>
-				<true/>
-			</dict>
-			<key>localhost</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
 			</dict>
 		</dict>
@@ -75,8 +70,12 @@
 	<string>$(PRODUCT_NAME) needs to use your camera for scanning QR codes and for uploading the documentation for your tax refund</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) needs to use your location to provide you with nearby stores that offer tax refunds through our app</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>$(PRODUCT_NAME) needs to access your microphone to record audio</string>
 	<key>NSMotionUsageDescription</key>
 	<string>$(PRODUCT_NAME) needs to use motion for detecting motion</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>$(PRODUCT_NAME) needs to access your photo library to add photos to your device</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) needs to access your photo library to upload photos as documentation for your tax refund</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
@@ -110,9 +109,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
