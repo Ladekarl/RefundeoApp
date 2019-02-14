@@ -18,24 +18,36 @@ import Scanner from '../containers/Scanner';
 import RefundCase from '../containers/RefundCase';
 import UploadDocumentation from '../containers/UploadDocumentation';
 import Contact from '../components/Contact';
+import Cities from '../containers/Cities';
+import AddCity from '../containers/AddCity';
+import StoresScreen from '../containers/Stores';
+import OverviewScreen from '../containers/Overview';
 
 const {width, height} = Dimensions.get('screen');
-const noHeaderNavigationOptions = {headerMode: 'none', gesturesEnabled: false};
+const noHeaderNavigationOptions = {
+    headerMode: 'none',
+    gesturesEnabled: false,
+    headerStyle: {
+        elevation: 0,
+        shadowOpacity: 0,
+    }
+};
 const hasDrawer = false;
 
 const headerBackNavigationOptions = ({navigation}) => ({
     headerLeft:
         <TouchableOpacity style={styles.defaultHeaderLeftButton}
                           onPress={() => navigation.goBack()}>
-            <Icon name={Platform.OS === 'ios' ? 'angle-left' : 'arrow-left'} style={styles.defaultHeaderLeftIcon}/>
+            <Icon name='angle-left' style={styles.defaultHeaderLeftIcon}/>
         </TouchableOpacity>,
     headerTitleStyle: {
-        fontSize: 18,
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
+        fontSize: Platform.OS === 'ios' ? 17 : 18,
+        color: colors.whiteColor
     },
     gesturesEnabled: false,
     headerStyle: styles.defaultHeaderStyle,
-    headerTintColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
+    headerForceInset: {top: 'always'},
+    headerTintColor: colors.activeTabColor
 });
 
 const drawerPageNavigationOptions = ({navigation}) => ({
@@ -86,8 +98,12 @@ const MainDrawerNavigator = createDrawerNavigator({
 });
 
 const MainStackNavigator = createStackNavigator({
-    Home: {screen: HomeTab, navigationOptions: homeNavigatorOptions},
+    //Home: {screen: HomeTab, navigationOptions: homeNavigatorOptions},
+    Cities: {screen: Cities, navigationOptions: homeNavigatorOptions},
+    Overview: {screen: OverviewScreen, navigationOptions: homeNavigatorOptions},
     Settings: {screen: SettingsScreen, navigationOptions: headerBackNavigationOptions},
+    AddCity: {screen: AddCity, navigationOptions: headerBackNavigationOptions},
+    Stores: {screen: StoresScreen, navigationOptions: homeNavigatorOptions},
     Help: {screen: Help, navigationOptions: headerBackNavigationOptions},
     Guide: {screen: EmptyOverviewScreen, navigationOptions: headerBackNavigationOptions},
     Contact: {screen: Contact, navigationOptions: headerBackNavigationOptions},
@@ -95,12 +111,7 @@ const MainStackNavigator = createStackNavigator({
     RefundCase: {screen: RefundCase, navigationOptions: headerBackNavigationOptions},
     UploadDocumentation: {screen: UploadDocumentation, navigationOptions: headerBackNavigationOptions}
 }, {
-    lazy: true,
-    // transitionConfig: () => ({
-    //     transitionSpec: {
-    //         duration: 0,
-    //     },
-    // }),
+    lazy: true
 });
 
 const routeConfiguration = {
@@ -110,7 +121,14 @@ const routeConfiguration = {
             Login: {screen: LoginScreen, navigationOptions: headerBackNavigationOptions},
             Register: {screen: RegisterScreen, navigationOptions: headerBackNavigationOptions},
             RegisterExtra: {screen: RegisterExtraScreen, navigationOptions: headerBackNavigationOptions},
-        }, {initialRouteName: 'Initial'})
+        }, {
+            initialRouteName: 'Initial',
+            cardStyle: {
+                elevation: 0,
+                shadowOpacity: 0,
+                shadowColor: 'transparent',
+            },
+        })
     },
     mainFlow: {
         screen: hasDrawer ? MainDrawerNavigator : MainStackNavigator
@@ -144,15 +162,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     defaultHeaderLeftIcon: {
-        fontSize: Platform.OS === 'ios' ? 25 : 20,
+        fontSize: 30,
         height: undefined,
         width: undefined,
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
+        color: colors.activeTabColor
     },
     defaultHeaderStyle: {
-        elevation: 1,
-        backgroundColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor,
+        backgroundColor: colors.backgroundColor,
         margin: 0,
-        paddingBottom: Platform.OS === 'ios' ? 10 : 0
+        paddingBottom: Platform.OS === 'ios' ? 10 : 0,
+        borderBottomWidth: 0,
+        elevation: 0,
+        shadowOpacity: 0,
+        shadowColor: 'transparent'
     }
 });

@@ -54,9 +54,7 @@ class HeaderScreen extends Component {
         const {navigation, refundCases, user} = this.props.state;
         const isMerchant = user.isMerchant;
 
-        // TODO display filter
-        // let displayFilter = navigation.currentRoute === 'Stores' && !navigation.isMap;
-        let displayFilter = false;
+        let displayFilter = navigation.currentRoute === 'Stores' && !navigation.isMap;
         let isOverview = navigation.currentRoute === 'Overview';
         let displayHelp = !displayFilter && !isMerchant;
         let isRefundCaseView = isOverview && refundCases && refundCases.length > 0;
@@ -73,30 +71,39 @@ class HeaderScreen extends Component {
                         <Icon name='bars' style={styles.drawerIcon}/>
                     </TouchableOpacity>
                     }
-                    {!hasDrawer && !isMerchant &&
-                    <TouchableOpacity style={styles.noDrawerHeader}
+                    {!hasDrawer && !isMerchant && navigation.currentRoute === 'Cities' &&
+                    <TouchableOpacity style={styles.iconContainer}
                                       onPress={this.props.actions.navigateSettings}>
-                        <Icon name='user-circle' style={hasDrawer ? styles.drawerIcon : styles.noDrawerIcon}/>
+                        <Icon name='user-circle' style={styles.noDrawerIcon}/>
                     </TouchableOpacity>
                     }
-                    {navigation.currentRoute !== 'Stores' &&
+                    {!hasDrawer && !isMerchant && navigation.currentRoute !== 'Cities' &&
+                    <TouchableOpacity style={styles.noDrawerHeader}
+                                      onPress={this.props.actions.navigateBack}>
+                        <Icon name='angle-left' style={styles.navigateBackIcon}/>
+                    </TouchableOpacity>
+                    }
+                    {navigation.currentRoute === 'Cities' &&
                     <CustomText style={styles.headerText}>Refundeo</CustomText>
+                    }
+                    {navigation.currentRoute === 'Overview' &&
+                    <CustomText style={styles.headerText}>{strings('overview.refunds')}</CustomText>
                     }
                     {navigation.currentRoute === 'Stores' &&
                     <View style={styles.overlayContainer}>
                         <TouchableOpacity
                             activeOpacity={1}
-                            onPress={this.props.actions.navigateStoreMap}
-                            style={[styles.leftOverlayButton, navigation.isMap ? styles.activeButton : {}]}>
-                            <Icon name='map'
-                                  style={[styles.overlayButtonText, navigation.isMap ? styles.activeOverlayButtonText : {}]}/>
+                            onPress={this.props.actions.navigateStoreList}
+                            style={[styles.leftOverlayButton, !navigation.isMap ? styles.activeButton : {}]}>
+                            <Icon name='list'
+                                  style={[styles.overlayButtonText, !navigation.isMap ? styles.activeOverlayButtonText : {}]}/>
                         </TouchableOpacity>
                         <TouchableOpacity
                             activeOpacity={1}
-                            onPress={this.props.actions.navigateStoreList}
-                            style={[styles.rightOverlayButton, !navigation.isMap ? styles.activeButton : {}]}>
-                            <Icon name='list'
-                                  style={[styles.overlayButtonText, !navigation.isMap ? styles.activeOverlayButtonText : {}]}/>
+                            onPress={this.props.actions.navigateStoreMap}
+                            style={[styles.rightOverlayButton, navigation.isMap ? styles.activeButton : {}]}>
+                            <Icon name='map'
+                                  style={[styles.overlayButtonText, navigation.isMap ? styles.activeOverlayButtonText : {}]}/>
                         </TouchableOpacity>
                     </View>
                     }
@@ -107,7 +114,7 @@ class HeaderScreen extends Component {
                     </TouchableOpacity>
                     }
                     {displayHelp &&
-                    <TouchableOpacity style={hasDrawer ? styles.headerButton : styles.noDrawerHeader}
+                    <TouchableOpacity style={hasDrawer ? styles.headerButton : styles.iconContainer}
                                       onPress={this.props.actions.navigateHelp}>
                         <Icon name='question-circle' style={hasDrawer ? styles.drawerIcon : styles.noDrawerIcon}/>
                     </TouchableOpacity>
@@ -154,24 +161,24 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor,
+        backgroundColor: colors.backgroundColor,
         paddingLeft: 25,
         paddingRight: 25,
         paddingTop: Platform.OS === 'ios' ? 0 : 11,
-        paddingBottom: Platform.OS === 'ios' ? 9 : 11,
+        paddingBottom: 12,
         elevation: 1,
         zIndex: 9999
     },
     safeContainer: {
         flex: 1,
-        backgroundColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor,
+        backgroundColor: colors.backgroundColor,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
     },
     headerText: {
         fontSize: Platform.OS === 'ios' ? 17 : 18,
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor,
+        color: colors.whiteColor,
         fontWeight: 'bold'
     },
     headerButton: {
@@ -184,11 +191,13 @@ const styles = StyleSheet.create({
         backgroundColor: colors.activeTabColor
     },
     noDrawerHeader: {
-        height: 35,
-        width: 35,
-        borderRadius: 100,
+        marginLeft: 7,
+        marginRight: 7,
+        marginBottom: Platform.OS === 'ios' ? 7 : 0,
         justifyContent: 'center',
+        alignSelf: 'center',
         alignItems: 'center',
+        textAlign: 'center'
     },
     drawerIcon: {
         fontSize: Platform.OS === 'ios' ? 20 : 15,
@@ -198,11 +207,36 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         color: colors.backgroundColor
     },
+    iconContainer: {
+        backgroundColor: colors.addButtonInnerColor,
+        borderRadius: 20,
+        borderWidth: 2,
+        borderColor: colors.addButtonOuterColor,
+        padding: 2,
+        marginTop: 3,
+        marginBottom: 3,
+        paddingBottom: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center'
+    },
     noDrawerIcon: {
-        fontSize: Platform.OS === 'ios' ? 20 : 25,
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
+        fontSize: 25,
+        color: colors.activeTabColor,
+        textAlign: 'center'
+    },
+    navigateBackIcon: {
+        fontSize: 30,
+        textAlign: 'center',
+        alignSelf: 'center',
+        color: colors.activeTabColor
     },
     overlayContainer: {
+        backgroundColor: colors.addButtonInnerColor,
+        borderRadius: 5,
+        borderWidth: 2,
+        padding: 2,
+        borderColor: colors.addButtonOuterColor,
         alignSelf: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
@@ -218,8 +252,8 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 5,
         borderBottomLeftRadius: 5,
         borderWidth: Platform.OS === 'ios' ? 2 : StyleSheet.hairlineWidth,
-        borderColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.blackColor,
-        backgroundColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor
+        borderColor: colors.whiteColor,
+        backgroundColor: colors.backgroundColor
     },
     rightOverlayButton: {
         paddingTop: 7,
@@ -229,18 +263,18 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 5,
         borderBottomRightRadius: 5,
         borderWidth: Platform.OS === 'ios' ? 2 : StyleSheet.hairlineWidth,
-        borderColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.blackColor,
-        backgroundColor: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor
+        borderColor: colors.whiteColor,
+        backgroundColor: colors.backgroundColor
     },
     activeButton: {
-        backgroundColor: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor
+        backgroundColor: colors.whiteColor
     },
     overlayButtonText: {
-        color: Platform.OS === 'ios' ? colors.backgroundColor : colors.activeTabColor,
+        color: colors.whiteColor,
         fontSize: 15
     },
     activeOverlayButtonText: {
-        color: Platform.OS === 'ios' ? colors.activeTabColor : colors.backgroundColor
+        color: colors.backgroundColor
     }
 });
 

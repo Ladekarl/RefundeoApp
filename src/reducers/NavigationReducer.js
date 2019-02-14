@@ -6,7 +6,7 @@ const initialState = {
     currentRoute: 'Initial',
     drawerRoute: '',
     previousRoute: '',
-    isMap: true,
+    isMap: false,
     drawerOpen: false,
     modal: {},
     ...RootNavigator.router.getStateForAction(NavigationActions.navigate({routeName: 'loginFlow'}))
@@ -30,11 +30,11 @@ export default function navigationReducer(state = initialState, action = {}) {
             break;
         }
         case types.NAVIGATE_LOGGED_IN: {
-            if (state.currentRoute !== 'Overview') {
+            if (state.currentRoute !== 'Cities') {
                 nextState = {
                     ...state,
                     ...navigateAndReset('mainFlow', state),
-                    currentRoute: 'Overview',
+                    currentRoute: 'Cities',
                     drawerRoute: 'Home'
                 };
             }
@@ -267,6 +267,30 @@ export default function navigationReducer(state = initialState, action = {}) {
                     ...state,
                     ...RootNavigator.router.getStateForAction(navigationAction, state),
                     currentRoute: 'Contact',
+                    drawerRoute: 'Home'
+                };
+            }
+            break;
+        }
+        case types.NAVIGATE_ADD_CITY: {
+            const navigationAction = NavigationActions.navigate({routeName: 'AddCity'});
+            if (state.currentRoute !== 'AddCity') {
+                nextState = {
+                    ...state,
+                    ...RootNavigator.router.getStateForAction(navigationAction, state),
+                    currentRoute: 'AddCity',
+                    drawerRoute: 'Home'
+                };
+            }
+            break;
+        }
+        case types.NAVIGATE_CITIES: {
+            const navigationAction = NavigationActions.navigate({routeName: 'Cities'});
+            if (state.currentRoute !== 'Cities') {
+                nextState = {
+                    ...state,
+                    ...RootNavigator.router.getStateForAction(navigationAction, state),
+                    currentRoute: 'Cities',
                     drawerRoute: 'Home'
                 };
             }

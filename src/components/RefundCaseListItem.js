@@ -41,6 +41,8 @@ export default class RefundCaseListItem extends Component {
     };
 
     _getRefundCaseIcon = (refundCase) => {
+        if(!refundCase.merchant.logo) return;
+
         return <FastImage
             style={styles.documentationIcon}
             resizeMode={FastImage.resizeMode.contain}
@@ -71,7 +73,7 @@ export default class RefundCaseListItem extends Component {
                         </View>
                         <View style={styles.detailsContainer}>
                             <CustomText
-                                style={styles.detailBigTitle}>{refundCase.merchant.currency + ' ' + refundCase.refundAmount.toFixed(2).replace(/[.,]00$/, '')}</CustomText>
+                                style={styles.detailBigTitle}>{refundCase.merchant.currency + ' ' + refundCase.refundAmount.toFixed(1).replace(/[.,]0$/, '')}</CustomText>
                             <Icon style={styles.angleRightIcon} name='angle-right'/>
                             <View/>
                         </View>

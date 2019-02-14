@@ -6,8 +6,12 @@ import Actions from '../actions/Actions';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {strings} from '../shared/i18n';
+import Location from '../shared/Location';
 import CustomText from '../components/CustomText';
 import FastImage from 'react-native-fast-image';
+import {SafeAreaView} from 'react-navigation';
+import PlaceHolderFastImage from '../components/PlaceHolderFastImage';
+import MapView, {Marker} from 'react-native-maps';
 
 class StoreProfile extends Component {
 
@@ -28,67 +32,52 @@ class StoreProfile extends Component {
         const {selectedMerchant} = this.props.state;
         const openingHours = selectedMerchant.openingHours.find(o => o.day === (new Date).getDay());
 
-        let oHoursString = strings('stores.closed');
+        let distance = Location.calculateDistance(selectedMerchant.distance);
 
-        if (openingHours && openingHours.open && openingHours.close) {
-            oHoursString = openingHours.open + ' - ' + openingHours.close;
-        }
+        let oHoursString =
+            openingHours && openingHours.open && openingHours.close ?
+                openingHours.open + ' - ' + openingHours.close : strings('stores.closed');
+        let storeImage = selectedMerchant.banner ?
+            {uri: selectedMerchant.banner} : require('../../assets/refundeo_logo.png');
 
         return (
-            <View style={styles.container}>
-                <ScrollView styles={styles.scrollContainer} contentContainerStyle={styles.scrollContent}>
-                    {selectedMerchant.banner &&
-                    <FastImage
-                        style={styles.bannerImage}
-                        source={{uri: selectedMerchant.banner}}
-                        borderRadius={2}>
-                        <View style={styles.flexIconContainer}>
-                            <View style={styles.iconContainer}>
-                                {selectedMerchant.logo &&
-                                <FastImage style={styles.logoImage} resizeMode={FastImage.resizeMode.contain}
-                                           source={{uri: selectedMerchant.logo}}/>
-                                }
-                            </View>
-                        </View>
-                    </FastImage>
-                    }
-                    <View style={styles.bannerTextBarContainer}>
-                        <View style={styles.bannerColumnContainer}>
-                            <CustomText style={styles.leftText}>{strings('stores.opening_hours')}</CustomText>
-                            <CustomText style={styles.leftText}>{strings('stores.refund_percentage')}</CustomText>
-                        </View>
-                        <View style={styles.bannerColumnContainer}>
-                            <CustomText
-                                style={styles.contentText}>{oHoursString}</CustomText>
-                            {selectedMerchant.refundPercentage &&
-                            <CustomText
-                                style={styles.contentText}>{selectedMerchant.refundPercentage.toFixed(2).replace(/[.,]00$/, '') + ' %'}</CustomText>
-                            }
-                            {!selectedMerchant.refundPercentage &&
-                            <CustomText
-                                style={styles.contentText}>{strings('stores.no_refund')}</CustomText>
-                            }
+            <SafeAreaView style={styles.container}>
+                <View style={styles.topContainer}>
+                    <View style={styles.leftContainer}>
+                        <CustomText style={styles.aboutText}>ABOUT STORE</CustomText>
+                    </View>
+                    <View style={styles.rightContainer}>
+                        <PlaceHolderFastImage
+                            contentContainerStyle={styles.imageContainer}
+                            resizeMode={FastImage.resizeMode.cover}
+                            source={storeImage}
+                            style={styles.storeImage}
+                        />
+                        <View style={styles.mapContainer}>
+                            <MapView
+                                style={styles.map}
+                                region={{
+                                    latitude: selectedMerchant.latitude,
+                                    longitude: selectedMerchant.longitude,
+                                    latitudeDelta: 0.002,
+                                    longitudeDelta: 0.002
+                                }}>
+                                <Marker
+                                    coordinate={{
+                                        latitude: selectedMerchant.latitude,
+                                        longitude: selectedMerchant.longitude
+                                    }}
+                                    title={selectedMerchant.companyName}
+                                    description={distance}
+                                />
+                            </MapView>
                         </View>
                     </View>
-                    <View style={styles.descriptionContainer}>
-                        <CustomText>
-                            {selectedMerchant.description}
-                        </CustomText>
-                    </View>
-                    <View style={styles.bottomContainer}>
-                        <CustomText style={styles.bottomTitleText}>{strings('stores.address')}</CustomText>
-                        <CustomText style={styles.bottomText}>
-                            {`${selectedMerchant.addressStreetName} ${selectedMerchant.addressStreetNumber}, ${selectedMerchant.addressPostalCode} ${selectedMerchant.addressCity}, ${selectedMerchant.addressCountry}`}
-                        </CustomText>
-                    </View>
-                    <View style={styles.bottomContainer}>
-                        <CustomText style={styles.bottomTitleText}>{strings('stores.vat_number')}</CustomText>
-                        <CustomText style={styles.bottomText}>
-                            {selectedMerchant.vatNumber}
-                        </CustomText>
-                    </View>
-                </ScrollView>
-            </View>
+                </View>
+                <View style={styles.bottomContainer}>
+                    <CustomText style={styles.offersText}>YOUR OFFERS</CustomText>
+                </View>
+            </SafeAreaView>
         );
     }
 }
@@ -96,82 +85,70 @@ class StoreProfile extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.backgroundColor,
-    },
-    scrollContainer: {
-        backgroundColor: colors.backgroundColor,
-    },
-    scrollContent: {
-        paddingBottom: 15
-    },
-    bannerImage: {
-        width: '100%',
-        height: 180
-    },
-    flexIconContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    iconContainer: {
-        height: 80,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: colors.backgroundColor,
-        borderRadius: 40,
-        padding: 6,
-        elevation: 2,
-        borderWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0,
-        borderColor: colors.separatorColor
-    },
-    logoImage: {
-        height: 60,
-        width: 60,
-        margin: 5,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    bannerTextBarContainer: {
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        width: '100%',
-        backgroundColor: colors.activeTabColor,
-        padding: 10
-    },
-    bannerColumnContainer: {
         flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start'
+        backgroundColor: colors.backgroundColor
     },
-    leftText: {
-        margin: 5,
-        color: colors.separatorColor
+    topContainer: {
+        flex: 2,
+        flexDirection: 'row',
     },
-    contentText: {
+    bottomContainer: {
+        flex: 1.4,
+        borderRadius: 3,
+        marginLeft: 6,
+        marginRight: 6,
+        marginTop: 3,
+        marginBottom: 50,
+        backgroundColor: colors.whiteColor
+    },
+    leftContainer: {
+        flex: 1,
+        borderRadius: 4,
+        marginLeft: 6,
+        marginRight: 3,
+        marginBottom: 3,
+        backgroundColor: colors.whiteColor
+    },
+    rightContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        marginRight: 6
+    },
+    imageContainer: {
+        flex: 1.3,
+        borderRadius: 4,
+        marginLeft: 3,
+        marginBottom: 3,
+        backgroundColor: colors.whiteColor
+    },
+    storeImage: {
+        flex: 1,
+        height: undefined,
+        width: undefined
+    },
+    mapContainer: {
+        flex: 2,
+        borderRadius: 4,
+        marginLeft: 3,
+        marginBottom: 3,
+        marginTop: 3,
+        backgroundColor: colors.whiteColor
+    },
+    aboutText: {
+        textAlign: 'center',
+        fontSize: 22,
         margin: 5,
         color: colors.backgroundColor
     },
-    descriptionContainer: {
-        paddingTop: 20,
-        paddingLeft: 20,
-        paddingRight: 20,
-        backgroundColor: colors.backgroundColor
+    offersText: {
+        textAlign: 'center',
+        fontSize: 22,
+        margin: 5,
+        color: colors.backgroundColor
     },
-    bottomContainer: {
-        paddingTop: 15,
-        paddingLeft: 20,
-        paddingRight: 20,
-        backgroundColor: colors.backgroundColor
-    },
-    bottomTitleText: {
-        color: colors.activeTabColor,
-        fontSize: 15
-    },
-    bottomText: {
-        color: colors.darkTextColor,
-        marginTop: 10,
-        fontSize: 15
+    map: {
+        flex: 1,
+        borderRadius: 4
     }
 });
 

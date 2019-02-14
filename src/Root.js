@@ -37,7 +37,7 @@ export default class Root extends Component {
         const isConnected = this.state.isConnected;
         return (
             <View style={styles.container}>
-                <View style={[styles.content, {marginTop: isConnected ? 0 : 30}]}>
+                <View style={[styles.content, {marginTop: isConnected ? 0 : 27}]}>
                     <AppNavigator/>
                 </View>
                 {!isConnected &&
@@ -59,16 +59,19 @@ const styles = StyleSheet.create({
         flex: 1
     },
     offlineContainer: {
-        backgroundColor: colors.activeTabColor,
-        height: Platform.OS === 'ios' ? 20 : 30,
+        backgroundColor: colors.backgroundColor,
         justifyContent: 'center',
-        alignItems: Platform.OS === 'ios' ? 'flex-end' : 'center',
+        alignItems: 'flex-start',
         flexDirection: 'row',
         width,
-        position: 'absolute',
-        top: 0
+        position: 'absolute'
     },
     offlineText: {
+        backgroundColor: colors.logoutIconColor,
+        width,
+        textAlign: 'center',
+        paddingTop: 1,
+        paddingBottom: 1,
         color: colors.backgroundColor
     }
 });

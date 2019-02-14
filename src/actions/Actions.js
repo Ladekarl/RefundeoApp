@@ -22,7 +22,7 @@ export default {
     navigateDrawerSettings,
     navigateScanner,
     navigateQrCode,
-    navgiateOverview,
+    navigateOverview,
     navigateHelp,
     navigateStoreProfile,
     navigateRefundCase,
@@ -32,6 +32,7 @@ export default {
     navigateRegisterExtra,
     navigateGuide,
     navigateContact,
+    navigateAddCity,
     openModal,
     closeModal,
     login,
@@ -56,8 +57,123 @@ export default {
     uploadTempReceiptImage,
     sendVatFormEmail,
     changeFilterValues,
-    forgotPassword
+    forgotPassword,
+    selectCity,
+    addCity
 };
+
+function navigateCities() {
+    return {
+        type: types.NAVIGATE_CITIES
+    };
+}
+
+function addCity(placesId) {
+    return dispatch => {
+        if(!placesId) {
+            dispatch(navigateCities());
+        }
+        dispatch(addingCity());
+        const getCitiesPromise = LocalStorage.getCities();
+        const getCityPromise = Api.getCityById(placesId);
+        Promise.all([getCitiesPromise, getCityPromise]).then(([cities, city]) => {
+            if (!cities) {
+                cities = [];
+            }
+            if (cities.indexOf(placesId) === -1) {
+                cities.push(placesId);
+                LocalStorage.saveCities(cities).then(() => {
+                    dispatch(addCitySuccess(city));
+                    dispatch(navigateCities());
+                }).catch(() => {
+                    // TODO Add error message
+                    dispatch(addCityError());
+                });
+            } else {
+                dispatch(addCitySuccess(city));
+                dispatch(navigateCities());
+            }
+        }).catch(response => {
+            if (shouldLogout(response)) {
+                dispatch(logout());
+            } else {
+                // TODO Add error message
+                dispatch(addCityError());
+            }
+        });
+    };
+}
+
+function addingCity() {
+    return {
+        type: types.CITY_ADDING_CITY
+    };
+}
+
+function addCitySuccess(city) {
+    return {
+        type: types.CITY_ADD_CITY_SUCCESS,
+        city
+    };
+}
+
+function addCityError(error = '') {
+    return {
+        type: types.CITY_ADD_CITY_ERROR,
+        error
+    };
+}
+
+function selectCity(id) {
+    return dispatch => {
+        dispatch(gettingCity());
+        Api.getCityById(id).then(city => {
+            dispatch(getCitySuccess(city));
+            dispatch({
+               type: types.CITY_SELECT_CITY,
+               city
+            });
+            dispatch(navigateStoreList());
+        }).catch(response => {
+            if (shouldLogout(response)) {
+                dispatch(logout());
+            } else {
+                Helpers.handleCityResponse(id).then(city => {
+                    if (city) {
+                        dispatch(getCitySuccess(city));
+                        dispatch({
+                            type: types.CITY_SELECT_CITY,
+                            city
+                        });
+                        dispatch(navigateStoreList());
+                    } else {
+                        dispatch(getCityError(strings('cities.get_city_error')));
+                    }
+                });
+            }
+        });
+    };
+}
+
+function gettingCity() {
+    return {
+        type: types.CITY_GETTING_CITY
+    };
+}
+
+function getCitySuccess(city) {
+    return {
+        type: types.CITY_GET_CITY_SUCCESS,
+        city
+    };
+}
+
+function getCityError(error = '') {
+    return {
+        type: types.CITY_GET_CITY_ERROR,
+        error
+    };
+}
 
 function forgotPassword(username) {
     if (!username) {
@@ -77,7 +193,7 @@ function forgotPasswordSuccess(email) {
     return {
         type: types.AUTH_FORGOT_PASSWORD_SUCCESS,
         forgotPasswordEmail: email
-    }
+    };
 }
 
 
@@ -85,13 +201,13 @@ function forgotPasswordError(error = '') {
     return {
         type: types.AUTH_FORGOT_PASSWORD_ERROR,
         error
-    }
+    };
 }
 
 function postingForgotPassword() {
     return {
         type: types.AUTH_POSTING_FORGOT_PASSWORD
-    }
+    };
 }
 
 function navigateGuide() {
@@ -103,6 +219,12 @@ function navigateGuide() {
 function navigateContact() {
     return {
         type: types.NAVIGATE_CONTACT
+    };
+}
+
+function navigateAddCity() {
+    return {
+        type: types.NAVIGATE_ADD_CITY
     };
 }
 
@@ -272,16 +394,46 @@ function navigateInitial() {
     };
 }
 
+function getCitiesSuccess(cities) {
+    return {
+        type: types.CITY_GET_CITIES_SUCCESS,
+        cities
+    };
+}
+
 function getInitialData() {
     return dispatch => {
         Promise.all([
             Api.getRefundCases(),
-            Api.getAllMerchants(),
+            LocalStorage.getCities(),
             Api.getTags()
-        ]).then(([refundCases, merchants, tags]) => {
+        ]).then(([refundCases, cityIds, tags]) => {
             dispatch(getRefundCasesSuccess(refundCases));
-            dispatch(getMerchantsSuccess(merchants));
             dispatch(getTagsSuccess(tags));
+            if (cityIds) {
+                const getCitiesPromises = [];
+                cityIds.forEach(c => {
+                        getCitiesPromises.push(LocalStorage.getCity(c));
+                    }
+                );
+                Promise.all(getCitiesPromises).then(localCities => {
+                    if (localCities) {
+                        const getRemoteCitiesPromises = [];
+                        localCities.forEach((localCity, i) => {
+                            if (!localCity) {
+                                getRemoteCitiesPromises.push(Api.getCityById(cityIds[i]));
+                            }
+                        });
+                        if (getRemoteCitiesPromises.length === 0) {
+                            getCitiesSuccess(localCities);
+                        } else {
+                            Promise.all(getRemoteCitiesPromises).then(remoteCities => {
+                                getCitiesSuccess(remoteCities.concat(localCities));
+                            });
+                        }
+                    }
+                });
+            }
         });
     };
 }
@@ -303,20 +455,7 @@ function getInitialDataThenNavigate() {
                         });
                     }
                 }),
-                Api.getAllMerchants().catch((response) => {
-                    if (shouldLogout(response)) {
-                        dispatch(logout());
-                    } else {
-                        Helpers.handleMerchantsResponse().then(merchants => {
-                            if (merchants) {
-                                dispatch(getMerchantsSuccess(merchants));
-                            } else {
-                                dispatch(getMerchantsError());
-                            }
-                            dispatch(navigateAndResetToMainFlow());
-                        });
-                    }
-                }),
+                LocalStorage.getCities(),
                 Api.getTags().catch(response => {
                     if (shouldLogout(response)) {
                         dispatch(logout());
@@ -330,11 +469,39 @@ function getInitialDataThenNavigate() {
                     }
                 })
             ]
-        ).then(([refundCases, merchants, tags]) => {
+        ).then(([refundCases, cityIds, tags]) => {
             dispatch(getRefundCasesSuccess(refundCases));
-            dispatch(getMerchantsSuccess(merchants));
             dispatch(getTagsSuccess(tags));
-            dispatch(navigateAndResetToMainFlow());
+            if (cityIds) {
+                const getCitiesPromises = [];
+                cityIds.forEach(c => {
+                        getCitiesPromises.push(LocalStorage.getCity(c));
+                    }
+                );
+                Promise.all(getCitiesPromises).then(localCities => {
+                    if (localCities) {
+                        const getRemoteCitiesPromises = [];
+                        localCities.forEach((localCity, i) => {
+                            if (!localCity) {
+                                getRemoteCitiesPromises.push(Api.getCityById(cityIds[i]));
+                            }
+                        });
+                        if (getRemoteCitiesPromises.length === 0) {
+                            dispatch(getCitiesSuccess(localCities));
+                            dispatch(navigateAndResetToMainFlow());
+                        } else {
+                            Promise.all(getRemoteCitiesPromises).then(remoteCities => {
+                                dispatch(getCitiesSuccess(remoteCities.concat(localCities)));
+                                dispatch(navigateAndResetToMainFlow());
+                            });
+                        }
+                    } else {
+                        dispatch(navigateAndResetToMainFlow());
+                    }
+                });
+            } else {
+                dispatch(navigateAndResetToMainFlow());
+            }
         });
     };
 }
@@ -402,7 +569,7 @@ function navigateQrCode() {
     };
 }
 
-function navgiateOverview() {
+function navigateOverview() {
     return {
         type: types.NAVIGATE_OVERVIEW
     };
@@ -514,8 +681,8 @@ function loginFacebook(accessToken) {
             } else {
                 dispatch(facebookLoginError(strings('login.error_user_does_not_exist_in_database')));
             }
-        }).catch((error) => {
-            dispatch(facebookLoginError(error));
+        }).catch(() => {
+            dispatch(facebookLoginError(strings('login.unknown_error')));
         });
     };
 }

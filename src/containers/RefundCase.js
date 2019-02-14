@@ -3,7 +3,6 @@ import {
     View,
     StyleSheet,
     ScrollView,
-    ImageBackground,
     Image,
     Platform,
     TouchableOpacity,
@@ -286,9 +285,9 @@ class RefundCase extends Component {
                         </View>
                         <View style={styles.bannerColumnContainer}>
                             <CustomText
-                                style={styles.contentText}>{refundCase.merchant.currency + ' ' + refundCase.amount.toFixed(2).replace(/[.,]00$/, '')}</CustomText>
+                                style={styles.contentText}>{refundCase.merchant.currency + ' ' + refundCase.amount.toFixed(1).replace(/[.,]0$/, '')}</CustomText>
                             <CustomText
-                                style={styles.contentText}>{refundCase.merchant.currency + ' ' + refundCase.refundAmount.toFixed(2).replace(/[.,]00$/, '')}</CustomText>
+                                style={styles.contentText}>{refundCase.merchant.currency + ' ' + refundCase.refundAmount.toFixed(1).replace(/[.,]0$/, '')}</CustomText>
                             <CustomText style={styles.contentText}>{refundCase.receiptNumber}</CustomText>
                         </View>
                     </View>

@@ -107,14 +107,13 @@ export default class StoreFilter extends React.PureComponent {
                 <View style={styles.filterTagsContainer} key={Math.random()}>
                     {
                         chunk.map(t => {
-                            const tagText = this.getTagText(t);
-                            if (tagText) {
+                            if (t.displayName) {
                                 return <TouchableOpacity
                                     style={filterTagValue.key === t.key ? styles.selectedFilterTag : styles.filterTag}
                                     key={t.key}
                                     onPress={() => this.onTagPress(t)}>
                                     <CustomText
-                                        style={filterTagValue.key === t.key ? styles.selectedFilterTagText : styles.filterTagText}>{tagText}</CustomText>
+                                        style={filterTagValue.key === t.key ? styles.selectedFilterTagText : styles.filterTagText}>{t.displayName}</CustomText>
                                 </TouchableOpacity>;
                             }
                         })
@@ -124,35 +123,6 @@ export default class StoreFilter extends React.PureComponent {
         }
         return renderedTags;
     };
-
-    getTagText = (tag) => {
-        const key = tag.key;
-        switch (key) {
-            case 0:
-                return strings('stores.tag_jewelry');
-            case 1:
-                return strings('stores.tag_leather');
-            case 2:
-                return strings('stores.tag_footwear');
-            case 3:
-                return strings('stores.tag_accessories');
-            case 4:
-                return strings('stores.tag_sportswear');
-            case 5:
-                return strings('stores.tag_electronics');
-            case 6:
-                return strings('stores.tag_children');
-            case 7:
-                return strings('stores.tag_books');
-            case 8:
-                return strings('stores.tag_menswear');
-            case 9:
-                return strings('stores.tag_womenswear');
-            default:
-                return null;
-        }
-    };
-
 
     render() {
         const distanceValue = this.getDistanceSliderValue(this.state.filterDistanceSliderValue);
@@ -254,7 +224,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     filterTitle: {
-        color: colors.darkTextColor
+        color: colors.slightlyDarkerColor
     },
     filterSliderContainer: {
         flexDirection: 'row',
@@ -291,11 +261,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginBottom: 10,
         marginRight: 10,
-        color: colors.darkTextColor
+        color: colors.activeTabColor
     },
     filterSwitchText: {
         fontWeight: 'bold',
-        color: colors.darkTextColor,
+        color: colors.whiteColor,
         marginBottom: 5,
         marginLeft: 20,
         marginTop: 5,
@@ -307,7 +277,7 @@ const styles = StyleSheet.create({
         padding: 2,
         minHeight: 40,
         marginTop: 10,
-        borderColor: colors.activeTabColor,
+        borderColor: colors.whiteColor,
         borderRadius: 2,
         borderWidth: 1,
         marginLeft: 1,
@@ -321,12 +291,11 @@ const styles = StyleSheet.create({
         padding: 2,
         marginTop: 10,
         minHeight: 40,
-        borderColor: colors.activeTabColor,
-        borderRadius: 2,
         borderWidth: 1,
+        borderRadius: 2,
         marginLeft: 1,
         marginRight: 1,
-        backgroundColor: colors.activeTabColor,
+        backgroundColor: colors.whiteColor,
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -334,12 +303,12 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         alignSelf: 'center',
         fontSize: 10,
-        color: colors.activeTabColor
+        color: colors.whiteColor
     },
     selectedFilterTagText: {
         textAlign: 'center',
         alignSelf: 'center',
         fontSize: 10,
-        color: colors.whiteColor
+        color: colors.backgroundColor
     }
 });

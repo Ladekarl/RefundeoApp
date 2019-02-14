@@ -282,4 +282,19 @@ export default class Api {
 
         return await response.json();
     }
+
+    static async getCityById(id) {
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                ...await Helpers.authHeader()
+            }
+        };
+
+        const response = await Helpers.fetchAuthenticated(`${API_URL}/api/city/${id}`, requestOptions);
+
+        const city = await response.json();
+
+        return await Helpers.handleCityResponse(id, city);
+    }
 }

@@ -36,30 +36,15 @@ class StoresScreen extends Component {
         };
     }
 
-    initRegion = {
-        latitude: 55.789354,
-        longitude: 12.525010,
-        latitudeDelta: 12,
-        longitudeDelta: 12
-    };
-
     componentDidMount() {
         Location.getCurrentPosition()
-            .then((location) => this.setLocation(location))
+            .then(() => {
+                this.setState({locationPermission: true});
+            })
             .catch(() => {
                 this.setState({locationPermission: false});
             });
     }
-
-    setLocation = (location) => {
-        this.initRegion = {
-            latitudeDelta: 0.1,
-            longitudeDelta: 0.1,
-            ...location.coords
-        };
-
-        this.setState({locationPermission: true});
-    };
 
 
     onCalloutPress = (merchant) => {
@@ -105,12 +90,12 @@ class StoresScreen extends Component {
     };
 
     render() {
-        const {navigation, merchants, fetchingMerchants, filterDistanceSliderValue, filterRefundSliderValue, filterOnlyOpenValue, filterTag} = this.props.state;
+        const {navigation, selectedCity, fetchingMerchants, filterDistanceSliderValue, filterRefundSliderValue, filterOnlyOpenValue, filterTag} = this.props.state;
 
         let clusteredMapData = [];
 
-        if (merchants) {
-            clusteredMapData = this.getClusteredMapData(merchants);
+        if (selectedCity && selectedCity.merchants) {
+            clusteredMapData = this.getClusteredMapData(selectedCity.merchants);
         }
 
         return (
@@ -121,7 +106,12 @@ class StoresScreen extends Component {
                     data={clusteredMapData}
                     showsUserLocation={true}
                     edgePadding={{top: 100, left: 100, bottom: 100, right: 100}}
-                    initialRegion={this.initRegion}
+                    initialRegion={{
+                        latitude: selectedCity.latitude,
+                        longitude: selectedCity.longitude,
+                        latitudeDelta: 0.2,
+                        longitudeDelta: 0.2
+                    }}
                     clusteringEnabled={true}
                     clusterInitialFontSize={15}
                     showsMyLocationButton={true}
@@ -129,10 +119,10 @@ class StoresScreen extends Component {
                     renderMarker={this.renderMarker}
                     renderCluster={this.renderCluster}/>
                 }
-                {!navigation.isMap && merchants &&
+                {!navigation.isMap && selectedCity && selectedCity.merchants &&
                 <StoresList
                     actions={this.props.actions}
-                    merchants={merchants}
+                    merchants={selectedCity.merchants}
                     distance={filterDistanceSliderValue}
                     minRefund={filterRefundSliderValue}
                     onlyOpen={filterOnlyOpenValue}
@@ -199,7 +189,8 @@ const mapStateToProps = state => {
     return {
         state: {
             navigation,
-            ...state.merchantReducer
+            ...state.merchantReducer,
+            ...state.cityReducer
         }
     };
 };

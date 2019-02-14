@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
         paddingRight: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: colors.white
+        backgroundColor: colors.whiteColor
     },
     facebookIconContainer: {
         flex: 1,
@@ -246,6 +246,7 @@ const styles = StyleSheet.create({
     },
     alreadyCustomerText: {
         fontWeight: 'bold',
+        color: colors.whiteColor
     },
     loginButtonText: {
         color: colors.submitButtonColor,
@@ -269,7 +270,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         fontWeight: 'bold',
-        color: colors.submitButtonColor
+        color: colors.activeTabColor
     },
     loadingContainer: {
         position: 'absolute',
