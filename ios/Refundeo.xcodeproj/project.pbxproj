@@ -22,13 +22,18 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		3100584FF7234023B00DF89A /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8C05AAF7D50C46B090AEA1E0 /* FontAwesome.ttf */; };
 		3525D8DEEE0240AD9ECC2C0F /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5D7BC5244ED4A50AFB5D748 /* libRNFirebase.a */; };
+		37BC533EFC3248379A2B8C2A /* help.png in Resources */ = {isa = PBXBuildFile; fileRef = DE1175A046CB499984AE8EE0 /* help.png */; };
 		47C6BDDF1160452D8952FAC2 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43ED2C976E6640E595F6944A /* libRCTFBSDK.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
+		5E958763C9704111A49C1CB2 /* tax_form.png in Resources */ = {isa = PBXBuildFile; fileRef = 801580E7210B44D6B1BE8FAB /* tax_form.png */; };
 		6E3CC5137AA74C508CB7DE36 /* facebook-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D2C311B1DAD74F2BB7491A9E /* facebook-icon.png */; };
 		6FF2BC39D15E4A5BB12A854E /* libPods-Refundeo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D34CADEBAC3AC006B8D1A8 /* libPods-Refundeo.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		8D5187C3916B40B89D2D539F /* receipt.png in Resources */ = {isa = PBXBuildFile; fileRef = BE8B8BC9B8FC4BE285713995 /* receipt.png */; };
+		A62998E7793149EA98DE8C18 /* refundeo_banner_small.png in Resources */ = {isa = PBXBuildFile; fileRef = DD8DD8C38FB84D3F997DC6EA /* refundeo_banner_small.png */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		B3358F815B54451390B8BE01 /* refundeo_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = CCCAB3D084E348138CA63940 /* refundeo_logo.png */; };
+		B84E95812B924F7582620EDE /* example-store.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B180C9ACF234497F807CE1D7 /* example-store.jpg */; };
 		CB273B9720B7388200FCCD2B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB273B9620B7388200FCCD2B /* Images.xcassets */; };
 		CB6CE4A820E0303E000B7C22 /* libRSSignatureCapture.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB6CE4A720E03021000B7C22 /* libRSSignatureCapture.a */; };
 		CB6CE4B620E035D4000B7C22 /* libRCTOrientation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB6CE4B520E035CA000B7C22 /* libRCTOrientation.a */; };
@@ -384,11 +389,14 @@
 		43ED2C976E6640E595F6944A /* libRCTFBSDK.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTFBSDK.a; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
+		801580E7210B44D6B1BE8FAB /* tax_form.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = tax_form.png; path = ../assets/tax_form.png; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		8C05AAF7D50C46B090AEA1E0 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-fa-icons/fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		A5D7BC5244ED4A50AFB5D748 /* libRNFirebase.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFirebase.a; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
+		B180C9ACF234497F807CE1D7 /* example-store.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "example-store.jpg"; path = "../assets/example-store.jpg"; sourceTree = "<group>"; };
 		B424A83DB81741D081FD29C0 /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTFBSDK.xcodeproj; path = "../node_modules/react-native-fbsdk/ios/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; };
+		BE8B8BC9B8FC4BE285713995 /* receipt.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = receipt.png; path = ../assets/receipt.png; sourceTree = "<group>"; };
 		C9DF66F9C7E34C79B25DFA0B /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
 		CB273B9520B734AF00FCCD2B /* da-DK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "da-DK"; path = "Refundeo/da-DK.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		CB273B9620B7388200FCCD2B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -411,6 +419,8 @@
 		CCCAB3D084E348138CA63940 /* refundeo_logo.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = refundeo_logo.png; path = ../assets/refundeo_logo.png; sourceTree = "<group>"; };
 		D2C311B1DAD74F2BB7491A9E /* facebook-icon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "facebook-icon.png"; path = "../assets/facebook-icon.png"; sourceTree = "<group>"; };
 		DD836F9644D14EB0327A2346 /* Pods-Refundeo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Refundeo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Refundeo/Pods-Refundeo.release.xcconfig"; sourceTree = "<group>"; };
+		DD8DD8C38FB84D3F997DC6EA /* refundeo_banner_small.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = refundeo_banner_small.png; path = ../assets/refundeo_banner_small.png; sourceTree = "<group>"; };
+		DE1175A046CB499984AE8EE0 /* help.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = help.png; path = ../assets/help.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -694,6 +704,11 @@
 				8C05AAF7D50C46B090AEA1E0 /* FontAwesome.ttf */,
 				D2C311B1DAD74F2BB7491A9E /* facebook-icon.png */,
 				CCCAB3D084E348138CA63940 /* refundeo_logo.png */,
+				B180C9ACF234497F807CE1D7 /* example-store.jpg */,
+				DE1175A046CB499984AE8EE0 /* help.png */,
+				BE8B8BC9B8FC4BE285713995 /* receipt.png */,
+				DD8DD8C38FB84D3F997DC6EA /* refundeo_banner_small.png */,
+				801580E7210B44D6B1BE8FAB /* tax_form.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -787,7 +802,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 6RUUX8C445;
+						DevelopmentTeam = 2AFEAX4TBH;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -805,8 +820,11 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
+				"da-DK",
+				"en-US",
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
@@ -1214,6 +1232,11 @@
 				CBA4A7D720B6277900A32902 /* GoogleService-Info.plist in Resources */,
 				6E3CC5137AA74C508CB7DE36 /* facebook-icon.png in Resources */,
 				B3358F815B54451390B8BE01 /* refundeo_logo.png in Resources */,
+				B84E95812B924F7582620EDE /* example-store.jpg in Resources */,
+				37BC533EFC3248379A2B8C2A /* help.png in Resources */,
+				8D5187C3916B40B89D2D539F /* receipt.png in Resources */,
+				A62998E7793149EA98DE8C18 /* refundeo_banner_small.png in Resources */,
+				5E958763C9704111A49C1CB2 /* tax_form.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1258,7 +1281,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Refundeo/Pods-Refundeo-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Refundeo/Pods-Refundeo-resources.sh",
 				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
 			);
@@ -1269,7 +1292,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Refundeo/Pods-Refundeo-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Refundeo/Pods-Refundeo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1394,12 +1417,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = "";
-				HEADER_SEARCH_PATHS = (
-					"<Multiple",
-					"values>",
-					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
-				);
+				DEVELOPMENT_TEAM = 2AFEAX4TBH;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				"HEADER_SEARCH_PATHS[arch=*]" = "$(inherited)";
 				INFOPLIST_FILE = Refundeo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1447,12 +1466,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				HEADER_SEARCH_PATHS = (
-					"<Multiple",
-					"values>",
-					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
-				);
+				DEVELOPMENT_TEAM = 2AFEAX4TBH;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				"HEADER_SEARCH_PATHS[arch=*]" = "$(inherited)";
 				INFOPLIST_FILE = Refundeo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
