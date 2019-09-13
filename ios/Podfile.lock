@@ -30,7 +30,7 @@ PODS:
     - GoogleUtilities/Network (~> 5.2)
     - "GoogleUtilities/NSData+zlib (~> 5.2)"
     - nanopb (~> 0.3)
-  - FirebaseAnalyticsInterop (1.1.0)
+  - FirebaseAnalyticsInterop (1.4.0)
   - FirebaseCore (5.1.10):
     - GoogleUtilities/Logger (~> 5.2)
   - FirebaseInstanceID (3.3.0):
@@ -77,30 +77,30 @@ PODS:
   - GoogleMaps/Base (2.5.0)
   - GoogleMaps/Maps (2.5.0):
     - GoogleMaps/Base
-  - GoogleUtilities/AppDelegateSwizzler (5.3.7):
+  - GoogleUtilities/AppDelegateSwizzler (5.8.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (5.3.7)
-  - GoogleUtilities/Logger (5.3.7):
+  - GoogleUtilities/Environment (5.8.0)
+  - GoogleUtilities/Logger (5.8.0):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (5.3.7):
+  - GoogleUtilities/MethodSwizzler (5.8.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (5.3.7):
+  - GoogleUtilities/Network (5.8.0):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (5.3.7)"
-  - GoogleUtilities/Reachability (5.3.7):
+  - "GoogleUtilities/NSData+zlib (5.8.0)"
+  - GoogleUtilities/Reachability (5.8.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (5.3.7):
+  - GoogleUtilities/UserDefaults (5.8.0):
     - GoogleUtilities/Logger
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
     - nanopb/encode (= 0.3.901)
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
-  - Protobuf (3.6.1)
+  - Protobuf (3.9.0)
   - React (0.57.8):
     - React/Core (= 0.57.8)
   - react-native-camera (1.9.1):
@@ -181,16 +181,17 @@ PODS:
     - React
   - RNI18n (2.0.15):
     - React
-  - SDWebImage/Core (4.4.3)
-  - SDWebImage/GIF (4.4.3):
+  - SDWebImage/Core (4.4.7)
+  - SDWebImage/GIF (4.4.7):
     - FLAnimatedImage (~> 1.0)
     - SDWebImage/Core
   - yoga (0.57.8.React)
 
 DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
-  - FBSDKLoginKit
-  - FBSDKShareKit
+  - FBSDKCoreKit (~> 4.40.0)
+  - FBSDKLoginKit (~> 4.40.0)
+  - FBSDKShareKit (~> 4.40.0)
   - Firebase/Core (~> 5.15.0)
   - Firebase/Messaging (~> 5.15.0)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
@@ -288,7 +289,7 @@ SPEC CHECKSUMS:
   FBSDKShareKit: 0e45916f4150da485928ae2a17ca021950b194f5
   Firebase: 8bb9268bff82374f2cbaaabb143e725743c316ae
   FirebaseAnalytics: c06f9d70577d79074214700a71fd5d39de5550fb
-  FirebaseAnalyticsInterop: e5f21be9af6548372e2f0815834ff909bff395a2
+  FirebaseAnalyticsInterop: d48b6ab67bcf016a05e55b71fc39c61c0cb6b7f3
   FirebaseCore: 35747502d9e8c6ee217385ad04446c7c2aaf9c5c
   FirebaseInstanceID: e2fa4cb35ef5558c200f7f0ad8a53e212215f93e
   FirebaseMessaging: b412996f6a09337d232bb3a6676ce4d1f353d024
@@ -298,24 +299,24 @@ SPEC CHECKSUMS:
   Google-Maps-iOS-Utils: c32891ff472eaaa1fca032beedafa1a013af7875
   GoogleAppMeasurement: 98b71f5e04142793729a5ef23e5b96651ff4b70f
   GoogleMaps: c087b8e5dfe87ca6ebf59adb9b4894a4146bec4f
-  GoogleUtilities: 111a012f4c3a29c9e7c954c082fafd6ee3c999c0
+  GoogleUtilities: 04fce34bcd5620c1ee76fb79172105c74a4df335
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
-  Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
-  React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
-  react-native-camera: a8d04ef12749def72cae86b0b8d28c2de891a392
-  react-native-document-picker: e7934f6a3c898a1b62fa68b1f09371beef6ac51a
-  react-native-fast-image: cba3d9bf9c2cf8ddb643d887a686c53a5dd90a2c
-  react-native-fetch-blob: 63394b1d7b0781547b3e4463b3195790177b1222
-  react-native-google-maps: b946d62e25dc66097921ed82520e45b0b081768a
-  react-native-image-picker: f42de90075c5b1af53417af927631d909a1a746e
-  react-native-maps: 066c2afcc89e18726377bcc685315f989ca22449
-  ReactNativePermissions: 9f2d9c45c98800795e6c2ed330e25d11a66a8169
-  RNFS: bbb1a64eb245763daf34aea86f97c97c4e85f74c
-  RNGestureHandler: 282af6ea58ed8483612365159c58a3ca5f55e7da
-  RNI18n: 46b8694063fbd699f2c06a4dc8e835b3176763b1
-  SDWebImage: c5594f1a19c48d526d321e548902b56b479cd508
-  yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
+  Protobuf: 1097ca58584c8d9be81bfbf2c5ff5975648dd87a
+  React: adbac0757ce35e92fbd447ab98c810209d27d9b0
+  react-native-camera: 829468e632561d2247a5fdcbd253aa8bfafc10bf
+  react-native-document-picker: da1c37bbc4ff0896986a70784808a2862d297887
+  react-native-fast-image: 6d50167ad4d68b59640ceead8c2bc4e58d91d8bd
+  react-native-fetch-blob: 2bef9be702de8726f4d7bf58d2345579aaaee60d
+  react-native-google-maps: 544d2208b09a7e2ec2c6112c8a97c4e7f921f74d
+  react-native-image-picker: e6e06d4315e3c85bad17e4b2002cd29f11d202c8
+  react-native-maps: 9469741f77f270c605cafec603ce47327dc5b5f8
+  ReactNativePermissions: 2e324bb3baf12702e3ec27f76c8ae1158fa69fc6
+  RNFS: c9bbde46b0d59619f8e7b735991c60e0f73d22c1
+  RNGestureHandler: 19864cb399138347461e7c9984ccf684cbf4db1d
+  RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
+  SDWebImage: c10d14a8883ebd89664f02a422006f66a85c0c5d
+  yoga: 74cdf036c30820443b25ade59916236b1e95ee93
 
-PODFILE CHECKSUM: a936b8e5d61386ad57258c9d5517ad359a48a12b
+PODFILE CHECKSUM: 114b9f6cf39b57d65e36b467a02226f17040cdbe
 
-COCOAPODS: 1.5.2
+COCOAPODS: 1.7.4

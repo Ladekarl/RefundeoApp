@@ -41,8 +41,9 @@ target 'Refundeo' do
   pod 'react-native-camera', :path => '../node_modules/react-native-camera'
   pod 'react-native-fast-image', :path => '../node_modules/react-native-fast-image'
   pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
-  pod 'FBSDKLoginKit'
-  pod 'FBSDKShareKit'
+  pod 'FBSDKCoreKit', '~> 4.40.0'
+  pod 'FBSDKLoginKit', '~> 4.40.0'
+  pod 'FBSDKShareKit', '~> 4.40.0'
   pod 'Firebase/Core', '~> 5.15.0'
   pod 'Firebase/Messaging', '~> 5.15.0'
 
