@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Platform, ScrollView} from 'react-native';
+import {Platform, ScrollView, StyleSheet, View} from 'react-native';
 import colors from '../shared/colors';
 import {bindActionCreators} from 'redux';
 import Actions from '../actions/Actions';
@@ -48,6 +48,16 @@ class StoreProfile extends Component {
                         }
                         source={{uri: selectedMerchant.banner}}
                         borderRadius={2}>
+                        {!!selectedMerchant.logo &&
+                        <View style={styles.flexIconContainer}>
+                            <View style={styles.iconContainer}>
+                                <FastImage
+                                    style={styles.logoImage}
+                                    resizeMode={FastImage.resizeMode.contain}
+                                    source={{uri: selectedMerchant.logo}}/>
+                            </View>
+                        </View>
+                        }
                     </PlaceHolderFastImage>
                     <View style={styles.bannerTextBarContainer}>
                         <View style={styles.bannerColumnContainer}>
@@ -68,6 +78,7 @@ class StoreProfile extends Component {
                                 style={styles.contentText}>{strings('stores.no_refund')}</CustomText>
                             }
                         </View>
+                        <View style={styles.bannerColumnContainer}/>
                     </View>
                     <View style={styles.descriptionContainer}>
                         <CustomText style={styles.descriptionText}>
@@ -99,8 +110,31 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.backgroundColor,
     },
+    flexIconContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    iconContainer: {
+        height: 80,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.whiteColor,
+        borderRadius: 40,
+        padding: 6,
+        elevation: 2,
+        borderWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0,
+        borderColor: colors.separatorColor
+    },
+    logoImage: {
+        height: 60,
+        width: 60,
+        margin: 5,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     scrollContainer: {
-        backgroundColor: colors.backgroundColor,
+        backgroundColor: colors.slightlyDarkerColor,
     },
     scrollContent: {
         paddingBottom: 15
@@ -119,44 +153,41 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         width: '100%',
-        backgroundColor: colors.whiteColor,
+        backgroundColor: colors.backgroundColor,
         padding: 10
     },
     bannerColumnContainer: {
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start'
+        flex: 1
     },
     leftText: {
         marginLeft: 10,
         marginTop: 5,
         marginBottom: 5,
         marginRight: 5,
-        color: colors.darkTextColor
+        color: colors.slightlyDarkerColor
     },
     contentText: {
-        margin: 5,
-        color: colors.backgroundColor
+        marginTop: 5,
+        marginBottom: 5,
+        marginLeft: 20,
+        color: colors.whiteColor
     },
     descriptionContainer: {
         paddingTop: 20,
         paddingLeft: 20,
         paddingRight: 20,
-        backgroundColor: colors.backgroundColor
+        paddingBottom: 20,
+        backgroundColor: colors.whiteColor
     },
     bottomContentContainer: {
-        marginTop: 15,
-        marginLeft: 15,
-        marginRight: 15,
-        borderWidth: 2,
-        borderColor: colors.addButtonOuterColor,
-        backgroundColor: colors.addButtonInnerColor,
-        padding: 2,
-        borderRadius: 4
+        paddingTop: 15,
+        paddingLeft: 15,
+        paddingBottom: 15,
+        paddingRight: 15,
+        backgroundColor: colors.backgroundColor
     },
     bottomContainer: {
-        padding: 10,
-        backgroundColor: colors.backgroundColor
+        padding: 10
     },
     bottomTitleText: {
         color: colors.activeTabColor,
@@ -168,7 +199,7 @@ const styles = StyleSheet.create({
         fontSize: 15
     },
     descriptionText: {
-        color: colors.whiteColor
+        color: colors.darkTextColor
     }
 });
 
