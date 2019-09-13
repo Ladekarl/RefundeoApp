@@ -6,6 +6,7 @@ import {strings} from '../shared/i18n';
 import Icon from 'react-native-fa-icons';
 import geolib from 'geolib';
 import CustomText from './CustomText';
+import Helpers from '../api/Helpers';
 
 export default class StoreFilter extends React.PureComponent {
 
@@ -107,7 +108,7 @@ export default class StoreFilter extends React.PureComponent {
                 <View style={styles.filterTagsContainer} key={Math.random()}>
                     {
                         chunk.map(t => {
-                            const tagText = this.getTagText(t);
+                            const tagText = Helpers.getTagText(t);
                             if (tagText) {
                                 return <TouchableOpacity
                                     style={filterTagValue.key === t.key ? styles.selectedFilterTag : styles.filterTag}
@@ -124,35 +125,6 @@ export default class StoreFilter extends React.PureComponent {
         }
         return renderedTags;
     };
-
-    getTagText = (tag) => {
-        const key = tag.key;
-        switch (key) {
-            case 0:
-                return strings('stores.tag_jewelry');
-            case 1:
-                return strings('stores.tag_leather');
-            case 2:
-                return strings('stores.tag_footwear');
-            case 3:
-                return strings('stores.tag_accessories');
-            case 4:
-                return strings('stores.tag_sportswear');
-            case 5:
-                return strings('stores.tag_electronics');
-            case 6:
-                return strings('stores.tag_children');
-            case 7:
-                return strings('stores.tag_books');
-            case 8:
-                return strings('stores.tag_menswear');
-            case 9:
-                return strings('stores.tag_womenswear');
-            default:
-                return null;
-        }
-    };
-
 
     render() {
         const distanceValue = this.getDistanceSliderValue(this.state.filterDistanceSliderValue);
